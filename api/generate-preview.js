@@ -31,7 +31,8 @@
 //    (questa parte la collego io appena il backend è online: mandami l'URL).
 
 const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS } = require("./_auth-lib");
-const jobs = require("./_jobs");   // anteprime salvate: si ritrovano anche chiudendo l'app
+const jobs = require("./_jobs");
+const DECO = require("./_deco");   // anteprime salvate: si ritrovano anche chiudendo l'app
 const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 
 module.exports = async function handler(req, res) {
@@ -52,7 +53,7 @@ module.exports = async function handler(req, res) {
       if (typeof req.body[k] === "string") req.body[k] = req.body[k].replace(/[\r\n\t]+/g, " ").replace(/[<>{}]/g, "").slice(0, 80);
     });
   }
-  const { muro, porteInterne, imageBase64, mimeType, material, materialId, colorA, colorAHex, colorB, colorBHex, colorC, colorCHex, colorDavanzali, colorDavanzaliHex, colorSottotetto, colorSottotettoHex, colorPlafone, colorPlafoneHex, effettoScatola, colorTetto, colorTettoHex, colorCornici, colorCorniciHex, colorBalconi, colorBalconiHex, colorSerramenti, colorSerramentiHex, colorRighe, colorRigheHex, effetto, finitura, facadeLayout, righeExtent, righeOrientamento, righeZona, context, boiserieStyle, boiserieHeight, addDavanzali, addMarcapiano, addSottotetto, addTetto, addCornici, addBalconi, addSerramenti, addRighe, boiserieStyleRefImage, resinaArea, granigliaLayout, granigliaScale, risoluzione, rapporto, stile, lavoriPrecedenti, parquetPosa, grana, righeSpessore, colorCardImage, posaRefImage, spcLine, collezione, accentoTipo, colorAccento, colorAccentoHex, accentoRefImage, segni, colonne, plafoneTipo, materialSampleImage, qualita, scaleTipo, piaDove, piaAlt, piaFmtPav, piaFmtRiv, piaRivTile, piaDoccia, piaDocciaTile, piaFmtDoccia, colorDoccia, colorDocciaHex, bordatura, colorBordatura, colorBordaturaHex, step, paddedBands, motore, jobId, jobMeta } = req.body || {};
+  const { muro, porteInterne, imageBase64, mimeType, material, materialId, colorA, colorAHex, colorB, colorBHex, colorC, colorCHex, colorDavanzali, colorDavanzaliHex, colorSottotetto, colorSottotettoHex, colorPlafone, colorPlafoneHex, effettoScatola, colorTetto, colorTettoHex, colorCornici, colorCorniciHex, colorBalconi, colorBalconiHex, colorSerramenti, colorSerramentiHex, colorRighe, colorRigheHex, effetto, finitura, facadeLayout, righeExtent, righeOrientamento, righeZona, context, boiserieStyle, boiserieHeight, addDavanzali, addMarcapiano, addSottotetto, addTetto, addCornici, addBalconi, addSerramenti, addRighe, boiserieStyleRefImage, resinaArea, granigliaLayout, granigliaScale, risoluzione, rapporto, stile, lavoriPrecedenti, parquetPosa, grana, righeSpessore, colorCardImage, posaRefImage, spcLine, collezione, accentoTipo, colorAccento, colorAccentoHex, accentoRefImage, segni, colonne, plafoneTipo, materialSampleImage, qualita, scaleTipo, piaDove, piaAlt, piaFmtPav, piaFmtRiv, piaRivTile, piaDoccia, piaDocciaTile, piaFmtDoccia, colorDoccia, colorDocciaHex, bordatura, colorBordatura, colorBordaturaHex, step, paddedBands, motore, jobId, jobMeta, deco } = req.body || {};
 
   if (!imageBase64 || !material || !colorA) {
     return res.status(400).json({ error: "Dati mancanti: servono almeno imageBase64, material, colorA" });
@@ -276,7 +277,11 @@ module.exports = async function handler(req, res) {
   const posaAddon = ((materialId === "parquet" || materialId === "spc" || materialId === "laminato") && PARQUET_POSA_DESC[parquetPosa])
     ? `. SCHEMA DI POSA OBBLIGATORIO: ${PARQUET_POSA_DESC[parquetPosa]}; il disegno della posa deve essere chiaramente riconoscibile su tutto il pavimento e seguire la prospettiva della stanza, e la superficie ha il colore indicato${materialId === "spc" ? " con la stampa decorativa realistica (venature del legno oppure disegno di pietra, cemento o marmo)" : " con venature naturali"}`
     : "";
-  const textureDesc = baseTextureDesc + effettoAddon + posaAddon;
+  // Pareti decorate (decorazioni Loggia): su "tutte le pareti" la decorazione
+  // prende il posto della pittura; su "una parete" passa dalla parete d'accento.
+  const decoSel = (materialId === "imbiancatura" && context !== "esterno") ? DECO.parse(deco) : null;
+  const decoAll = !!(decoSel && decoSel.dove === "tutte");
+  const textureDesc = decoAll ? DECO.text(decoSel) : baseTextureDesc + effettoAddon + posaAddon;
 
   // Monolith Pietra e Terrazzo si posano SOLO a pavimento (non a parete): lo
   // diciamo esplicitamente all'AI così non applica la lavorazione anche ai muri
@@ -407,6 +412,7 @@ module.exports = async function handler(req, res) {
     microcemento: () => `rivestita in MICROCEMENTO nel colore ${colorRef(colorAccento, colorAccentoHex)}, superficie continua senza fughe, leggermente nuvolata e materica`,
     marmo: () => `rivestita con una finitura decorativa EFFETTO MARMO (marmorino) nel colore di fondo ${colorRef(colorAccento, colorAccentoHex)}, con venature naturali sottili e superficie liscia e setosa`,
   };
+  if (decoSel && decoSel.dove === "parete") ACCENTO_DESC.loggia = () => "rivestita con " + DECO.text(decoSel);
   const accentoNote = (isInterniPittura && accentoTipo && ACCENTO_DESC[accentoTipo] && accentoRefClean !== undefined)
     ? ` PARETE D'ACCENTO: UNA SOLA parete della stanza è diversa dalle altre: è ${ACCENTO_DESC[accentoTipo]()}.` + (accentoRefClean
       ? " Quale parete: ti è stata fornita un'immagine aggiuntiva (l'ULTIMA immagine) che è la stessa foto con un CERCHIO ROSSO disegnato sopra: la parete d'accento è ESATTAMENTE la parete su cui si trova il cerchio rosso, da angolo ad angolo e dal pavimento al soffitto. Il cerchio rosso è solo un'indicazione: NON disegnarlo nell'immagine finale."
@@ -742,6 +748,8 @@ module.exports = async function handler(req, res) {
   // Pittura interni: la vernice cambia il colore, non la forma dell'intonaco; le travi in legno restano legno.
   const muroSel = (muro === "liscio" || muro === "civile") ? muro : "com";
   const paintTextureNote = !isInterniPittura ? ""
+    : decoAll
+      ? " PARETI DECORATE (richiesta dal cliente): la finitura decorativa indicata copre TUTTE le pareti della stanza, da angolo ad angolo e dal pavimento al soffitto, e sostituisce la pittura: le pareti NON sono in tinta piatta. Il soffitto resta com'è se non è stato chiesto. Porte, finestre, prese, quadri e mobili restano identici e visibili."
     : muroSel === "liscio"
       ? " FINITURA DEI MURI (richiesta dal cliente): RASATURA A GESSO. Tutte le pareti da dipingere diventano perfettamente LISCE, piane e uniformi, senza grana, rilievi, crepe o buccia d'arancia: l'intonaco ruvido originale NON deve più vedersi. Spigoli dritti e puliti. La luce scivola uniforme sulla superficie opaca. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "")
     : muroSel === "civile"
