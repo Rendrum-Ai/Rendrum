@@ -7,7 +7,7 @@
 <script>try{if(/[?&](recensione|vota|impresa)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <link rel="preload" as="image" href="/img/5298b64fd7df.jpg" fetchpriority="high">
-<link rel="preload" as="image" href="/img/4d4639d26fdc.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/img/8ee849b00fb5.jpg" fetchpriority="high">
 <title>Rendrum – Vedi la tua casa rinnovata prima dei lavori</title>
 <meta name="description" content="Carica una foto e guarda in anteprima resine, microcemento, parquet, SPC, piastrelle, pittura e facciate con i colori reali che scegli. Anteprima realistica con intelligenza artificiale.">
 <meta property="og:type" content="website">
@@ -772,6 +772,52 @@
   .rp-wt{ font-size:24px; margin:0; }
   .rp-pair{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:12px 0; } .rp-pair div{ position:relative; } .rp-pair img{ width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:12px; display:block; }
   .rp-pair .rp-tag{ top:8px; left:8px; }
+
+  /* Anteprima versione B (account di prova) */
+  .gb-wait{ display:none; }
+  html.rd-gb #aiBusy .gb-wait{ display:block; }
+  html.rd-gb #aiBusy .ab-img, html.rd-gb #aiBusy #abTitle, html.rd-gb #aiBusy #aiBusyStep, html.rd-gb #aiBusy .ab-main > .ai-progress, html.rd-gb #aiBusy .ab-row, html.rd-gb #aiBusy #abSp{ display:none !important; }
+  .gb-ring{ position:relative; width:150px; height:150px; margin:4px auto 10px; }
+  .gb-ring svg{ width:150px; height:150px; display:block; }
+  .gb-r0{ fill:none; stroke:var(--line); stroke-width:10; }
+  .gb-r1{ fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round; stroke-dasharray:327; stroke-dashoffset:327; transform:rotate(-90deg); transform-origin:60px 60px; transition:stroke-dashoffset .5s linear; }
+  .gb-ring > div{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .gb-ring b{ font-size:32px; color:var(--ink); } .gb-ring span{ font-size:12.5px; color:var(--ink-soft); }
+  .gb-step{ text-align:center; font-size:13px; font-weight:700; color:var(--accent); min-height:4px; margin-bottom:8px; }
+  .gb-mat{ display:flex; gap:12px; align-items:center; background:var(--surface); border:1.5px solid var(--line); border-radius:16px; padding:10px; text-align:left; }
+  .gb-sw{ width:72px; height:72px; border-radius:12px; flex:none; border:1px solid var(--line); }
+  .gb-mat i{ display:block; font-style:normal; font-size:12px; color:var(--ink-soft); font-weight:700; } .gb-mat b{ display:block; font-size:18px; color:var(--ink); } .gb-mat span{ font-size:13px; color:var(--ink-soft); }
+  .gb-tip{ margin-top:10px; background:#2B1408; color:#fff; border-radius:16px; padding:14px; text-align:left; }
+  .gb-tip i{ font-style:normal; font-size:12px; color:#F0B98A; font-weight:700; } .gb-tip p{ font-size:14px; line-height:1.4; margin:4px 0 0; }
+  .gb-seg{ display:flex; background:var(--line); border-radius:12px; padding:3px; margin:0 0 10px; }
+  .gb-seg[hidden], .gb-res[hidden]{ display:none; }
+  .gb-seg button{ flex:1; border:none; background:none; font-family:inherit; font-size:14px; font-weight:800; color:var(--ink-soft); padding:9px 4px; border-radius:9px; cursor:pointer; }
+  .gb-seg button.on{ background:var(--surface); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  .gb-res{ margin:10px 0 12px; }
+  .gb-mrow{ display:flex; gap:12px; align-items:center; background:var(--surface); border:1.5px solid var(--line); border-radius:14px; padding:8px; }
+  .gb-mrow .gb-sw{ width:52px; height:52px; border-radius:10px; } .gb-mrow div{ flex:1; min-width:0; } .gb-mrow b{ display:block; font-size:15px; } .gb-mrow span{ font-size:12.5px; color:var(--ink-soft); }
+  .gb-mrow button{ border:none; background:none; color:var(--accent); font-family:inherit; font-weight:800; font-size:14px; cursor:pointer; }
+  .gb-vl{ font-weight:800; font-size:13px; color:var(--ink-soft); margin:14px 0 8px; }
+  .gb-vars{ display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
+  .gb-vars button{ flex:none; width:80px; border:none; background:none; padding:0; font-family:inherit; cursor:pointer; color:var(--ink); }
+  .gb-vars img{ width:80px; height:62px; object-fit:cover; border-radius:10px; border:2.5px solid transparent; display:block; }
+  .gb-vars button.on img{ border-color:var(--accent); }
+  .gb-vars i{ display:block; font-style:normal; font-size:11.5px; text-align:center; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .gb-vars .gb-add{ height:62px; border:2px dashed var(--accent); border-radius:10px; color:var(--accent); font-weight:800; font-size:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .gb-vars .gb-add i{ font-size:11px; margin:0; }
+  .gb-b2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; }
+  .gb-b2 button{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); font-family:inherit; font-weight:800; font-size:14px; padding:14px 6px; border-radius:14px; cursor:pointer; }
+  .gb-b2 button.p{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .gb-cmp{ position:fixed; inset:0; z-index:1001; background:#111; display:flex; flex-direction:column; }
+  .gb-cmp[hidden]{ display:none; }
+  .gb-ch{ display:flex; align-items:center; padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 12px; color:#fff; } .gb-ch b{ flex:1; font-size:16px; }
+  .gb-ch button{ width:40px; height:40px; border-radius:50%; border:none; background:rgba(255,255,255,.15); color:#fff; font-size:18px; cursor:pointer; }
+  .gb-st{ position:relative; flex:1; margin:0 0 10px; touch-action:none; overflow:hidden; }
+  .gb-st img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; } .gb-st img.r{ clip-path:inset(0 0 0 50%); }
+  .gb-k{ position:absolute; top:0; bottom:0; left:50%; width:3px; background:#fff; transform:translateX(-50%); }
+  .gb-k:after{ content:'‹ ›'; position:absolute; top:50%; left:50%; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50%; background:#fff; color:#111; display:grid; place-items:center; font-weight:900; }
+  .gb-st i{ position:absolute; top:12px; font-style:normal; font-size:12px; font-weight:800; color:#fff; background:rgba(0,0,0,.55); padding:4px 10px; border-radius:12px; } .gb-st .a{ left:12px; } .gb-st .b{ right:12px; }
+  .gb-hint{ text-align:center; color:rgba(255,255,255,.7); font-size:13px; padding:0 0 calc(env(safe-area-inset-bottom,0px) + 16px); }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -1746,7 +1792,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <figure class="lp-ba" id="lpBA">
         <div class="ba-frame" id="baFrame" style="--pos:50%">
           <img fetchpriority="high" class="ba-img" id="baBefore" src="/img/5298b64fd7df.jpg" alt="Prima dei lavori" data-i18n-alt="baBeforeAlt" draggable="false">
-          <img fetchpriority="high" class="ba-img ba-after" id="baAfter" src="/img/4d4639d26fdc.jpg" alt="Anteprima dopo i lavori" data-i18n-alt="baAfterAlt" draggable="false">
+          <img fetchpriority="high" class="ba-img ba-after" id="baAfter" src="/img/8ee849b00fb5.jpg" alt="Anteprima dopo i lavori" data-i18n-alt="baAfterAlt" draggable="false">
           <span class="ba-line" aria-hidden="true"><span class="ba-knob"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6"/><path d="M15 6l6 6-6 6"/></svg></span></span>
           <span class="ba-lab ba-lab-l" data-i18n="baBefore">Prima</span>
           <span class="ba-lab ba-lab-r" data-i18n="baAfter">Dopo</span>
@@ -8710,6 +8756,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // swipe reale PRIMA (foto originale) / DOPO (immagine generata dall'AI),
   // in stile "storie", invece del vecchio cursore a tendina.
   function renderHeroPreview(){
+    setTimeout(function(){ try{ if(window.gbRender) window.gbRender(); }catch(e){} }, 0);
     try{ renderQueue(); }catch(e){}
     var dgmB=document.querySelector('.dgm-badge'); if(dgmB) dgmB.style.display = aiResultImage ? '' : 'none';
     if(!photoImg) return;
@@ -9713,6 +9760,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     spTimer = setInterval(function(){ spIdx = (spIdx + 1) % RD_DEMO_SP.length; spShow(); }, 4000);
   }
   function setAiBusy(on, stepText){
+    try{ if(window.gbBusy) window.gbBusy(!!on); }catch(e){}
     try{ spRun(on); if(!on) setTimeout(spRenderRes, 50); }catch(e){}
     document.body.classList.toggle('ai-busy-on', !!on);
     if(on){
@@ -10095,6 +10143,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }
     if(!chainRun) setAiBusy(false);
     renderHeroPreview();
+    try{ if(window.gbOnResult) window.gbOnResult(result); }catch(e){}
     setTimeout(syncResultCta, 0);
     statusEl.textContent = ts('aiStatusDone');
     if(RD_TEST_Q){
@@ -15222,6 +15271,115 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function ctCosa(){ var box = rxOpen('Cosa vuoi fare?', null); box.innerHTML = ctCosaHtml(); ctCosaBind(box); }
   function ctCosaBind(box){ box.querySelectorAll('[data-cosa]').forEach(function(b){ b.addEventListener('click', function(){ ctCosaGo(b.dataset.cosa); }); }); }
+  // ---------- Anteprima, versione B "scheda del materiale" (per ora solo account di prova) ----------
+  var gb = { timer:null, tip:0, vars:[], base:null, last:null };
+  var GB_TIPS = {
+    monolith:['La resina non ha fughe: si pulisce con un panno e non trattiene lo sporco.', 'Si può posare sopra il pavimento esistente, senza demolire.'],
+    microcemento:['Il microcemento si posa sopra le vecchie piastrelle: pochi millimetri, niente demolizioni.', 'Con la protezione giusta va bene anche in doccia.'],
+    imbiancatura:['Per le facciate la pittura silossanica lascia respirare il muro e respinge l’acqua.', 'Guarda il colore anche con la luce del pomeriggio: cambia molto.'],
+    parquet:['Il parquet si può levigare e rinnovare più volte negli anni.', 'Le doghe lunghe fanno sembrare la stanza più grande.'],
+    spc:['L’SPC è impermeabile: va bene anche in cucina e in bagno.', 'Si posa a incastro, spesso sopra il pavimento esistente.'],
+    laminato:['Il laminato resiste ai graffi: ottimo con bambini e animali.', 'Si posa in pochi giorni, senza colle.'],
+    piastrelle:['Fughe sottili e lastre grandi fanno sembrare la stanza più ampia.', 'Per l’esterno scegli piastrelle antiscivolo.'],
+    scale:['Sulle scale conviene una finitura antiscivolo.', 'Gli spigoli rinforzati durano di più.'],
+    graniglia_esterni:['La graniglia drenante lascia passare l’acqua: niente pozzanghere.', 'Resiste al gelo e non si crepa.'],
+    resina_haccp:['La resina HACCP è continua e lavabile: adatta a cucine professionali e laboratori.'],
+    _:['Puoi provare più colori sulla stessa foto e confrontarli alla fine.', 'Le misure che rispondi qui sotto servono per il preventivo.']
+  };
+  function gbOn(){ return !!(typeof proAccount !== 'undefined' && proAccount && rdIsTester()); }
+  function gbMat(){
+    var s = (typeof state !== 'undefined' && state) || {}, m = s.material, c = s.colorA || {};
+    var mn = ''; try{ mn = m ? (LF(m, 'name') || m.name || '') : ''; }catch(e){ mn = (m && m.name) || ''; }
+    var cn = [c.name, c.code && c.code !== c.name ? c.code : ''].filter(Boolean).join(' · ');
+    var fin = s.finitura ? 'finitura ' + s.finitura : '';
+    return { cat: (s.category && s.category.id) || '', nome: mn || (s.category && s.category.name) || 'Lavoro', colore: cn, fin: fin, img: c.img || null, hex: c.hex || '#ccc' };
+  }
+  function gbEl(){
+    var w = document.getElementById('gbWait'); if(w) return w;
+    var main = document.getElementById('abMain'); if(!main) return null;
+    w = document.createElement('div'); w.id = 'gbWait'; w.className = 'gb-wait';
+    w.innerHTML = '<div class="gb-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="gb-r0"/><circle cx="60" cy="60" r="52" class="gb-r1" id="gbArc"/></svg><div><b id="gbPct">0%</b><span id="gbEta"></span></div></div>'
+      + '<div class="gb-step" id="gbStep"></div>'
+      + '<div class="gb-mat"><span class="gb-sw" id="gbSw"></span><div><i>Stai provando</i><b id="gbMn"></b><span id="gbMc"></span></div></div>'
+      + '<div class="gb-tip"><i>Lo sapevi?</i><p id="gbTip"></p></div>';
+    main.insertBefore(w, main.firstChild);
+    return w;
+  }
+  window.gbBusy = function(on){
+    clearInterval(gb.timer); gb.timer = null;
+    document.documentElement.classList.toggle('rd-gb', gbOn());
+    if(!on || !gbOn()) return;
+    var w = gbEl(); if(!w) return;
+    var m = gbMat(), tips = GB_TIPS[m.cat] || GB_TIPS._;
+    document.getElementById('gbMn').textContent = m.nome;
+    document.getElementById('gbMc').textContent = [m.colore, m.fin].filter(Boolean).join(' · ');
+    var sw = document.getElementById('gbSw'); sw.style.background = m.img ? 'url(' + m.img + ') center/cover' : m.hex;
+    gb.tip = 0; document.getElementById('gbTip').textContent = tips[0];
+    var tick = 0;
+    gb.timer = setInterval(function(){
+      var f = document.getElementById('aiBusyFill'), p = f ? parseFloat(f.style.width) || 0 : 0, arc = document.getElementById('gbArc');
+      if(arc) arc.style.strokeDashoffset = String(327 * (1 - Math.min(100, p) / 100));
+      var pc = document.getElementById('gbPct'); if(pc) pc.textContent = Math.round(p) + '%';
+      var e = document.getElementById('abEta'), ge = document.getElementById('gbEta'); if(ge) ge.textContent = e ? e.textContent.replace(/^ancora /, '') : '';
+      var st = document.getElementById('aiBusyStep'), gs = document.getElementById('gbStep'); if(gs) gs.textContent = st ? st.textContent : '';
+      if(++tick % 12 === 0 && tips.length > 1){ gb.tip = (gb.tip + 1) % tips.length; var t = document.getElementById('gbTip'); if(t) t.textContent = tips[gb.tip]; }
+    }, 500);
+  };
+  // ----- risultato: Prima / Dopo / Confronta, materiale, prove sulla stessa foto -----
+  function gbBase(){ return (typeof layerOriginal !== 'undefined' && layerOriginal && layerOriginal.img) || photoImg; }
+  function gbThumb(img){ try{ var k = Math.min(1, 220 / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height)), c = document.createElement('canvas'); c.width = Math.round((img.naturalWidth || img.width) * k); c.height = Math.round((img.naturalHeight || img.height) * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', 0.8); }catch(e){ return img.src; } }
+  window.gbOnResult = function(result){
+    if(!gbOn() || !result || !result.img) return;
+    if(typeof chainRun !== 'undefined' && chainRun) return;
+    var base = gbBase();
+    if(gb.base !== base){ gb.base = base; gb.vars = []; }
+    if(!gb.vars.some(function(v){ return v.img === result.img; })){
+      var m = gbMat(); gb.vars.push({ img: result.img, th: gbThumb(result.img), nome: m.colore || m.nome, m: m });
+      if(gb.vars.length > 8) gb.vars.shift();
+    }
+    gb.last = result.img;
+    setTimeout(gbRender, 30);
+  };
+  window.gbRender = function(){ gbRender(); };
+  function gbRender(){
+    var hero = document.getElementById('hero'); if(!hero) return;
+    var seg = document.getElementById('gbSeg'), box = document.getElementById('gbRes');
+    if(!seg){ seg = document.createElement('div'); seg.id = 'gbSeg'; seg.className = 'gb-seg'; seg.innerHTML = '<button type="button" data-gbs="0">Prima</button><button type="button" data-gbs="1" class="on">Dopo</button><button type="button" data-gbs="c">Confronta</button>'; hero.parentNode.insertBefore(seg, hero);
+      seg.addEventListener('click', function(e){ var b = e.target.closest('[data-gbs]'); if(!b) return; var k = b.dataset.gbs;
+        if(k === 'c'){ gbCompare(gb.last); return; }
+        seg.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x === b); });
+        var d = document.querySelector('#heroDots [data-i="' + k + '"]'); if(d) d.click(); else { var sl = document.getElementById('heroSlides'); if(sl) sl.scrollTo({ left: +k * sl.clientWidth, behavior:'smooth' }); } }); }
+    if(!box){ box = document.createElement('div'); box.id = 'gbRes'; box.className = 'gb-res'; hero.parentNode.insertBefore(box, hero.nextSibling); }
+    var show = gbOn() && !!aiResultImage;
+    seg.hidden = !show; box.hidden = !show; if(!show) return;
+    seg.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x.dataset.gbs === '1'); });
+    var m = (gb.vars.filter(function(v){ return v.img === gb.last; })[0] || {}).m || gbMat(), pro = proAccount && proAccount.accountType !== 'privato';
+    box.innerHTML = '<div class="gb-mrow"><span class="gb-sw" style="background:' + (m.img ? 'url(' + m.img + ') center/cover' : m.hex) + '"></span><div><b>' + qEsc(m.nome) + '</b><span>' + qEsc([m.colore, m.fin].filter(Boolean).join(' · ')) + '</span></div><button type="button" id="gbCh">Cambia</button></div>'
+      + (gb.vars.length ? '<div class="gb-vl">Le tue prove su questa foto</div><div class="gb-vars">' + gb.vars.map(function(v, i){ return '<button type="button" data-gbv="' + i + '"' + (v.img === gb.last ? ' class="on"' : '') + '><img src="' + v.th + '" alt=""><i>' + qEsc(v.nome) + '</i></button>'; }).join('') + '<button type="button" class="gb-add" id="gbNew">＋<i>Nuova</i></button></div>' : '')
+      + '<div class="gb-b2">' + (pro ? '<button type="button" class="p" id="gbSend">💬 Manda al cliente</button><button type="button" id="gbQuote">📄 Crea il preventivo</button>' : '<button type="button" class="p" id="gbSave">💾 Salva</button><button type="button" id="gbFind">🔎 Trova un artigiano</button>') + '</div>';
+    var ch = function(){ try{ goTo('panelColor'); }catch(e){} };
+    document.getElementById('gbCh').addEventListener('click', ch);
+    var nw = document.getElementById('gbNew'); if(nw) nw.addEventListener('click', ch);
+    box.querySelectorAll('[data-gbv]').forEach(function(b){ b.addEventListener('click', function(){ gbCompare(gb.vars[+b.dataset.gbv].img, gb.vars[+b.dataset.gbv].nome); }); });
+    var c = function(id, tgt){ var e = document.getElementById(id); if(e) e.addEventListener('click', function(){ var t = document.getElementById(tgt); if(t) t.click(); }); };
+    c('gbSend', 'rxWaScheda'); c('gbQuote', 'qFromPreviewBtn'); c('gbSave', 'panel3SaveProjectBtn'); c('gbFind', 'tfBtn');
+  }
+  // confronto a tutto schermo: prima e dopo con il cursore
+  function gbCompare(img, nome){
+    var base = gbBase(); if(!img || !base) return;
+    var ov = document.getElementById('gbCmp');
+    if(!ov){ ov = document.createElement('div'); ov.id = 'gbCmp'; ov.className = 'gb-cmp'; document.body.appendChild(ov); }
+    ov.innerHTML = '<div class="gb-ch"><b>' + qEsc(nome || 'Confronta') + '</b><button type="button" id="gbX">✕</button></div><div class="gb-st" id="gbSt"><img src="' + base.src + '" alt=""><img class="r" id="gbR" src="' + img.src + '" alt=""><span class="gb-k" id="gbK"></span><i class="a">Prima</i><i class="b">Dopo</i></div><div class="gb-hint">Trascina il cerchio per confrontare</div>';
+    ov.hidden = false;
+    var st = document.getElementById('gbSt'), r = document.getElementById('gbR'), k = document.getElementById('gbK');
+    function set(x){ var b = st.getBoundingClientRect(), p = Math.max(0, Math.min(1, (x - b.left) / b.width)); r.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)'; k.style.left = (p * 100) + '%'; }
+    var down = false;
+    st.addEventListener('pointerdown', function(e){ down = true; set(e.clientX); });
+    window.addEventListener('pointermove', function(e){ if(down) set(e.clientX); });
+    window.addEventListener('pointerup', function(){ down = false; });
+    st.addEventListener('touchmove', function(e){ if(e.touches[0]){ e.preventDefault(); set(e.touches[0].clientX); } }, { passive:false });
+    document.getElementById('gbX').addEventListener('click', function(){ ov.hidden = true; });
+  }
   // ---------- Nuovo ingresso (per ora solo account di prova professionisti): home "Oggi" + barra in basso ----------
   var rdV2 = { on:false, loading:false, modalWas:false };
   function rdV2Active(){ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsTester()); }
@@ -15811,6 +15969,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   if(document.body) start(); else document.addEventListener('DOMContentLoaded', start);
 })();
 </script>
-<script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/5298b64fd7df.jpg", "/img/4d4639d26fdc.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
+<script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/5298b64fd7df.jpg", "/img/8ee849b00fb5.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
 </body>
 </html>
