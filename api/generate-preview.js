@@ -35,6 +35,24 @@ const jobs = require("./_jobs");
 const DECO = require("./_deco");   // anteprime salvate: si ritrovano anche chiudendo l'app
 const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 
+// ---- Anteprime di prova (vedi supabase_anteprime_prova.sql) ----
+const FREE_PREVIEWS = 5;
+// Account senza limite: quelli di prova di Rendrum, più eventuali email in RD_UNLIMITED_EMAILS (separate da virgola) su Vercel.
+const UNLIMITED_EMAILS = () => ["prova@rendrum.com", "provalo@rendrum.com"].concat(String(process.env.RD_UNLIMITED_EMAILS || "").split(",").map(x => x.trim().toLowerCase()).filter(Boolean));
+// Prenota un'anteprima di prova. Ritorna il nuovo conteggio, "over" se finite, "missing" se manca la colonna.
+async function useTrial(acc) {
+  for (let i = 0; i < 3; i++) {
+    const r = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(acc.id) + "&select=trial_used", { method: "GET" }).catch(function () { return { ok: false }; });
+    const row = r.ok && Array.isArray(r.data) && r.data[0];
+    if (!row || !Object.prototype.hasOwnProperty.call(row, "trial_used")) return "missing";
+    const used = Number(row.trial_used) || 0;
+    if (used >= FREE_PREVIEWS) return "over";
+    const p = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(acc.id) + "&trial_used=eq." + used, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ trial_used: used + 1 }) }).catch(function () { return { ok: false }; });
+    if (p.ok && Array.isArray(p.data) && p.data.length) return used + 1;
+  }
+  return "over";
+}
+
 module.exports = async function handler(req, res) {
   const tStart = Date.now();   // misura dei tempi (visibile solo agli account di test)
   const qs = req.query || {};
@@ -64,10 +82,26 @@ module.exports = async function handler(req, res) {
   let quotaAcc = null, quotaMonth = null, reserved = false, refunded = false;
   quotaAcc = await currentAccount(req).catch(function () { return null; });
   if (!quotaAcc) return res.status(401).json({ error: "Per creare l'anteprima accedi o registrati.", code: "login_required" });
-  if (paymentsEnabled()) {
-    if (!["active", "trialing"].includes(quotaAcc.subscription_status)) {
-      return res.status(402).json({ error: "Il tuo abbonamento non è attivo: attivalo per creare le anteprime.", code: "subscription_required" });
-    }
+  // Chi non ha un abbonamento attivo ha FREE_PREVIEWS anteprime di prova in tutto (non al mese),
+  // così nel periodo di test nessuno può generare senza limite a spese di Rendrum.
+  const accEmail = String(quotaAcc.email || "").toLowerCase();
+  const unlimited = UNLIMITED_EMAILS().includes(accEmail);
+  const subActive = paymentsEnabled() && ["active", "trialing"].includes(quotaAcc.subscription_status);
+  if (!unlimited && !subActive) {
+    const t = await useTrial(quotaAcc);
+    if (t === "missing") return res.status(503).json({ error: "Le anteprime non sono disponibili in questo momento. Riprova tra poco.", code: "trial_unavailable" });
+    if (t === "over") return res.status(429).json({ error: "Hai usato le " + FREE_PREVIEWS + " anteprime di prova gratuite. Grazie per aver provato Rendrum! Per continuare scrivi a info@rendrum.com.", code: "trial_over" });
+    const origJsonT = res.json.bind(res); let backT = false;
+    res.json = function (payload) {
+      if (!backT && res.statusCode >= 400) {
+        backT = true;
+        return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&trial_used=eq." + t, { method: "PATCH", body: JSON.stringify({ trial_used: t - 1 }) })
+          .catch(function () {}).then(function () { return origJsonT(payload); });
+      }
+      return origJsonT(payload);
+    };
+  }
+  if (!unlimited && subActive) {
     quotaMonth = new Date().toISOString().slice(0, 7);
     const limit = PLANS_LIMIT(quotaAcc.tier);
     // Prenotazione atomica dell'anteprima nel database (funzione use_preview):
