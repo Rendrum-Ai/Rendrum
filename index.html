@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <title>Rendrum – Vedi la tua casa rinnovata prima dei lavori</title>
 <meta name="description" content="Carica una foto e guarda in anteprima resine, microcemento, parquet, SPC, piastrelle, pittura e facciate con i colori reali che scegli. Anteprima realistica con intelligenza artificiale.">
@@ -570,6 +571,10 @@
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
   body.rd-v2 #proBar{ display:none !important; }
+  html.rd-v2-pre #panelLanding .lp > :not(#rdOggi){ display:none !important; }
+  html.rd-v2-pre #rdOggi{ display:block; padding:6px 0 20px; }
+  html.rd-v2-pre #proAuthOpen, html.rd-v2-pre .brand .tag{ visibility:hidden; }
+  html.rd-v2-pre body{ padding-bottom:calc(76px + env(safe-area-inset-bottom,0px)); }
   body.rd-v2 #panelLanding .lp > :not(#rdOggi){ display:none !important; }
   body.rd-v2 #rdOggi{ display:block; padding:6px 0 20px; }
   body.rd-v2{ padding-bottom:calc(76px + env(safe-area-inset-bottom,0px)); }
@@ -11759,7 +11764,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function proCheckSession(cb){
     fetch('/api/auth-me')
       .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(data){ if(data && data.user){ proAccount = data.user; proUpdateHeader(); } if(cb) cb(); })
+      .then(function(data){ window.__rdAuthDone = true; if(data && data.user){ proAccount = data.user; proUpdateHeader(); } else if(window.__rdV2Ready) rdV2Sync(); if(cb) cb(); })
       .catch(function(){ if(cb) cb(); });
   }
 
@@ -14201,8 +14206,26 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function rdV2Sync(){
     rdV2.on = rdV2Active();
     document.body.classList.toggle('rd-v2', rdV2.on);
-    if(!rdV2.on){ var t = document.getElementById('rdTab'); if(t) t.hidden = true; document.getElementById('rdAltro').classList.remove('open'); return; }
-    rdTabSync(); rdOggiLoad();
+    if(!rdV2.on){
+      var t = document.getElementById('rdTab'); if(t) t.hidden = true; document.getElementById('rdAltro').classList.remove('open');
+      if(proAccount || window.__rdAuthDone) rdV2Pre(false);
+      return;
+    }
+    rdV2Pre(true); rdTabSync(); rdOggiLoad();
+  }
+  // Ricordo sul telefono che l'ultimo accesso era con il nuovo ingresso: all'apertura
+  // si vede subito "Oggi" invece della pagina pubblicitaria per un attimo.
+  function rdV2Pre(on){
+    try{ if(on){ localStorage.setItem('rdV2', '1'); localStorage.setItem('rdV2Name', String((proAccount && proAccount.companyName) || '').slice(0, 80)); } else { localStorage.removeItem('rdV2'); localStorage.removeItem('rdV2Name'); } }catch(e){}
+    document.documentElement.classList.remove('rd-v2-pre');
+    if(!on){ var b = document.getElementById('rdOggi'); if(b){ b.innerHTML = ''; delete b.dataset.ready; } }
+  }
+  function rdOggiPreview(){
+    var box = document.getElementById('rdOggi'), nome = ''; try{ nome = localStorage.getItem('rdV2Name') || ''; }catch(e){}
+    var h = new Date().getHours(), saluto = h < 13 ? 'Buongiorno' : h < 18 ? 'Buon pomeriggio' : 'Buonasera';
+    box.innerHTML = '<div class="rd-o-k">' + qEsc(new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</div><h1 class="rd-o-h">' + qEsc(saluto + (nome ? ', ' + nome : '')) + '</h1><div class="rd-o-sub">Carico le cose da fare…</div><div class="rd-o-sec">Da fare</div><div class="rd-o-list"><div class="rd-o-skel"></div><div class="rd-o-skel"></div></div>';
+    document.getElementById('rdTab').hidden = false;
+    setTimeout(function(){ if(document.documentElement.classList.contains('rd-v2-pre')){ window.__rdAuthDone = true; rdV2Sync(); } }, 8000);
   }
   function rdGiorni(iso){ var t = Date.parse(iso || ''); return isFinite(t) ? Math.floor((Date.now() - t) / 86400000) : 0; }
   function rdOggiLoad(){
@@ -14269,7 +14292,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(k === 'esci') document.getElementById('proLogoutBtn').click();
   });
   try{ new MutationObserver(rdTabSync).observe(document.getElementById('proProjectsModal'), { attributes:true, attributeFilter:['class'] }); }catch(e){}
-  window.__rdV2Ready = true; if(typeof proAccount !== 'undefined' && proAccount) rdV2Sync();
+  window.__rdV2Ready = true; if(document.documentElement.classList.contains('rd-v2-pre')) rdOggiPreview(); if(typeof proAccount !== 'undefined' && proAccount) rdV2Sync();
   document.getElementById('tfBtn').addEventListener('click', tfOpen);
   document.getElementById('tfBack').addEventListener('click', ppClose);
   document.getElementById('tfSearch').addEventListener('click', tfSearch);
