@@ -135,11 +135,13 @@ module.exports = async function handler(req, res) {
   if (!getSupabaseConfig().configured) return res.status(500).json({ error: "Servizio non configurato." });
   const action = (req.query && req.query.action) || "";
   try {
+    if (action.indexOf("pub-") === 0) return require("./_extra").handlePublic(req, res, action);
     const acc = await currentAccount(req).catch(() => null);
     if (!acc) return res.status(401).json({ error: "Accedi al tuo account." });
     if (acc.account_type === "privato") return res.status(403).json({ error: "Il generatore di preventivi è riservato ai professionisti." });
     const mine = "account_id=eq." + encodeURIComponent(acc.id);
     if (action.indexOf("sopr-") === 0) return require("./_sopralluoghi").handle(req, res, action, acc);
+    if (action.indexOf("px-") === 0) return require("./_extra").handle(req, res, action, acc);
 
     if (action === "settings") {
       if (req.method === "GET") return res.status(200).json({ settings: acc.quote_settings || {}, account: { companyName: acc.company_name || "", piva: acc.piva || "", phone: acc.phone || "", email: acc.email || "", logoUrl: acc.logo_url || null } });

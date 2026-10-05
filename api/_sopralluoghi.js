@@ -26,16 +26,17 @@ function clean(d) {
   d = obj(d);
   const lavori = (Array.isArray(d.lavori) ? d.lavori : []).filter((k, i, a) => SCHEDE.includes(k) && a.indexOf(k) === i);
   const sup = s => { const o = {}; Object.keys(obj(s)).slice(0, 10).forEach(k => { if (SCHEDE.includes(k)) { const x = obj(s[k]); o[k] = { pav: !!x.pav, par: !!x.par, sof: !!x.sof }; } }); return o; };
+  const rid = x => key(x && x.id, 16);
   const ambienti = (Array.isArray(d.ambienti) ? d.ambienti : []).slice(0, 60).map(a => ({
-    nome: str(a && a.nome, 60), l: num(a && a.l, 200), w: num(a && a.w, 200), h: num(a && a.h, 30), sottrai: num(a && a.sottrai, 500),
+    id: rid(a), nome: str(a && a.nome, 60), l: num(a && a.l, 200), w: num(a && a.w, 200), h: num(a && a.h, 30), sottrai: num(a && a.sottrai, 500),
     sup: sup(a && a.sup), note: str(a && a.note, 500),
   }));
   const prospetti = (Array.isArray(d.prospetti) ? d.prospetti : []).slice(0, 20).map(p => ({
-    nome: str(p && p.nome, 60), w: num(p && p.w, 500), h: num(p && p.h, 200), aperture: num(p && p.aperture, 5000), finestre: num(p && p.finestre, 1000),
+    id: rid(p), nome: str(p && p.nome, 60), w: num(p && p.w, 500), h: num(p && p.h, 200), aperture: num(p && p.aperture, 5000), finestre: num(p && p.finestre, 1000),
     extra: num(p && p.extra, 5000), piani: num(p && p.piani, 100), note: str(p && p.note, 500),
   }));
   const aree = (Array.isArray(d.aree) ? d.aree : []).slice(0, 40).map(a => ({
-    nome: str(a && a.nome, 60), mq: num(a && a.mq, 100000), perim: num(a && a.perim, 10000), lav: (Array.isArray(a && a.lav) ? a.lav : []).filter(k => SCHEDE.includes(k)),
+    id: rid(a), nome: str(a && a.nome, 60), mq: num(a && a.mq, 100000), perim: num(a && a.perim, 10000), lav: (Array.isArray(a && a.lav) ? a.lav : []).filter(k => SCHEDE.includes(k)),
   }));
   const g = obj(d.gradini);
   const gradini = { n: num(g.n, 500), larg: num(g.larg, 20), pedata: num(g.pedata, 5), alzata: num(g.alzata, 5), pian: num(g.pian, 1000) };
@@ -46,7 +47,7 @@ function clean(d) {
   Object.keys(obj(d.scelte)).forEach(sk => { if (!SCHEDE.includes(sk)) return; const o = {}; Object.keys(obj(d.scelte[sk])).slice(0, 20).forEach(k => { const kk = key(k, 30); if (kk) o[kk] = str(d.scelte[sk][k], 160); }); scelte[sk] = o; });
   const controlli = {};
   Object.keys(obj(d.controlli)).slice(0, 200).forEach(k => { const kk = key(k, 60); const v = d.controlli[k]; if (kk && ["ok", "ko", "?"].includes(v)) controlli[kk] = v; });
-  const foto = (Array.isArray(d.foto) ? d.foto : []).slice(0, 30).map(f => ({ url: photoUrl(f && f.url), nota: str(f && f.nota, 300) })).filter(f => f.url);
+  const foto = (Array.isArray(d.foto) ? d.foto : []).slice(0, 40).map(f => ({ url: photoUrl(f && f.url), nota: str(f && f.nota, 300), rif: key(f && f.rif, 16) })).filter(f => f.url);
   return {
     lavori, tipo: str(d.tipo, 40), ambienti, prospetti, aree, gradini, voci, extra, scelte, controlli, foto,
     note: str(d.note, 4000),
