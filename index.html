@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>try{if(/[?&](recensione|vota|impresa)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
+<script>try{if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <link rel="preload" as="image" href="/img/5298b64fd7df.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="/img/8ee849b00fb5.jpg" fetchpriority="high">
@@ -1006,6 +1006,21 @@
   .qb-box > b{ display:block; color:#2E7D32; font-size:15px; } .qb-box > span{ display:block; font-size:13px; color:var(--ink-soft); margin:3px 0 10px; line-height:1.4; }
   .qb-acts{ display:flex; gap:8px; } .qb-acts .pro-auth-submit{ flex:1; margin:0; } .qb-g{ background:var(--surface) !important; background-image:none !important; box-shadow:none !important; color:var(--ink) !important; border:1.5px solid var(--line) !important; }
   .qb-sec{ flex:1; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; font-family:inherit; font-weight:700; font-size:14px; padding:12px 10px; cursor:pointer; }
+  /* ---- lavori in più ---- */
+  .vr-it > div{ flex:1; min-width:0; } .vr-it em.vr-ok{ color:#2E7D32; }
+  .vr-st{ flex:none; font-size:11px; font-weight:800; border-radius:999px; padding:3px 9px; } .vr-st.y{ background:#FDF0E6; color:#8A3F12; } .vr-st.g{ background:#E3F3E9; color:#1D6B3E; } .vr-st.n{ background:#EEE; color:#777; }
+  .vr-re{ border:none; background:none; font-size:18px; cursor:pointer; padding:2px; }
+  .vr-two{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; } .vr-two .cc-fld[hidden]{ display:none; } .vr-two .cc-fld span{ font-size:12.5px; white-space:nowrap; }
+  .vr-ph{ display:flex; gap:8px; } .vr-ph img{ width:72px; height:72px; object-fit:cover; border-radius:12px; }
+  .vr-add-ph{ display:flex; align-items:center; justify-content:center; width:72px; height:72px; border-radius:12px; border:2px dashed var(--accent); font-size:22px; cursor:pointer; } .vr-add-ph[hidden]{ display:none; }
+  .cc-calc span{ display:block; font-size:12.5px; }
+  .vr-msg{ background:#DCF8C6; color:#1D1B18; border-radius:14px; padding:12px 14px; font-size:14px; line-height:1.5; margin:6px 0 12px; word-break:break-word; }
+  .vr-cp{ width:100%; margin-top:10px; }
+  .rp-var h1{ margin:4px 0 6px; } .rp-vph{ display:flex; gap:8px; margin:10px 0; overflow-x:auto; } .rp-vph img{ height:140px; border-radius:12px; object-fit:cover; }
+  .rp-vr div{ display:flex; justify-content:space-between; padding:6px 0; border-top:1px solid var(--line, #eee); font-size:15px; } .rp-vr div:first-child{ border-top:none; } .rp-vr span{ color:var(--ink-soft, #666); }
+  .rp-vr div.t{ border-top:1.5px solid var(--ink, #222); margin-top:4px; padding-top:10px; } .rp-vr div.t b{ font-size:20px; }
+  .rp-done.ok{ border-color:#9CCBA3; background:#EEF6EF; } .rp-done.ok b{ color:#2E7D32; }
+  .vr-two{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .vr-two .cc-fld{ min-width:0; padding:4px 10px; } .vr-two .cc-fld input{ width:100%; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -15205,7 +15220,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // carica tutto e raggruppa per cliente: richieste, sopralluoghi, preventivi, appuntamenti, lavori finiti, recensioni
   function ctLoad(){
     var J = function(p){ return p.then(function(x){ return x && x.ok ? x.d : null; }).catch(function(){ return null; }); };
-    return Promise.all([J(lApi('pro-list')), J(soApi('sopr-list')), J(qApi('list')), J(qApi('px-list', 'GET', null, '&kind=agenda')), J(qApi('px-list', 'GET', null, '&kind=lavoro')), J(qApi('px-list', 'GET', null, '&kind=review')), J(qApi('px-list', 'GET', null, '&kind=costo'))]).then(function(r){
+    return Promise.all([J(lApi('pro-list')), J(soApi('sopr-list')), J(qApi('list')), J(qApi('px-list', 'GET', null, '&kind=agenda')), J(qApi('px-list', 'GET', null, '&kind=lavoro')), J(qApi('px-list', 'GET', null, '&kind=review')), J(qApi('px-list', 'GET', null, '&kind=costo')), J(qApi('px-list', 'GET', null, '&kind=variante'))]).then(function(r){
       var par = {}, rec = {};
       function f(k){ while(par[k] && par[k] !== k){ par[k] = par[par[k]] || par[k]; k = par[k]; } return k; }
       function add(k, kind, o){ if(!par[k]) par[k] = k; rec[k] = { kind: kind, o: o }; }
@@ -15220,9 +15235,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       ag.forEach(function(a){ add('A:' + a.id, 'agenda', a); link('A:' + a.id, nm(a.data.cliente)); });
       lav.forEach(function(w){ add('W:' + w.id, 'lavoro', w); link('W:' + w.id, nm(w.data.cliente)); if(w.data.quoteId) link('W:' + w.id, 'Q:' + w.data.quoteId); });
       ((r[6] && r[6].items) || []).forEach(function(x){ add('C:' + x.id, 'costo', x); link('C:' + x.id, nm(x.data.cliente)); if(x.data.quoteId) link('C:' + x.id, 'Q:' + x.data.quoteId); });
+      ((r[7] && r[7].items) || []).forEach(function(x){ add('V:' + x.id, 'variante', x); link('V:' + x.id, nm(x.data.cliente)); if(x.data.quoteId) link('V:' + x.id, 'Q:' + x.data.quoteId); });
       rv.forEach(function(v){ add('R:' + v.id, 'review', v); link('R:' + v.id, nm(v.data.cliente)); if(v.data.lavoroId) link('R:' + v.id, 'W:' + v.data.lavoroId); });
       var G = {};
-      Object.keys(rec).forEach(function(k){ var g = f(k); (G[g] = G[g] || { lead:[], sopr:[], quote:[], agenda:[], lavoro:[], review:[], costo:[] })[rec[k].kind].push(rec[k].o); });
+      Object.keys(rec).forEach(function(k){ var g = f(k); (G[g] = G[g] || { lead:[], sopr:[], quote:[], agenda:[], lavoro:[], review:[], costo:[], variante:[] })[rec[k].kind].push(rec[k].o); });
       ct.list = Object.keys(G).map(function(k){ return ctMake(k, G[k]); }).sort(function(a, b){ return String(b.agg).localeCompare(String(a.agg)); });
       ct.raw = { ag: ag, lav: lav };
       return ct.list;
@@ -15316,6 +15332,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<div class="ct-tl">' + CT_FASI.map(function(f, i){ return '<button type="button" class="ct-st ' + (i < c.fase || (!c.next && c.fase === 4) ? 'd' : i === c.fase ? 'c' : '') + '"' + (open[i] ? ' data-cto="' + i + '"' : ' disabled') + '><i></i><span><b>' + f + '</b>' + (det[i] ? '<em>' + qEsc(det[i]) + '</em>' : '') + '</span>' + (open[i] ? '<u>›</u>' : '') + '</button>'; }).join('') + '</div>'
       + (c.next ? '<button type="button" class="pro-auth-submit ct-go" id="ctGo">' + qEsc(c.next.t) + '</button>' : '<div class="rx-ok" style="text-align:center">' + qEsc(c.stato || 'Lavoro concluso') + '</div>');
     box.innerHTML = h;
+    try{ ctVarBlock(c, box); }catch(e){}
     try{ ctCostiBlock(c, box); }catch(e){}
     box.querySelectorAll('[data-cto]').forEach(function(b){ b.addEventListener('click', function(){ open[+b.dataset.cto](); }); });
     var g1 = document.getElementById('ctGo'); if(g1) g1.addEventListener('click', function(){ c.next.fn(); });
@@ -15895,6 +15912,70 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('qbCp').addEventListener('click', function(){ rxCopy(qbTesto()).then(function(ok){ document.getElementById('qbMsg').textContent = ok ? 'Messaggio copiato: incollalo dove vuoi.' : qbTesto(); }); });
   }
   (function(){ var st = document.getElementById('qStatus'); if(st) st.addEventListener('change', function(){ setTimeout(function(){ qbSync(); var b = document.getElementById('qbBox'); if(b && !b.hidden) try{ b.scrollIntoView({ block:'nearest', behavior:'smooth' }); }catch(e){} }, 0); }); })();
+  // ---------- Lavori in più (variante al preventivo confermata dal cliente con un link) ----------
+  var VR_UM = [['mq', 'm²'], ['ml', 'metri'], ['pz', 'pezzi'], ['a corpo', 'a corpo']];
+  function vrUm(u){ return ({ mq:'m²', ml:'m', pz:'pz', 'a corpo':'a corpo', h:'ore' })[u] || u; }
+  function vrE2(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €'; }
+  function vrImp(d){ return Math.round((+d.qta || 0) * (+d.prezzo || 0) * 100) / 100; }
+  function vrQta(d){ return d.um === 'a corpo' ? 'a corpo' : (String(d.qta).replace('.', ',') + ' ' + vrUm(d.um) + ' × ' + vrE2(d.prezzo)); }
+  function vrLink(tok){ return rxOrigin() + '/?variante=' + tok; }
+  function vrTesto(c, d, tok){
+    var imp = vrImp(d), tot = Math.round(imp * (1 + (d.iva || 0) / 100) * 100) / 100;
+    return 'Buongiorno ' + (v3First ? v3First(c.nome) : c.nome) + ', come concordato ecco il lavoro in più: ' + d.titolo + (d.um === 'a corpo' ? '' : ', ' + vrQta(d)) + ' = ' + vrE2(imp) + ' + IVA (' + vrE2(tot) + ' IVA inclusa).\nLo può confermare qui: ' + vrLink(tok) + '\nGrazie, ' + rxImpresa();
+  }
+  function ctVarBlock(c, box){
+    var q = ccQ(c); if(!q || c.fase < 3) return;
+    var L = (c.g.variante || []).slice().sort(function(a, b){ return String(b.createdAt).localeCompare(String(a.createdAt)); });
+    var ST = { attesa:['y', 'da confermare'], confermata:['g', 'confermata'], rifiutata:['n', 'non la vuole'] };
+    var h = '<div class="cc-sec">Lavori in più</div>';
+    if(L.length) h += '<div class="cc-card cc-list">' + L.map(function(x){ var d = x.data, s = ST[d.stato] || ST.attesa;
+        return '<div class="cc-it vr-it"><div><b>' + qEsc(d.titolo) + '</b><em>' + qEsc(vrQta(d)) + ' · ' + vrE2(vrImp(d)) + ' + IVA</em>'
+          + (d.stato === 'confermata' ? '<em class="vr-ok">✓ ' + qEsc(d.nome || 'Il cliente') + ' ha confermato il ' + qEsc(rxDate(String(d.at).slice(0, 10))) + (d.applicata ? ' · aggiunta al preventivo' : '') + '</em>' : '') + '</div>'
+          + '<span class="vr-st ' + s[0] + '">' + s[1] + '</span>' + (d.stato === 'attesa' ? '<button type="button" class="vr-re" data-vrwa="' + x.id + '" aria-label="Rimanda su WhatsApp">💬</button>' : '') + '</div>'; }).join('') + '</div>';
+    else h += '<div class="cc-hint" style="margin-top:0">Il cliente chiede qualcosa che non era nel preventivo? Mandagli il lavoro in più da confermare con un tocco: quando conferma, si aggiunge da solo al preventivo.</div>';
+    h += '<button type="button" class="pro-auth-submit cc-add vr-add" id="vrAdd">＋ Lavoro in più</button>';
+    var w = document.createElement('div'); w.className = 'cc-wrap'; w.innerHTML = h; box.appendChild(w);
+    document.getElementById('vrAdd').addEventListener('click', function(){ vrForm(c); });
+    w.querySelectorAll('[data-vrwa]').forEach(function(b){ b.addEventListener('click', function(){ var x = L.filter(function(k){ return k.id === b.dataset.vrwa; })[0]; if(x) rxWa(c.tel || x.data.telefono, vrTesto(c, x.data, x.token)); }); });
+  }
+  function vrForm(c){
+    var q = ccQ(c), st = { um:'mq', foto:[], iva:22, numero: q ? ('00' + q.number).slice(-3) + '/' + q.year : '' }, box = rxOpen('Lavoro in più', function(){ ctScheda(c.id); });
+    box.innerHTML = '<div class="cc-h2">Lavoro in più</div><div class="cc-sub">' + qEsc(c.nome) + (st.numero ? ' · preventivo n. ' + st.numero : '') + '. Il cliente lo conferma dal telefono e si aggiunge al preventivo.</div>'
+      + '<div class="cc-q">Cosa</div><label class="cc-fld"><input id="vrT" maxlength="160" placeholder="es. Battiscopa in resina, soggiorno e cucina" style="text-align:left;font-size:15px;font-weight:600"></label>'
+      + '<div class="cc-q">Quanto</div>' + ccChips('um', VR_UM, 'mq')
+      + '<div class="vr-two"><label class="cc-fld" id="vrQF"><span>Quantità</span><input id="vrQ" inputmode="decimal" placeholder="18"></label><label class="cc-fld"><span id="vrPL">€ al m²</span><input id="vrP" inputmode="decimal" placeholder="25"></label></div>'
+      + '<div class="cc-q">Foto <i>(se vuoi)</i></div><div class="vr-ph" id="vrPh"><label class="vr-add-ph">📷<input type="file" accept="image/*" hidden id="vrF"></label></div>'
+      + '<div class="cc-q">Note per il cliente <i>(se vuoi)</i></div><label class="cc-fld"><input id="vrD" maxlength="600" placeholder="es. stesso colore del pavimento" style="text-align:left;font-size:15px;font-weight:600"></label>'
+      + '<div class="cc-calc" id="vrCalc"></div><button type="button" class="pro-auth-submit" id="vrOk">Prepara il link per il cliente</button><div class="cc-hint" style="text-align:center">Gli arriva un link: vede foto e prezzo e tocca «Confermo».</div>';
+    function calc(){ var d = { qta: st.um === 'a corpo' ? 1 : ccNum2(document.getElementById('vrQ').value), prezzo: ccNum2(document.getElementById('vrP').value), um: st.um, iva: st.iva }, imp = vrImp(d), tot = Math.round(imp * (1 + st.iva / 100) * 100) / 100;
+      document.getElementById('vrCalc').innerHTML = (st.um === 'a corpo' ? 'A corpo' : (String(d.qta).replace('.', ',') + ' ' + vrUm(st.um) + ' × ' + vrE2(d.prezzo))) + '<b>= ' + vrE2(imp) + ' + IVA</b>' + (imp ? '<span>' + vrE2(tot) + ' IVA ' + st.iva + '% inclusa</span>' : ''); return d; }
+    ccChipsBind(box, function(g, v){ st.um = v; document.getElementById('vrQF').hidden = v === 'a corpo'; document.getElementById('vrPL').textContent = v === 'a corpo' ? 'Prezzo' : '€ al ' + ({ mq:'m²', ml:'metro', pz:'pezzo' })[v]; calc(); });
+    ['vrQ', 'vrP'].forEach(function(id){ document.getElementById(id).addEventListener('input', calc); });
+    function phDraw(){ var el = document.getElementById('vrPh'); el.querySelectorAll('img').forEach(function(i){ i.remove(); }); st.foto.forEach(function(u){ el.insertAdjacentHTML('afterbegin', '<img src="' + u + '" alt="">'); }); el.querySelector('.vr-add-ph').hidden = st.foto.length >= 3; }
+    document.getElementById('vrF').addEventListener('change', function(){ var f = Array.prototype.slice.call(this.files || []); this.value = ''; rxPickPhotos(f, 1).then(function(a){ st.foto = st.foto.concat(a).slice(0, 3); phDraw(); }); });
+    if(q) qApi('get', 'GET', null, '&id=' + encodeURIComponent(q.id)).then(function(x){ if(x.ok && x.d.quote){ st.iva = +((x.d.quote.iva || {}).aliquota); if(!isFinite(st.iva)) st.iva = 22; if(!c.tel && x.d.quote.cliente) c.tel = x.d.quote.cliente.telefono || ''; calc(); } });
+    calc();
+    document.getElementById('vrOk').addEventListener('click', function(){
+      var d = calc(), t = document.getElementById('vrT').value.trim(), btn = this, err = document.getElementById('rdXErr');
+      if(!t){ err.textContent = 'Scrivi cosa c’è da fare in più.'; return; }
+      if(!(d.qta > 0) || !(d.prezzo > 0)){ err.textContent = st.um === 'a corpo' ? 'Scrivi il prezzo.' : 'Scrivi quantità e prezzo.'; return; }
+      err.textContent = ''; btn.disabled = true; btn.textContent = 'Preparo il link…';
+      rxUpload(st.foto).then(function(u){ return rxSave('variante', { quoteId: q ? q.id : null, numero: st.numero, cliente: c.nome, telefono: c.tel || '', titolo: t, descrizione: document.getElementById('vrD').value.trim(), qta: d.qta, um: st.um, prezzo: d.prezzo, iva: st.iva, foto: u }); })
+        .then(function(it){ vrSent(c, it); })
+        .catch(function(e){ rxFail(e); btn.disabled = false; btn.textContent = 'Prepara il link per il cliente'; });
+    });
+  }
+  function vrSent(c, it){
+    var d = it.data, box = rxOpen('Lavoro in più', function(){ ccBack(c); }), txt = vrTesto(c, d, it.token);
+    box.innerHTML = '<div class="cc-h2">Pronto da mandare</div><div class="cc-sub">' + qEsc(d.titolo) + ' · ' + vrE2(vrImp(d)) + ' + IVA</div>'
+      + '<div class="vr-msg">' + qEsc(txt).replace(/\n/g, '<br>') + '</div>'
+      + (c.tel ? '<button type="button" class="pro-auth-submit cc-add" id="vrWa">💬 Manda su WhatsApp a ' + qEsc(v3First(c.nome)) + '</button>' : '<div class="cc-hint">Nel cantiere non c’è il telefono del cliente: copia il messaggio e mandalo tu.</div>')
+      + '<button type="button" class="qb-sec vr-cp" id="vrCp">📋 Copia il messaggio</button><div class="cc-hint" id="vrMsg"></div>'
+      + '<button type="button" class="ct-link" id="vrBk">Torna al cantiere</button>';
+    var wa = document.getElementById('vrWa'); if(wa) wa.addEventListener('click', function(){ rxWa(c.tel, txt); });
+    document.getElementById('vrCp').addEventListener('click', function(){ rxCopy(txt).then(function(ok){ document.getElementById('vrMsg').textContent = ok ? 'Copiato: incollalo nella chat con il cliente.' : txt; }); });
+    document.getElementById('vrBk').addEventListener('click', function(){ ccBack(c); });
+  }
   // ---------- Nuovo ingresso (per ora solo account di prova professionisti): home "Oggi" + barra in basso ----------
   var rdV2 = { on:false, loading:false, modalWas:false };
   function rdV2Active(){ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsTester()); }
@@ -16360,7 +16441,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 (function(){
   // Pagine pubbliche dei professionisti: recensione del cliente, voto dei condòmini, sito vetrina.
   // Si aprono da un link (?recensione=, ?vota=, ?impresa=) e coprono il resto dell'app.
-  var Q = new URLSearchParams(location.search), mode = Q.get('recensione') ? 'rec' : Q.get('vota') ? 'vota' : Q.get('impresa') ? 'sito' : '';
+  var Q = new URLSearchParams(location.search), mode = Q.get('recensione') ? 'rec' : Q.get('vota') ? 'vota' : Q.get('impresa') ? 'sito' : Q.get('variante') ? 'var' : '';
   if(!mode) return;
   document.documentElement.classList.add('rd-pub');
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
@@ -16438,6 +16519,33 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
             box.innerHTML = head(d.impresa, d.logo) + '<div class="rp-card"><b>' + (x.d.cambiato ? 'Voto aggiornato.' : 'Voto registrato.') + '</b><p>Hai scelto: ' + esc(d.opzioni[sel].nome) + '. Grazie!</p></div>';
           }).catch(function(){ e.textContent = 'Connessione non riuscita, riprova.'; b.disabled = false; });
         });
+      }).catch(function(){ fail('Connessione non riuscita.'); });
+    }
+
+    if(mode === 'var'){
+      var tk = Q.get('variante');
+      var eur = function(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €'; };
+      var UM = { mq:'m²', ml:'metri', pz:'pezzi', h:'ore' };
+      api('pub-variante', '&t=' + encodeURIComponent(tk)).then(function(x){
+        if(!x.ok) return fail(x.d.error);
+        var d = x.d;
+        function fatto(){ var ok = d.stato === 'confermata', dt = d.at ? new Date(d.at).toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' }) : '';
+          return '<div class="rp-card rp-done ' + (ok ? 'ok' : '') + '"><b>' + (ok ? '✓ Lavoro confermato' : 'Hai detto che non ti serve') + '</b><p>' + (ok ? (d.impresa || 'L’impresa') + ' lo ha aggiunto al preventivo' + (d.numero ? ' n. ' + esc(d.numero) : '') + (dt ? '. Confermato il ' + esc(dt) : '') + '.' : 'Abbiamo avvisato ' + esc(d.impresa || 'l’impresa') + '. Se cambi idea, scrivigli.') + '</p></div>'; }
+        box.innerHTML = head(d.impresa, d.logo)
+          + '<div class="rp-card rp-var"><div class="rp-sub">' + (d.numero ? 'Lavoro in più · preventivo n. ' + esc(d.numero) : 'Lavoro in più') + '</div><h1>' + esc(d.titolo) + '</h1>' + (d.descrizione ? '<p>' + esc(d.descrizione) + '</p>' : '')
+          + (d.foto && d.foto.length ? '<div class="rp-vph">' + d.foto.map(function(u){ return '<img src="' + esc(u) + '" alt="">'; }).join('') + '</div>' : '')
+          + '<div class="rp-vr">' + (d.um === 'a corpo' ? '' : '<div><span>Quantità</span><b>' + esc(String(d.qta).replace('.', ',')) + ' ' + esc(UM[d.um] || d.um) + '</b></div><div><span>Prezzo</span><b>' + eur(d.prezzo) + ' al ' + esc(({ mq:'m²', ml:'metro', pz:'pezzo', h:'ora' })[d.um] || d.um) + '</b></div>')
+          + '<div><span>Importo</span><b>' + eur(d.imponibile) + '</b></div><div><span>IVA ' + esc(d.iva) + '%</span><b>' + eur(d.totale - d.imponibile) + '</b></div><div class="t"><span>Totale</span><b>' + eur(d.totale) + '</b></div></div></div>'
+          + '<div id="rpVA">' + (d.stato === 'attesa' ? '<div class="rp-card"><label>Il tuo nome</label><input id="rpN" maxlength="60" value="' + esc(d.cliente || '') + '"><div class="rp-err" id="rpE"></div><button type="button" class="rp-btn" id="rpSi">Confermo il lavoro in più</button><button type="button" class="rp-btn alt" id="rpNo" style="margin-top:8px">Non mi serve</button><p class="rp-sub">Con la conferma il lavoro si aggiunge al tuo preventivo.</p></div>' : fatto()) + '</div>';
+        function send(sc){ var e = document.getElementById('rpE'), n = document.getElementById('rpN').value.trim(), bs = box.querySelectorAll('#rpVA button');
+          if(!n){ e.textContent = 'Scrivi il tuo nome.'; return; }
+          bs.forEach(function(b){ b.disabled = true; }); e.textContent = '';
+          api('pub-variante', '', { t: tk, scelta: sc, nome: n }).then(function(r){
+            if(!r.ok){ e.textContent = r.d.error || 'Non riuscito, riprova.'; bs.forEach(function(b){ b.disabled = false; }); return; }
+            d.stato = r.d.stato; d.at = new Date().toISOString(); document.getElementById('rpVA').innerHTML = fatto();
+          }).catch(function(){ e.textContent = 'Connessione non riuscita, riprova.'; bs.forEach(function(b){ b.disabled = false; }); });
+        }
+        var si = document.getElementById('rpSi'); if(si){ si.addEventListener('click', function(){ send('si'); }); document.getElementById('rpNo').addEventListener('click', function(){ send('no'); }); }
       }).catch(function(){ fail('Connessione non riuscita.'); });
     }
 

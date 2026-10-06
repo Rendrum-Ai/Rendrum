@@ -11,12 +11,13 @@
 //   GET  ?action=pub-review&t=...   POST { t, stelle, testo, nome }   recensione del cliente
 //   GET  ?action=pub-vote&t=...     POST { t, scelta, nome, interno } voto dei condòmini
 //   GET  ?action=pub-site&s=...                                        sito vetrina dell'impresa
+//   GET  ?action=pub-variante&t=... POST { t, scelta:'si'|'no', nome }  lavoro in più da confermare
 const crypto = require("crypto");
 const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante"];
 const SINGLE = ["site", "tariffe"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
@@ -68,6 +69,19 @@ function clean(kind, d, old) {
     foto: urls(d.foto, 3), iva: d.iva !== false,
     voci: (Array.isArray(d.voci) ? d.voci : []).slice(0, 12).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000), giorni: int(v && v.giorni, 1, 60) })).filter(v => v.nome),
   };
+  if (kind === "variante") {
+    // la conferma (stato, nome, data) arriva solo dal link pubblico del cliente
+    const ferma = old.stato === "confermata" || old.stato === "rifiutata";
+    const src = ferma ? old : d;
+    return {
+      quoteId: UUID.test(String(src.quoteId || "")) ? src.quoteId : null, numero: str(src.numero, 20),
+      cliente: str(d.cliente || old.cliente, 120), telefono: str(d.telefono || old.telefono, 40),
+      titolo: str(src.titolo, 160), descrizione: str(src.descrizione, 600),
+      qta: num(src.qta, 100000), um: ["mq", "ml", "pz", "a corpo", "h"].includes(src.um) ? src.um : "a corpo",
+      prezzo: num(src.prezzo, 1000000), iva: [0, 4, 10, 22].includes(+src.iva) ? +src.iva : 22, foto: urls(src.foto, 3),
+      stato: ferma ? old.stato : "attesa", nome: old.nome || "", at: old.at || "", applicata: !!old.applicata,
+    };
+  }
   if (kind === "tariffe") return {
     mia: num(d.mia, 500), operaio: num(d.operaio, 500), operai: d.operai !== false,
     attrezzi: (Array.isArray(d.attrezzi) ? d.attrezzi : []).slice(0, 20).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000) })).filter(v => v.nome),
@@ -144,6 +158,33 @@ async function handlePublic(req, res, action) {
       slogan: g.row.data.slogan || "", lavori, recensioni: rec, media,
     });
   }
+  if (action === "pub-variante") {
+    const t = String(req.method === "POST" ? b.t : q.t || "");
+    if (!TOKEN.test(t)) return res.status(404).json({ error: "Link non valido." });
+    const g = await getOne("kind=eq.variante&token=eq." + t);
+    if (g.missing || !g.row) return res.status(404).json({ error: "Link non valido o scaduto." });
+    const d = g.row.data || {}, acc = await account(g.row.account_id, "company_name,logo_url") || {};
+    const imp = Math.round(d.qta * d.prezzo * 100) / 100, tot = Math.round(imp * (1 + (d.iva || 0) / 100) * 100) / 100;
+    if (req.method === "GET") return res.status(200).json({ impresa: acc.company_name || "", logo: acc.logo_url || null, cliente: d.cliente || "", numero: d.numero || "", titolo: d.titolo || "", descrizione: d.descrizione || "", qta: d.qta, um: d.um, prezzo: d.prezzo, iva: d.iva, imponibile: imp, totale: tot, foto: d.foto || [], stato: d.stato || "attesa", at: d.at || "" });
+    if (d.stato === "confermata" || d.stato === "rifiutata") return res.status(409).json({ error: d.stato === "confermata" ? "Hai già confermato questo lavoro. Grazie!" : "Hai già risposto a questa richiesta." });
+    const si = b.scelta === "si";
+    const nd = Object.assign({}, d, { stato: si ? "confermata" : "rifiutata", nome: str(b.nome, 60) || d.cliente || "Cliente", at: new Date().toISOString() });
+    // confermata: la voce si aggiunge da sola al preventivo
+    if (si && d.quoteId && !d.applicata) {
+      const qr = await supabaseRequest("/pro_quotes?id=eq." + d.quoteId + "&account_id=eq." + encodeURIComponent(g.row.account_id) + "&select=*", { method: "GET" });
+      const row = qr.ok && Array.isArray(qr.data) && qr.data[0];
+      if (row && row.data && Array.isArray(row.data.voci)) {
+        const qd = Object.assign({}, row.data), quando = new Date().toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Rome" });
+        qd.voci = row.data.voci.concat([{ titolo: "Lavoro in più: " + d.titolo, descrizione: (d.descrizione ? d.descrizione + "\n" : "") + "Confermato dal cliente (" + nd.nome + ") il " + quando + ".", qta: d.qta, um: d.um, prezzo: d.prezzo, lavorazione: "" }]).slice(0, 60);
+        try { qd.totali = require("./quotes")._test.totals(qd); } catch (e) { qd.totali = row.data.totali; }
+        const up = await supabaseRequest("/pro_quotes?id=eq." + row.id, { method: "PATCH", body: JSON.stringify({ data: qd, total_cents: Math.round(((qd.totali || {}).totale || 0) * 100), updated_at: new Date().toISOString() }) });
+        if (up.ok) nd.applicata = true;
+      }
+    }
+    const r = await patch(g.row.id, nd);
+    if (!r.ok) return res.status(502).json({ error: "Non sono riuscito a salvare, riprova." });
+    return res.status(200).json({ ok: true, stato: nd.stato });
+  }
   return res.status(400).json({ error: "Azione non valida." });
 }
 
@@ -198,7 +239,7 @@ async function handle(req, res, action, acc) {
       }
       token = slug;
     }
-    if (!token && (kind === "review" || kind === "vote")) token = crypto.randomBytes(10).toString("hex");
+    if (!token && (kind === "review" || kind === "vote" || kind === "variante")) token = crypto.randomBytes(10).toString("hex");
     const now = new Date().toISOString();
     let r;
     if (found) r = await supabaseRequest("/pro_extra?id=eq." + found.id + "&" + mine, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ data, token, updated_at: now }) });
