@@ -3,7 +3,7 @@
 // una funzione Vercel in più.
 //
 // Con accesso (professionista):
-//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe|variante|cliente|proforma|commerc  -> { items }
+//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe|variante|cliente|proforma|commerc|incasso  -> { items }
 //   POST ?action=px-save    { id?, kind, data }               -> { item }
 //   POST ?action=px-delete  { id }
 //   POST ?action=px-photo   { dataUrl }                       -> { url }
@@ -17,7 +17,7 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso"];
 const SINGLE = ["site", "tariffe", "commerc"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
@@ -83,6 +83,11 @@ function clean(kind, d, old) {
     };
   }
   if (kind === "cliente") return cleanCliente(d);
+  if (kind === "incasso") return {
+    // rate del preventivo accettato: quando vanno chieste e quanto è già arrivato
+    quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : (old.quoteId || null), numero: str(d.numero, 20), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), oggetto: str(d.oggetto, 200),
+    rate: (Array.isArray(d.rate) ? d.rate : []).slice(0, 8).map(r => ({ d: str(r && r.d, 60), pct: num(r && r.pct, 100), quando: ["firma", "inizio", "meta", "fine"].includes(r && r.quando) ? r.quando : "fine", inc: num(r && r.inc, 1e8), data: date(r && r.data), soll: date(r && r.soll) })).filter(r => r.pct > 0),
+  };
   if (kind === "commerc") return { nome: str(d.nome, 120), email: str(d.email, 120), telefono: str(d.telefono, 40) };
   if (kind === "proforma") {
     // il proforma è una fotografia: dopo la creazione cambia solo "fatturato"
