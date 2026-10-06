@@ -3,7 +3,7 @@
 // una funzione Vercel in più.
 //
 // Con accesso (professionista):
-//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe  -> { items }
+//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe|variante|cliente|proforma|commerc  -> { items }
 //   POST ?action=px-save    { id?, kind, data }               -> { item }
 //   POST ?action=px-delete  { id }
 //   POST ?action=px-photo   { dataUrl }                       -> { url }
@@ -17,8 +17,8 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante"];
-const SINGLE = ["site", "tariffe"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc"];
+const SINGLE = ["site", "tariffe", "commerc"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
 
@@ -82,11 +82,39 @@ function clean(kind, d, old) {
       stato: ferma ? old.stato : "attesa", nome: old.nome || "", at: old.at || "", applicata: !!old.applicata,
     };
   }
+  if (kind === "cliente") return cleanCliente(d);
+  if (kind === "commerc") return { nome: str(d.nome, 120), email: str(d.email, 120), telefono: str(d.telefono, 40) };
+  if (kind === "proforma") {
+    // il proforma è una fotografia: dopo la creazione cambia solo "fatturato"
+    if (old.numero) return Object.assign({}, old, { fatturato: !!d.fatturato, fatturatoAt: d.fatturato ? (old.fatturatoAt || new Date().toISOString()) : "" });
+    const tot = t => ({ imponibile: num(t && t.imponibile, 1e8), iva: num(t && t.iva, 1e8), totale: num(t && t.totale, 1e8) });
+    return {
+      numero: 0, anno: new Date().getFullYear(), data: date(d.data) || new Date().toISOString().slice(0, 10),
+      tipo: ["acconto", "saldo", "tutto"].includes(d.tipo) ? d.tipo : "tutto",
+      quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : null, quoteNum: str(d.quoteNum, 20), oggetto: str(d.oggetto, 200), cantiere: str(d.cantiere, 200),
+      cliente: cleanCliente(d.cliente),
+      righe: (Array.isArray(d.righe) ? d.righe : []).slice(0, 60).map(v => ({ t: str(v && v.t, 160), d: str(v && v.d, 400), qta: num(v && v.qta, 1e6), um: str(v && v.um, 12), prezzo: num(v && v.prezzo, 1e8), imp: num(v && v.imp, 1e8) })).filter(v => v.t),
+      scontoPct: num(d.scontoPct, 100), sconto: num(d.sconto, 1e8),
+      aliquota: [0, 4, 5, 10, 22].includes(+d.aliquota) ? +d.aliquota : 22, ivaNota: str(d.ivaNota, 200),
+      lavori: tot(d.lavori), fatt: tot(d.fatt), pct: num(d.pct, 100),
+      dedotti: (Array.isArray(d.dedotti) ? d.dedotti : []).slice(0, 10).map(x => Object.assign({ numero: str(x && x.numero, 20), data: date(x && x.data) }, tot(x))),
+      note: str(d.note, 800), fatturato: false, fatturatoAt: "",
+    };
+  }
   if (kind === "tariffe") return {
     mia: num(d.mia, 500), operaio: num(d.operaio, 500), operai: d.operai !== false,
     attrezzi: (Array.isArray(d.attrezzi) ? d.attrezzi : []).slice(0, 20).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000) })).filter(v => v.nome),
   };
   return {};
+}
+function cleanCliente(d) {
+  d = obj(d);
+  return {
+    tipo: d.tipo === "azienda" ? "azienda" : "privato", nome: str(d.nome, 120),
+    cf: str(d.cf, 20).toUpperCase().replace(/\s+/g, ""), piva: str(d.piva, 20).toUpperCase().replace(/\s+/g, ""),
+    indirizzo: str(d.indirizzo, 200), cap: str(d.cap, 10), comune: str(d.comune, 80), prov: str(d.prov, 4).toUpperCase(),
+    telefono: str(d.telefono, 40), email: str(d.email, 120), sdi: str(d.sdi, 7).toUpperCase(), pec: str(d.pec, 120), note: str(d.note, 400),
+  };
 }
 function pub(row) { return { id: row.id, kind: row.kind, token: row.token || null, data: row.data || {}, createdAt: row.created_at, updatedAt: row.updated_at }; }
 async function getOne(q) {
@@ -247,6 +275,13 @@ async function handle(req, res, action, acc) {
       token = slug;
     }
     if (!token && (kind === "review" || kind === "vote" || kind === "variante")) token = crypto.randomBytes(10).toString("hex");
+    if (kind === "proforma" && !found) {
+      // numerazione per anno: il primo proforma dell'anno è il n. 1
+      const r0 = await supabaseRequest("/pro_extra?" + mine + "&kind=eq.proforma&select=data&limit=2000", { method: "GET" });
+      if (missing(r0)) return res.status(404).json(NOTABLE);
+      const max = (r0.ok && Array.isArray(r0.data) ? r0.data : []).filter(x => x.data && +x.data.anno === data.anno).reduce((m, x) => Math.max(m, +x.data.numero || 0), 0);
+      data.numero = max + 1;
+    }
     const now = new Date().toISOString();
     let r;
     if (found) r = await supabaseRequest("/pro_extra?id=eq." + found.id + "&" + mine, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ data, token, updated_at: now }) });
