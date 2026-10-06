@@ -1001,6 +1001,11 @@
     body.rd-v2 .v3ci2{ border-radius:26px; }
     body.rd-v2 .v3sv{ max-width:480px; margin:0 auto; border-radius:0; }
   }
+  .qb-box{ background:#EEF6EF; border:1.5px solid #9CCBA3; border-radius:14px; padding:12px 14px; margin:4px 0 12px; }
+  .qb-box[hidden]{ display:none; }
+  .qb-box > b{ display:block; color:#2E7D32; font-size:15px; } .qb-box > span{ display:block; font-size:13px; color:var(--ink-soft); margin:3px 0 10px; line-height:1.4; }
+  .qb-acts{ display:flex; gap:8px; } .qb-acts .pro-auth-submit{ flex:1; margin:0; } .qb-g{ background:var(--surface) !important; background-image:none !important; box-shadow:none !important; color:var(--ink) !important; border:1.5px solid var(--line) !important; }
+  .qb-sec{ flex:1; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; font-family:inherit; font-weight:700; font-size:14px; padding:12px 10px; cursor:pointer; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -12786,9 +12791,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     hline(y, null, null, 0.8, INK);
     // Condizioni di pagamento
     var rate = q.rate || [], pg = q.pagamento || {};
-    var showBank = pg.metodo === 'bonifico' ? !!(bk.iban) : !!pg.testo;
+    var rdNoBank = rdIsTester() && pg.metodo === 'bonifico';
+    var showBank = pg.metodo === 'bonifico' ? (!rdNoBank && !!(bk.iban)) : !!pg.testo;
     var notaL = pg.nota ? split(pg.nota, 'normal', 7.5, W - 2*M) : [];
-    var payH = 3 + 6 + rate.length * 6.5 + 8 + (showBank ? 21.5 : 0) + notaL.length * 3.8;
+    var payH = 3 + 6 + rate.length * 6.5 + 8 + (showBank ? 21.5 : 0) + (rdNoBank ? 6 : 0) + notaL.length * 3.8;
     y += 7; need(payH);
     txt(M, y, 'CONDIZIONI DI PAGAMENTO', 'bold', 8); y += 3;
     hline(y, null, null, 0.3);
@@ -12808,6 +12814,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     hline(y, null, null, 0.3);
     txt(M + 10, y + 4.4, 'Totale', 'normal', 8.5, SOFT); txt(W - M - 32, y + 4.4, '100%', 'bold', 8.5, INK, 'right'); txt(W - M - 2, y + 4.4, qpEur(t.totale), 'bold', 8.5, INK, 'right');
     y += 8;
+    if(rdNoBank){ txt(M, y + 1, 'Pagamento con bonifico bancario: le coordinate bancarie verranno inviate alla conferma del preventivo.', 'normal', 7.8, SOFT); y += 6; }
     if(showBank){
       var bw = W - 2*M;
       doc.setDrawColor.apply(doc, LINE); doc.setLineWidth(0.3); doc.roundedRect(M, y, bw, 17, 1.5, 1.5, 'S');
@@ -13175,7 +13182,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         if(p === 'cliente.nome' && qs.introAuto){ qs.cur.intro = Q_INTRO.replace('{cliente}', el.value.trim() || 'Cliente'); var it = document.querySelector('[data-q="intro"]'); if(it) it.value = qs.cur.intro; }
         if(p === 'intro') qs.introAuto = false;
         if(p === 'iva.aliquota'){ qs.cur.iva.aliquota = Number(el.value); qIvaHint(); }
-        if(p === 'pagamento.metodo') qPayHint();
+        if(p === 'pagamento.metodo'){ qPayHint(); try{ qbSync(); }catch(e){} }
         qTotalsRender();
       });
     });
@@ -13192,7 +13199,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var g2 = document.getElementById('qGoSettings2'); if(g2) g2.addEventListener('click', qOpenSettings);
     var lavSel = document.getElementById('qLav'); lavSel.innerHTML = Q_LAV.map(function(l){ return '<option value="' + l[0] + '">' + qEsc(l[1]) + '</option>'; }).join('');
     qBind(document.getElementById('ppViewQuote'));
-    qRenderVoci(); qRenderRate(); qRenderCond('qCond', q.condizioni); qIvaHint(); qPayHint(); qRenderListinoSel(); qRenderPreviewBox(); qTotalsRender();
+    qRenderVoci(); qRenderRate(); qRenderCond('qCond', q.condizioni); qIvaHint(); qPayHint(); try{ if(window.__rdV2Ready) qbSync(); }catch(e){} qRenderListinoSel(); qRenderPreviewBox(); qTotalsRender();
   }
   function qIvaHint(){
     var a = Number(qs.cur.iva.aliquota), el = document.getElementById('qIvaNota');
@@ -13201,7 +13208,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function qPayHint(){
     var m = qs.cur.pagamento.metodo, b = (qs.settings.banca || {});
     document.getElementById('qPayAltro').hidden = m !== 'altro';
-    document.getElementById('qPayBank').innerHTML = m === 'bonifico'
+    document.getElementById('qPayBank').innerHTML = m === 'bonifico' && rdIsTester() ? 'Sul preventivo non c’è l’IBAN: i dati per il bonifico li mandi al cliente quando conferma.' : m === 'bonifico'
       ? (b.iban ? 'Sul PDF: bonifico su IBAN <b>' + qEsc(b.iban.replace(/(.{4})/g, '$1 ').trim()) + '</b>' + (b.banca ? ' (' + qEsc(b.banca) + ')' : '') + '.' : '⚠︎ Inserisci il tuo IBAN in <button type="button" class="q-link" id="qGoSettings3">Dati impresa e banca</button>.')
       : '';
     var g3 = document.getElementById('qGoSettings3'); if(g3) g3.addEventListener('click', qOpenSettings);
@@ -13356,7 +13363,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var btn = document.getElementById('qPdfBtn'), msg = document.getElementById('qEdMsg'), err = document.getElementById('qEdErr');
     var miss = qImpresaMissing(qs.settings);
     if(miss.length){ err.innerHTML = 'Prima completa i dati della tua impresa: ' + qEsc(miss.join(', ')) + '. <button type="button" class="q-link" id="qGoSettings4">Completa ora</button>'; document.getElementById('qGoSettings4').addEventListener('click', qOpenSettings); return; }
-    if(qs.cur.pagamento.metodo === 'bonifico' && !(qs.settings.banca || {}).iban){ err.innerHTML = 'Per il pagamento con bonifico inserisci il tuo IBAN. <button type="button" class="q-link" id="qGoSettings5">Inserisci ora</button>'; document.getElementById('qGoSettings5').addEventListener('click', qOpenSettings); return; }
+    if(!rdIsTester() && qs.cur.pagamento.metodo === 'bonifico' && !(qs.settings.banca || {}).iban){ err.innerHTML = 'Per il pagamento con bonifico inserisci il tuo IBAN. <button type="button" class="q-link" id="qGoSettings5">Inserisci ora</button>'; document.getElementById('qGoSettings5').addEventListener('click', qOpenSettings); return; }
     btn.disabled = true; msg.textContent = 'Preparo il PDF…';
     qSave().then(function(){
       var a = qs.cur.anteprima || {}, loc = qs._pvLocal;
@@ -15854,6 +15861,40 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     });
     document.getElementById('ccEveNo').addEventListener('click', function(){ try{ localStorage.setItem(ccSeraKey(c), '1'); }catch(e){} el.remove(); });
   }
+  // ---------- IBAN solo alla conferma (per ora solo account di prova) ----------
+  function qbEl(){
+    var b = document.getElementById('qbBox'); if(b) return b;
+    var st = document.getElementById('qStatus'); if(!st) return null;
+    var row = st.closest('.row2') || st.parentNode;
+    b = document.createElement('div'); b.id = 'qbBox'; b.className = 'qb-box'; b.hidden = true;
+    row.parentNode.insertBefore(b, row.nextSibling); return b;
+  }
+  function qbTesto(){
+    var q = qs.cur, bk = qs.settings.banca || {}, imp = qs.settings.impresa || {}, t = qpTotals(q), r1 = (q.rate || [])[0] || { descrizione:'Acconto', pct:100 };
+    var amt = (q.rate || []).length === 1 ? t.totale : Math.round(t.totale * (Number(r1.pct) || 0)) / 100;
+    var num = qs.meta ? qpNumero(qs.meta) : '';
+    var iban = String(bk.iban || '').replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
+    return 'Buongiorno ' + ((q.cliente && q.cliente.nome) || '') + ', grazie per aver confermato il preventivo' + (num ? ' n. ' + num : '') + '.\n'
+      + 'Ecco i dati per il bonifico:\n\n'
+      + 'Importo: ' + qpEur(amt) + ' (' + (r1.descrizione || 'Acconto') + ', ' + qpNum(r1.pct) + '%)\n'
+      + 'Intestatario: ' + (bk.intestatario || imp.ragioneSociale || '') + '\n' + (bk.banca ? 'Banca: ' + bk.banca + '\n' : '') + 'IBAN: ' + iban + '\n'
+      + 'Causale: Preventivo nr. ' + (num || '') + ' - ' + (r1.descrizione || 'Acconto') + '\n\n'
+      + 'Grazie, ' + (imp.ragioneSociale || (proAccount && proAccount.companyName) || '');
+  }
+  function qbSync(){
+    var b = qbEl(); if(!b) return;
+    var q = qs.cur, on = rdIsTester() && q && q.status === 'accettato' && (q.pagamento || {}).metodo === 'bonifico';
+    b.hidden = !on; if(!on) return;
+    var bk = qs.settings.banca || {};
+    if(!bk.iban){ b.innerHTML = '<b>✓ Preventivo confermato</b><span>Ora manda al cliente i dati per il bonifico. Prima inserisci il tuo IBAN: lo chiediamo solo adesso.</span><button type="button" class="pro-auth-submit" id="qbSet">Inserisci l’IBAN</button>'; document.getElementById('qbSet').addEventListener('click', qOpenSettings); return; }
+    var tel = (q.cliente && q.cliente.telefono) || '';
+    b.innerHTML = '<b>✓ Preventivo confermato</b><span>Manda al cliente i dati per il bonifico dell’acconto: IBAN, importo e causale sono già scritti.</span>'
+      + '<div class="qb-acts">' + (tel ? '<button type="button" class="pro-auth-submit" id="qbWa">💬 Manda su WhatsApp</button>' : '') + '<button type="button" class="qb-sec" id="qbCp">📋 Copia il messaggio</button></div>'
+      + (tel ? '' : '<div class="pf-hint">Aggiungi il telefono del cliente per mandarlo su WhatsApp.</div>') + '<div class="pf-hint" id="qbMsg"></div>';
+    var wa = document.getElementById('qbWa'); if(wa) wa.addEventListener('click', function(){ rxWa(tel, qbTesto()); });
+    document.getElementById('qbCp').addEventListener('click', function(){ rxCopy(qbTesto()).then(function(ok){ document.getElementById('qbMsg').textContent = ok ? 'Messaggio copiato: incollalo dove vuoi.' : qbTesto(); }); });
+  }
+  (function(){ var st = document.getElementById('qStatus'); if(st) st.addEventListener('change', function(){ setTimeout(function(){ qbSync(); var b = document.getElementById('qbBox'); if(b && !b.hidden) try{ b.scrollIntoView({ block:'nearest', behavior:'smooth' }); }catch(e){} }, 0); }); })();
   // ---------- Nuovo ingresso (per ora solo account di prova professionisti): home "Oggi" + barra in basso ----------
   var rdV2 = { on:false, loading:false, modalWas:false };
   function rdV2Active(){ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsTester()); }
