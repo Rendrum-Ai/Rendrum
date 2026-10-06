@@ -987,6 +987,20 @@
   .cc-eok{ display:block; width:100%; border:none; border-radius:14px; background:var(--accent); color:#fff; font-family:inherit; font-weight:800; font-size:16px; padding:14px; margin-top:14px; cursor:pointer; }
   .cc-eno{ display:block; width:100%; border:none; background:none; color:#F7F5F1; opacity:.6; font-family:inherit; font-size:13px; padding:10px 0 0; cursor:pointer; }
   .v3cost{ display:block; width:100%; border:1.5px solid rgba(255,255,255,.35); border-radius:14px; background:rgba(255,255,255,.08); color:#fff; font-family:inherit; font-size:14.5px; font-weight:700; padding:12px; margin-bottom:10px; cursor:pointer; }
+  /* computer e tablet: la home dei cantieri occupa tutta la larghezza, schede in griglia */
+  body.rd-v2 #panelLanding .lp, html.rd-v2-pre #panelLanding .lp{ display:block; }
+  @media (min-width:760px){
+    body.rd-v2 .v3t{ font-size:36px; }
+    body.rd-v2 .v3st{ margin:0 0 18px; padding:2px 0 6px; flex-wrap:wrap; overflow:visible; }
+    body.rd-v2 .v3cards{ display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px; overflow:visible; margin:0 0 20px; padding:0; scroll-snap-type:none; }
+    body.rd-v2 .v3c, body.rd-v2 .v3c:only-child{ width:auto; max-width:none; height:340px; }
+    body.rd-v2 .v3list{ display:grid; grid-template-columns:1fr 1fr; }
+    body.rd-v2 .v3list button:nth-child(2){ border-top:none; }
+    body.rd-v2 .v3list button:nth-child(even){ border-left:1px solid var(--line); }
+    body.rd-v2 .v3cam{ align-items:center; }
+    body.rd-v2 .v3ci2{ border-radius:26px; }
+    body.rd-v2 .v3sv{ max-width:480px; margin:0 auto; border-radius:0; }
+  }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
