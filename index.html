@@ -11237,7 +11237,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function rdNeedLogin(kind){
     if(proAccount) return false;
     proCheckSession(function(){
-      if(proAccount){ document.getElementById(kind === 'privato' ? 'landingPrivato' : 'landingPro').click(); return; }
+      if(proAccount){ if(kind !== 'privato' && typeof rdV2Active === 'function' && rdV2Active()){ try{ rdV2Sync(); }catch(e){} return; } document.getElementById(kind === 'privato' ? 'landingPrivato' : 'landingPro').click(); return; }
       rdPendingStart = kind; state.userType = kind === 'privato' ? 'privato' : 'professionista';
       proAuthOpen();
     });
@@ -11249,6 +11249,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(ob && ob.classList.contains('active') && document.getElementById('proAuthModal').classList.contains('open')) return;
     var k = rdPendingStart; rdPendingStart = null;
     try{ proAuthClose(); }catch(e){}
+    if(k !== 'privato' && typeof rdV2Active === 'function' && rdV2Active()){ try{ rdV2Sync(); }catch(e){} return; }
     if(currentPanel === 'panelLanding') document.getElementById(k === 'privato' ? 'landingPrivato' : 'landingPro').click();
   }
   document.getElementById('landingPrivato').addEventListener('click', function(){
@@ -11927,7 +11928,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(proAccount && proAccount.accountType === 'privato' && typeof rdVoteCheck === 'function') rdVoteCheck();
     if(proAccount && typeof proPendingClick !== 'undefined' && proPendingClick && (!proAccount.paymentsEnabled || subActive())){
       var pid = proPendingClick; proPendingClick = null;
-      setTimeout(function(){ var el = document.getElementById(pid); if(el) el.click(); }, 300);
+      setTimeout(function(){ if(pid === 'landingPro' && typeof rdV2Active === 'function' && rdV2Active()){ try{ rdV2Sync(); }catch(e){} return; } var el = document.getElementById(pid); if(el) el.click(); }, 300);
     }
     document.body.classList.remove('pro-logged');
     var openBtn = document.getElementById('proAuthOpen');
