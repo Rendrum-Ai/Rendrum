@@ -916,6 +916,17 @@
   .rd-tab .rd-tab-cam u svg{ width:26px; height:26px; }
   .rd-tab .rd-tab-cam span{ font-size:11px; }
   body.rd-v2, html.rd-v2-pre body{ padding-bottom:calc(104px + env(safe-area-inset-bottom,0px)); }
+  .v3line{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:11px 14px; font-size:13.5px; color:var(--ink-soft); }
+  .v3line b{ color:var(--ink); }
+  .v3list{ background:var(--surface); border:1px solid var(--line); border-radius:20px; overflow:hidden; }
+  .v3list button{ display:flex; width:100%; align-items:center; gap:12px; border:none; border-top:1px solid var(--line); background:none; padding:12px 14px; font-family:inherit; text-align:left; color:var(--ink); cursor:pointer; }
+  .v3list button:first-child{ border-top:none; }
+  .v3list i{ flex:none; display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:var(--accent-soft); color:var(--accent); }
+  .v3list i svg{ width:21px; height:21px; }
+  .v3list span{ flex:1; min-width:0; }
+  .v3list b{ display:block; font-size:15.5px; }
+  .v3list em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft); margin-top:1px; }
+  .v3chev{ flex:none; width:16px; height:16px; color:var(--ink-soft); opacity:.6; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -15491,6 +15502,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       .sort(function(a, b){ return a._p - b._p || (a._td && b._td ? String(a._td.data.ora).localeCompare(String(b._td.data.ora)) : 0) || String(b.agg).localeCompare(String(a.agg)); });
   }
   function v3Sub(c){ if(c._new) return 'nuova'; if(c._td) return c._td.data.ora || 'oggi'; return c.aperto ? CT_FASI[c.fase].toLowerCase() : 'finito'; }
+  function V3_SVG(d, c){ return '<svg' + (c ? ' class="' + c + '"' : '') + ' viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
+  var V3_ACT = [
+    ['app', '<rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/><circle cx="16" cy="20" r="1.4"/>', 'Appuntamento', 'Fissa giorno e ora, avvisi il cliente'],
+    ['sopr', '<path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2M18 22v-1"/>', 'Sopralluogo', 'Misure e foto stanza per stanza'],
+    ['prev', '<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/>', 'Preventivo', 'Dal listino o dal sopralluogo'],
+    ['fine', '<circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/>', 'Chiudi un lavoro', 'Foto prima e dopo, per il tuo sito'],
+    ['rev', '<path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/>', 'Recensione', 'Chiedila al cliente su WhatsApp']
+  ];
   // home
   function v3Home(box){
     var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
@@ -15510,8 +15529,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
             + '<div class="v3bar">' + [0, 1, 2, 3, 4].map(function(k){ return '<u class="' + (k < c.fase ? 'd' : k === c.fase ? 'c' : '') + '"></u>'; }).join('') + '</div>'
             + (c.next ? '<button type="button" class="v3nx" data-v3n="' + i + '">' + qEsc(c.next.t) + ' <span>›</span></button>' : '') + '</div></div>'; }).join('') + '</div>';
       else h += '<div class="v3empty"><b>Inizia dal pulsante rame in basso</b><span>Fotografa la stanza o la facciata del cliente e crea la prima anteprima. I clienti e i cantieri compariranno qui.</span></div>';
-      h += '<div class="v3kpi"><div><b>' + Math.round(acc).toLocaleString('it-IT') + ' €</b><span>accettati negli ultimi 7 giorni</span></div><div><b>' + (rv.length ? rxMedia(media) + ' ★' : '—') + '</b><span>' + rv.length + (rv.length === 1 ? ' recensione' : ' recensioni') + '</span></div></div>';
-      h += '<div class="rd-o-sec">Veloce</div><div class="v3q">' + [['app', '🗓️ Appuntamento'], ['sopr', '📐 Sopralluogo'], ['prev', '📄 Preventivo'], ['fine', '✅ Chiudi un lavoro'], ['rev', '⭐ Recensione']].map(function(x){ return '<button type="button" data-cosa="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>';
+      h += '<div class="v3line">Questa settimana: <b>' + Math.round(acc).toLocaleString('it-IT') + ' € accettati</b> · ' + (rv.length ? '<b>' + rxMedia(media) + ' ★</b> su ' + rv.length + (rv.length === 1 ? ' recensione' : ' recensioni') : 'nessuna recensione') + '</div>';
+      h += '<div class="rd-o-sec">Cosa vuoi fare?</div><div class="v3list">' + V3_ACT.map(function(x){ return '<button type="button" data-cosa="' + x[0] + '"><i>' + V3_SVG(x[1]) + '</i><span><b>' + x[2] + '</b><em>' + x[3] + '</em></span>' + V3_SVG('<path d="m12 7 9 9-9 9"/>', 'v3chev') + '</button>'; }).join('') + '</div>';
       box.innerHTML = h; box.dataset.ready = 1;
       box.querySelectorAll('[data-v3s]').forEach(function(b){ b.addEventListener('click', function(){ v3Story(+b.dataset.v3s); }); });
       box.querySelectorAll('[data-v3c]').forEach(function(b){ b.addEventListener('click', function(e){ if(e.target.closest('[data-v3n]')) return; v3Story(+b.dataset.v3c); }); });
