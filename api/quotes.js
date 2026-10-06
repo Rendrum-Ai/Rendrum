@@ -138,6 +138,7 @@ module.exports = async function handler(req, res) {
     if (action.indexOf("pub-") === 0) return require("./_extra").handlePublic(req, res, action);
     const acc = await currentAccount(req).catch(() => null);
     if (!acc) return res.status(401).json({ error: "Accedi al tuo account." });
+    if (action.indexOf("tm-") === 0) return require("./_extra").handleTeam(req, res, action, acc);
     if (acc.account_type === "privato") return res.status(403).json({ error: "Il generatore di preventivi è riservato ai professionisti." });
     const mine = "account_id=eq." + encodeURIComponent(acc.id);
     if (action.indexOf("sopr-") === 0) return require("./_sopralluoghi").handle(req, res, action, acc);

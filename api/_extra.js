@@ -158,6 +158,13 @@ async function handlePublic(req, res, action) {
       slogan: g.row.data.slogan || "", lavori, recensioni: rec, media,
     });
   }
+  if (action === "pub-team") {
+    const code = normCode(q.c);
+    const g = code.length >= 4 ? await getOne("kind=eq.team&token=eq." + code) : {};
+    if (!g.row) return res.status(404).json({ error: "Codice non trovato." });
+    const acc = await account(g.row.account_id, "company_name,logo_url") || {};
+    return res.status(200).json({ impresa: acc.company_name || "", logo: acc.logo_url || null, code });
+  }
   if (action === "pub-variante") {
     const t = String(req.method === "POST" ? b.t : q.t || "");
     if (!TOKEN.test(t)) return res.status(404).json({ error: "Link non valido." });
@@ -252,4 +259,165 @@ async function handle(req, res, action, acc) {
   return res.status(400).json({ error: "Azione non valida." });
 }
 
-module.exports = { handle, handlePublic, clean };
+
+// ---------- squadra: il titolare affida i cantieri ai collaboratori ----------
+// Tutto in pro_extra, righe del titolare (account_id = impresa):
+//   team     token = codice (es. DGM4K7)          data { }
+//   membro   token = m + id impresa + id persona  data { memberId, nome, email, stato: richiesta|attivo|rimosso }
+//   incarico                                       data { memberId, cliente, indirizzo, lavori, foto, passaggi, data, giorni, stato }
+//   diario                                         data { incaricoId, memberId, passaggio, mq, ore, foto, note, chiusura }
+const CODE_CH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+function normCode(c) { return String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12); }
+function newCode(nome) {
+  const pre = (String(nome || "").toUpperCase().normalize("NFD").replace(/[^A-Z]/g, "") + "RDM").slice(0, 3);
+  let r = ""; const b = crypto.randomBytes(3); for (let i = 0; i < 3; i++) r += CODE_CH[b[i] % CODE_CH.length];
+  return pre + r;
+}
+async function rows(q) { const r = await supabaseRequest("/pro_extra?" + q + "&select=*&limit=500", { method: "GET" }); if (missing(r)) return null; return r.ok && Array.isArray(r.data) ? r.data : []; }
+async function insert(accountId, kind, token, data) {
+  const now = new Date().toISOString();
+  const r = await supabaseRequest("/pro_extra", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify([{ id: crypto.randomUUID(), account_id: accountId, kind, token, data, updated_at: now }]) });
+  return r.ok && Array.isArray(r.data) ? r.data[0] : null;
+}
+function cleanIncarico(d, old) {
+  d = obj(d); old = obj(old);
+  return {
+    memberId: UUID.test(String(d.memberId || "")) ? d.memberId : old.memberId || null, memberNome: str(d.memberNome || old.memberNome, 80),
+    cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), indirizzo: str(d.indirizzo, 200), titolo: str(d.titolo, 160),
+    quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : null,
+    lavori: (Array.isArray(d.lavori) ? d.lavori : []).slice(0, 30).map(v => ({ t: str(v && v.t, 160), q: str(v && v.q, 40) })).filter(v => v.t),
+    colori: (Array.isArray(d.colori) ? d.colori : []).slice(0, 20).map(v => str(v, 160)).filter(Boolean),
+    ambienti: (Array.isArray(d.ambienti) ? d.ambienti : []).slice(0, 40).map(v => ({ n: str(v && v.n, 60), mq: num(v && v.mq, 100000) })).filter(v => v.n),
+    foto: (Array.isArray(d.foto) ? d.foto : []).slice(0, 12).map(f => ({ url: url(f && f.url), nota: str(f && f.nota, 200) })).filter(f => f.url),
+    nota: str(d.nota, 600), data: date(d.data), ora: time(d.ora), giorni: int(d.giorni, 1, 60),
+    passaggi: (Array.isArray(d.passaggi) ? d.passaggi : []).slice(0, 10).map(p => ({ n: str(p && p.n, 40), p: num(p && p.p, 100) })).filter(p => p.n),
+    mqTot: num(d.mqTot, 100000),
+    stato: ["attivo", "chiuso", "confermato"].includes(old.stato) && old.stato !== "attivo" ? old.stato : "attivo",
+    chiusoAt: old.chiusoAt || "",
+  };
+}
+async function handleTeam(req, res, action, acc) {
+  const b = req.body || {}, q = req.query || {}, me = acc.id, post = req.method === "POST";
+  const owner = acc.account_type !== "privato";
+  // ----- lato titolare -----
+  if (action === "tm-team" || action === "tm-code") {
+    if (!owner) return res.status(403).json({ error: "Solo per le imprese." });
+    const t = await rows("account_id=eq." + me + "&kind=eq.team"); if (t === null) return res.status(404).json(NOTABLE);
+    let row = t[0];
+    if (!row || action === "tm-code") {
+      let ok = null;
+      for (let i = 0; i < 6 && !ok; i++) {
+        const code = newCode(acc.company_name);
+        const dup = await getOne("kind=eq.team&token=eq." + code); if (dup.row) continue;
+        if (row) { const r = await supabaseRequest("/pro_extra?id=eq." + row.id, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ token: code, updated_at: new Date().toISOString() }) }); ok = r.ok && r.data && r.data[0]; }
+        else ok = await insert(me, "team", code, {});
+      }
+      if (!ok) return res.status(502).json({ error: "Non riesco a creare il codice, riprova." });
+      row = ok;
+    }
+    const m = await rows("account_id=eq." + me + "&kind=eq.membro") || [];
+    return res.status(200).json({ code: row.token, members: m.filter(x => x.data.stato !== "rimosso").map(x => ({ id: x.id, memberId: x.data.memberId, nome: x.data.nome, email: x.data.email, stato: x.data.stato, at: x.created_at })) });
+  }
+  if (action === "tm-member") {
+    if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    const g = await getOne("id=eq." + b.id + "&account_id=eq." + me + "&kind=eq.membro");
+    if (!g.row) return res.status(404).json({ error: "Persona non trovata." });
+    const stato = ["attivo", "rimosso"].includes(b.stato) ? b.stato : g.row.data.stato;
+    const r = await patch(g.row.id, Object.assign({}, g.row.data, { stato }));
+    return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Non riuscito, riprova." });
+  }
+  if (action === "tm-assign") {
+    if (!owner || !post) return res.status(400).json({ error: "Richiesta non valida." });
+    const d = obj(b.data), id = String(b.id || "");
+    const mm = await rows("account_id=eq." + me + "&kind=eq.membro") || [];
+    const mem = mm.find(x => x.data.memberId === d.memberId && x.data.stato === "attivo");
+    if (!mem) return res.status(400).json({ error: "Questa persona non è (più) nella tua squadra." });
+    d.memberNome = mem.data.nome;
+    if (id) {
+      if (!UUID.test(id)) return res.status(400).json({ error: "Incarico non valido." });
+      const g = await getOne("id=eq." + id + "&account_id=eq." + me + "&kind=eq.incarico"); if (!g.row) return res.status(404).json({ error: "Incarico non trovato." });
+      const r = await patch(g.row.id, cleanIncarico(d, g.row.data)); const s = r.ok && r.data && r.data[0];
+      return s ? res.status(200).json({ item: pub(s) }) : res.status(502).json({ error: "Non riuscito, riprova." });
+    }
+    const s = await insert(me, "incarico", null, cleanIncarico(d, {}));
+    return s ? res.status(200).json({ item: pub(s) }) : res.status(502).json({ error: "Non riuscito, riprova." });
+  }
+  if (action === "tm-owner") {
+    if (!owner) return res.status(403).json({ error: "Solo per le imprese." });
+    const inc = await rows("account_id=eq." + me + "&kind=eq.incarico"); if (inc === null) return res.status(404).json(NOTABLE);
+    const dia = await rows("account_id=eq." + me + "&kind=eq.diario") || [];
+    return res.status(200).json({ incarichi: inc.map(pub), diario: dia.map(pub) });
+  }
+  if (action === "tm-confirm") {
+    if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    const g = await getOne("id=eq." + b.id + "&account_id=eq." + me + "&kind=eq.incarico"); if (!g.row) return res.status(404).json({ error: "Incarico non trovato." });
+    const r = await patch(g.row.id, Object.assign({}, g.row.data, { stato: b.riapri ? "attivo" : "confermato" }));
+    return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Non riuscito, riprova." });
+  }
+  if (action === "tm-unassign") {
+    if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    await supabaseRequest("/pro_extra?id=eq." + b.id + "&account_id=eq." + me + "&kind=eq.incarico", { method: "DELETE" });
+    return res.status(200).json({ ok: true });
+  }
+  // ----- lato collaboratore -----
+  if (action === "tm-join") {
+    if (!post) return res.status(405).json({ error: "Metodo non valido" });
+    const code = normCode(b.code); if (code.length < 4) return res.status(400).json({ error: "Codice non valido." });
+    const g = await getOne("kind=eq.team&token=eq." + code);
+    if (g.missing) return res.status(404).json(NOTABLE);
+    if (!g.row) return res.status(404).json({ error: "Codice non trovato: controlla di averlo scritto giusto." });
+    const ownerId = g.row.account_id;
+    if (ownerId === me) return res.status(400).json({ error: "Questo è il codice della tua impresa." });
+    const tok = "m" + ownerId.replace(/-/g, "").slice(0, 12) + me.replace(/-/g, "");
+    const ex = await getOne("kind=eq.membro&token=eq." + tok);
+    const nome = str(b.nome, 80) || acc.company_name || acc.email || "Collaboratore";
+    if (ex.row) {
+      if (ex.row.data.stato === "rimosso") await patch(ex.row.id, Object.assign({}, ex.row.data, { stato: "richiesta", nome }));
+    } else if (!await insert(ownerId, "membro", tok, { memberId: me, nome, email: str(acc.email, 120), stato: "richiesta" })) return res.status(502).json({ error: "Non riuscito, riprova." });
+    const oa = await account(ownerId, "company_name") || {};
+    return res.status(200).json({ ok: true, impresa: oa.company_name || "" });
+  }
+  if (action === "tm-me") {
+    const m = await rows("kind=eq.membro&data->>memberId=eq." + me); if (m === null) return res.status(200).json({ teams: [] });
+    const teams = [];
+    for (const x of m.filter(x => x.data.stato !== "rimosso").slice(0, 5)) {
+      const oa = await account(x.account_id, "company_name,logo_url,phone") || {};
+      const t = { ownerId: x.account_id, impresa: oa.company_name || "", logo: oa.logo_url || null, telefono: oa.phone || "", stato: x.data.stato, incarichi: [], diario: [] };
+      if (x.data.stato === "attivo") {
+        t.incarichi = (await rows("account_id=eq." + x.account_id + "&kind=eq.incarico&data->>memberId=eq." + me) || []).map(pub);
+        t.diario = (await rows("account_id=eq." + x.account_id + "&kind=eq.diario&data->>memberId=eq." + me) || []).map(pub);
+      }
+      teams.push(t);
+    }
+    return res.status(200).json({ teams });
+  }
+  if (action === "tm-photo") {
+    if (!post) return res.status(405).json({ error: "Metodo non valido" });
+    const u = await uploadPhoto(b.dataUrl, "extra/team/" + me).catch(() => null);
+    return u ? res.status(200).json({ url: u }) : res.status(400).json({ error: "Foto non valida o troppo grande." });
+  }
+  if (action === "tm-diario") {
+    if (!post || !UUID.test(String(b.incaricoId || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    const g = await getOne("id=eq." + b.incaricoId + "&kind=eq.incarico");
+    if (!g.row || g.row.data.memberId !== me) return res.status(404).json({ error: "Cantiere non trovato." });
+    const tok = "m" + g.row.account_id.replace(/-/g, "").slice(0, 12) + me.replace(/-/g, "");
+    const mem = await getOne("kind=eq.membro&token=eq." + tok);
+    if (!mem.row || mem.row.data.stato !== "attivo") return res.status(403).json({ error: "Non fai più parte di questa squadra." });
+    if (g.row.data.stato !== "attivo") return res.status(409).json({ error: "Questo cantiere è già chiuso." });
+    const pass = (g.row.data.passaggi || []).map(p => p.n);
+    const d = {
+      incaricoId: g.row.id, memberId: me, nome: mem.row.data.nome, data: date(b.data) || new Date().toISOString().slice(0, 10),
+      passaggio: pass.includes(b.passaggio) ? b.passaggio : "", mq: num(b.mq, 100000), ore: num(b.ore, 24),
+      foto: urls(b.foto, 8), note: str(b.note, 600), chiusura: !!b.chiusura,
+    };
+    if (!d.chiusura && !d.passaggio && !d.ore && !d.foto.length) return res.status(400).json({ error: "Segna almeno un passaggio, le ore o una foto." });
+    if (d.chiusura && d.foto.length < 3) return res.status(400).json({ error: "Per chiudere il cantiere servono almeno 3 foto finali." });
+    const s = await insert(g.row.account_id, "diario", null, d);
+    if (!s) return res.status(502).json({ error: "Non riuscito, riprova." });
+    if (d.chiusura) await patch(g.row.id, Object.assign({}, g.row.data, { stato: "chiuso", chiusoAt: new Date().toISOString() }));
+    return res.status(200).json({ ok: true, item: pub(s) });
+  }
+  return res.status(400).json({ error: "Azione non valida." });
+}
+
+module.exports = { handle, handlePublic, handleTeam, clean };
