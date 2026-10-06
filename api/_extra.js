@@ -3,7 +3,7 @@
 // una funzione Vercel in più.
 //
 // Con accesso (professionista):
-//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site  -> { items }
+//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe  -> { items }
 //   POST ?action=px-save    { id?, kind, data }               -> { item }
 //   POST ?action=px-delete  { id }
 //   POST ?action=px-photo   { dataUrl }                       -> { url }
@@ -16,7 +16,8 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe"];
+const SINGLE = ["site", "tariffe"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
 
@@ -25,6 +26,8 @@ function url(u) { u = String(u || ""); return /^https:\/\/[^\s"'<>]+$/.test(u) &
 function urls(v, max) { return (Array.isArray(v) ? v : []).map(url).filter(Boolean).slice(0, max); }
 function date(v) { return /^\d{4}-\d{2}-\d{2}$/.test(String(v || "")) ? String(v) : ""; }
 function time(v) { return /^\d{2}:\d{2}$/.test(String(v || "")) ? String(v) : ""; }
+function num(v, max) { v = Math.round((+String(v == null ? "" : v).replace(",", ".") || 0) * 100) / 100; return v > 0 ? Math.min(v, max) : 0; }
+function int(v, min, max) { v = Math.round(+v || 0); return Math.max(min, Math.min(max, v)); }
 function obj(v) { return v && typeof v === "object" && !Array.isArray(v) ? v : {}; }
 const missing = r => !r.ok && (r.status === 404 || (r.data && /42P01|does not exist/.test(JSON.stringify(r.data))));
 const NOTABLE = { error: "Questa funzione non è ancora attiva: manca la tabella su Supabase.", code: "notable" };
@@ -56,6 +59,18 @@ function clean(kind, d, old) {
   };
   if (kind === "site") return {
     attivo: !!d.attivo, slogan: str(d.slogan, 140), dominio: str(d.dominio, 80).toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, ""),
+  };
+  if (kind === "costo") return {
+    tipo: ["ore", "materiali", "mezzi"].includes(d.tipo) ? d.tipo : "materiali",
+    cliente: str(d.cliente, 120), quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : null,
+    data: date(d.data), importo: num(d.importo, 1000000), desc: str(d.desc, 200),
+    io: !!d.io, operai: int(d.operai, 0, 20), ore: num(d.ore, 24), giorni: int(d.giorni, 1, 60),
+    foto: urls(d.foto, 3), iva: d.iva !== false,
+    voci: (Array.isArray(d.voci) ? d.voci : []).slice(0, 12).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000), giorni: int(v && v.giorni, 1, 60) })).filter(v => v.nome),
+  };
+  if (kind === "tariffe") return {
+    mia: num(d.mia, 500), operaio: num(d.operaio, 500), operai: d.operai !== false,
+    attrezzi: (Array.isArray(d.attrezzi) ? d.attrezzi : []).slice(0, 20).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000) })).filter(v => v.nome),
   };
   return {};
 }
@@ -166,8 +181,8 @@ async function handle(req, res, action, acc) {
       if (g.missing) return res.status(404).json(NOTABLE);
       found = g.row;
       if (found && (found.account_id !== acc.id || found.kind !== kind)) return res.status(403).json({ error: "Elemento di un altro account." });
-    } else if (kind === "site") {
-      const g = await getOne(mine + "&kind=eq.site");
+    } else if (SINGLE.includes(kind)) {
+      const g = await getOne(mine + "&kind=eq." + kind);
       if (g.missing) return res.status(404).json(NOTABLE);
       found = g.row;
     }

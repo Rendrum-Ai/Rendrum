@@ -927,6 +927,66 @@
   .v3list b{ display:block; font-size:15.5px; }
   .v3list em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft); margin-top:1px; }
   .v3chev{ flex:none; width:16px; height:16px; color:var(--ink-soft); opacity:.6; }
+  /* barra in basso flottante: le finestre (preventivo, impostazioni…) finiscono sopra la barra */
+  html body.rd-v2 .pro-projects-modal{ padding-bottom:calc(112px + env(safe-area-inset-bottom,0px)); }
+  html body.rd-v2 .pro-projects-card{ max-height:calc(100vh - 150px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)); max-height:calc(100dvh - 150px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)); }
+  /* ---- costi del cantiere ---- */
+  .cc-wrap{ margin-top:18px; }
+  .cc-sec{ font-size:11.5px; font-weight:800; letter-spacing:.12em; color:var(--ink-soft); text-transform:uppercase; margin:18px 0 8px; }
+  .cc-card{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:14px 16px; }
+  .cc-r{ display:flex; justify-content:space-between; font-size:14.5px; color:var(--ink-soft); padding:3px 0; } .cc-r b{ color:var(--ink); }
+  .cc-meter{ display:flex; height:8px; border-radius:4px; background:var(--line); overflow:hidden; margin:10px 0 5px; } .cc-meter u{ display:block; height:100%; text-decoration:none; }
+  .cc-leg{ display:flex; flex-wrap:wrap; gap:4px 12px; font-size:11.5px; color:var(--ink-soft); } .cc-leg i{ display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:4px; vertical-align:middle; }
+  .cc-tot{ display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--line); margin-top:10px; padding-top:10px; font-weight:800; }
+  .cc-tot b{ font-family:"Playfair Display", Georgia, serif; font-weight:500; font-size:28px; color:#2E7D4F; } .cc-tot b.neg{ color:#B3261E; }
+  .cc-hint{ font-size:12.5px; color:var(--ink-soft); line-height:1.4; margin-top:8px; } .cc-hint b{ color:var(--ink); }
+  .cc-warn{ background:#FDF0E6; border:1.5px solid #E9B48C; border-radius:16px; padding:12px 14px; color:#8A3F12; font-size:13.5px; line-height:1.4; margin-top:10px; } .cc-warn b{ display:block; font-size:15px; color:#6B2E0A; }
+  .cc-fin{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; } .cc-fin div{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 12px; } .cc-fin b{ display:block; font-size:18px; } .cc-fin span{ font-size:11.5px; color:var(--ink-soft); }
+  .cc-add{ margin-top:12px; border-radius:14px; font-size:15.5px; padding:14px; }
+  .cc-list{ padding:4px 14px; }
+  .cc-it{ display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:14px; } .cc-it:first-child{ border-top:none; }
+  .cc-it > i{ flex:none; display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--accent-soft); color:var(--accent); }
+  .cc-it > div{ flex:1; min-width:0; } .cc-it > div b{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .cc-it em{ display:block; font-style:normal; font-size:12px; color:var(--ink-soft); }
+  .cc-ph{ text-decoration:none; font-size:17px; }
+  .cc-del{ border:none; background:none; color:var(--ink-soft); font-size:20px; line-height:1; padding:4px 2px; cursor:pointer; font-family:inherit; } .cc-del.sure{ font-size:12px; font-weight:800; color:#B3261E; }
+  .cc-h2{ font-family:"Playfair Display", Georgia, serif; font-weight:500; font-size:26px; line-height:1.15; color:var(--ink); }
+  .cc-sub{ color:var(--ink-soft); font-size:13.5px; margin:4px 0 12px; line-height:1.4; }
+  .cc-big{ display:flex; width:100%; align-items:center; gap:14px; border:1.5px solid var(--line); background:var(--surface); border-radius:18px; padding:14px; margin-top:10px; font-family:inherit; text-align:left; color:var(--ink); cursor:pointer; }
+  .cc-big i{ flex:none; display:flex; align-items:center; justify-content:center; width:50px; height:50px; border-radius:16px; background:var(--accent-soft); color:var(--accent); }
+  .cc-big span{ flex:1; } .cc-big b{ display:block; font-size:17px; } .cc-big em{ font-style:normal; font-size:12.5px; color:var(--ink-soft); } .cc-big u{ text-decoration:none; color:var(--ink-soft); font-size:20px; }
+  .cc-q{ font-weight:800; font-size:15.5px; margin:16px 0 8px; color:var(--ink); } .cc-q i{ font-weight:600; font-style:normal; color:var(--ink-soft); font-size:13px; }
+  .cc-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .cc-chips button{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:10px 15px; font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer; }
+  .cc-chips button.on{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cc-fld{ display:flex; align-items:center; gap:10px; background:var(--surface); border:1.5px solid var(--line); border-radius:14px; padding:4px 14px; font-size:15px; color:var(--ink-soft); }
+  .cc-fld[hidden]{ display:none; } .cc-fld:focus-within{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .cc-fld input{ flex:1; min-width:0; border:none; background:none; font-family:inherit; font-size:19px; font-weight:800; color:var(--ink); padding:10px 0; text-align:right; outline:none; }
+  .cc-fld input#ccDesc{ text-align:left; font-size:15px; font-weight:600; }
+  .cc-fld em{ font-style:normal; font-size:13px; }
+  .cc-calc{ background:var(--accent-soft); border-radius:16px; padding:12px 16px; margin:16px 0 12px; font-size:13.5px; color:var(--ink-soft); line-height:1.4; }
+  .cc-calc b{ display:block; font-family:"Playfair Display", Georgia, serif; font-weight:500; font-size:28px; color:var(--ink); margin-top:2px; }
+  .cc-inv{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:150px; border:2px dashed var(--accent); border-radius:18px; background:var(--surface); color:var(--accent); font-weight:800; font-size:15px; cursor:pointer; overflow:hidden; text-align:center; padding:10px; }
+  .cc-inv img{ max-width:100%; max-height:260px; border-radius:10px; } .cc-inv .ok{ color:#2E7D4F; font-size:13px; }
+  .cc-tools{ padding:4px 14px; }
+  .cc-tool{ display:flex; align-items:center; gap:12px; padding:11px 0; border-top:1px solid var(--line); } .cc-tool:first-child{ border-top:none; }
+  .cc-box{ flex:none; width:26px; height:26px; border-radius:8px; border:2px solid var(--line); background:var(--surface); position:relative; cursor:pointer; padding:0; }
+  .cc-tool.on .cc-box{ background:var(--accent); border-color:var(--accent); } .cc-tool.on .cc-box:after{ content:''; position:absolute; left:7px; top:2px; width:7px; height:12px; border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg); }
+  .cc-tool > div{ flex:1; min-width:0; } .cc-tool b{ display:block; font-size:15px; } .cc-tool label{ font-size:12px; color:var(--ink-soft); }
+  .cc-tool label input{ width:52px; border:1px solid var(--line); border-radius:8px; padding:3px 6px; font-family:inherit; font-size:13px; font-weight:700; color:var(--ink); background:var(--bg); }
+  .cc-step{ display:flex; align-items:center; gap:8px; font-weight:800; } .cc-tool:not(.on) .cc-step{ opacity:.35; }
+  .cc-step button{ width:32px; height:32px; border-radius:50%; border:1.5px solid var(--line); background:var(--surface); color:var(--accent); font-size:18px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .cc-new{ display:flex; gap:6px; padding:10px 0 8px; border-top:1px solid var(--line); }
+  .cc-new input{ min-width:0; border:1px solid var(--line); border-radius:10px; padding:9px 10px; font-family:inherit; font-size:13.5px; background:var(--bg); color:var(--ink); } .cc-new input:first-child{ flex:1; } .cc-new input:nth-child(2){ width:80px; }
+  .cc-new button{ border:none; border-radius:10px; background:var(--accent-soft); color:var(--accent); font-size:18px; font-weight:800; padding:0 14px; cursor:pointer; }
+  .cc-eve{ background:#2B1408; color:#F7F5F1; border-radius:22px; padding:16px; margin-bottom:16px; }
+  .cc-eve .k{ font-size:11.5px; letter-spacing:.1em; color:#E3A06B; font-weight:800; }
+  .cc-eve h3{ font-family:"Playfair Display", Georgia, serif; font-weight:500; font-size:23px; margin:6px 0 2px; line-height:1.2; }
+  .cc-eve p{ margin:0 0 4px; font-size:13px; opacity:.75; }
+  .cc-eve .cc-chips button{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.2); color:#fff; font-size:14px; padding:9px 13px; }
+  .cc-eve .cc-chips button.on{ background:var(--accent); border-color:var(--accent); }
+  .cc-eok{ display:block; width:100%; border:none; border-radius:14px; background:var(--accent); color:#fff; font-family:inherit; font-weight:800; font-size:16px; padding:14px; margin-top:14px; cursor:pointer; }
+  .cc-eno{ display:block; width:100%; border:none; background:none; color:#F7F5F1; opacity:.6; font-family:inherit; font-size:13px; padding:10px 0 0; cursor:pointer; }
+  .v3cost{ display:block; width:100%; border:1.5px solid rgba(255,255,255,.35); border-radius:14px; background:rgba(255,255,255,.08); color:#fff; font-family:inherit; font-size:14.5px; font-weight:700; padding:12px; margin-bottom:10px; cursor:pointer; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -15124,7 +15184,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // carica tutto e raggruppa per cliente: richieste, sopralluoghi, preventivi, appuntamenti, lavori finiti, recensioni
   function ctLoad(){
     var J = function(p){ return p.then(function(x){ return x && x.ok ? x.d : null; }).catch(function(){ return null; }); };
-    return Promise.all([J(lApi('pro-list')), J(soApi('sopr-list')), J(qApi('list')), J(qApi('px-list', 'GET', null, '&kind=agenda')), J(qApi('px-list', 'GET', null, '&kind=lavoro')), J(qApi('px-list', 'GET', null, '&kind=review'))]).then(function(r){
+    return Promise.all([J(lApi('pro-list')), J(soApi('sopr-list')), J(qApi('list')), J(qApi('px-list', 'GET', null, '&kind=agenda')), J(qApi('px-list', 'GET', null, '&kind=lavoro')), J(qApi('px-list', 'GET', null, '&kind=review')), J(qApi('px-list', 'GET', null, '&kind=costo'))]).then(function(r){
       var par = {}, rec = {};
       function f(k){ while(par[k] && par[k] !== k){ par[k] = par[par[k]] || par[k]; k = par[k]; } return k; }
       function add(k, kind, o){ if(!par[k]) par[k] = k; rec[k] = { kind: kind, o: o }; }
@@ -15138,9 +15198,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       quotes.forEach(function(q){ add('Q:' + q.id, 'quote', q); link('Q:' + q.id, nm(q.clientName)); });
       ag.forEach(function(a){ add('A:' + a.id, 'agenda', a); link('A:' + a.id, nm(a.data.cliente)); });
       lav.forEach(function(w){ add('W:' + w.id, 'lavoro', w); link('W:' + w.id, nm(w.data.cliente)); if(w.data.quoteId) link('W:' + w.id, 'Q:' + w.data.quoteId); });
+      ((r[6] && r[6].items) || []).forEach(function(x){ add('C:' + x.id, 'costo', x); link('C:' + x.id, nm(x.data.cliente)); if(x.data.quoteId) link('C:' + x.id, 'Q:' + x.data.quoteId); });
       rv.forEach(function(v){ add('R:' + v.id, 'review', v); link('R:' + v.id, nm(v.data.cliente)); if(v.data.lavoroId) link('R:' + v.id, 'W:' + v.data.lavoroId); });
       var G = {};
-      Object.keys(rec).forEach(function(k){ var g = f(k); (G[g] = G[g] || { lead:[], sopr:[], quote:[], agenda:[], lavoro:[], review:[] })[rec[k].kind].push(rec[k].o); });
+      Object.keys(rec).forEach(function(k){ var g = f(k); (G[g] = G[g] || { lead:[], sopr:[], quote:[], agenda:[], lavoro:[], review:[], costo:[] })[rec[k].kind].push(rec[k].o); });
       ct.list = Object.keys(G).map(function(k){ return ctMake(k, G[k]); }).sort(function(a, b){ return String(b.agg).localeCompare(String(a.agg)); });
       ct.raw = { ag: ag, lav: lav };
       return ct.list;
@@ -15148,7 +15209,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function ctMake(id, g){
     var c = { id: id, g: g };
-    var names = [].concat(g.sopr.map(function(s){ return s.clientName; }), g.quote.map(function(q){ return q.clientName; }), g.lavoro.map(function(w){ return w.data.cliente; }), g.agenda.map(function(a){ return a.data.cliente; }), g.review.map(function(v){ return v.data.cliente; })).filter(Boolean);
+    var names = [].concat(g.sopr.map(function(s){ return s.clientName; }), g.quote.map(function(q){ return q.clientName; }), g.lavoro.map(function(w){ return w.data.cliente; }), g.agenda.map(function(a){ return a.data.cliente; }), g.review.map(function(v){ return v.data.cliente; }), (g.costo || []).map(function(x){ return x.data.cliente; })).filter(Boolean);
     var L = g.lead[0];
     c.nome = names[0] || (L ? 'Richiesta ' + (L.lavorazioneNome || '') : 'Cliente');
     c.tel = [].concat(g.sopr.map(function(s){ return s.phone; }), g.lavoro.map(function(w){ return w.data.telefono; }), g.agenda.map(function(a){ return a.data.telefono; }), g.review.map(function(v){ return v.data.telefono; })).filter(Boolean)[0] || '';
@@ -15234,6 +15295,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<div class="ct-tl">' + CT_FASI.map(function(f, i){ return '<button type="button" class="ct-st ' + (i < c.fase || (!c.next && c.fase === 4) ? 'd' : i === c.fase ? 'c' : '') + '"' + (open[i] ? ' data-cto="' + i + '"' : ' disabled') + '><i></i><span><b>' + f + '</b>' + (det[i] ? '<em>' + qEsc(det[i]) + '</em>' : '') + '</span>' + (open[i] ? '<u>›</u>' : '') + '</button>'; }).join('') + '</div>'
       + (c.next ? '<button type="button" class="pro-auth-submit ct-go" id="ctGo">' + qEsc(c.next.t) + '</button>' : '<div class="rx-ok" style="text-align:center">' + qEsc(c.stato || 'Lavoro concluso') + '</div>');
     box.innerHTML = h;
+    try{ ctCostiBlock(c, box); }catch(e){}
     box.querySelectorAll('[data-cto]').forEach(function(b){ b.addEventListener('click', function(){ open[+b.dataset.cto](); }); });
     var g1 = document.getElementById('ctGo'); if(g1) g1.addEventListener('click', function(){ c.next.fn(); });
     var wa = document.getElementById('ctWa'); if(wa) wa.addEventListener('click', function(){ rxWa(c.tel, 'Buongiorno ' + c.nome + ', '); });
@@ -15514,8 +15576,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function v3Home(box){
     var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
     if(!box.dataset.ready) box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div></div><div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div><div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
-    return ctLoad().then(function(L){
-      L = v3Order(L.slice()); v3.list = L;
+    return Promise.all([ctLoad(), ccTar()]).then(function(R){
+      var L = v3Order(R[0].slice()), tar = R[1]; v3.list = L;
+      var sera = ccSeraFind(L);
       var open = L.filter(function(c){ return c.aperto; }), stories = L.slice(0, 12);
       var badge = document.getElementById('rdTabBadge'), nn = L.filter(function(c){ return c._new; }).length; if(badge){ badge.hidden = !nn; badge.textContent = nn; }
       var week = Date.now() - 7 * 86400000, acc = 0, rv = [];
@@ -15523,6 +15586,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var media = rv.length ? rv.reduce(function(a, b){ return a + b; }, 0) / rv.length : 0;
       var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div>' + (L.length ? '<button type="button" class="v3all" id="v3All">Tutti ›</button>' : '') + '</div>';
       if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
+      if(sera) h += ccSeraHtml(sera, tar);
       if(open.length) h += '<div class="v3cards">' + open.slice(0, 10).map(function(c){ var i = L.indexOf(c);
           return '<div class="v3c" data-v3c="' + i + '" style="' + v3Bg(c) + '"><div class="v3cs"></div>' + (c.img ? '' : '<span class="v3ci">' + qEsc(ctIni(c.nome)) + '</span>')
             + '<div class="v3ct"><span class="v3ph">' + CT_FASI[c.fase] + (c._td ? ' · oggi ' + qEsc(c._td.data.ora || '') : '') + '</span><b>' + qEsc(c.nome) + '</b><i>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ')) + '</i>'
@@ -15537,6 +15601,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       box.querySelectorAll('[data-v3n]').forEach(function(b){ b.addEventListener('click', function(){ var c = v3.list[+b.dataset.v3n]; if(c && c.next) c.next.fn(); }); });
       var all = document.getElementById('v3All'); if(all) all.addEventListener('click', ctOpen);
       ctCosaBind(box);
+      if(sera) ccSeraBind(box, sera, tar);
     }).catch(function(){ box.innerHTML = '<div class="v3empty"><b>Non riesco a caricare i cantieri</b><span>Controlla la connessione e riprova.</span></div>'; });
   }
   // storia del cliente a tutto schermo
@@ -15551,6 +15616,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<button type="button" class="v3tap l" id="v3P" aria-label="Precedente"></button><button type="button" class="v3tap r" id="v3N" aria-label="Successivo"></button>'
       + '<div class="v3body"><span class="v3f">Fase ' + (c.fase + 1) + ' di 5 · ' + CT_FASI[c.fase] + '</span><h2>' + qEsc(String(c.stato || CT_FASI[c.fase]).replace(/^./, function(x){ return x.toUpperCase(); })) + '</h2>' + (extra ? '<p>' + qEsc(extra) + '</p>' : '')
       + (c.next ? '<button type="button" class="v3go" id="v3Go">' + qEsc(c.next.t) + '</button>' : '')
+      + (c.fase >= 3 ? '<button type="button" class="v3cost" id="v3Cost">＋ Segna un costo' + (ccSpesi(c) ? ' · spesi ' + ccE(ccSpesi(c)) + (ccPrev(c) ? ' su ' + ccE(ccPrev(c)) : '') : '') + '</button>' : '')
       + '<div class="v3b3">' + (c.tel ? '<a href="tel:' + qEsc(String(c.tel).replace(/[^\d+]/g, '')) + '">📞<i>Chiama</i></a>' : '<span class="off">📞<i>Chiama</i></span>') + (c.luogo ? '<button type="button" id="v3Map">📍<i>Portami lì</i></button>' : '<span class="off">📍<i>Portami lì</i></span>') + '<button type="button" id="v3Sch">📂<i>Scheda</i></button></div>'
       + '<div class="v3hint">' + (i < v3.list.length - 1 ? 'Tocca a destra per il prossimo cliente ›' : 'Ultimo cliente') + '</div></div>';
     ov.hidden = false; document.documentElement.classList.add('rd-x-open');
@@ -15560,6 +15626,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('v3N').onclick = function(){ if(i < v3.list.length - 1) v3Story(i + 1); else close(); };
     var go = document.getElementById('v3Go'); if(go) go.onclick = function(){ close(); c.next.fn(); };
     var mp = document.getElementById('v3Map'); if(mp) mp.onclick = function(){ ctOpenUrl(ctMaps(c.luogo)); };
+    var cst = document.getElementById('v3Cost'); if(cst) cst.onclick = function(){ close(); ct.list = v3.list; ctCostoAdd(c); };
     document.getElementById('v3Sch').onclick = function(){ close(); ct.list = v3.list; ctScheda(c.id); };
   }
   // fotocamera: scegli il materiale come un filtro e scatta
@@ -15584,6 +15651,195 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }, 400);
   }
   window.v3Cam = v3Cam;
+  // ---------- Costi del cantiere: ore, materiali (foto fattura), attrezzi e mezzi (per ora solo account di prova) ----------
+  var CC = { tar:null, tarId:null, tarOk:false };
+  var CC_ATT = [['Furgone', 40], ['Levigatrice', 25], ['Aspiratore', 10], ['Betoniera', 15]];
+  var CC_SVG = {
+    ore:'<circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3"/>',
+    materiali:'<path d="M6 10 16 5l10 5v12l-10 5-10-5z"/><path d="m6 10 10 5 10-5M16 15v12"/>',
+    mezzi:'<path d="M3 9h15v12H3zM18 13h6l4 4v4h-10z"/><circle cx="9" cy="23" r="2.4"/><circle cx="23" cy="23" r="2.4"/>'
+  };
+  function ccIc(k, s){ return '<svg width="' + (s || 22) + '" height="' + (s || 22) + '" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + CC_SVG[k] + '</svg>'; }
+  function ccE(n){ return Math.round(+n || 0).toLocaleString('it-IT') + ' €'; }
+  function ccNum(v){ v = parseFloat(String(v == null ? '' : v).replace(/\./g, '').replace(',', '.')); return isFinite(v) && v > 0 ? Math.round(v * 100) / 100 : 0; }
+  function ccNum2(v){ v = parseFloat(String(v == null ? '' : v).replace(',', '.')); return isFinite(v) && v > 0 ? Math.round(v * 100) / 100 : 0; }
+  function ccQ(c){ var g = c.g.quote; return g.filter(function(q){ return q.status === 'accettato'; })[0] || g[0] || null; }
+  function ccPrev(c){ var q = ccQ(c); return q && +q.total > 0 ? +q.total : 0; }
+  function ccSpesi(c, t){ return (c.g.costo || []).filter(function(x){ return !t || x.data.tipo === t; }).reduce(function(a, x){ return a + (+x.data.importo || 0); }, 0); }
+  function ccTar(){
+    if(CC.tarOk) return Promise.resolve(CC.tar);
+    return qApi('px-list', 'GET', null, '&kind=tariffe').then(function(x){ var it = x && x.ok && x.d.items && x.d.items[0]; CC.tar = it ? it.data : null; CC.tarId = it ? it.id : null; CC.tarOk = !!(x && x.ok); return CC.tar; }).catch(function(){ return null; });
+  }
+  function ccTarSave(d){ return rxSave('tariffe', d, CC.tarId).then(function(it){ CC.tar = it.data; CC.tarId = it.id; CC.tarOk = true; return it.data; }); }
+  function ccBase(c){ var q = ccQ(c); return { cliente: c.nome, quoteId: q ? q.id : null, data: ctDayIso(0) }; }
+  function ccSave(c, d){ return rxSave('costo', Object.assign(ccBase(c), d)); }
+  function ccBack(c, costId){
+    var nome = ctNorm(c.nome), box = rxOpen(c.nome, null); rxLoading(box);
+    return ctLoad().then(function(L){ var x = L.filter(function(k){ return k.id === c.id; })[0] || L.filter(function(k){ return (k.g.costo || []).some(function(z){ return z.id === costId; }); })[0] || L.filter(function(k){ return ctNorm(k.nome) === nome; })[0]; if(x) ctScheda(x.id); else ctOpen(); });
+  }
+  function ccOreCalc(t, io, op, ore, gg){ return Math.round(ore * ((io ? (+t.mia || 0) : 0) + op * (+t.operaio || 0)) * gg * 100) / 100; }
+  function ccChi(t){ var o = [['1-0', 'Solo io']]; if(!t || t.operai !== false){ o.push(['1-1', 'Io + 1'], ['1-2', 'Io + 2'], ['1-3', 'Io + 3'], ['0-1', '1 operaio'], ['0-2', '2 operai']); } return o; }
+  function ccChiTxt(io, op){ return io ? (op ? 'Tu + ' + op + (op === 1 ? ' operaio' : ' operai') : 'Solo tu') : op + (op === 1 ? ' operaio' : ' operai'); }
+  function ccChips(name, opts, on){ return '<div class="cc-chips" data-ccg="' + name + '">' + opts.map(function(o){ return '<button type="button" data-v="' + o[0] + '"' + (String(o[0]) === String(on) ? ' class="on"' : '') + '>' + o[1] + '</button>'; }).join('') + '</div>'; }
+  function ccChipsBind(box, fn){ box.querySelectorAll('[data-ccg]').forEach(function(g){ g.addEventListener('click', function(e){ var b = e.target.closest('[data-v]'); if(!b) return; g.querySelectorAll('[data-v]').forEach(function(x){ x.classList.toggle('on', x === b); }); fn(g.dataset.ccg, b.dataset.v); }); }); }
+  // ----- riquadro nella scheda del cantiere -----
+  function ctCostiBlock(c, box){
+    var cs = (c.g.costo || []).slice().sort(function(a, b){ return String(b.data.data || b.createdAt).localeCompare(String(a.data.data || a.createdAt)); });
+    if(c.fase < 2 && !cs.length) return;
+    var prev = ccPrev(c), sp = ccSpesi(c), resta = prev - sp, o = ccSpesi(c, 'ore'), m = ccSpesi(c, 'materiali'), z = ccSpesi(c, 'mezzi'), tot = Math.max(prev, sp) || 1;
+    var h = '<div class="cc-sec">Quanto ci guadagni</div><div class="cc-card">'
+      + (prev ? '<div class="cc-r"><span>Preventivo</span><b>' + ccE(prev) + '</b></div>' : '')
+      + '<div class="cc-r"><span>Costi segnati</span><b>' + (sp ? '− ' : '') + ccE(sp) + '</b></div>'
+      + (sp ? '<div class="cc-meter"><u style="width:' + (o / tot * 100) + '%;background:#2B1408"></u><u style="width:' + (m / tot * 100) + '%;background:var(--accent)"></u><u style="width:' + (z / tot * 100) + '%;background:#E3A06B"></u></div><div class="cc-leg">' + (o ? '<span><i style="background:#2B1408"></i>Ore ' + ccE(o) + '</span>' : '') + (m ? '<span><i style="background:var(--accent)"></i>Materiali ' + ccE(m) + '</span>' : '') + (z ? '<span><i style="background:#E3A06B"></i>Mezzi ' + ccE(z) + '</span>' : '') + '</div>' : '')
+      + (prev ? '<div class="cc-tot"><span>' + (c.fase === 4 ? 'Guadagno' : 'Ti restano') + '</span><b class="' + (resta < 0 ? 'neg' : '') + '">' + ccE(resta) + (c.fase === 4 && sp ? ' · ' + Math.round(resta / prev * 100) + '%' : '') + '</b></div>' : '<div class="cc-hint">Quando c’è il preventivo vedi anche quanto ti resta.</div>')
+      + '</div>';
+    if(prev && sp >= prev * 0.8 && c.fase === 3) h += '<div class="cc-warn"><b>Attento al margine</b>Su questo cantiere hai già speso il ' + Math.round(sp / prev * 100) + '% del preventivo.</div>';
+    if(c.fase === 4 && prev && sp){
+      var gg = cs.filter(function(x){ return x.data.tipo === 'ore'; }).reduce(function(a, x){ return a + (+x.data.giorni || 1); }, 0), L = c.g.lead[0], mq = L && +L.mq || 0;
+      h += '<div class="cc-fin">' + (gg ? '<div><b>' + gg + (gg === 1 ? ' giorno' : ' giorni') + '</b><span>di lavoro segnati</span></div>' : '') + (mq ? '<div><b>' + ccE(sp / mq).replace(' €', ' €/m²') + '</b><span>quanto ti è costato al m²</span></div>' : '') + '</div>'
+        + (mq ? '<div class="cc-hint">Per guadagnare almeno il 25% su un lavoro simile, non scendere sotto <b>' + ccE(sp / mq / 0.75).replace(' €', ' €/m²') + '</b>.</div>' : '');
+    }
+    h += '<button type="button" class="pro-auth-submit cc-add" id="ccAdd">＋ Aggiungi un costo</button>';
+    if(cs.length) h += '<div class="cc-sec">Costi segnati</div><div class="cc-card cc-list">' + cs.map(function(x){ var d = x.data;
+        return '<div class="cc-it"><i>' + ccIc(d.tipo, 18) + '</i><div><b>' + qEsc(d.desc || ({ ore:'Ore', materiali:'Materiali', mezzi:'Attrezzi e mezzi' })[d.tipo]) + '</b><em>' + qEsc([d.data ? rxDate(d.data) : '', (d.foto || []).length ? 'foto salvata' : ''].filter(Boolean).join(' · ')) + '</em></div><b>' + ccE(d.importo) + '</b>' + ((d.foto || [])[0] ? '<a href="' + qEsc(d.foto[0]) + '" target="_blank" rel="noopener" class="cc-ph">🧾</a>' : '') + '<button type="button" class="cc-del" data-ccdel="' + x.id + '" aria-label="Elimina">×</button></div>'; }).join('') + '</div>';
+    h += '<button type="button" class="ct-link" id="ccTarEd">Cambia le tariffe (ore e attrezzi)</button>';
+    var w = document.createElement('div'); w.className = 'cc-wrap'; w.innerHTML = h; box.appendChild(w);
+    document.getElementById('ccAdd').addEventListener('click', function(){ ctCostoAdd(c); });
+    document.getElementById('ccTarEd').addEventListener('click', function(){ ccTar().then(function(){ ccTarForm(c, function(){ ccBack(c); }); }); });
+    w.querySelectorAll('[data-ccdel]').forEach(function(b){ b.addEventListener('click', function(){
+      if(b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = 'Elimina?'; b.classList.add('sure'); return; }
+      b.disabled = true; rxDel(b.dataset.ccdel).then(function(){ ccBack(c); }).catch(rxFail); }); });
+  }
+  // ----- aggiungi un costo: tre scelte -----
+  function ctCostoAdd(c){
+    var box = rxOpen('Aggiungi un costo', function(){ ctScheda(c.id); });
+    box.innerHTML = '<div class="cc-h2">Che costo aggiungi?</div><div class="cc-sub">' + qEsc(c.nome) + (c.lavoro ? ' · ' + qEsc(c.lavoro) : '') + '</div>'
+      + [['ore', 'Ore di lavoro', 'Tu e i tuoi operai'], ['materiali', 'Materiali', 'Foto della fattura o dello scontrino'], ['mezzi', 'Attrezzi e mezzi', 'Furgone, levigatrice, ponteggio…']].map(function(x){ return '<button type="button" class="cc-big" data-cct="' + x[0] + '"><i>' + ccIc(x[0], 26) + '</i><span><b>' + x[1] + '</b><em>' + x[2] + '</em></span><u>›</u></button>'; }).join('');
+    box.querySelectorAll('[data-cct]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.cct; if(k === 'ore') ccOre(c); if(k === 'materiali') ccMat(c); if(k === 'mezzi') ccMezzi(c); }); });
+  }
+  // ----- tariffe: una volta sola -----
+  function ccTarForm(c, then){
+    var t = CC.tar || {}, box = rxOpen('Le tue tariffe', function(){ ctScheda(c.id); }), first = !t.mia;
+    box.innerHTML = '<div class="cc-h2">' + (first ? 'Prima, una cosa sola' : 'Le tue tariffe') + '</div><div class="cc-sub">Quanto vale un’ora di lavoro? ' + (first ? 'Lo chiedo solo questa volta, poi l’app fa i conti da sola. ' : '') + 'Lo puoi cambiare quando vuoi.</div>'
+      + '<div class="cc-q">Un’ora tua</div><label class="cc-fld"><span>Tu</span><input id="ccMia" inputmode="decimal" value="' + (t.mia || '') + '" placeholder="35"><em>€ / ora</em></label>'
+      + '<div class="cc-q">Un’ora di un operaio o collaboratore</div><label class="cc-fld" id="ccOpF"' + (t.operai === false ? ' hidden' : '') + '><span>Operaio</span><input id="ccOp" inputmode="decimal" value="' + (t.operaio || '') + '" placeholder="25"><em>€ / ora</em></label>'
+      + ccChips('op', [['20', '20 €'], ['25', '25 €'], ['30', '30 €'], ['no', 'Non ho operai']], t.operai === false ? 'no' : String(t.operaio || ''))
+      + '<div class="cc-calc">Consiglio: metti il costo vero, compresi contributi e assicurazione. Se non lo sai, 25–30 € va bene per iniziare.</div>'
+      + '<button type="button" class="pro-auth-submit" id="ccTarOk">Salva e continua</button>';
+    var noop = t.operai === false;
+    ccChipsBind(box, function(g, v){ noop = v === 'no'; document.getElementById('ccOpF').hidden = noop; if(!noop) document.getElementById('ccOp').value = v; });
+    document.getElementById('ccTarOk').addEventListener('click', function(){
+      var mia = ccNum2(document.getElementById('ccMia').value), op = ccNum2(document.getElementById('ccOp').value);
+      if(!mia){ document.getElementById('rdXErr').textContent = 'Scrivi quanto vale un’ora tua.'; return; }
+      if(!noop && !op){ document.getElementById('rdXErr').textContent = 'Scrivi quanto vale un’ora di un operaio, oppure tocca “Non ho operai”.'; return; }
+      this.disabled = true;
+      ccTarSave({ mia: mia, operaio: noop ? 0 : op, operai: !noop, attrezzi: (CC.tar && CC.tar.attrezzi) || [] }).then(then).catch(function(e){ rxFail(e); document.getElementById('ccTarOk').disabled = false; });
+    });
+  }
+  // ----- ore -----
+  function ccOre(c, pre){
+    ccTar().then(function(t){
+      if(!t || !t.mia) return ccTarForm(c, function(){ ccOre(c, pre); });
+      pre = pre || {};
+      var st = { chi: pre.chi || (t.operai === false ? '1-0' : '1-1'), ore: pre.ore || 8, gg: 1 }, box = rxOpen('Ore di lavoro', function(){ ctCostoAdd(c); });
+      box.innerHTML = '<div class="cc-h2">Ore da ' + qEsc(v3First(c.nome)) + '</div><div class="cc-sub">' + qEsc(rxDay(ctDayIso(0))) + '</div>'
+        + '<div class="cc-q">Quanti eravate?</div>' + ccChips('chi', ccChi(t), st.chi)
+        + '<div class="cc-q">Quanto avete lavorato?</div>' + ccChips('ore', [['4', 'Mezza giornata'], ['8', 'Giornata (8 ore)'], ['x', 'Scrivo le ore']], String(st.ore))
+        + '<label class="cc-fld" id="ccOreF" hidden><span>Ore</span><input id="ccOreI" inputmode="decimal" placeholder="6"><em>ore</em></label>'
+        + '<div class="cc-q">Quanti giorni?</div>' + ccChips('gg', [['1', 'Oggi'], ['2', '2 giorni'], ['3', '3 giorni'], ['5', '5 giorni']], '1')
+        + '<div class="cc-calc" id="ccCalc"></div><button type="button" class="pro-auth-submit" id="ccOreOk"></button>';
+      function calc(){ var p = st.chi.split('-'), io = p[0] === '1', op = +p[1], v = ccOreCalc(t, io, op, st.ore, st.gg);
+        document.getElementById('ccCalc').innerHTML = st.ore + ' ore' + (st.gg > 1 ? ' × ' + st.gg + ' giorni' : '') + ' × (' + [io ? ccE(t.mia) + ' tu' : '', op ? op + ' × ' + ccE(t.operaio) + (op === 1 ? ' operaio' : ' operai') : ''].filter(Boolean).join(' + ') + ')<b>= ' + ccE(v) + '</b>';
+        var ok = document.getElementById('ccOreOk'); ok.textContent = 'Segna ' + ccE(v); ok.disabled = !(v > 0); return { io: io, op: op, v: v }; }
+      ccChipsBind(box, function(g, v){ if(g === 'chi') st.chi = v; if(g === 'gg') st.gg = +v; if(g === 'ore'){ document.getElementById('ccOreF').hidden = v !== 'x'; if(v !== 'x') st.ore = +v; else { st.ore = ccNum2(document.getElementById('ccOreI').value) || 0; document.getElementById('ccOreI').focus(); } } calc(); });
+      document.getElementById('ccOreI').addEventListener('input', function(){ st.ore = Math.min(24, ccNum2(this.value)); calc(); });
+      calc();
+      document.getElementById('ccOreOk').addEventListener('click', function(){ var r = calc(); if(!(r.v > 0)) return; this.disabled = true;
+        ccSave(c, { tipo:'ore', io: r.io, operai: r.op, ore: st.ore, giorni: st.gg, importo: r.v, desc: ccChiTxt(r.io, r.op) + ', ' + (st.ore === 8 ? 'giornata' : st.ore === 4 ? 'mezza giornata' : st.ore + ' ore') + (st.gg > 1 ? ' × ' + st.gg + ' giorni' : '') })
+          .then(function(it){ ccBack(c, it.id); }).catch(function(e){ rxFail(e); document.getElementById('ccOreOk').disabled = false; }); });
+    });
+  }
+  // ----- materiali: foto della fattura + totale -----
+  function ccMat(c){
+    var st = { foto:null, iva:true }, box = rxOpen('Materiali', function(){ ctCostoAdd(c); });
+    box.innerHTML = '<div class="cc-h2">Fattura dei materiali</div><div class="cc-sub">Fai la foto, scrivi il totale. Fine.</div>'
+      + '<label class="cc-inv" id="ccInv"><span>📷 Fotografa la fattura o lo scontrino</span><input type="file" accept="image/*" hidden id="ccFile"></label>'
+      + '<div class="cc-q">Totale</div><label class="cc-fld"><span>Totale</span><input id="ccTot" inputmode="decimal" placeholder="0,00"><em>€</em></label>'
+      + ccChips('iva', [['1', 'Iva compresa'], ['0', 'Senza Iva']], '1')
+      + '<div class="cc-q">Cosa hai comprato? <i>(se vuoi)</i></div><label class="cc-fld"><input id="ccDesc" placeholder="es. Resina e primer"></label>'
+      + '<button type="button" class="pro-auth-submit" id="ccMatOk">Salva il costo</button><div class="cc-hint" style="text-align:center">La foto resta nel cantiere: comoda per il commercialista.</div>';
+    ccChipsBind(box, function(g, v){ st.iva = v === '1'; });
+    document.getElementById('ccFile').addEventListener('change', function(){ var f = this.files; rxPickPhotos(f, 1).then(function(a){ if(!a.length) return; st.foto = a[0]; document.getElementById('ccInv').innerHTML = '<img src="' + a[0] + '" alt=""><span class="ok">✓ Foto pronta · tocca per cambiarla</span><input type="file" accept="image/*" hidden id="ccFile2">';
+      document.getElementById('ccFile2').addEventListener('change', function(){ var ff = this.files; rxPickPhotos(ff, 1).then(function(b){ if(b.length){ st.foto = b[0]; document.querySelector('#ccInv img').src = b[0]; } }); }); }); });
+    document.getElementById('ccMatOk').addEventListener('click', function(){
+      var tot = ccNum(document.getElementById('ccTot').value), btn = this;
+      if(!tot){ document.getElementById('rdXErr').textContent = 'Scrivi il totale della fattura.'; return; }
+      btn.disabled = true; btn.textContent = 'Salvo…';
+      rxUpload(st.foto ? [st.foto] : []).then(function(u){ return ccSave(c, { tipo:'materiali', importo: tot, iva: st.iva, foto: u, desc: document.getElementById('ccDesc').value.trim() || (u.length ? 'Fattura materiali' : 'Materiali') }); })
+        .then(function(it){ ccBack(c, it.id); }).catch(function(e){ rxFail(e); btn.disabled = false; btn.textContent = 'Salva il costo'; });
+    });
+  }
+  // ----- attrezzi e mezzi -----
+  function ccMezzi(c){
+    ccTar().then(function(t){
+      t = t || {}; var at = (t.attrezzi && t.attrezzi.length ? t.attrezzi : CC_ATT.map(function(a){ return { nome:a[0], euro:a[1] }; })).map(function(a){ return { nome:a.nome, euro:a.euro, on:false, gg:1 }; });
+      var box = rxOpen('Attrezzi e mezzi', function(){ ctCostoAdd(c); });
+      function draw(){
+        box.innerHTML = '<div class="cc-h2">Attrezzi e mezzi</div><div class="cc-sub">Spunta cosa hai usato. Il prezzo al giorno lo scrivi una volta sola.</div><div class="cc-card cc-tools">'
+          + at.map(function(a, i){ return '<div class="cc-tool' + (a.on ? ' on' : '') + '"><button type="button" class="cc-box" data-cci="' + i + '" aria-label="Usato"></button><div><b>' + qEsc(a.nome) + '</b><label><input data-cce="' + i + '" inputmode="decimal" value="' + (a.euro || '') + '" placeholder="0"> € al giorno</label></div><div class="cc-step"><button type="button" data-ccm="' + i + '">−</button><span>' + a.gg + '</span><button type="button" data-ccp="' + i + '">+</button></div></div>'; }).join('')
+          + '<div class="cc-new"><input id="ccNN" placeholder="Nuovo attrezzo (es. Ponteggio)"><input id="ccNE" inputmode="decimal" placeholder="€/giorno"><button type="button" id="ccNA">＋</button></div></div>'
+          + '<div class="cc-calc" id="ccCalc"></div><button type="button" class="pro-auth-submit" id="ccMzOk"></button>';
+        box.querySelectorAll('[data-cci]').forEach(function(b){ b.addEventListener('click', function(){ var a = at[+b.dataset.cci]; a.on = !a.on; draw(); }); });
+        box.querySelectorAll('[data-ccm]').forEach(function(b){ b.addEventListener('click', function(){ var a = at[+b.dataset.ccm]; a.gg = Math.max(1, a.gg - 1); a.on = true; draw(); }); });
+        box.querySelectorAll('[data-ccp]').forEach(function(b){ b.addEventListener('click', function(){ var a = at[+b.dataset.ccp]; a.gg = Math.min(60, a.gg + 1); a.on = true; draw(); }); });
+        box.querySelectorAll('[data-cce]').forEach(function(inp){ inp.addEventListener('input', function(){ at[+inp.dataset.cce].euro = ccNum2(inp.value); calc(); }); });
+        document.getElementById('ccNA').addEventListener('click', function(){ var n = document.getElementById('ccNN').value.trim(); if(!n) return; at.push({ nome:n.slice(0, 60), euro: ccNum2(document.getElementById('ccNE').value), on:true, gg:1 }); draw(); });
+        document.getElementById('ccMzOk').addEventListener('click', save);
+        calc();
+      }
+      function calc(){ var u = at.filter(function(a){ return a.on && a.euro > 0; }), v = u.reduce(function(s, a){ return s + a.euro * a.gg; }, 0);
+        document.getElementById('ccCalc').innerHTML = u.length ? u.map(function(a){ return qEsc(a.nome) + ' ' + a.gg + (a.gg === 1 ? ' giorno' : ' giorni'); }).join(' + ') + '<b>= ' + ccE(v) + '</b>' : 'Spunta almeno un attrezzo e scrivi quanto costa al giorno.';
+        var ok = document.getElementById('ccMzOk'); ok.textContent = u.length ? 'Segna ' + ccE(v) : 'Segna'; ok.disabled = !u.length; return { u: u, v: v }; }
+      function save(){ var r = calc(); if(!r.u.length) return; var btn = document.getElementById('ccMzOk'); btn.disabled = true;
+        var list = at.filter(function(a){ return a.euro > 0; }).map(function(a){ return { nome:a.nome, euro:a.euro }; });
+        ccTarSave({ mia: t.mia || 0, operaio: t.operaio || 0, operai: t.operai !== false, attrezzi: list }).catch(function(){})
+          .then(function(){ return ccSave(c, { tipo:'mezzi', importo: Math.round(r.v * 100) / 100, voci: r.u.map(function(a){ return { nome:a.nome, euro:a.euro, giorni:a.gg }; }), desc: r.u.map(function(a){ return a.nome + (a.gg > 1 ? ' · ' + a.gg + ' giorni' : ''); }).join(', ') }); })
+          .then(function(it){ ccBack(c, it.id); }).catch(function(e){ rxFail(e); btn.disabled = false; }); }
+      draw();
+    });
+  }
+  // ----- promemoria della sera (home) -----
+  function ccSeraKey(c){ return 'rdSera:' + ctDayIso(0) + ':' + ctNorm(c.nome); }
+  function ccSeraFind(L){
+    var hr = window.__v3Hour != null ? window.__v3Hour : new Date().getHours(), today = ctDayIso(0); if(hr < 17) return null;
+    return L.filter(function(c){
+      if(c.fase !== 3 || !c.aperto) return false;
+      if(!c.g.agenda.some(function(a){ return a.data.tipo === 'lavoro' && a.data.data && a.data.data <= today; })) return false;
+      if((c.g.costo || []).some(function(x){ return x.data.tipo === 'ore' && x.data.data === today; })) return false;
+      try{ if(localStorage.getItem(ccSeraKey(c))) return false; }catch(e){}
+      return true; })[0] || null;
+  }
+  function ccSeraHtml(c, t){
+    var ok = t && t.mia, chi = t && t.operai === false ? '1-0' : '1-1';
+    return '<div class="cc-eve" id="ccEve"><div class="k">🌙 FINE GIORNATA</div><h3>Com’è andata da ' + qEsc(v3First(c.nome)) + ' oggi?</h3><p>Segna le ore, ci vogliono due secondi.</p>'
+      + (ok ? ccChips('chi', ccChi(t).slice(0, 3), chi) + ccChips('ore', [['4', 'Mezza giornata'], ['8', 'Giornata']], '8') : '')
+      + '<button type="button" class="cc-eok" id="ccEveOk">' + (ok ? '' : 'Segna le ore') + '</button><button type="button" class="cc-eno" id="ccEveNo">Oggi non ci sono andato</button></div>';
+  }
+  function ccSeraBind(box, c, t){
+    var el = document.getElementById('ccEve'); if(!el) return;
+    var st = { chi: t && t.operai === false ? '1-0' : '1-1', ore: 8 }, ok = document.getElementById('ccEveOk');
+    function calc(){ if(!(t && t.mia)) return 0; var p = st.chi.split('-'), v = ccOreCalc(t, p[0] === '1', +p[1], st.ore, 1); ok.textContent = 'Segna ' + ccE(v); return v; }
+    ccChipsBind(el, function(g, v){ if(g === 'chi') st.chi = v; if(g === 'ore') st.ore = +v; calc(); });
+    calc();
+    ok.addEventListener('click', function(){
+      if(!(t && t.mia)){ ct.list = v3.list; return ccOre(c); }
+      var p = st.chi.split('-'), io = p[0] === '1', op = +p[1], v = calc(); ok.disabled = true; ok.textContent = 'Salvo…';
+      ccSave(c, { tipo:'ore', io: io, operai: op, ore: st.ore, giorni: 1, importo: v, desc: ccChiTxt(io, op) + ', ' + (st.ore === 8 ? 'giornata' : 'mezza giornata') })
+        .then(function(){ el.innerHTML = '<div class="k">✓ SEGNATO</div><h3>' + ccE(v) + ' di lavoro da ' + qEsc(v3First(c.nome)) + '</h3><p>Buona serata!</p>'; setTimeout(function(){ delete box.dataset.ready; rdOggiLoad(); }, 1500); })
+        .catch(function(e){ ok.disabled = false; calc(); el.querySelector('p').textContent = rxErr(e); });
+    });
+    document.getElementById('ccEveNo').addEventListener('click', function(){ try{ localStorage.setItem(ccSeraKey(c), '1'); }catch(e){} el.remove(); });
+  }
   // ---------- Nuovo ingresso (per ora solo account di prova professionisti): home "Oggi" + barra in basso ----------
   var rdV2 = { on:false, loading:false, modalWas:false };
   function rdV2Active(){ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsTester()); }
