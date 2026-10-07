@@ -906,6 +906,8 @@ module.exports = async function handler(req, res) {
     isExteriorFacade ? exteriorPreservationNote : globalPreservationNote,
     paddedBands ? "NOTA SUL FORMATO: ai bordi della foto ci sono bande sfocate aggiunte solo per adattare il formato: lasciale come sono e NON ingrandire, spostare o ritagliare la foto al centro, che deve restare esattamente nella stessa posizione e dimensione." : ""
   ].join(" ");
+  // Cappotto: le regole generali ("non aggiungere bande", "spallette e davanzali identici") lo cancellerebbero.
+  const promptOut = cappSel ? SIST.cappFix(prompt, cappSel) : prompt;
 
   // L'immagine base64 arriva dal frontend già ridimensionata, ma per sicurezza
   // rifiutiamo esplicitamente payload anomali invece di lasciare che falliscano
@@ -960,7 +962,7 @@ module.exports = async function handler(req, res) {
     const send = (extra) => {
       const fd = new FormData();
       fd.append("model", model);
-      fd.append("prompt", prompt);
+      fd.append("prompt", promptOut);
       fd.append("n", "1");
       images.forEach((im, i) => fd.append("image[]", new Blob([Buffer.from(im.b64, "base64")], { type: im.mime }), `immagine${i + 1}.${ext(im.mime)}`));
       Object.entries(extra).forEach(([k, v]) => fd.append(k, v));
@@ -1063,7 +1065,7 @@ module.exports = async function handler(req, res) {
     // importante perché il prompt sopra spiega esplicitamente "PRIMA immagine" /
     // "SECONDA immagine" facendo riferimento a questa stessa sequenza.
     const contentParts = [
-      { text: prompt },
+      { text: promptOut },
       {
         inline_data: {
           mime_type: mimeType || "image/jpeg",

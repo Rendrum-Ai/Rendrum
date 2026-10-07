@@ -14,7 +14,7 @@ function parseCapp(c) {
 function cappNote(c, zocColor) {
   if (!c) return "";
   return " CAPPOTTO TERMICO: la facciata è stata rifatta con un cappotto termico appena posato. Tutte le pareti esterne intonacate visibili hanno ora una superficie NUOVA, perfettamente planare e uniforme, senza crepe, macchie, distacchi, rappezzi o vecchi segni, con " + GRANA[c.grana] + ", nel colore indicato." +
-    " Gli spigoli degli angoli e delle aperture sono dritti e netti; finestre e porte restano esattamente dove sono, con la stessa forma, ma appaiono leggermente più incassate (spallette più profonde di circa 10 cm) e con davanzali nuovi un po' più sporgenti." +
+    " Gli spigoli degli angoli e delle aperture sono dritti e netti; finestre e porte restano esattamente dove sono, con la stessa forma, ma appaiono più incassate (spallette più profonde di circa 12–15 cm) e con davanzali nuovi un po' più sporgenti." +
     (c.zoc ? " Alla base della facciata c'è una ZOCCOLATURA alta circa 60–80 cm, continua e dritta, in un tono " + (zocColor ? zocColor : "più scuro dello stesso colore") + ", con un sottile profilo di separazione." : "") +
     " Non cambiare tetto, serramenti, ringhiere, vegetazione, cielo, inquadratura né l'architettura della casa: cambia solo la superficie delle pareti esterne.";
 }
@@ -50,4 +50,26 @@ function cgPrompt(c, colorDesc) {
   ].join(" ");
 }
 
-module.exports = { parseCapp, cappNote, parseCg, cgPrompt, GRANA, CG_TIPO };
+// Cappotto: il testo generale della facciata dice "spallette e davanzali identici" e "nessuna banda":
+// così l'AI faceva solo la pittura. Qui il cappotto diventa il lavoro principale e le regole che lo
+// cancellerebbero vengono tolte o superate da eccezioni esplicite.
+function cappFix(prompt, c) {
+  if (!c) return prompt;
+  const zoc = c.zoc
+    ? "una ZOCCOLATURA ben visibile alta circa 70 cm alla base di tutta la facciata, continua e dritta, in un tono nettamente più scuro dello stesso colore, separata dal resto da una sottile linea orizzontale"
+    : "alla base della facciata, a circa 20–30 cm da terra, una sottile linea orizzontale dritta (il profilo di partenza del cappotto)";
+  const lead = "LAVORO PRINCIPALE: CAPPOTTO TERMICO. Questa facciata è stata isolata con un cappotto termico e rifinita da poco: il risultato deve far capire SUBITO, a colpo d'occhio, che la casa ha il cappotto nuovo e non è solo stata ridipinta. Cambiamenti visibili OBBLIGATORI: "
+    + "1) tutte le pareti esterne hanno una superficie NUOVA, perfettamente dritta e planare, senza crepe, rappezzi, macchie o vecchi segni, con " + GRANA[c.grana] + ", nel colore indicato; "
+    + "2) le pareti sono più spesse di circa 12–15 cm: attorno a OGNI finestra e porta le spallette laterali e l'architrave sono visibilmente più profondi, intonacati e lisci nello stesso colore, con una striscia d'ombra più marcata verso il serramento; i serramenti restano dove sono ma appaiono più incassati nel muro; "
+    + "3) sotto ogni finestra c'è un davanzale NUOVO, sottile, in alluminio o pietra chiara, che sporge di qualche centimetro oltre la nuova parete e getta una piccola ombra; "
+    + "4) gli spigoli degli angoli della casa e delle aperture sono netti e perfettamente dritti (paraspigoli); "
+    + "5) " + zoc + ". ";
+  let p = prompt
+    .replace(/le cornici di porte e finestre, /, "")
+    .replace(/, i davanzali/, "")
+    .replace(/SUPERFICIE CONTINUA \(regola vincolante\): /, "SUPERFICIE CONTINUA (regola vincolante, tranne la base della facciata descritta nel CAPPOTTO): ");
+  const after = " ECCEZIONI PER IL CAPPOTTO (valgono più di tutte le regole sopra): spallette e architravi più profondi, davanzali nuovi, spigoli dritti e " + (c.zoc ? "zoccolatura" : "linea del profilo di partenza") + " sono RICHIESTI e vanno fatti; non contano come elementi aggiunti né come bande o righe decorative. Restano invece identici tetto, serramenti, persiane, ringhiere, grondaie, vegetazione, cielo e inquadratura.";
+  return lead + p + after;
+}
+
+module.exports = { parseCapp, cappNote, parseCg, cgPrompt, cappFix, GRANA, CG_TIPO };
