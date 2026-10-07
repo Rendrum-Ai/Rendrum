@@ -1232,6 +1232,14 @@ button.ft-pr{ cursor:pointer; }
 .rd-sheet-in .rx-gr button[data-rdalt="account"] .rx-ic{ background:#2B1408; }
 .rd-sheet-in .rx-gr button[data-rxgo2="assist"] .rx-ic{ background:#2B1408; }
 
+/* ---------- Misuratore laser nel sopralluogo ---------- */
+.so-laser{ background:#F6E6DA; border-radius:14px; padding:10px 12px; font-size:12.5px; color:#6B2E0A; line-height:1.4; margin:8px 0; }
+.so-laser b{ display:block; font-size:13.5px; color:#8A3F12; margin-bottom:2px; }
+.so-amb input[data-k]:focus{ border-color:#C8692E !important; box-shadow:0 0 0 3px #F6E6DA; outline:none; }
+.so-amb-g label:focus-within span{ color:#C8692E; }
+.so-amb-g label:focus-within span::after{ content:' · 📏 misura ora'; font-weight:800; }
+.so-amb input.so-got{ background:#E3F3E9 !important; transition:background .2s; }
+
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
   body.rd-v2 #proBar{ display:none !important; }
@@ -14390,7 +14398,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     d.lavori.forEach(function(sk){ if(SO_SCHEDE[sk].mis) types[SO_SCHEDE[sk].mis] = 1; });
     if(!d.lavori.length){ box.innerHTML = '<div class="pp-empty">Prima scegli i lavori nella pagina Cliente.</div>'; return; }
     var stSk = d.lavori.filter(function(sk){ return SO_SCHEDE[sk].mis === 'stanze'; }), arSk = d.lavori.filter(function(sk){ return SO_SCHEDE[sk].mis === 'aree'; });
-    var h = '<div class="so-tot" id="soMisTot"></div>';
+    var h = '<div class="so-tot" id="soMisTot"></div><div class="so-laser"><b>📏 Misuratore laser</b>Tocca la prima misura e premi il tasto del misuratore: il numero si scrive da solo e passo alla misura dopo. Funziona con i misuratori in «modalità tastiera» (es. Leica DISTO D110, D2, X3).</div>';
     // una stanza (o prospetto, o zona) aperta alla volta, con le sue foto
     var rooms = soRooms(d).filter(function(r){ return (r.k === 'amb' && types.stanze) || (r.k === 'pro' && types.prospetti) || (r.k === 'area' && types.aree); });
     if(so.room === undefined){ var f0 = rooms.filter(function(r){ return !soDone(r.k, r.x); })[0]; so.room = f0 ? f0.id : null; }
@@ -14946,6 +14954,34 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(!b.dataset.arm){ b.dataset.arm = 1; b.textContent = 'Tocca di nuovo per eliminare'; return; }
     soLocalDel(id); soApi('sopr-delete', 'POST', { id: id }).catch(function(){}).then(function(){ soOpen(); });
   });
+  // ---------- Misuratore laser in "modalità tastiera": il misuratore scrive il numero e manda Invio ----------
+  // Capisce "4.567", "4,567", "4.567 m", "456,7 cm", "4567 mm"; poi passa da solo alla misura dopo.
+  var SO_LEN = ['l', 'w', 'h', 'larg', 'pedata', 'alzata'];
+  function soLaserVal(t, isLen){
+    var s0 = String(t || '').toLowerCase().replace(/\s+/g, ''), u = /mm$/.test(s0) ? 'mm' : /cm$/.test(s0) ? 'cm' : /m$/.test(s0) ? 'm' : '';
+    var n = qParse(s0.replace(/[a-z]+$/, '')); if(!(n > 0)) return null;
+    if(u === 'mm') n = n / 1000; else if(u === 'cm') n = n / 100;
+    else if(!u && isLen && n >= 1000) n = n / 1000; else if(!u && isLen && n >= 100) n = n / 100;
+    return Math.round(n * 1000) / 1000;
+  }
+  function soLaserNext(inp){
+    var box = inp.closest('.so-amb'); if(!box) return null;
+    var L = Array.prototype.slice.call(box.querySelectorAll('input[data-k]')).filter(function(i){ return SO_LEN.indexOf(i.dataset.k) > -1; });
+    var i = L.indexOf(inp); return i > -1 ? L[i + 1] || null : null;
+  }
+  document.addEventListener('keydown', function(e){
+    var inp = e.target; if(!inp || inp.tagName !== 'INPUT' || !inp.dataset || !inp.dataset.k || !inp.closest('#soBody, .so-amb')) return;
+    if(e.key !== 'Enter' && e.key !== 'Tab') return;
+    var k = inp.dataset.k; if(k === 'nome' || k === 'note') return;
+    var isLen = SO_LEN.indexOf(k) > -1, v = soLaserVal(inp.value, isLen);
+    if(v != null){ var f = String(v).replace('.', ','); if(inp.value !== f){ inp.value = f; inp.dispatchEvent(new Event('input', { bubbles:true })); } }
+    if(!isLen) return;
+    e.preventDefault();
+    inp.classList.add('so-got'); setTimeout(function(){ inp.classList.remove('so-got'); }, 900);
+    var nx = soLaserNext(inp);
+    if(nx){ nx.focus(); try{ nx.select(); }catch(er){} }
+    else { inp.blur(); var b = inp.closest('.so-amb'), t = b && b.querySelector('.so-amb-mq, .so-sup-mq'); try{ soMsg('✓ Misure fatte' + (t && t.textContent ? ': ' + t.textContent : '') + '.'); }catch(er){} }
+  }, true);
   // ---------- Servizi in più per i professionisti (per ora solo account di prova) ----------
   // Agenda, lavori finiti, recensioni, sito vetrina, voto condominio, statistiche, WhatsApp.
   var rx = { cache:{}, back:null, edit:null };
