@@ -1198,6 +1198,18 @@ button.ft-pr{ cursor:pointer; }
 .rd-sheet-in .rd-esci svg{ width:22px; height:22px; }
 @media (min-width:760px){ .rd-sheet-in .rx-gr{ grid-template-columns:repeat(6,minmax(0,1fr)); } }
 
+/* ---------- Riepilogo piano e codice sconto ---------- */
+.pr-card{ background:#2B1408; color:#fff; border-radius:18px; padding:16px; }
+.pr-card b{ display:block; font-size:17px; }
+.pr-price{ font-family:"Playfair Display", Georgia, serif; font-size:32px; margin:6px 0 2px; }
+.pr-price s{ font-size:20px; color:#CDB8A6; }
+.pr-price span{ font-family:inherit; font-size:13px; color:#E3A06B; }
+.pr-card em{ font-style:normal; font-size:13px; color:#E8D9CC; }
+.pr-ask{ display:block; width:100%; margin-top:12px; border:1.5px dashed var(--accent); background:var(--accent-soft); color:#8A3F12; border-radius:14px; padding:13px; font-family:inherit; font-weight:800; font-size:15px; cursor:pointer; }
+.pr-ok{ background:#E3F3E9; border-radius:16px; padding:12px 14px; margin-top:12px; color:#235C3A; font-size:13.5px; line-height:1.4; }
+.pr-ok b{ display:block; color:#1D6B3E; font-size:15px; margin-bottom:2px; }
+.pr-ok .ct-link{ margin-top:6px; }
+
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
   body.rd-v2 #proBar{ display:none !important; }
@@ -12287,6 +12299,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var APP_NO_SUB = 'Il tuo account non ha un abbonamento attivo, quindi da qui non puoi ancora creare anteprime.';
   function startCheckout(tier){
     if(IS_APP){ alert(APP_NO_SUB); return; }
+    if(typeof window.rdPlanSheet === 'function'){ window.rdPlanSheet(tier || (proAccount && proAccount.tier) || 'basic'); return; }
     fetch('/api/stripe?action=checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ tier: tier || (proAccount && proAccount.tier) || 'basic' }) })
       .then(function(r){ return r.json().catch(function(){ return {}; }); })
       .then(function(d){ if(d && d.url) window.location.href = d.url; else alert((d && d.error) || 'Impossibile aprire il pagamento, riprova.'); })
@@ -17092,6 +17105,42 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var t = inDay(0), ag = 0; L.forEach(function(c){ (c.g.agenda || []).forEach(function(a){ if(a.data.data === t && !a.data.fatto) ag++; }); }); set('agenda', ag); }catch(e){}
     try{ set('squadra', (TM.members || []).filter(function(m){ return m.stato === 'richiesta'; }).length); }catch(e){}
   }
+  // ---------- Prima del pagamento: riepilogo del piano e "Hai un codice sconto?" ----------
+  // Il codice lo verifica il server su Stripe (api/stripe?action=offer) e lo applica al pagamento.
+  function prE(c){ return ((+c || 0) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €'; }
+  function prPost(action, body){ return fetch('/api/stripe?action=' + action, { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return { ok:r.ok, d:d }; }); }); }
+  function rdPlanSheet(tier){
+    var st = { tier:tier, code:'', promo:null, open:false }, box = rxOpen('Attiva l’abbonamento', null); rxLoading(box);
+    prPost('offer', { tier:tier }).then(function(x){ st.tier = x.d.tier || tier; st.plan = x.d.plan || null; st.promoOk = x.d.promoOk !== false; draw(); }).catch(function(){ st.plan = null; draw(); });
+    function draw(){
+      var p = st.plan, pr = st.promo, h = '<div class="pr-card">' + (p ? '<b>' + qEsc(p.name) + '</b><div class="pr-price">' + (pr ? '<s>' + prE(p.priceCents) + '</s> ' + prE(pr.finalCents) : prE(p.priceCents)) + '<span> al mese + IVA</span></div><em>' + p.images + ' anteprime AI al mese</em>' : '<b>Abbonamento Rendrum</b>') + '</div>';
+      if(pr) h += '<div class="pr-ok"><b>✓ Codice ' + qEsc(pr.code) + ': ' + qEsc(pr.label) + '</b>' + (pr.duration === 'forever' ? 'Lo sconto vale per tutto l’abbonamento.' : 'Poi ' + (p ? prE(p.priceCents) : 'il prezzo pieno') + ' al mese + IVA.') + '<button type="button" class="ct-link" id="prRm">Togli il codice</button></div>';
+      else if(st.promoOk){
+        h += st.open ? '<label class="ft-f" style="margin-top:12px"><span>Codice sconto</span><input id="prCode" maxlength="40" autocapitalize="characters" autocomplete="off" placeholder="es. LANCIO" value="' + qEsc(st.code) + '"></label><button type="button" class="qb-sec vr-cp" id="prApply">Applica il codice</button>'
+          : '<button type="button" class="pr-ask" id="prAsk">🏷️ Hai un codice sconto?</button>';
+      }
+      h += '<button type="button" class="pro-auth-submit cc-add" id="prGo">Continua al pagamento</button><div class="cc-hint" style="text-align:center">Pagamento sicuro con carta tramite Stripe. Disdici quando vuoi dall’account.</div>';
+      box.innerHTML = h;
+      var a = document.getElementById('prAsk'); if(a) a.addEventListener('click', function(){ st.open = true; draw(); var i = document.getElementById('prCode'); if(i) i.focus(); });
+      var ap = document.getElementById('prApply'); if(ap) ap.addEventListener('click', apply);
+      var ci = document.getElementById('prCode'); if(ci) ci.addEventListener('keydown', function(e){ if(e.key === 'Enter') apply(); });
+      var rm = document.getElementById('prRm'); if(rm) rm.addEventListener('click', function(){ st.promo = null; st.code = ''; st.open = false; draw(); });
+      document.getElementById('prGo').addEventListener('click', go);
+    }
+    function apply(){
+      var i = document.getElementById('prCode'), b = document.getElementById('prApply'), err = document.getElementById('rdXErr'); st.code = i.value.trim().toUpperCase();
+      if(!st.code){ err.textContent = 'Scrivi il codice.'; return; }
+      err.textContent = ''; b.disabled = true; b.textContent = 'Controllo il codice…';
+      prPost('offer', { tier:st.tier, code:st.code }).then(function(x){ if(x.ok && x.d.promo){ st.promo = x.d.promo; draw(); } else { err.textContent = (x.d && x.d.error) || 'Codice non valido.'; b.disabled = false; b.textContent = 'Applica il codice'; } })
+        .catch(function(){ err.textContent = 'Connessione non riuscita. Riprova.'; b.disabled = false; b.textContent = 'Applica il codice'; });
+    }
+    function go(){
+      var b = document.getElementById('prGo'), err = document.getElementById('rdXErr'); b.disabled = true; b.textContent = 'Apro il pagamento…'; err.textContent = '';
+      prPost('checkout', { tier:st.tier, code:st.promo ? st.promo.code : '' }).then(function(x){ if(x.d && x.d.url){ window.location.href = x.d.url; return; } err.textContent = (x.d && x.d.error) || 'Impossibile aprire il pagamento, riprova.'; b.disabled = false; b.textContent = 'Continua al pagamento'; })
+        .catch(function(){ err.textContent = 'Impossibile aprire il pagamento, riprova.'; b.disabled = false; b.textContent = 'Continua al pagamento'; });
+    }
+  }
+  window.rdPlanSheet = rdPlanSheet;
   // ---------- Privati e professionisti separati: niente richieste ai professionisti per ora ----------
   // Al posto di "Trova un artigiano" il privato manda il prima e dopo a chi vuole lui.
   function rdShareImg(){
