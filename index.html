@@ -1209,6 +1209,8 @@ button.ft-pr{ cursor:pointer; }
 .pr-ok{ background:#E3F3E9; border-radius:16px; padding:12px 14px; margin-top:12px; color:#235C3A; font-size:13.5px; line-height:1.4; }
 .pr-ok b{ display:block; color:#1D6B3E; font-size:15px; margin-bottom:2px; }
 .pr-ok .ct-link{ margin-top:6px; }
+/* logo dell'impresa nella scheda del menu: intero, mai tagliato */
+.rx-co-lg.img{ width:64px; height:48px; background-color:#fff; background-size:contain; background-repeat:no-repeat; background-position:center; background-origin:content-box; padding:5px; border-radius:12px; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -17098,7 +17100,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       document.getElementById('rxCoN').textContent = n;
       var tr = proAccount && proAccount.subscriptionStatus === 'trialing', pl = RX_PLAN[RX_RANK[(proAccount && proAccount.tier) || 'basic'] || 1];
       document.getElementById('rxCoS').textContent = tr ? 'In prova · piano ' + pl : (proAccount && proAccount.email) || ('Piano ' + pl);
-      var u = proAccount && proAccount.logoUrl; if(lg){ if(u){ lg.style.backgroundImage = 'url("' + String(u).replace(/"/g, '') + '")'; lg.textContent = ''; } else { lg.style.backgroundImage = ''; lg.textContent = ctIni(n); } }
+      var u = proAccount && proAccount.logoUrl; if(lg){ if(u){ lg.style.backgroundImage = 'url("' + String(u).replace(/"/g, '') + '")'; lg.textContent = ''; lg.classList.add('img'); } else { lg.style.backgroundImage = ''; lg.textContent = ctIni(n); lg.classList.remove('img'); } }
     }catch(e){}
     var set = function(k, v){ var b = document.querySelector('#rdAltro [data-rxbd="' + k + '"]'); if(!b) return; b.hidden = !(v > 0); b.textContent = v > 9 ? '9+' : String(v || ''); };
     try{ var L = (typeof ct !== 'undefined' && ct.list) || []; set('incassi', inAll(L).filter(function(a){ return a.x.alert; }).length);
