@@ -33,7 +33,8 @@
 const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS } = require("./_auth-lib");
 const jobs = require("./_jobs");
 const DECO = require("./_deco");
-const SIST = require("./_sist");   // cappotto termico e cartongesso   // anteprime salvate: si ritrovano anche chiudendo l'app
+const SIST = require("./_sist");
+const INV = require("./_invito");   // link anteprima mandato dall'artigiano al cliente   // cappotto termico e cartongesso   // anteprime salvate: si ritrovano anche chiudendo l'app
 const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 
 // ---- Crediti e prova gratuita (vedi supabase_crediti.sql) ----
@@ -98,14 +99,57 @@ module.exports = async function handler(req, res) {
   // Accesso: per generare serve SEMPRE un account (le anteprime costano).
   // Con i pagamenti attivi servono anche abbonamento attivo e anteprime rimaste nel mese.
   let quotaAcc = null, quotaMonth = null, reserved = false, refunded = false;
-  quotaAcc = await currentAccount(req).catch(function () { return null; });
+  // Link dell'artigiano (?i=CODICE): il cliente non ha un account. Si usa l'account dell'artigiano,
+  // solo per il lavoro scelto da lui; prima i crediti comprati dal cliente, poi l'omaggio.
+  let inv = null;
+  if (req.body && req.body.invito) {
+    const f = await INV.find(req.body.invito);
+    if (!f.row) return res.status(404).json({ error: f.error, code: "invito_invalid" });
+    const d0 = f.row.data || {};
+    if (INV.scaduto(d0)) return res.status(410).json({ error: "Questo link è scaduto: chiedi all'impresa di mandartene uno nuovo.", code: "invito_scaduto" });
+    const L = INV.LAVORI[d0.lavoro] || INV.LAVORI.pittura;
+    if (!L.ok(String(materialId || ""), context)) return res.status(400).json({ error: "Con questo link puoi provare solo: " + L.n + ".", code: "invito_lavoro" });
+    const ar = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(f.row.account_id) + "&select=*", { method: "GET" }).catch(function () { return { ok: false }; });
+    const owner = ar.ok && Array.isArray(ar.data) && ar.data[0];
+    if (!owner) return res.status(404).json({ error: "Link non valido o scaduto.", code: "invito_invalid" });
+    const PAY = "Puoi comprare altre " + INV.PACK_N + " anteprime a " + INV.PACK_CENTS / 100 + " €, senza abbonamento.";
+    const rs = await INV.reserve(f.row);
+    if (!rs) return res.status(402).json({ error: "Hai usato le anteprime disponibili. " + PAY, code: "invito_pay" });
+    inv = { row: rs.row, kind: rs.kind, owner };
+    const invJson = res.json.bind(res); let invDone = false;
+    res.json = function (payload) {
+      if (invDone) return invJson(payload);
+      invDone = true;
+      if (res.statusCode >= 400) {
+        let out = payload;
+        if (inv.kind === "omaggio" && payload && /^(quota_exceeded|trial_over|trial_expired|trial_unavailable)$/.test(payload.code || "")) {
+          res.status(402); out = { error: "L'anteprima in omaggio non è disponibile in questo momento. " + PAY, code: "invito_pay" };
+        }
+        return INV.release(inv.row, inv.kind).catch(function () {}).then(function () { return invJson(out); });
+      }
+      if (payload && payload.imageBase64) {
+        const up = require("./_projects-lib").uploadPhoto, dir = "inviti/" + owner.id;
+        return Promise.all([
+          up("data:" + (payload.mimeType || "image/jpeg") + ";base64," + payload.imageBase64, dir).catch(function () { return null; }),
+          up("data:" + (mimeType || "image/jpeg") + ";base64," + imageBase64, dir).catch(function () { return null; }),
+        ]).then(function (u) {
+          if (!u[0]) return null;
+          const titolo = String((jobMeta && jobMeta.title) || [material, colorA].filter(Boolean).join(" · ")).slice(0, 120);
+          return INV.addResult(inv.row, { url: u[0], prima: u[1] || null, titolo: titolo, at: new Date().toISOString(), tipo: inv.kind });
+        }).catch(function () {}).then(function () { return invJson(Object.assign({}, payload, { jobId: null, invito: true })); });
+      }
+      return invJson(payload);
+    };
+  }
+  quotaAcc = inv ? inv.owner : await currentAccount(req).catch(function () { return null; });
+  const skipQuota = !!(inv && inv.kind === "credito");   // anteprima pagata dal cliente: niente dall'artigiano
   if (!quotaAcc) return res.status(401).json({ error: "Per creare l'anteprima accedi o registrati.", code: "login_required" });
   // Chi non ha un abbonamento attivo usa i crediti comprati o la prova gratuita settimanale,
   // così nessuno può generare senza limite a spese di Rendrum.
   const accEmail = String(quotaAcc.email || "").toLowerCase();
   const unlimited = UNLIMITED_EMAILS().includes(accEmail);
   const subActive = paymentsEnabled() && ["active", "trialing"].includes(quotaAcc.subscription_status);
-  if (!unlimited && !subActive) {
+  if (!skipQuota && !unlimited && !subActive) {
     const t = await useCredit(quotaAcc);
     if (t === "missing") return res.status(503).json({ error: "Le anteprime non sono disponibili in questo momento. Riprova tra poco.", code: "trial_unavailable" });
     if (t === "over" || t === "expired") {
@@ -122,7 +166,7 @@ module.exports = async function handler(req, res) {
       return origJsonT(payload);
     };
   }
-  if (!unlimited && subActive) {
+  if (!skipQuota && !unlimited && subActive) {
     quotaMonth = new Date().toISOString().slice(0, 7);
     const limit = PLANS_LIMIT(quotaAcc.tier);
     // Prenotazione atomica dell'anteprima nel database (funzione use_preview):
@@ -154,7 +198,7 @@ module.exports = async function handler(req, res) {
   async function countUsage() { /* già conteggiata all'inizio */ }
 
   // Lavoro salvato: foto, bozze e risultato restano anche se il cliente chiude l'app.
-  const job = jobs.validId(jobId) ? await jobs.start(req, quotaAcc, jobId, jobMeta, imageBase64, mimeType).catch(function () { return null; }) : null;
+  const job = (!inv && jobs.validId(jobId)) ? await jobs.start(req, quotaAcc, jobId, jobMeta, imageBase64, mimeType).catch(function () { return null; }) : null;
   if (job) {
     const prevJson = res.json.bind(res);
     res.json = function (payload) {

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>try{if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
+<script>try{if(/[?&]i=[a-f0-9]{20}/.test(location.search))document.documentElement.classList.add("rd-inv");if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <link rel="preload" as="image" href="/img/5298b64fd7df.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="/img/8ee849b00fb5.jpg" fetchpriority="high">
@@ -1286,6 +1286,62 @@ button.ft-pr{ cursor:pointer; }
 .mt-sch{ display:inline-block; font-size:13px; font-weight:800; color:#C8692E; margin:2px 0 6px; }
 .mt-c a{ color:#C8692E; font-weight:800; text-decoration:none; }
 .so-ble{ display:block; width:100%; margin-top:8px; border:1.5px solid #C8692E; background:#fff; color:#8A3F12; border-radius:12px; padding:10px; font-family:inherit; font-weight:800; font-size:13.5px; cursor:pointer; }
+/* ===== Link anteprima per il cliente ===== */
+.iv-hero{ background:#2B1408; color:#fff; border-radius:16px; padding:14px; margin-bottom:6px; }
+.iv-hero b{ display:block; font-size:16px; } .iv-hero span{ display:block; font-size:12.5px; color:#E3A06B; margin-top:4px; line-height:1.4; }
+.iv-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.iv-chip{ font-family:inherit; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 12px; font-size:13px; font-weight:700; cursor:pointer; }
+.iv-chip.on{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.iv-info{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:2px 12px; margin-top:12px; }
+.iv-info div{ display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line); font-size:13.5px; } .iv-info div:first-child{ border:none; } .iv-info span{ color:var(--ink-soft); }
+.iv-note{ font-size:12px; color:var(--ink-soft); margin:8px 2px 0; line-height:1.4; }
+html:not([data-theme="dark"]) .pro-auth-submit.iv-wa, html .pro-auth-submit.iv-wa{ background:#25A35A !important; background-image:none !important; color:#fff !important; border-color:#25A35A !important; margin-top:12px; box-shadow:0 6px 16px rgba(37,163,90,.25) !important; }
+.iv-copy{ display:block; width:100%; margin-top:8px; text-align:center; }
+.iv-off{ display:block; width:100%; margin-top:10px; background:none; border:none; color:#B4341A; font-family:inherit; font-size:13px; font-weight:700; padding:8px; cursor:pointer; }
+.iv-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
+.iv-pic{ display:block; background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; text-decoration:none; color:var(--ink); }
+.iv-pic img{ display:block; width:100%; aspect-ratio:4/3; object-fit:cover; } .iv-pic span{ display:block; padding:6px 8px 8px; font-size:12px; font-weight:700; } .iv-pic em{ display:block; font-style:normal; font-weight:400; color:var(--ink-soft); font-size:11px; margin-top:2px; }
+.iv-row{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; font-family:inherit; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:9px; margin-top:8px; cursor:pointer; color:var(--ink); }
+.iv-row img, .iv-row i{ flex:none; width:52px; height:52px; border-radius:10px; object-fit:cover; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; font-style:normal; font-size:22px; }
+.iv-row span{ flex:1; min-width:0; } .iv-row b{ display:block; font-size:14px; } .iv-row em{ display:block; font-style:normal; font-size:11.5px; color:var(--ink-soft); }
+.iv-row u{ flex:none; text-decoration:none; background:var(--accent); color:#fff; font-size:11px; font-weight:800; border-radius:999px; padding:3px 8px; }
+.iv-pp{ margin:0 0 12px; } .iv-pp-h{ display:flex; justify-content:space-between; align-items:center; } .iv-pp-h b{ font-size:15px; }
+.iv-pp-h button{ font-family:inherit; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:6px 11px; font-size:12.5px; font-weight:700; cursor:pointer; }
+.iv-pp-e{ font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
+.iv-home{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; font-family:inherit; background:#2B1408; color:#fff; border:none; border-radius:16px; padding:12px 14px; margin:0 0 10px; cursor:pointer; }
+.iv-home i{ font-style:normal; font-size:20px; } .iv-home b{ display:block; font-size:14px; } .iv-home em{ display:block; font-style:normal; font-size:12px; color:#E3A06B; }
+/* cliente che apre il link */
+html.rd-inv #proBar, html.rd-inv #rdTab, html.rd-inv #proAuthOpen, html.rd-inv #proBadge, html.rd-inv #proProjectsOpenBtn, html.rd-inv #rdAvatar, html.rd-inv #rdMenu,
+html.rd-inv #layerBox, html.rd-inv #queueBox, html.rd-inv #queueAddBtn, html.rd-inv #layerAddBtn, html.rd-inv #qFromPreviewBtn, html.rd-inv #tfBtn, html.rd-inv #panel3SaveProjectBtn{ display:none !important; }
+.iv-guest{ position:fixed; inset:0; z-index:9000; background:var(--bg, #F7F5F1); overflow:auto; }
+.iv-g-in{ max-width:460px; margin:0 auto; padding:calc(env(safe-area-inset-top,0px) + 16px) 18px 30px; }
+.iv-g-h{ display:flex; align-items:center; gap:10px; margin-bottom:16px; } .iv-g-h img, .iv-g-h i{ width:42px; height:42px; border-radius:12px; object-fit:contain; background:#2B1408; color:#E3A06B; display:flex; align-items:center; justify-content:center; font-style:normal; font-family:'Playfair Display',Georgia,serif; font-size:18px; }
+.iv-g-h b{ display:block; font-size:16px; color:var(--ink); } .iv-g-h span{ font-size:12px; color:var(--ink-soft); }
+.iv-badge{ display:inline-block; background:var(--accent-soft); color:#8A3F12; border-radius:999px; padding:6px 12px; font-size:13px; font-weight:700; }
+.iv-g-t{ font-family:'Playfair Display',Georgia,serif; font-weight:400; font-size:30px; line-height:1.1; color:#2B1408; margin:12px 0 8px; }
+.iv-g-s{ font-size:14px; color:var(--ink-soft); line-height:1.45; margin:0 0 12px; }
+.iv-steps{ display:flex; gap:6px; } .iv-steps span{ flex:1; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:9px 6px; text-align:center; font-size:12px; color:var(--ink-soft); }
+.iv-steps b{ display:block; font-family:'Playfair Display',Georgia,serif; font-weight:400; font-size:22px; color:var(--accent); }
+.iv-g-prev{ display:flex; gap:6px; margin-top:14px; } .iv-g-prev a{ flex:1; } .iv-g-prev img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:12px; display:block; }
+.iv-go{ display:block; width:100%; margin-top:18px; border:none; border-radius:16px; background:var(--accent); color:#fff; font-family:inherit; font-size:16px; font-weight:700; padding:16px; cursor:pointer; }
+.iv-go.alt{ margin-top:8px; background:#2B1408; }
+.iv-g-n{ font-size:12px; color:var(--ink-soft); text-align:center; margin-top:8px; }
+.iv-g-card{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; } .iv-g-card b{ display:block; font-size:16px; } .iv-g-card span{ display:block; font-size:13px; color:var(--ink-soft); margin-top:4px; }
+.iv-ok{ background:#E3F1E4; color:#24602B; border-radius:12px; padding:10px 12px; font-size:13.5px; font-weight:700; margin-bottom:10px; }
+.iv-load{ text-align:center; color:var(--ink-soft); padding:60px 0; }
+.iv-bar{ margin:10px 0; } .iv-left{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:11px 13px; font-size:13.5px; font-weight:700; }
+.iv-buy{ background:#FDF0E6; border:1px solid #E9B48C; border-radius:16px; padding:13px; } .iv-buy b{ display:block; color:#6B2E0A; font-size:15px; } .iv-buy span{ display:block; color:#6B2E0A; font-size:12.5px; margin-top:3px; }
+.iv-buy-b{ display:block; width:100%; margin-top:10px; border:none; border-radius:14px; background:var(--accent); color:#fff; font-family:inherit; font-size:15px; font-weight:700; padding:13px; cursor:pointer; }
+.iv-wr{ display:block; width:100%; margin-top:8px; border:1.5px solid var(--line); border-radius:14px; background:var(--surface); color:var(--ink); font-family:inherit; font-size:14.5px; font-weight:700; padding:12px; cursor:pointer; }
+.iv-sheet{ position:fixed; inset:0; z-index:9500; background:rgba(29,27,24,.45); display:flex; align-items:flex-end; justify-content:center; }
+.iv-sh-in{ width:100%; max-width:480px; background:var(--bg, #FBFAF7); border-radius:24px 24px 0 0; padding:16px 18px calc(env(safe-area-inset-bottom,0px) + 20px); }
+.iv-sh-t{ display:block; font-family:'Playfair Display',Georgia,serif; font-weight:400; font-size:25px; color:#2B1408; } .iv-sh-s{ display:block; font-size:13px; color:var(--ink-soft); margin:2px 0 6px; }
+.iv-pk{ display:flex; align-items:center; gap:12px; background:var(--surface); border:1.5px solid var(--accent); box-shadow:0 0 0 3px var(--accent-soft); border-radius:16px; padding:13px 14px; margin-top:8px; }
+.iv-pk i{ width:20px; height:20px; border-radius:50%; border:6px solid var(--accent); flex:none; } .iv-pk span{ flex:1; } .iv-pk b{ display:block; font-size:15px; } .iv-pk em{ font-style:normal; font-size:12px; color:var(--ink-soft); }
+.iv-pk strong{ font-family:'Playfair Display',Georgia,serif; font-weight:400; font-size:24px; color:#2B1408; }
+.iv-pay{ display:block; width:100%; margin-top:14px; border:none; border-radius:16px; background:#2B1408; color:#fff; font-family:inherit; font-size:15.5px; font-weight:700; padding:15px; cursor:pointer; }
+.iv-sh-n{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:8px; } .iv-err{ color:#B4341A; font-size:13px; text-align:center; margin-top:6px; }
+.iv-close{ display:block; width:100%; margin-top:6px; background:none; border:none; font-family:inherit; color:var(--ink-soft); font-size:13.5px; padding:8px; cursor:pointer; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -10614,6 +10670,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(!chainRun) setAiBusy(false);
     renderHeroPreview();
     try{ if(window.gbOnResult) window.gbOnResult(result); }catch(e){}
+    try{ if(window.invOnResult) window.invOnResult(result); }catch(e){}
     setTimeout(syncResultCta, 0);
     statusEl.textContent = ts('aiStatusDone');
     if(RD_TEST_Q){
@@ -10674,6 +10731,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         colorAccento: (needsAccentoColor() && state.colorAccento) ? state.colorAccento.name : null, colorAccentoHex: (needsAccentoColor() && state.colorAccento) ? apiHex(state.colorAccento) : null,
         accentoRefImage: buildAccentoRefImage(),
         deco: decoPayload(),
+        invito: window.RD_INV_T || null,
         cartongesso: cgPayload(),
         cappotto: cappPayload(),
         segni: (marksAvailable() && state.marks && state.marks.length) ? state.marks.map(function(m, i){ return { n: i+1, target: m.target }; }) : null,
@@ -10809,7 +10867,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       })
       .catch(function(err){
         if(myRun.detached){ rdDetachedDone(false, null, err); return; }
-        if(err && err.code === 'login_required'){ proAuthOpen(); proSwitchTab('register'); }
+        if(err && err.code === 'invito_pay' && window.invBuy){ setTimeout(window.invBuy, 50); }
+        else if(err && err.code === 'login_required' && !window.RD_INV_T){ proAuthOpen(); proSwitchTab('register'); }
         else if(err && err.code === 'subscription_required' && !IS_APP){ startCheckout(); }
         statusEl.classList.add('error');
         var errMsg = err && err.message;
@@ -11285,7 +11344,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return L.map(function(m){ var st = CATEGORY_STYLE[m.cat || m.v] || {}; m.bg = st.bg; m.icon = st.icon || ''; return m; });
   }
   function sfSteps(){
-    var s = ['foto', 'mat'], c = SF.mat;
+    var s = window.RD_INV_MAT ? ['foto'] : ['foto', 'mat'], c = SF.mat;
     if(c === 'monolith') s.push('dove', 'resEff');
     else if(c === 'microcemento') s.push('dove');
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
@@ -11295,6 +11354,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'legno') s.push('legnoTipo');
     else if(c === 'scale') s.push('scaleMat');
     else if(c === 'graniglia_esterni') s.push('granLayout', 'granScale');
+    if(window.RD_INV_MAT) s = s.filter(function(x){ return x !== 'ctx'; });
     return s;
   }
   function sfAnswered(st){
@@ -11524,7 +11584,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     syncNextStepEnabled();
   }
   function sfGo(st){ SF.step = st; sfRender(); window.scrollTo(0,0); }
+  function invApplyMat(){
+    if(!window.RD_INV_MAT || SF.mat === window.RD_INV_MAT) return false;
+    sfApply('mat', window.RD_INV_MAT); if(window.RD_INV_CTX) sfApply('ctx', window.RD_INV_CTX);
+    return true;
+  }
   function sfNext(){
+    if(SF.step === 'foto') invApplyMat();
     var steps = sfSteps(), i = steps.indexOf(SF.step);
     for(var k = i + 1; k < steps.length; k++){ return sfGo(steps[k]); }
     var nsq = currentSeq(); goTo(nsq[nsq.indexOf('panelSimple') + 1] || 'panelColor');
@@ -11558,6 +11624,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function sfEnter(){
     if(!photoImg) SF.step = 'foto';
+    else if(window.RD_INV_MAT && (invApplyMat() || !state.category)){ SF.step = sfSteps()[1] || 'foto'; }
     else if(!state.category){ SF.step = 'mat'; SF.mat = null; SF.a = {}; }
     else if(sfSteps().indexOf(SF.step) < 0) SF.step = sfSteps()[sfSteps().length - 1];
     sfRender();
@@ -11645,7 +11712,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 
   var rdPendingStart = null;
   function rdNeedLogin(kind){
-    if(proAccount) return false;
+    if(proAccount || (window.RD_INV && kind === 'privato')) return false;
     proCheckSession(function(){
       if(proAccount){ if(kind !== 'privato' && typeof rdV2Active === 'function' && rdV2Active()){ try{ rdV2Sync(); }catch(e){} return; } document.getElementById(kind === 'privato' ? 'landingPrivato' : 'landingPro').click(); return; }
       rdPendingStart = kind; state.userType = kind === 'privato' ? 'privato' : 'professionista';
@@ -12432,6 +12499,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   document.addEventListener('click', function(e){
     var t = e.target.closest && e.target.closest('#landingPrivato, #landingPro, #next1, #nextStep');
     if(!t) return;
+    if(window.RD_INV && t.id !== 'landingPro') return;   // cliente arrivato dal link dell'artigiano: niente accesso
     if(!proAccount){
       e.preventDefault(); e.stopImmediatePropagation();
       proPendingClick = t.id;
@@ -12753,7 +12821,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     listEl.innerHTML = '<div class="pp-empty">' + (LANG==='en' ? 'Loading…' : 'Caricamento…') + '</div>';
     fetch('/api/projects-list')
       .then(function(r){ return r.json().catch(function(){ return {}; }); })
-      .then(function(data){ ppProjects = (data && data.projects) || []; ppRenderList(); })
+      .then(function(data){ ppProjects = (data && data.projects) || []; ppRenderList(); try{ if(window.invPpSection) window.invPpSection(listEl); }catch(e){} })
       .catch(function(){ ppProjects = []; ppRenderList(); });
   }
 
@@ -15706,6 +15774,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     try{ ctCostiBlock(c, box); }catch(e){}
     try{ ctMatBlock(c, box); }catch(e){}
     try{ ftBlock(c, box); }catch(e){}
+    try{ ctInvBlock(c, box); }catch(e){}
     box.querySelectorAll('[data-cto]').forEach(function(b){ b.addEventListener('click', function(){ open[+b.dataset.cto](); }); });
     var g1 = document.getElementById('ctGo'); if(g1) g1.addEventListener('click', function(){ c.next.fn(); });
     var wa = document.getElementById('ctWa'); if(wa) wa.addEventListener('click', function(){ rxWa(c.tel, 'Buongiorno ' + c.nome + ', '); });
@@ -15986,7 +16055,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function v3Home(box){
     var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
     if(!box.dataset.ready) box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div></div><div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div><div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
-    return Promise.all([ctLoad(), ccTar(), tmOwnerOn() ? tmLoad(true).catch(function(){ return null; }) : null, inLoad(true).catch(function(){ return null; })]).then(function(R){
+    return Promise.all([ctLoad(), ccTar(), tmOwnerOn() ? tmLoad(true).catch(function(){ return null; }) : null, inLoad(true).catch(function(){ return null; }), invLoad(true).catch(function(){ return null; })]).then(function(R){
       var L = v3Order(R[0].slice()), tar = R[1]; v3.list = L;
       var sera = ccSeraFind(L);
       var open = L.filter(function(c){ return c.aperto; }), stories = L.slice(0, 12);
@@ -15997,6 +16066,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div>' + (L.length ? '<button type="button" class="v3all" id="v3All">Tutti ›</button>' : '') + '</div>';
       if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
       if(sera) h += ccSeraHtml(sera, tar);
+      h += invHomeHtml();
       h += inHomeHtml(L);
       h += tmFeedHtml();
       if(open.length) h += '<div class="v3cards">' + open.slice(0, 10).map(function(c){ var i = L.indexOf(c);
@@ -16016,6 +16086,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(sera) ccSeraBind(box, sera, tar);
       tmFeedBind(box);
       inHomeBind(box, L, function(){ v3Home(box); });
+      try{ invHomeBind(box); }catch(e){}
     }).catch(function(){ box.innerHTML = '<div class="v3empty"><b>Non riesco a caricare i cantieri</b><span>Controlla la connessione e riprova.</span></div>'; });
   }
   // storia del cliente a tutto schermo
@@ -17631,6 +17702,210 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       return doc;
     });
   }
+  // ===================== Link anteprima per il cliente =====================
+  // L'artigiano manda al cliente un link (?i=CODICE) su WhatsApp. Il cliente, senza registrarsi,
+  // prova SOLO il lavoro scelto dall'artigiano: 1 anteprima in omaggio, poi pacchetti da 4 a 5 €.
+  // Le anteprime finiscono nei Progetti dell'artigiano. Server: api/_invito.js.
+  var INV_LAV = [
+    ['facciata', 'Facciata', 'la tua facciata rifatta', 'la sua facciata già pittata', 'imbiancatura', 'esterno'],
+    ['pittura', 'Pittura interni', 'le tue pareti rifatte', 'le sue pareti già pittate', 'imbiancatura', 'interno'],
+    ['resina', 'Resina', 'il tuo pavimento in resina', 'il suo pavimento in resina già fatto', 'monolith'],
+    ['microcemento', 'Microcemento', 'il tuo microcemento', 'il suo microcemento già fatto', 'microcemento'],
+    ['piastrelle', 'Piastrelle', 'le tue piastrelle nuove', 'le sue piastrelle nuove già posate', 'piastrelle'],
+    ['legno', 'Parquet / SPC', 'il tuo pavimento in legno', 'il suo pavimento in legno già posato', 'legno'],
+    ['cartongesso', 'Cartongesso', 'il tuo cartongesso', 'il suo lavoro in cartongesso già fatto', 'cartongesso'],
+    ['deco', 'Pareti decorate', 'la tua parete decorata', 'la sua parete decorata già finita', 'deco'],
+    ['scale', 'Scale', 'la tua scala rifatta', 'la sua scala già rifatta', 'scale'],
+    ['graniglia', 'Graniglia esterni', 'il tuo esterno in graniglia', 'il suo esterno in graniglia già fatto', 'graniglia_esterni']
+  ];
+  function invLav(k){ return INV_LAV.filter(function(x){ return x[0] === k; })[0] || INV_LAV[0]; }
+  function invOrigin(){ return /^https?:/.test(location.origin) && !/localhost|127\.0\.0\.1/.test(location.hostname) ? location.origin : (/^https?:/.test(location.origin) ? location.origin : 'https://rendrum.com'); }
+  function invLink(t){ return invOrigin() + '/?i=' + t; }
+  var INV = { list: null };
+
+  // ---------- lato artigiano ----------
+  function invLoad(force){
+    if(INV.list && !force) return Promise.resolve(INV.list);
+    return rxList('invito').then(function(L){ INV.list = L; return L; });
+  }
+  function invNew(I){ var d = I.data || {}; return Math.max(0, (d.anteprime || []).length - (+d.visto || 0)); }
+  function invMsg(d, t){
+    var imp = (proAccount && proAccount.companyName) || '', primo = String(d.cliente || '').trim().split(/\s+/)[0];
+    return 'Buongiorno' + (primo ? ' ' + primo : '') + (imp ? ', sono ' + imp : '') + '. Con questo link vede ' + invLav(d.lavoro)[3] + ', prima di iniziare i lavori: basta una foto 📷\n' + invLink(t);
+  }
+  // pagina "Fai provare l'anteprima al cliente"
+  function invSheet(o, back){
+    o = o || {};
+    var box = rxOpen('Anteprima al cliente', back || null), st = { lav: o.lavoro || 'facciata' };
+    function draw(){
+      box.innerHTML = '<div class="iv-hero"><b>Fai provare l’anteprima al cliente</b><span>Gli mandi un link su WhatsApp: fa la foto e vede il lavoro finito, con il tuo nome. Non deve registrarsi.</span></div>'
+        + ftF('ivNome', 'Nome del cliente', o.cliente, 'Es. Mario Rossi') + ftF('ivTel', 'Telefono (WhatsApp)', o.telefono, 'Es. 333 1234567', ' type="tel"')
+        + '<div class="cc-sec">Quale lavoro?</div><div class="iv-chips">' + INV_LAV.map(function(x){ return '<button type="button" class="iv-chip' + (x[0] === st.lav ? ' on' : '') + '" data-ivl="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>'
+        + '<div class="iv-info"><div><span>Anteprime in omaggio</span><b>1</b></div><div><span>Il link vale</span><b>30 giorni</b></div><div><span>Le anteprime le vedi in</span><b>Progetti</b></div><div><span>Dalle tue anteprime del mese</span><b>−1</b></div></div>'
+        + '<div class="iv-note">Finita l’anteprima in omaggio, il cliente può comprarne altre 4 a 5 €, senza abbonamento.</div>'
+        + '<button type="button" class="pro-auth-submit iv-wa" id="ivSend">💬 Invia su WhatsApp</button>';
+      box.querySelectorAll('[data-ivl]').forEach(function(b){ b.addEventListener('click', function(){ st.lav = b.dataset.ivl; o.cliente = document.getElementById('ivNome').value; o.telefono = document.getElementById('ivTel').value; draw(); }); });
+      document.getElementById('ivSend').addEventListener('click', function(){
+        var nome = document.getElementById('ivNome').value.trim(), tel = document.getElementById('ivTel').value.trim(), btn = this;
+        if(!nome){ document.getElementById('ivNome').focus(); return rxFail({ d:{ error:'Scrivi il nome del cliente.' } }); }
+        btn.disabled = true; btn.textContent = 'Preparo il link…';
+        rxSave('invito', { cliente: nome, telefono: tel, lavoro: st.lav, quoteId: o.quoteId || null }).then(function(it){
+          INV.list = null;
+          rxWa(tel, invMsg(it.data, it.token));
+          invView(it, back);
+        }).catch(function(e){ btn.disabled = false; btn.textContent = '💬 Invia su WhatsApp'; rxFail(e); });
+      });
+    }
+    draw();
+  }
+  // un invito: anteprime del cliente, rimanda o disattiva il link
+  function invView(I, back){
+    var d = I.data || {}, A = (d.anteprime || []).slice().reverse(), box = rxOpen(d.cliente || 'Anteprime del cliente', back || function(){ invPage(); });
+    var off = !d.attivo || (d.scade && Date.parse(d.scade) < Date.now());
+    box.innerHTML = '<div class="iv-hero"><b>' + qEsc(invLav(d.lavoro)[1]) + ' · ' + qEsc(d.cliente || '') + '</b><span>' + (off ? 'Link non più attivo' : 'Link attivo fino al ' + new Date(d.scade).toLocaleDateString('it-IT', { day:'numeric', month:'long' })) + ' · ' + (d.omaggioUsato ? 'omaggio usato' : 'omaggio da usare') + (d.comprate ? ' · ha comprato ' + d.comprate + ' anteprime' : '') + '</span></div>'
+      + (A.length ? '<div class="iv-grid">' + A.map(function(a){ return '<a class="iv-pic" href="' + qEsc(a.url) + '" target="_blank" rel="noopener"><img src="' + qEsc(a.url) + '" alt=""><span>' + qEsc(a.titolo || '') + '<em>' + new Date(a.at).toLocaleString('it-IT', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) + ' · ' + (a.tipo === 'credito' ? 'comprata' : 'omaggio') + '</em></span></a>'; }).join('') + '</div>'
+        : '<div class="cc-hint">Il cliente non ha ancora creato anteprime. Quando lo fa, le trovi qui e in Progetti.</div>')
+      + (off ? '' : '<button type="button" class="pro-auth-submit iv-wa" id="ivAgain">💬 Rimanda il link</button><button type="button" class="q-add iv-copy" id="ivCopy">🔗 Copia il link</button><button type="button" class="iv-off" id="ivOff">Disattiva il link</button>');
+    if(invNew(I)) rxSave('invito', { visto: (d.anteprime || []).length }, I.id).then(function(it){ I.data = it.data; INV.list = null; try{ invHomeSync(); }catch(e){} }).catch(function(){});
+    var a1 = document.getElementById('ivAgain'); if(a1) a1.addEventListener('click', function(){ rxWa(d.telefono, invMsg(d, I.token)); });
+    var c1 = document.getElementById('ivCopy'); if(c1) c1.addEventListener('click', function(){ rxCopy(invLink(I.token)).then(function(ok){ c1.textContent = ok ? '✓ Link copiato' : invLink(I.token); }); });
+    var o1 = document.getElementById('ivOff'); if(o1) o1.addEventListener('click', function(){
+      if(o1.dataset.sure !== '1'){ o1.dataset.sure = '1'; o1.textContent = 'Sicuro? Tocca di nuovo per disattivarlo'; return; }
+      rxSave('invito', { attivo: false }, I.id).then(function(it){ INV.list = null; invView(it, back); }).catch(rxFail);
+    });
+  }
+  // elenco di tutti i link
+  function invPage(){
+    var box = rxOpen('Anteprime dei clienti', null); rxLoading(box);
+    invLoad(true).then(function(L){
+      box.innerHTML = '<button type="button" class="pro-auth-submit iv-wa" id="ivNew">📲 Manda il link a un cliente</button>'
+        + (L.length ? L.map(invRow).join('') : '<div class="cc-hint">Manda il link al cliente: fa la foto e vede il lavoro finito con il tuo nome. Le sue anteprime arrivano qui.</div>');
+      document.getElementById('ivNew').addEventListener('click', function(){ invSheet({}, invPage); });
+      box.querySelectorAll('[data-iv]').forEach(function(b){ b.addEventListener('click', function(){ var I = L.filter(function(x){ return x.id === b.dataset.iv; })[0]; if(I) invView(I, invPage); }); });
+    }).catch(function(e){ box.innerHTML = ''; rxFail(e); });
+  }
+  function invRow(I){
+    var d = I.data || {}, A = d.anteprime || [], n = invNew(I), last = A[A.length - 1];
+    return '<button type="button" class="iv-row" data-iv="' + I.id + '">' + (last ? '<img src="' + qEsc(last.url) + '" alt="">' : '<i>📲</i>') + '<span><b>' + qEsc(d.cliente || 'Cliente') + '</b><em>' + qEsc(invLav(d.lavoro)[1]) + ' · ' + (A.length ? A.length + (A.length === 1 ? ' anteprima' : ' anteprime') : 'link inviato') + (d.comprate ? ' · ha comprato ' + d.comprate : '') + '</em></span>' + (n ? '<u>' + n + ' nuove</u>' : '') + '</button>';
+  }
+  // nella scheda del cantiere
+  function ctInvBlock(c, box){
+    var q = (c.g && c.g.quote && c.g.quote[0]) || null;
+    var w = document.createElement('div'); w.className = 'cc-wrap'; box.appendChild(w);
+    invLoad().then(function(L){
+      var nome = String(c.nome || '').toLowerCase().trim();
+      var M = L.filter(function(I){ var d = I.data || {}; return (q && d.quoteId === q.id) || (nome && String(d.cliente || '').toLowerCase().trim() === nome); });
+      w.innerHTML = '<div class="cc-sec">Anteprima al cliente</div>' + (M.length ? M.map(invRow).join('') : '<div class="cc-hint" style="margin-top:0">Mandagli un link: fa la foto e vede il lavoro finito con il tuo nome. 1 anteprima in omaggio.</div>')
+        + '<button type="button" class="pro-auth-submit cc-add" id="ivCt">📲 Fai provare l’anteprima al cliente</button>';
+      document.getElementById('ivCt').addEventListener('click', function(){ invSheet({ cliente: c.nome, telefono: c.tel, quoteId: q ? q.id : null }, function(){ ctScheda(c.id); }); });
+      w.querySelectorAll('[data-iv]').forEach(function(b){ b.addEventListener('click', function(){ var I = M.filter(function(x){ return x.id === b.dataset.iv; })[0]; if(I) invView(I, function(){ ctScheda(c.id); }); }); });
+    }).catch(function(){ w.remove(); });
+  }
+  // nei Progetti: "Dai tuoi clienti"
+  window.invPpSection = function(listEl){
+    if(!(proAccount && proAccount.accountType !== 'privato') || !listEl) return;
+    var old = document.getElementById('ivPp'); if(old) old.remove();
+    var w = document.createElement('div'); w.id = 'ivPp'; w.className = 'iv-pp'; listEl.parentNode.insertBefore(w, listEl);
+    invLoad(true).then(function(L){
+      var S = L.filter(function(I){ return (I.data.anteprime || []).length; });
+      w.innerHTML = '<div class="iv-pp-h"><b>Dai tuoi clienti</b><button type="button" id="ivPpNew">📲 Manda il link</button></div>' + (S.length ? S.slice(0, 8).map(invRow).join('') : '<div class="iv-pp-e">Manda il link a un cliente: le sue anteprime arrivano qui.</div>');
+      document.getElementById('ivPpNew').addEventListener('click', function(){ invSheet({}, null); });
+      w.querySelectorAll('[data-iv]').forEach(function(b){ b.addEventListener('click', function(){ var I = L.filter(function(x){ return x.id === b.dataset.iv; })[0]; if(I) invView(I, invPage); }); });
+    }).catch(function(){ w.remove(); });
+  };
+  // in Oggi: avviso delle anteprime nuove
+  function invHomeHtml(){
+    var N = (INV.list || []).filter(invNew);
+    if(!N.length) return '<div id="ivHome"></div>';
+    return '<div id="ivHome">' + N.slice(0, 2).map(function(I){ var n = invNew(I); return '<button type="button" class="iv-home" data-ivh="' + I.id + '"><i>🔔</i><span><b>' + qEsc(I.data.cliente || 'Un cliente') + ' ha creato ' + n + (n === 1 ? ' anteprima' : ' anteprime') + '</b><em>dal tuo link · ' + qEsc(invLav(I.data.lavoro)[1]) + (I.data.comprate ? ' · ha comprato ' + I.data.comprate + ' anteprime' : '') + '</em></span></button>'; }).join('') + '</div>';
+  }
+  function invHomeBind(box){
+    (box || document).querySelectorAll('[data-ivh]').forEach(function(b){ b.addEventListener('click', function(){ var I = (INV.list || []).filter(function(x){ return x.id === b.dataset.ivh; })[0]; if(I) invView(I, function(){ rxClose(); }); }); });
+  }
+  function invHomeSync(){ var h = document.getElementById('ivHome'); if(!h) return; var t = document.createElement('div'); t.innerHTML = invHomeHtml(); h.replaceWith(t.firstChild); invHomeBind(); }
+  RX_GO.inviti = invPage;
+
+  // ---------- lato cliente (link ?i=CODICE) ----------
+  var RD_INV_T = (function(){ try{ var t = new URLSearchParams(location.search).get('i') || ''; return /^[a-f0-9]{20}$/.test(t) ? t : null; }catch(e){ return null; } })();
+  window.RD_INV_T = RD_INV_T;
+  function invApi(){ return fetch('/api/quotes?action=pub-invito&t=' + RD_INV_T, { cache:'no-store' }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return { ok:r.ok, d:d }; }); }); }
+  function invLeft(D){ return (D.omaggio ? 1 : 0) + (+D.crediti || 0); }
+  function invBar(){
+    var D = window.RD_INV; if(!D) return;
+    var bar = document.getElementById('ivBar');
+    if(!bar){ bar = document.createElement('div'); bar.id = 'ivBar'; bar.className = 'iv-bar'; var anchor = document.getElementById('pdfBox'); if(!anchor) return; anchor.parentNode.insertBefore(bar, anchor); }
+    var n = invLeft(D), tel = D.telefono;
+    bar.innerHTML = (n ? '<div class="iv-left">Ti ' + (n === 1 ? 'resta 1 anteprima' : 'restano ' + n + ' anteprime') + ': prova un altro colore.</div>'
+        : '<div class="iv-buy"><b>Vuoi provare altri colori?</b><span>' + D.pacchetto.n + ' anteprime a ' + String(D.pacchetto.euro).replace('.', ',') + ' €, senza abbonamento.</span><button type="button" class="iv-buy-b" id="ivBuy">Acquista altre anteprime</button></div>')
+      + (tel ? '<button type="button" class="iv-wr" id="ivWr">💬 Scrivi a ' + qEsc(D.impresa || 'l’impresa') + '</button>' : '');
+    var b = document.getElementById('ivBuy'); if(b) b.addEventListener('click', invBuy);
+    var w = document.getElementById('ivWr'); if(w) w.addEventListener('click', function(){ rxWa(tel, 'Buongiorno, ho visto l’anteprima del lavoro (' + D.lavoroNome + ') con il vostro link. '); });
+  }
+  function invBuy(){
+    var D = window.RD_INV; if(!D) return;
+    var old = document.getElementById('ivSheet'); if(old) old.remove();
+    var s = document.createElement('div'); s.id = 'ivSheet'; s.className = 'iv-sheet';
+    s.innerHTML = '<div class="iv-sh-in"><b class="iv-sh-t">Altre anteprime</b><span class="iv-sh-s">Prova altri colori sulla stessa foto o su altre foto.</span>'
+      + '<div class="iv-pk"><i></i><span><b>' + D.pacchetto.n + ' anteprime</b><em>per provare altri colori</em></span><strong>' + String(D.pacchetto.euro).replace('.', ',') + ' €</strong></div>'
+      + '<button type="button" class="iv-pay" id="ivPay">Paga ' + String(D.pacchetto.euro).replace('.', ',') + ' € con carta</button><div class="iv-sh-n">Pagamento sicuro · nessun abbonamento · IVA inclusa</div>'
+      + '<div class="iv-err" id="ivPayErr"></div><button type="button" class="iv-close" id="ivNo">Non ora</button></div>';
+    document.body.appendChild(s);
+    s.addEventListener('click', function(e){ if(e.target === s) s.remove(); });
+    document.getElementById('ivNo').addEventListener('click', function(){ s.remove(); });
+    document.getElementById('ivPay').addEventListener('click', function(){
+      var b = this; b.disabled = true; b.textContent = 'Apro il pagamento…';
+      try{ sessionStorage.setItem('rdInvPay', '1'); }catch(e){}
+      fetch('/api/stripe?action=invito-checkout', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ t: RD_INV_T }) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok || !d.url) throw new Error(d.error || 'Il pagamento non è partito. Riprova.'); location.href = d.url; }); })
+        .catch(function(e){ b.disabled = false; b.textContent = 'Paga con carta'; document.getElementById('ivPayErr').textContent = e.message; });
+    });
+  }
+  window.invBuy = invBuy;
+  window.invOnResult = function(){
+    if(!RD_INV_T || !window.RD_INV) return;
+    var D = window.RD_INV; if(D.crediti > 0) D.crediti--; else D.omaggio = false;
+    invBar();
+    invApi().then(function(x){ if(x.ok){ window.RD_INV = x.d; invBar(); } });
+  };
+  function invGuestStart(){
+    document.documentElement.classList.add('rd-inv');
+    var hero = document.createElement('div'); hero.id = 'ivHero'; hero.className = 'iv-guest';
+    hero.innerHTML = '<div class="iv-g-in"><div class="iv-load">Caricamento…</div></div>'; document.body.appendChild(hero);
+    var inBox = hero.firstChild;
+    invApi().then(function(x){
+      if(!x.ok){ inBox.innerHTML = '<div class="iv-g-card"><b>' + qEsc(x.d.error || 'Link non valido.') + '</b><span>Controlla di aver aperto il link completo che ti è stato mandato.</span></div>'; return; }
+      var D = window.RD_INV = x.d, L = invLav(D.lavoro), primo = String(D.cliente || '').trim().split(/\s+/)[0];
+      window.RD_INV_MAT = L[4]; window.RD_INV_CTX = L[5] || null;
+      var head = '<div class="iv-g-h">' + (D.logo ? '<img src="' + qEsc(D.logo) + '" alt="">' : '<i>' + qEsc(String(D.impresa || 'R').trim().split(/\s+/).map(function(w){ return w[0]; }).join('').slice(0, 2).toUpperCase()) + '</i>') + '<div><b>' + qEsc(D.impresa || 'La tua impresa') + '</b><span>ti invita a provare</span></div></div>';
+      if(D.scaduto){ inBox.innerHTML = head + '<div class="iv-g-card"><b>Questo link è scaduto.</b><span>Chiedi a ' + qEsc(D.impresa || 'l’impresa') + ' di mandartene uno nuovo.</span></div>'; return; }
+      var pagato = /[?&]pagato=1/.test(location.search);
+      function draw(){
+      D = window.RD_INV; var n = invLeft(D);
+      inBox.innerHTML = head + (pagato ? '<div class="iv-ok" id="ivPaid">' + (D.crediti > 0 ? '✓ Pagamento ricevuto: hai ' + D.crediti + ' anteprime.' : 'Pagamento in arrivo: le anteprime compaiono tra pochi secondi…') + '</div>' : '')
+        + '<span class="iv-badge">' + (D.omaggio ? '🎁 1 anteprima in omaggio' : n ? '✓ ' + n + (n === 1 ? ' anteprima disponibile' : ' anteprime disponibili') : 'Anteprima in omaggio già usata') + '</span>'
+        + '<h1 class="iv-g-t">' + (primo ? qEsc(primo) + ', guarda ' : 'Guarda ') + qEsc(L[2]) + '</h1>'
+        + '<p class="iv-g-s">Lavoro scelto da ' + qEsc(D.impresa || 'la tua impresa') + ': <b>' + qEsc(D.lavoroNome) + '</b>. Fai una foto e scegli il colore.</p>'
+        + '<div class="iv-steps"><span><b>1</b>La foto</span><span><b>2</b>Il colore</span><span><b>3</b>L’anteprima</span></div>'
+        + (D.anteprime && D.anteprime.length ? '<div class="iv-g-prev">' + D.anteprime.slice(-3).reverse().map(function(a){ return '<a href="' + qEsc(a.url) + '" target="_blank" rel="noopener"><img src="' + qEsc(a.url) + '" alt=""></a>'; }).join('') + '</div><div class="iv-g-n">Le tue anteprime</div>' : '')
+        + '<button type="button" class="iv-go" id="ivGo">📷 ' + (n ? 'Scatta o carica la foto' : 'Inizia') + '</button>'
+        + (n ? '' : '<button type="button" class="iv-go alt" id="ivGoBuy">Acquista ' + D.pacchetto.n + ' anteprime a ' + String(D.pacchetto.euro).replace('.', ',') + ' €</button>')
+        + '<div class="iv-g-n">Niente registrazione. La foto serve solo per l’anteprima e la vede anche ' + qEsc(D.impresa || 'l’impresa') + '.</div>';
+      document.getElementById('ivGo').addEventListener('click', function(){
+        hero.remove();
+        var lp = document.getElementById('landingPrivato'); if(lp) lp.click();
+      });
+      var gb = document.getElementById('ivGoBuy'); if(gb) gb.addEventListener('click', invBuy);
+      }
+      draw();
+      if(pagato && !(D.crediti > 0)){
+        var k = 0, poll = setInterval(function(){
+          if(++k > 15) return clearInterval(poll);
+          invApi().then(function(y){ if(y.ok && y.d.crediti > 0){ clearInterval(poll); window.RD_INV = y.d; if(document.getElementById('ivHero')) draw(); } });
+        }, 2000);
+      }
+    });
+  }
+  if(RD_INV_T) invGuestStart();
   // ---------- Privati e professionisti separati: niente richieste ai professionisti per ora ----------
   // Al posto di "Trova un artigiano" il privato manda il prima e dopo a chi vuole lui.
   function rdShareImg(){

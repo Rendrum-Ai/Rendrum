@@ -112,6 +112,33 @@ async function checkout(req, res) {
   }
 }
 
+// ---------- anteprime comprate dal cliente dal link dell'artigiano ----------
+// Pagamento singolo (niente abbonamento): PACK_N anteprime a PACK_CENTS, IVA inclusa.
+// Le anteprime le aggiunge SOLO il webhook, quando Stripe conferma il pagamento.
+async function invitoCheckout(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ error: "Usa una richiesta POST" });
+  if (!paymentsEnabled()) return res.status(503).json({ error: "I pagamenti non sono ancora attivi: riprova più tardi." });
+  const INV = require("./_invito");
+  const t = String((req.body || {}).t || "");
+  const f = await INV.find(t);
+  if (!f.row) return res.status(404).json({ error: f.error });
+  if (INV.scaduto(f.row.data || {})) return res.status(410).json({ error: "Questo link è scaduto: chiedi all'impresa di mandartene uno nuovo." });
+  const origin = (req.headers["x-forwarded-proto"] || "https") + "://" + (req.headers["x-forwarded-host"] || req.headers.host);
+  const params = {
+    mode: "payment",
+    success_url: origin + "/?i=" + t + "&pagato=1",
+    cancel_url: origin + "/?i=" + t,
+    locale: "it",
+    line_items: { 0: { quantity: 1, price_data: { currency: "eur", unit_amount: INV.PACK_CENTS, tax_behavior: "inclusive", product_data: { name: INV.PACK_N + " anteprime Rendrum" } } } },
+    metadata: { invito: t, anteprime: String(INV.PACK_N) },
+    payment_intent_data: { metadata: { invito: t } },
+  };
+  if ((process.env.STRIPE_AUTOMATIC_TAX || "").trim() === "1") params.automatic_tax = { enabled: "true" };
+  const r = await stripeRequest("POST", "/checkout/sessions", params);
+  if (!r.ok || !r.data || !r.data.url) { console.error("stripe invito", r.data); return res.status(502).json({ error: "Il pagamento non è partito. Riprova tra poco." }); }
+  return res.status(200).json({ url: r.data.url });
+}
+
 // api/stripe-portal.js
 // Apre il "portale cliente" di Stripe: il cliente può cambiare carta,
 // scaricare le fatture o disdire l'abbonamento da solo.
@@ -153,6 +180,14 @@ async function webhook(req, res) {
     if (!ev.ok || !ev.data) return res.status(400).json({ error: "evento non trovato su Stripe" });
     const type = ev.data.type, obj = ev.data.data && ev.data.data.object ? ev.data.data.object : {};
 
+    // Pacchetto di anteprime comprato dal cliente (link dell'artigiano)
+    if (type === "checkout.session.completed" && obj.mode === "payment" && obj.metadata && obj.metadata.invito) {
+      if (obj.payment_status !== "paid") return res.status(200).json({ ignored: "non pagato" });
+      const INV = require("./_invito");
+      const ok = await INV.addPack(obj.metadata.invito, obj.id, INV.PACK_N);
+      if (!ok) return res.status(500).json({ error: "invito non aggiornato" });   // Stripe riproverà
+      return res.status(200).json({ received: true, added: ok });
+    }
     // Da quale abbonamento arriva l'evento?
     let subId = null, fallbackAccount = null;
     if (type === "checkout.session.completed" && obj.mode === "subscription") {
@@ -213,6 +248,7 @@ module.exports = async function handler(req, res) {
   if (action === "checkout") return checkout(req, res);
   if (action === "offer") return offer(req, res);
   if (action === "portal") return portal(req, res);
+  if (action === "invito-checkout") return invitoCheckout(req, res);
   if (action === "webhook") return webhook(req, res);
   return res.status(404).json({ error: "Azione sconosciuta" });
 };

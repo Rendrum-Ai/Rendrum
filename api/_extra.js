@@ -18,7 +18,7 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito"];
 const SINGLE = ["site", "tariffe", "commerc"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
@@ -36,6 +36,7 @@ const NOTABLE = { error: "Questa funzione non è ancora attiva: manca la tabella
 
 function clean(kind, d, old) {
   d = obj(d); old = obj(old);
+  if (kind === "invito") return cleanInvito(d, old);
   if (kind === "agenda") return {
     tipo: ["sopralluogo", "lavoro", "altro"].includes(d.tipo) ? d.tipo : "altro",
     titolo: str(d.titolo, 120), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), indirizzo: str(d.indirizzo, 200),
@@ -145,6 +146,20 @@ function cleanCliente(d) {
     telefono: str(d.telefono, 40), email: str(d.email, 120), sdi: str(d.sdi, 7).toUpperCase(), pec: str(d.pec, 120), note: str(d.note, 400),
   };
 }
+function cleanInvito(d, old) {
+  // l'artigiano sceglie solo cliente, telefono e lavoro; omaggio, crediti e anteprime li scrive il server
+  const INV = require("./_invito");
+  const nuovo = !old.scade;
+  const out = Object.assign({}, old, {
+    cliente: str(d.cliente || old.cliente, 120), telefono: str(d.telefono || old.telefono, 40),
+    lavoro: nuovo ? (INV.LAVORI[d.lavoro] ? d.lavoro : "pittura") : old.lavoro,
+    quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : (old.quoteId || null),
+    attivo: d.attivo === false ? false : (old.attivo === false && !nuovo ? !!d.attivo : true),
+    visto: int(d.visto == null ? old.visto : d.visto, 0, 40),
+  });
+  if (nuovo) Object.assign(out, { omaggio: true, omaggioUsato: false, crediti: 0, comprate: 0, anteprime: [], pagamenti: [], scade: new Date(Date.now() + INV.DAYS * 86400000).toISOString() });
+  return out;
+}
 function pub(row) { return { id: row.id, kind: row.kind, token: row.token || null, data: row.data || {}, createdAt: row.created_at, updatedAt: row.updated_at }; }
 async function getOne(q) {
   const r = await supabaseRequest("/pro_extra?" + q + "&select=*&limit=1", { method: "GET" });
@@ -221,6 +236,14 @@ async function handlePublic(req, res, action) {
     if (!g.row) return res.status(404).json({ error: "Codice non trovato." });
     const acc = await account(g.row.account_id, "company_name,logo_url") || {};
     return res.status(200).json({ impresa: acc.company_name || "", logo: acc.logo_url || null, code });
+  }
+  if (action === "pub-invito") {
+    const INV = require("./_invito");
+    const f = await INV.find(q.t);
+    if (!f.row) return res.status(404).json({ error: f.error });
+    const acc = await account(f.row.account_id, "company_name,logo_url,phone") || {};
+    res.setHeader && res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json(INV.publicView(f.row, acc));
   }
   if (action === "pub-variante") {
     const t = String(req.method === "POST" ? b.t : q.t || "");
@@ -348,7 +371,7 @@ async function handle(req, res, action, acc) {
       }
       token = slug;
     }
-    if (!token && (kind === "review" || kind === "vote" || kind === "variante")) token = crypto.randomBytes(10).toString("hex");
+    if (!token && (kind === "review" || kind === "vote" || kind === "variante" || kind === "invito")) token = crypto.randomBytes(10).toString("hex");
     if (kind === "proforma" && !found) {
       // numerazione per anno: il primo proforma dell'anno è il n. 1
       const r0 = await supabaseRequest("/pro_extra?" + mine + "&kind=eq.proforma&select=data&limit=2000", { method: "GET" });
