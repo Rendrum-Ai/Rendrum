@@ -1367,6 +1367,13 @@ input[type="date"], input[type="time"]{ min-width:0; max-width:100%; box-sizing:
 .sf-cards.sf-sw .sf-card b{ font-size:12.5px; text-align:center; }
 .sf-cards.sf-sw .sf-card span{ font-size:10.5px; text-align:center; }
 @media (min-width:720px){ .sf-cards.sf-sw{ grid-template-columns:repeat(6,1fr); } }
+/* QR da inquadrare */
+.qr-box{ display:flex; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:12px; margin-top:10px; }
+.qr-img{ flex:none; border-radius:10px; overflow:hidden; background:#fff; line-height:0; }
+.qr-img svg{ display:block; }
+.qr-t{ flex:1; min-width:0; } .qr-t b{ display:block; font-size:15px; } .qr-t span{ display:block; font-size:12.5px; color:var(--ink-soft); line-height:1.4; margin-top:3px; }
+.qr-pr{ margin-top:10px; font-family:inherit; font-size:13px; font-weight:700; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 12px; cursor:pointer; }
+@media (max-width:360px){ .qr-box{ flex-direction:column; align-items:stretch; } .qr-img{ margin:0 auto; } }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16640,10 +16647,12 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         return '<div class="tm-mem"><span class="tm-av">' + qEsc(ctIni(m.nome)) + '</span><div><b>' + qEsc(m.nome) + '</b><em>' + (n ? n + (n === 1 ? ' cantiere affidato' : ' cantieri affidati') : 'nessun cantiere affidato') + '</em></div><button type="button" class="tm-no" data-tmrm="' + m.id + '">Togli</button></div>'; }).join('') + '</div>'
       : '<div class="cc-hint" style="margin-top:0">Ancora nessuno. Manda l’invito qui sotto: quando entrano li approvi tu.</div>');
     h += '<div class="cc-sec">Invita qualcuno</div><div class="tm-code"><div><span>Codice della tua impresa</span><b>' + qEsc(tmCodeFmt(TM.code)) + '</b><span>chi lo ha può chiedere di entrare: decidi tu</span></div></div>'
+      + '<div class="qr-box"><div class="qr-img">' + rdQrSvg(rxOrigin() + '/?squadra=' + TM.code, 150) + '</div><div class="qr-t"><b>Fallo inquadrare</b><span>Chi è con te inquadra il QR con la fotocamera del telefono ed entra subito nella pagina della squadra, con il codice già scritto.</span><button type="button" class="qr-pr" id="tmQrPr">🖨 Stampa il QR</button></div></div>'
       + '<button type="button" class="pro-auth-submit cc-add" id="tmWa">💬 Manda l’invito su WhatsApp</button><button type="button" class="qb-sec vr-cp" id="tmCp">📋 Copia l’invito</button><div class="cc-hint" id="tmMsg"></div>'
       + '<button type="button" class="ct-link" id="tmNew">Cambia codice (il vecchio smette di funzionare)</button>';
     box.innerHTML = h;
     document.getElementById('tmWa').addEventListener('click', function(){ rxWa('', tmInvito()); });
+    document.getElementById('tmQrPr').addEventListener('click', function(){ var b = this; b.disabled = true; rdQrPdf({ impresa: rxImpresa(), title:'Entra nella nostra squadra', sub:'Inquadra il QR con la fotocamera del telefono', link: rxOrigin() + '/?squadra=' + TM.code, code: tmCodeFmt(TM.code), steps:['Inquadra il QR con la fotocamera e apri il link', 'Crea il tuo accesso (email e password)', 'Aspetta la conferma: poi trovi i cantieri che ti affidiamo'], fname:'QR_squadra.pdf' }).catch(rxFail).then(function(){ b.disabled = false; }); });
     document.getElementById('tmCp').addEventListener('click', function(){ rxCopy(tmInvito()).then(function(ok){ document.getElementById('tmMsg').textContent = ok ? 'Invito copiato.' : tmInvito(); }); });
     document.getElementById('tmNew').addEventListener('click', function(){ var b = this; if(b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = 'Sicuro? Tocca di nuovo per cambiarlo'; return; } tmApi('tm-code').then(function(d){ TM.code = d.code; tmSquadraDraw(); }).catch(rxFail); });
     var act = function(id, stato){ return tmApi('tm-member', { id:id, stato:stato }).then(function(){ return tmLoad(true); }).then(tmSquadraDraw).catch(rxFail); };
@@ -17935,8 +17944,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     box.innerHTML = '<div class="iv-hero"><b>' + qEsc(invLav(d.lavoro)[1]) + ' · ' + qEsc(d.cliente || '') + '</b><span>' + (off ? 'Link non più attivo' : 'Link attivo fino al ' + new Date(d.scade).toLocaleDateString('it-IT', { day:'numeric', month:'long' })) + ' · ' + (d.omaggioUsato ? 'omaggio usato' : 'omaggio da usare') + (d.comprate ? ' · ha comprato ' + d.comprate + ' anteprime' : '') + '</span></div>'
       + (A.length ? '<div class="iv-grid">' + A.map(function(a){ return '<a class="iv-pic" href="' + qEsc(a.url) + '" target="_blank" rel="noopener"><img src="' + qEsc(a.url) + '" alt=""><span>' + qEsc(a.titolo || '') + '<em>' + new Date(a.at).toLocaleString('it-IT', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) + ' · ' + (a.tipo === 'credito' ? 'comprata' : 'omaggio') + '</em></span></a>'; }).join('') + '</div>'
         : '<div class="cc-hint">Il cliente non ha ancora creato anteprime. Quando lo fa, le trovi qui e in Progetti.</div>')
+      + (off ? '' : '<div class="qr-box"><div class="qr-img">' + rdQrSvg(invLink(I.token), 150) + '</div><div class="qr-t"><b>Fallo inquadrare al cliente</b><span>Durante il sopralluogo: il cliente inquadra il QR con il suo telefono e prova subito l’anteprima.</span><button type="button" class="qr-pr" id="ivQrPr">🖨 Stampa il QR</button></div></div>')
       + (off ? '' : '<button type="button" class="pro-auth-submit iv-wa" id="ivAgain">💬 Rimanda il link</button><button type="button" class="q-add iv-copy" id="ivCopy">🔗 Copia il link</button><button type="button" class="iv-off" id="ivOff">Disattiva il link</button>');
     if(invNew(I)) rxSave('invito', { visto: (d.anteprime || []).length }, I.id).then(function(it){ I.data = it.data; INV.list = null; try{ invHomeSync(); }catch(e){} }).catch(function(){});
+    var q1 = document.getElementById('ivQrPr'); if(q1) q1.addEventListener('click', function(){ q1.disabled = true; rdQrPdf({ impresa: (proAccount && proAccount.companyName) || '', title:'Guarda il lavoro finito a casa tua', sub: (d.cliente ? d.cliente + ': ' : '') + invLav(d.lavoro)[1] + ' · 1 anteprima in omaggio', link: invLink(I.token), steps:['Inquadra il QR con la fotocamera del telefono', 'Fai una foto della stanza o della facciata', 'Scegli il colore e guarda l’anteprima'], fname:'QR_anteprima_' + String(d.cliente || 'cliente').replace(/[^A-Za-z0-9]+/g, '_') + '.pdf' }).catch(rxFail).then(function(){ q1.disabled = false; }); });
     var a1 = document.getElementById('ivAgain'); if(a1) a1.addEventListener('click', function(){ rxWa(d.telefono, invMsg(d, I.token)); });
     var c1 = document.getElementById('ivCopy'); if(c1) c1.addEventListener('click', function(){ rxCopy(invLink(I.token)).then(function(ok){ c1.textContent = ok ? '✓ Link copiato' : invLink(I.token); }); });
     var o1 = document.getElementById('ivOff'); if(o1) o1.addEventListener('click', function(){
@@ -18089,6 +18100,106 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     try{ new MutationObserver(sync).observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] }); }catch(e){}
     document.addEventListener('visibilitychange', function(){ if(!document.hidden) sync(); });
   })();
+  // ===== QR code (scritto qui, senza librerie esterne): rdQrSvg(testo, lato) =====
+  // Modalità byte, correzione errori M, versioni 1–20, scelta automatica della maschera.
+  var RD_QR = (function(){
+    var ECC = [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26];
+    var BLK = [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16];
+    function raw(v){ var r = (16 * v + 128) * v + 64; if(v >= 2){ var n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if(v >= 7) r -= 36; } return r; }
+    function dataCw(v){ return Math.floor(raw(v) / 8) - ECC[v] * BLK[v]; }
+    function mul(x, y){ var z = 0; for(var i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 255; }
+    function rsDiv(d){ var r = []; for(var i = 0; i < d - 1; i++) r.push(0); r.push(1); var root = 1; for(var i2 = 0; i2 < d; i2++){ for(var j = 0; j < r.length; j++){ r[j] = mul(r[j], root); if(j + 1 < r.length) r[j] ^= r[j + 1]; } root = mul(root, 2); } return r; }
+    function rsRem(data, div){ var r = div.map(function(){ return 0; }); data.forEach(function(b){ var f = b ^ r.shift(); r.push(0); div.forEach(function(c, i){ r[i] ^= mul(c, f); }); }); return r; }
+    function utf8(s){ var o = []; s = unescape(encodeURIComponent(s)); for(var i = 0; i < s.length; i++) o.push(s.charCodeAt(i)); return o; }
+    function make(text){
+      var bytes = utf8(text), v = 1;
+      for(; v <= 20; v++){ var bits = 4 + (v <= 9 ? 8 : 16) + bytes.length * 8; if(bits <= dataCw(v) * 8) break; }
+      if(v > 20) return null;
+      var bb = [];
+      function put(val, n){ for(var i = n - 1; i >= 0; i--) bb.push((val >>> i) & 1); }
+      put(4, 4); put(bytes.length, v <= 9 ? 8 : 16); bytes.forEach(function(b){ put(b, 8); });
+      var cap = dataCw(v) * 8; put(0, Math.min(4, cap - bb.length)); put(0, (8 - bb.length % 8) % 8);
+      for(var pad = 0xEC; bb.length < cap; pad ^= 0xEC ^ 0x11) put(pad, 8);
+      var data = []; for(var i = 0; i < bb.length; i += 8){ var x = 0; for(var k = 0; k < 8; k++) x = (x << 1) | bb[i + k]; data.push(x); }
+      // blocchi e correzione errori
+      var nb = BLK[v], el = ECC[v], rc = Math.floor(raw(v) / 8), ns = nb - rc % nb, sl = Math.floor(rc / nb), div = rsDiv(el), blocks = [], p = 0;
+      for(var b = 0; b < nb; b++){ var dat = data.slice(p, p + sl - el + (b < ns ? 0 : 1)); p += dat.length; var ec = rsRem(dat, div); if(b < ns) dat.push(0); blocks.push(dat.concat(ec)); }
+      var cw = []; for(var i3 = 0; i3 < blocks[0].length; i3++) for(var j3 = 0; j3 < nb; j3++) if(i3 !== sl - el || j3 >= ns) cw.push(blocks[j3][i3]);
+      // matrice
+      var n = v * 4 + 17, M = [], F = [];
+      for(var y = 0; y < n; y++){ M.push(new Array(n).fill(false)); F.push(new Array(n).fill(false)); }
+      function set(x, y, d){ M[y][x] = d; F[y][x] = true; }
+      for(var t = 0; t < n; t++){ set(6, t, t % 2 === 0); set(t, 6, t % 2 === 0); }
+      [[3, 3], [n - 4, 3], [3, n - 4]].forEach(function(c){ for(var dy = -4; dy <= 4; dy++) for(var dx = -4; dx <= 4; dx++){ var xx = c[0] + dx, yy = c[1] + dy, d = Math.max(Math.abs(dx), Math.abs(dy)); if(xx >= 0 && xx < n && yy >= 0 && yy < n) set(xx, yy, d !== 2 && d !== 4); } });
+      var al = [];
+      if(v > 1){ var na = Math.floor(v / 7) + 2, step = Math.ceil((v * 4 + 4) / (na * 2 - 2)) * 2; al = [6]; for(var pos = n - 7; al.length < na; pos -= step) al.splice(1, 0, pos); }
+      al.forEach(function(ay, i){ al.forEach(function(ax, j){ if((i === 0 && j === 0) || (i === 0 && j === al.length - 1) || (i === al.length - 1 && j === 0)) return; for(var dy = -2; dy <= 2; dy++) for(var dx = -2; dx <= 2; dx++) set(ax + dx, ay + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1); }); });
+      function fmt(mask){
+        var d = (0 << 3) | mask, r = d; for(var i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+        var bits = ((d << 10) | r) ^ 0x5412; function g(i){ return ((bits >>> i) & 1) !== 0; }
+        for(var i1 = 0; i1 <= 5; i1++) set(8, i1, g(i1));
+        set(8, 7, g(6)); set(8, 8, g(7)); set(7, 8, g(8));
+        for(var i2 = 9; i2 < 15; i2++) set(14 - i2, 8, g(i2));
+        for(var i3 = 0; i3 < 8; i3++) set(n - 1 - i3, 8, g(i3));
+        for(var i4 = 8; i4 < 15; i4++) set(8, n - 15 + i4, g(i4));
+        set(8, n - 8, true);
+      }
+      fmt(0);
+      if(v >= 7){ var rv = v; for(var i5 = 0; i5 < 12; i5++) rv = (rv << 1) ^ ((rv >>> 11) * 0x1F25); var vb = (v << 12) | rv; for(var i6 = 0; i6 < 18; i6++){ var bit = ((vb >>> i6) & 1) !== 0, a = n - 11 + i6 % 3, bq = Math.floor(i6 / 3); set(a, bq, bit); set(bq, a, bit); } }
+      var bi = 0;
+      for(var right = n - 1; right >= 1; right -= 2){ if(right === 6) right = 5;
+        for(var vert = 0; vert < n; vert++) for(var j = 0; j < 2; j++){ var x = right - j, up = ((right + 1) & 2) === 0, yy = up ? n - 1 - vert : vert;
+          if(!F[yy][x] && bi < cw.length * 8){ M[yy][x] = ((cw[bi >>> 3] >>> (7 - (bi & 7))) & 1) !== 0; bi++; } } }
+      function cond(m, x, y){ switch(m){ case 0: return (x + y) % 2 === 0; case 1: return y % 2 === 0; case 2: return x % 3 === 0; case 3: return (x + y) % 3 === 0; case 4: return (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; case 5: return x * y % 2 + x * y % 3 === 0; case 6: return (x * y % 2 + x * y % 3) % 2 === 0; default: return ((x + y) % 2 + x * y % 3) % 2 === 0; } }
+      function apply(m){ for(var y = 0; y < n; y++) for(var x = 0; x < n; x++) if(!F[y][x] && cond(m, x, y)) M[y][x] = !M[y][x]; }
+      function pen(){
+        var s = 0, dark = 0;
+        function line(get){ for(var a = 0; a < n; a++){ var run = 1; for(var b = 1; b <= n; b++){ if(b < n && get(a, b) === get(a, b - 1)) run++; else { if(run >= 5) s += 3 + run - 5; run = 1; } } } }
+        line(function(a, b){ return M[a][b]; }); line(function(a, b){ return M[b][a]; });
+        for(var y = 0; y < n - 1; y++) for(var x = 0; x < n - 1; x++){ var c = M[y][x]; if(c === M[y][x + 1] && c === M[y + 1][x] && c === M[y + 1][x + 1]) s += 3; }
+        var P1 = [1,0,1,1,1,0,1,0,0,0,0], P2 = [0,0,0,0,1,0,1,1,1,0,1];
+        for(var y2 = 0; y2 < n; y2++) for(var x2 = 0; x2 + 11 <= n; x2++){ var r1 = true, r2 = true, c1 = true, c2 = true;
+          for(var k = 0; k < 11; k++){ var h = M[y2][x2 + k] ? 1 : 0, vv = M[x2 + k][y2] ? 1 : 0; if(h !== P1[k]) r1 = false; if(h !== P2[k]) r2 = false; if(vv !== P1[k]) c1 = false; if(vv !== P2[k]) c2 = false; }
+          s += 40 * ((r1 ? 1 : 0) + (r2 ? 1 : 0) + (c1 ? 1 : 0) + (c2 ? 1 : 0)); }
+        M.forEach(function(r){ r.forEach(function(c){ if(c) dark++; }); });
+        var tot = n * n, kk = Math.ceil(Math.abs(dark * 20 - tot * 10) / tot) - 1; s += Math.max(0, kk) * 10;
+        return s;
+      }
+      var best = 0, bp = Infinity;
+      for(var m = 0; m < 8; m++){ apply(m); fmt(m); var pp = pen(); if(pp < bp){ bp = pp; best = m; } apply(m); }
+      apply(best); fmt(best);
+      return M;
+    }
+    function svg(text, px, color){
+      var M = make(text); if(!M) return '';
+      var n = M.length, q = 4, d = '';
+      for(var y = 0; y < n; y++) for(var x = 0; x < n; x++) if(M[y][x]) d += 'M' + (x + q) + ' ' + (y + q) + 'h1v1h-1z';
+      var k = Math.max(3, Math.floor((px || 220) / (n + q * 2))), sz = (n + q * 2) * k;   // moduli interi: QR nitido
+      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + (n + q * 2) + ' ' + (n + q * 2) + '" width="' + sz + '" height="' + sz + '" shape-rendering="crispEdges" role="img" aria-label="QR code"><rect width="100%" height="100%" fill="#fff"/><path d="' + d + '" fill="' + (color || '#1D1B18') + '"/></svg>';
+    }
+    return { make: make, svg: svg };
+  })();
+  window.rdQrSvg = RD_QR.svg;
+  // Foglio da stampare con il QR (A4): titolo, impresa, QR grande, istruzioni
+  function rdQrPdf(o){
+    return loadJsPdf().then(function(jsPDF){
+      var doc = new jsPDF({ unit:'mm', format:'a4' }), W = 210, M = RD_QR.make(o.link); if(!M) throw new Error('QR');
+      function txt(s, y, sz, st, rgb){ doc.setFont('helvetica', st || 'normal'); doc.setFontSize(sz); doc.setTextColor.apply(doc, rgb || [29,27,24]); doc.splitTextToSize(String(s), W - 40).forEach(function(l, i){ doc.text(l, W / 2, y + i * sz * 0.45, { align:'center' }); }); }
+      doc.setFillColor(43, 20, 8); doc.rect(0, 0, W, 34, 'F');
+      txt(o.impresa || 'Rendrum', 15, 13, 'bold', [227, 160, 107]); txt(o.title, 26, 20, 'bold', [255, 255, 255]);
+      txt(o.sub || '', 50, 12, 'normal', [111, 104, 95]);
+      var n = M.length, side = 120, cell = side / (n + 8), x0 = (W - side) / 2, y0 = 62;
+      doc.setDrawColor(232, 227, 219); doc.setLineWidth(0.4); doc.roundedRect(x0 - 6, y0 - 6, side + 12, side + 12, 4, 4, 'S');
+      doc.setFillColor(29, 27, 24);
+      for(var y = 0; y < n; y++) for(var x = 0; x < n; x++) if(M[y][x]) doc.rect(x0 + (x + 4) * cell, y0 + (y + 4) * cell, cell + 0.02, cell + 0.02, 'F');
+      var yy = y0 + side + 18;
+      if(o.code){ txt('Codice: ' + o.code, yy, 18, 'bold', [200, 105, 46]); yy += 12; }
+      (o.steps || []).forEach(function(s, i){ txt((i + 1) + '. ' + s, yy, 12, 'normal'); yy += 8; });
+      txt(o.link, 286, 8, 'normal', [140, 132, 122]);
+      return rdSavePdf(doc, o.fname || 'QR_Rendrum.pdf');
+    });
+  }
+  window.rdQrPdf = rdQrPdf;
   // ---------- Privati e professionisti separati: niente richieste ai professionisti per ora ----------
   // Al posto di "Trova un artigiano" il privato manda il prima e dopo a chi vuole lui.
   function rdShareImg(){
