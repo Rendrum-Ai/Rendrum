@@ -3,7 +3,8 @@
 // una funzione Vercel in più.
 //
 // Con accesso (professionista):
-//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe|variante|cliente|proforma|commerc|incasso  -> { items }
+//   GET  ?action=px-list&kind=agenda|lavoro|review|vote|site|costo|tariffe|variante|cliente|proforma|commerc|incasso|materiale|fornitore|ordine  -> { items }
+//   POST ?action=px-mail-ordine { ordineId, pdf } -> manda l'ordine al fornitore per email (se l'email è attiva)
 //   POST ?action=px-save    { id?, kind, data }               -> { item }
 //   POST ?action=px-delete  { id }
 //   POST ?action=px-photo   { dataUrl }                       -> { url }
@@ -17,7 +18,7 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine"];
 const SINGLE = ["site", "tariffe", "commerc"];
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
@@ -83,6 +84,29 @@ function clean(kind, d, old) {
     };
   }
   if (kind === "cliente") return cleanCliente(d);
+  if (kind === "materiale") return {
+    // un prodotto del listino materiali, con il modo di calcolo
+    lav: str(d.lav, 30).replace(/[^a-z_]/g, ""), ordine: int(d.ordine, 0, 99), nome: str(d.nome, 120), codice: str(d.codice, 40),
+    fornitoreId: UUID.test(String(d.fornitoreId || "")) ? d.fornitoreId : null,
+    modo: ["resa", "scatola", "metro", "pezzo"].includes(d.modo) ? d.modo : "resa",
+    resa: num(d.resa, 1000), um: ["kg", "l"].includes(d.um) ? d.um : "kg", mani: int(d.mani, 1, 10),
+    conf: num(d.conf, 100000), confUm: str(d.confUm, 20), scarto: num(d.scarto, 100), ogni: num(d.ogni, 100000), fisso: int(d.fisso, 0, 10000),
+    colore: !!d.colore, prezzo: num(d.prezzo, 1e6), scheda: url(d.scheda), nota: str(d.nota, 300),
+    base: ["mq", "iso", "guide", "perim", "partenza", "spigoli", "montanti", "davanzali"].includes(d.base) ? d.base : "",
+  };
+  if (kind === "fornitore") return { nome: str(d.nome, 120), telefono: str(d.telefono, 40), email: str(d.email, 120), note: str(d.note, 300) };
+  if (kind === "ordine") {
+    const righe = (Array.isArray(d.righe) ? d.righe : (old.righe || [])).slice(0, 80).map(r => ({ nome: str(r && r.nome, 120), codice: str(r && r.codice, 40), colore: str(r && r.colore, 80), conf: str(r && r.conf, 40), qta: int(r && r.qta, 0, 100000) })).filter(r => r.nome && r.qta);
+    const stato = ["inviato", "confermato", "arrivato"].includes(d.stato) ? d.stato : (old.stato || "inviato");
+    return {
+      quoteId: UUID.test(String(d.quoteId || old.quoteId || "")) ? (d.quoteId || old.quoteId) : null, cliente: str(d.cliente || old.cliente, 120),
+      fornitoreId: UUID.test(String(d.fornitoreId || old.fornitoreId || "")) ? (d.fornitoreId || old.fornitoreId) : null,
+      fornitore: str(d.fornitore || old.fornitore, 120), consegna: d.consegna === "ritiro" ? "ritiro" : (d.consegna === "cantiere" ? "cantiere" : (old.consegna || "cantiere")),
+      indirizzo: str(d.indirizzo != null ? d.indirizzo : old.indirizzo, 200), data: date(d.data != null ? d.data : old.data), note: str(d.note != null ? d.note : old.note, 600),
+      righe, stato, inviatoAt: old.inviatoAt || new Date().toISOString(), statoAt: stato !== old.stato ? new Date().toISOString() : (old.statoAt || ""),
+      email: !!(d.email || old.email),
+    };
+  }
   if (kind === "incasso") return {
     // rate del preventivo accettato: quando vanno chieste e quanto è già arrivato
     quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : (old.quoteId || null), numero: str(d.numero, 20), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), oggetto: str(d.oggetto, 200),
@@ -236,6 +260,51 @@ async function handle(req, res, action, acc) {
     const u = await uploadPhoto(b.dataUrl, "extra/" + acc.id).catch(() => null);
     if (!u) return res.status(400).json({ error: "Foto non valida o troppo grande." });
     return res.status(200).json({ url: u });
+  }
+  if (action === "px-scheda-ai") {
+    // legge foto o PDF della scheda tecnica e restituisce i numeri per il listino materiali (l'artigiano controlla)
+    if (req.method !== "POST") return res.status(405).json({ error: "Metodo non valido" });
+    const key = (process.env.OPENAI_API_KEY || "").trim();
+    if (!key) return res.status(503).json({ error: "Lettura automatica non attiva.", code: "noai" });
+    const du = String(b.dataUrl || "");
+    const isPdf = /^data:application\/pdf;base64,/.test(du), isImg = /^data:image\/(jpeg|png|webp);base64,/.test(du);
+    if ((!isPdf && !isImg) || du.length > 9000000) return res.status(400).json({ error: "Carica una foto o un PDF (massimo 6 MB)." });
+    const prompt = "Sei un tecnico di cantiere. Dalla scheda tecnica o dalla confezione di questo prodotto edile estrai SOLO quello che c'è scritto, in JSON con queste chiavi: " +
+      "nome (nome commerciale), codice (codice prodotto o vuoto), modo ('resa' se si consuma in kg o litri al m², 'scatola' se è venduto a scatole o rotoli con m² per confezione, 'metro' se a barre/rotoli in metri lineari, 'pezzo' altrimenti), " +
+      "resa (numero: consumo per m² per UNA mano; se c'è un intervallo usa il valore medio; 0 se non c'è), um ('kg' o 'l'), mani (numero di mani consigliate, 1 se non indicato), " +
+      "conf (numero: contenuto di una confezione in kg, litri, m² o metri), confUm (nome della confezione in italiano: secchio, latta, sacco, scatola, rotolo, barra, kit…), nota (max 120 caratteri: condizioni importanti, es. spessore o supporto a cui si riferisce la resa). " +
+      "Non inventare: se un valore non c'è, metti 0 o stringa vuota. Rispondi solo con il JSON.";
+    const content = [{ type: "input_text", text: prompt }, isPdf ? { type: "input_file", filename: "scheda.pdf", file_data: du } : { type: "input_image", image_url: du }];
+    const model = (process.env.OPENAI_VISION_MODEL || "gpt-4o-mini").trim();
+    const r = await fetch("https://api.openai.com/v1/responses", { method: "POST", headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify({ model, input: [{ role: "user", content }], text: { format: { type: "json_object" } } }) }).catch(() => null);
+    const j = r ? await r.json().catch(() => null) : null;
+    let out = j && (j.output_text || ((j.output || []).flatMap(o => o.content || []).map(c => c.text || "").join("")));
+    let d = null; try { d = JSON.parse(String(out || "").replace(/^```json|```$/g, "")); } catch (e) { d = null; }
+    if (!r || !r.ok || !d) return res.status(502).json({ error: "Non sono riuscito a leggere la scheda. Prova con una foto più nitida o scrivi i numeri a mano." });
+    return res.status(200).json({ data: clean("materiale", Object.assign({}, d, { nota: d.nota ? "Dalla scheda: " + d.nota : "" })) });
+  }
+  if (action === "px-mail-ordine") {
+    if (req.method !== "POST" || !UUID.test(String(b.ordineId || ""))) return res.status(400).json({ error: "Ordine non valido." });
+    const key = (process.env.RESEND_API_KEY || "").trim();
+    if (!key) return res.status(503).json({ error: "Invio email non attivo.", code: "noemail" });
+    const g = await getOne("id=eq." + b.ordineId + "&" + mine);
+    if (g.missing || !g.row || g.row.kind !== "ordine") return res.status(404).json({ error: "Ordine non trovato." });
+    const o = g.row.data || {};
+    let to = "";
+    if (o.fornitoreId) { const f = await getOne("id=eq." + o.fornitoreId + "&" + mine); to = f.row && f.row.data && f.row.data.email || ""; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) return res.status(400).json({ error: "Il fornitore non ha un'email valida." });
+    const a = await account(acc.id, "company_name,email");
+    const imp = (a && a.company_name) || "Rendrum";
+    const esc = t => String(t || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const rows = (o.righe || []).map(r => "<tr><td style='padding:6px;border-bottom:1px solid #eee'>" + esc(r.codice) + "</td><td style='padding:6px;border-bottom:1px solid #eee'><b>" + esc(r.nome) + "</b>" + (r.colore ? " · " + esc(r.colore) : "") + "</td><td style='padding:6px;border-bottom:1px solid #eee'>" + esc(r.conf) + "</td><td style='padding:6px;border-bottom:1px solid #eee;text-align:right'><b>" + r.qta + "</b></td></tr>").join("");
+    const html = "<div style='font-family:Arial,sans-serif;max-width:640px;color:#1C1B18'><h2 style='margin:0 0 8px'>Ordine materiali · " + esc(imp) + "</h2><p>Cantiere <b>" + esc(o.cliente) + "</b> · " + (o.consegna === "ritiro" ? "ritiro in magazzino" : "consegna in cantiere: " + esc(o.indirizzo)) + (o.data ? " · entro il " + esc(o.data.split("-").reverse().join("/")) : "") + "</p><table style='border-collapse:collapse;width:100%;font-size:14px'><tr style='background:#F7F5F1'><th style='text-align:left;padding:6px'>Codice</th><th style='text-align:left;padding:6px'>Prodotto</th><th style='text-align:left;padding:6px'>Confezione</th><th style='text-align:right;padding:6px'>Q.tà</th></tr>" + rows + "</table>" + (o.note ? "<p><b>Note:</b> " + esc(o.note) + "</p>" : "") + "<p>Per confermare rispondete a questa email.<br>Grazie, " + esc(imp) + "</p><p style='color:#999;font-size:12px'>Ordine preparato con Rendrum</p></div>";
+    const body = { from: (process.env.EMAIL_FROM || "Rendrum <onboarding@resend.dev>").trim(), to: [to], subject: "Ordine materiali · " + (o.cliente || "") + " · " + imp, html };
+    if (a && a.email) body.reply_to = a.email;
+    if (typeof b.pdf === "string" && /^[A-Za-z0-9+/=]+$/.test(b.pdf) && b.pdf.length < 4000000) body.attachments = [{ filename: "Ordine_" + String(o.cliente || "materiali").replace(/[^A-Za-z0-9]+/g, "_") + ".pdf", content: b.pdf }];
+    const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
+    if (!r || !r.ok) return res.status(502).json({ error: "L'email non è partita. Riprova o mandalo su WhatsApp." });
+    await patch(g.row.id, Object.assign({}, o, { email: true }));
+    return res.status(200).json({ ok: true, to });
   }
   if (action === "px-list") {
     const kind = String(q.kind || "");
