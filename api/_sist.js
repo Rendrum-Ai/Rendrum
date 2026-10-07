@@ -20,32 +20,46 @@ function cappNote(c, zocColor) {
 }
 
 const CG_TIPO = {
-  veletta: "una VELETTA in cartongesso lungo il soffitto: una fascia ribassata di circa 25–35 cm di altezza e 40–60 cm di profondità, che corre lungo la parete indicata, con spigoli dritti e superficie liscia",
+  veletta: "una VELETTA in cartongesso lungo il soffitto: una fascia ribassata di circa 25–35 cm di altezza e 40–60 cm di profondità, che corre lungo il soffitto nel punto indicato, con spigoli dritti e superficie liscia",
   soffitto: "un CONTROSOFFITTO in cartongesso ribassato di circa 10–15 cm su tutto il soffitto della stanza, superficie liscia e continua, perimetro pulito con una sottile gola d'ombra lungo le pareti",
   nicchia: "una NICCHIA rettangolare incassata in una controparete in cartongesso sulla parete indicata, larga circa 120–160 cm e alta circa 50–70 cm, profonda circa 15–20 cm, con spigoli netti, posizionata a un'altezza naturale (ad esempio per TV o mensole)",
   parete: "una PARETE DIVISORIA in cartongesso, dritta e piana, dal pavimento al soffitto, che divide la stanza nel punto indicato; superficie liscia, con un'apertura passante rettangolare larga circa 90 cm se serve per passare",
   libreria: "una LIBRERIA in cartongesso a tutta parete sulla parete indicata: struttura di vani rettangolari regolari (ripiani e montanti spessi circa 10–12 cm), profonda circa 30 cm, dal pavimento al soffitto, con superficie liscia",
   controparete: "una CONTROPARETE in cartongesso che riveste completamente la parete indicata: superficie nuova, perfettamente piana e liscia, con spigoli netti",
 };
-const CG_DOVE = { fondo: "sulla parete di fondo (quella di fronte nella foto)", sinistra: "sulla parete a sinistra", destra: "sulla parete a destra", soffitto: "sul soffitto" };
+const CG_DOVE = { fondo: "sulla parete di fondo (quella di fronte nella foto)", sinistra: "sulla parete a sinistra", destra: "sulla parete a destra", soffitto: "sul soffitto", giro: "lungo tutto il perimetro della stanza, su tutte le pareti visibili" };
 const CG_LUCI = {
   led: "con una striscia LED nascosta a luce calda (circa 3000 K) che crea una lama di luce morbida e uniforme lungo il bordo",
   faretti: "con faretti a incasso tondi piccoli e bianchi distribuiti regolarmente, accesi a luce calda",
   no: "senza luci",
 };
-function parseCg(c) {
+const CG_NOLUCI = ["parete", "controparete"];
+function parseOne(c) {
   if (!c || typeof c !== "object" || !CG_TIPO[c.tipo]) return null;
-  return { tipo: c.tipo, dove: CG_DOVE[c.dove] ? c.dove : (c.tipo === "soffitto" ? "soffitto" : "fondo"), luci: CG_LUCI[c.luci] ? c.luci : "no" };
+  let dove = CG_DOVE[c.dove] ? c.dove : (c.tipo === "soffitto" ? "soffitto" : "fondo");
+  if (dove === "giro" && c.tipo !== "veletta") dove = "fondo";
+  return { tipo: c.tipo, dove: c.tipo === "soffitto" ? "soffitto" : dove, luci: CG_NOLUCI.includes(c.tipo) ? "no" : (CG_LUCI[c.luci] ? c.luci : "no") };
+}
+// Uno o più lavori in cartongesso (massimo 3, senza doppioni): { items:[{tipo,dove,luci}] }
+function parseCg(c) {
+  if (!c || typeof c !== "object") return null;
+  const src = Array.isArray(c.items) ? c.items : [c], seen = {}, items = [];
+  src.slice(0, 6).forEach(function (x) { const o = parseOne(x); if (o && !seen[o.tipo] && items.length < 3) { seen[o.tipo] = 1; items.push(o); } });
+  return items.length ? { items: items } : null;
+}
+function cgOne(o) {
+  const luci = o.luci === "no" || CG_NOLUCI.includes(o.tipo) ? "" : ", " + CG_LUCI[o.luci];
+  return CG_TIPO[o.tipo] + (o.tipo === "soffitto" ? "" : ", " + CG_DOVE[o.dove]) + luci;
 }
 // prompt completo per il cartongesso: si COSTRUISCE qualcosa che prima non c'era
 function cgPrompt(c, colorDesc) {
-  const luci = (c.tipo === "parete" || c.tipo === "controparete") ? "" : " " + CG_LUCI[c.luci] + ".";
+  const L = c.items || [c], more = L.length > 1;
   return [
-    "Modifica la foto di questo interno aggiungendo un lavoro in cartongesso realizzato da un professionista.",
-    "Aggiungi " + CG_TIPO[c.tipo] + (c.tipo === "soffitto" ? "" : ", " + CG_DOVE[c.dove]) + "." + luci,
-    "Il nuovo elemento in cartongesso è rifinito e dipinto nel colore " + colorDesc + ", opaco, con stuccature invisibili.",
+    "Modifica la foto di questo interno aggiungendo " + (more ? L.length + " lavori in cartongesso" : "un lavoro in cartongesso") + " realizzati da un professionista.",
+    more ? "Aggiungi TUTTI questi elementi, ognuno al suo posto: " + L.map(function (o, i) { return (i + 1) + ") " + cgOne(o); }).join("; ") + "." : "Aggiungi " + cgOne(L[0]) + ".",
+    "I nuovi elementi in cartongesso sono rifiniti e dipinti nel colore " + colorDesc + ", opachi, con stuccature invisibili.",
     "Proporzioni realistiche rispetto alla stanza, alle porte e ai mobili; segui esattamente la prospettiva e le linee della foto; luci e ombre coerenti con la luce della stanza.",
-    "Mantieni identici pavimento, mobili, finestre, porte, oggetti, inquadratura e tutte le altre pareti: aggiungi SOLO l'elemento in cartongesso descritto. Non spostare né eliminare nulla.",
+    "Mantieni identici pavimento, mobili, finestre, porte, oggetti, inquadratura e tutte le altre pareti: aggiungi SOLO " + (more ? "gli elementi in cartongesso descritti" : "l'elemento in cartongesso descritto") + ". Non spostare né eliminare nulla.",
     "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
   ].join(" ");
 }

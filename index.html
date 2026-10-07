@@ -11353,7 +11353,58 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return '<div class="sf-pic" style="background-color:'+(hex || '#CFC6B6')+';background-image:url('+t+');background-size:cover;background-position:center;'+(hex ? 'background-blend-mode:luminosity;' : '')+(filter ? 'filter:'+filter+';' : '')+'"></div>';
   }
   var CG_ICO = {"veletta": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 6h100M10 56h100M10 6v50M110 6v50\"/><path d=\"M10 18h34v8H10\"/><path d=\"M48 24l6 3M48 20l7 0\" stroke-width=\"1.2\"/></svg>", "soffitto": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 6h100M10 56h100M10 6v50M110 6v50\"/><path d=\"M10 18h100\"/><path d=\"M30 6v12M60 6v12M90 6v12\" stroke-width=\"1.2\"/></svg>", "nicchia": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 56h100M10 6h100M10 6v50M110 6v50\"/><rect x=\"38\" y=\"16\" width=\"44\" height=\"22\" rx=\"2\"/><path d=\"M38 27h44\" stroke-width=\"1.2\"/></svg>", "parete": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 56h100M10 6h100\"/><path d=\"M58 6v50M62 6v50\"/><path d=\"M20 56V30h16v26\" stroke-width=\"1.5\"/></svg>", "libreria": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 56h100M10 6h100\"/><rect x=\"30\" y=\"10\" width=\"60\" height=\"46\"/><path d=\"M30 25h60M30 40h60M60 10v46\" stroke-width=\"1.4\"/></svg>", "controparete": "<svg viewBox=\"0 0 120 62\" fill=\"none\" stroke=\"#C8692E\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 56h100M10 6h100M14 6v50\"/><path d=\"M24 6v50\" stroke-dasharray=\"3 3\"/><path d=\"M14 31h10\" stroke-width=\"1\"/></svg>"};
+  var CG_LUCI_OK = ['veletta', 'soffitto', 'nicchia', 'libreria'];
+  var CG_NOMI = { veletta:'la veletta', soffitto:'il controsoffitto', nicchia:'la nicchia', parete:'la parete divisoria', libreria:'la libreria', controparete:'la controparete' };
+  function cgList(){ return (state.cg && state.cg.list) || []; }
+  function cgIt(t){ return (state.cg && state.cg.it && state.cg.it[t]) || {}; }
+  function cgQ(st){
+    if(st === 'cgTipo') return { t:'Cosa aggiungi in cartongesso?', s:'Puoi sceglierne più di uno (fino a 3), poi premi Continua.', multi:true, opts: [['veletta','Veletta','Fascia ribassata, anche con luci'],['soffitto','Controsoffitto','Abbassa tutto il soffitto'],['nicchia','Nicchia','Per TV o mensole'],['parete','Parete divisoria','Divide la stanza'],['libreria','Libreria','A tutta parete'],['controparete','Controparete','Riveste un muro']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic:sfPic('#FBFAF7', CG_ICO[x[0]]), sel: cgList().indexOf(x[0]) > -1 }; }) };
+    if(st.indexOf('cgD_') === 0){
+      var t = st.slice(4), T = { veletta:'Dove va la veletta?', nicchia:'Su quale parete la nicchia?', parete:'Dove passa la parete divisoria?', libreria:'Su quale parete la libreria?', controparete:'Quale parete rivesti?' }[t] || 'Su quale parete?';
+      var O = [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra','']];
+      if(t === 'veletta') O.push(['giro','Tutto intorno','Su tutto il perimetro della stanza']);
+      return { t:T, s:'Guardando la foto.', opts: O.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', cgWall(x[0])), sel: cgIt(t).dove === x[0] }; }) };
+    }
+    if(st.indexOf('cgL_') === 0){
+      var t2 = st.slice(4), cur = cgIt(t2).luci, nm = CG_NOMI[t2] || '';
+      return { t: nm.charAt(0).toUpperCase() + nm.slice(1) + ': con le luci?', opts:[
+        { v:'led', n:'Striscia LED nascosta', d:'Una lama di luce calda', pic:sfPic('linear-gradient(180deg,#2B2622 0 40%,#F6D9A8 40% 46%,#6B5A48 46%)', ''), sel: cur === 'led' },
+        { v:'faretti', n:'Faretti a incasso', d:'Piccoli e tondi', pic:sfPic('radial-gradient(circle at 25% 30%,#FFF3D6 0 6%,transparent 7%),radial-gradient(circle at 75% 30%,#FFF3D6 0 6%,transparent 7%),linear-gradient(180deg,#EDE7DC,#CFC6B6)', ''), sel: cur === 'faretti' },
+        { v:'no', n:'Senza luci', pic:sfPic('linear-gradient(180deg,#EDE7DC,#CFC6B6)', ''), sel: cur === 'no' } ] };
+    }
+    return null;
+  }
+  // disegno della stanza con in arancione solo la parete scelta
+  function cgWall(w){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark', L = dark ? '#B0A897' : '#1D1B18', BG = dark ? '#1A160F' : '#FBFAF7', N = dark ? '#221D16' : '#FFFFFF', S = dark ? '#1E1913' : '#F3F0EA', A = '#E8A77A', st = ' stroke="' + L + '" stroke-width="1.2" stroke-linejoin="round"';
+    function f(on, base){ return on ? A : base; }
+    var all = w === 'giro';
+    return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="' + BG + '"/>'
+      + '<polygon points="20,10 100,10 100,62 20,62" fill="' + f(all || w === 'fondo', N) + '"' + st + '/>'
+      + '<polygon points="0,0 20,10 20,62 0,90" fill="' + f(all || w === 'sinistra', S) + '"' + st + '/>'
+      + '<polygon points="120,0 100,10 100,62 120,90" fill="' + f(all || w === 'destra', S) + '"' + st + '/>'
+      + '<polygon points="20,62 100,62 120,90 0,90" fill="' + (dark ? '#1E1913' : '#EFEBE4') + '"' + st + '/>'
+      + (all ? '<path d="M3 4L20 13H100L117 4" fill="none" stroke="#C8692E" stroke-width="3"/>' : '') + '</svg>';
+  }
+  function cgApply(st, v){
+    if(st !== 'cgTipo' && st.indexOf('cgD_') !== 0 && st.indexOf('cgL_') !== 0) return false;
+    state.cg = state.cg && state.cg.list ? state.cg : { list:[], it:{} };
+    if(st === 'cgTipo'){
+      var i = state.cg.list.indexOf(v);
+      if(i > -1){ state.cg.list.splice(i, 1); delete state.cg.it[v]; }
+      else if(state.cg.list.length < 3){ state.cg.list.push(v); state.cg.it[v] = { dove: v === 'soffitto' ? 'soffitto' : null, luci: CG_LUCI_OK.indexOf(v) > -1 ? null : 'no' }; }
+      return true;
+    }
+    var t = st.slice(4), it = state.cg.it[t] = state.cg.it[t] || {};
+    if(st.indexOf('cgD_') === 0) it.dove = v; else it.luci = v;
+    return true;
+  }
   function cgPayload(){
+    var c = state.cg; if(!(SF_ON && SF.mat === 'cartongesso') || !c || !c.list || !c.list.length) return null;
+    var items = c.list.map(function(t){ var it = c.it[t] || {}; return { tipo:t, dove: it.dove || (t === 'soffitto' ? 'soffitto' : 'fondo'), luci: it.luci || 'no' }; });
+    return { items: items, tipo: items[0].tipo, dove: items[0].dove, luci: items[0].luci };
+  }
+  function cgPayloadOld(){
     var c = state.cg; if(!(SF_ON && SF.mat === 'cartongesso') || !c || !c.tipo) return null;
     return { tipo:c.tipo, dove: c.dove || (c.tipo === 'soffitto' ? 'soffitto' : 'fondo'), luci: c.luci || 'no' };
   }
@@ -11505,7 +11556,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'microcemento') s.push('dove');
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
     else if(c === 'imbiancatura'){ s.push('ctx'); if(SF.a.ctx === 'interno'){ s.push('pitCosa', 'pitMuro'); if(semplOn()) semplIntSteps(s); } else if(SF.a.ctx === 'esterno'){ s.push('capp'); if(state.capp && state.capp.on) s.push('cappZoc'); if(semplOn()) semplFacSteps(s); } }
-    else if(c === 'cartongesso'){ s.push('cgTipo'); var cgt = state.cg && state.cg.tipo; if(cgt !== 'soffitto') s.push('cgDove'); if(!cgt || ['veletta','soffitto','nicchia','libreria'].indexOf(cgt) > -1) s.push('cgLuci'); }
+    else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
     else if(c === 'legno') s.push('legnoTipo');
     else if(c === 'scale') s.push('scaleMat');
@@ -11515,6 +11566,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function sfAnswered(st){
     var sa = semplAnswered(st); if(sa !== null) return sa;
+    if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
+    if(st.indexOf('cgL_') === 0) return !!cgIt(st.slice(4)).luci;
     switch(st){
       case 'foto': return !!photoImg;
       case 'mat': return !!SF.mat && !!state.category;
@@ -11531,7 +11584,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       case 'granScale': return !!SF.a.granScale;
       case 'capp': return !!(state.capp && state.capp.set);
       case 'cappZoc': return !!(state.capp && state.capp.zocSet);
-      case 'cgTipo': return !!(state.cg && state.cg.tipo);
+      case 'cgTipo': return !!SF.a.cgTipo && cgList().length > 0;
       case 'cgDove': return !!(state.cg && state.cg.dove);
       case 'cgLuci': return !!(state.cg && state.cg.luci);
       case 'decoStile': return !!(state.deco && state.deco.fam);
@@ -11564,6 +11617,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function sfPic(bg, html){ return '<div class="sf-pic" style="background:'+(bg || 'var(--surface)')+'">'+html+'</div>'; }
   function sfQ(st){
     var sq0 = semplQ(st); if(sq0) return sq0;
+    var cq = cgQ(st); if(cq) return cq;
     var catObj = state.category;
     switch(st){
       case 'mat': return { t:'Cosa vuoi rifare?', s: ((queueAddPending && genQueue.length) || (layerAddPending && layers.length)) ? 'Lavorazione ' + (genQueue.length + layers.length + 1) + ': tocca il lavoro. Hai sbagliato? Premi Indietro per annullare.' : 'Tocca il lavoro.', opts: sfMats().map(function(m){ return { v:m.v, n:m.n, d:m.d, pic:(MAT_LINE_ICON[m.v] ? '<div class="sf-mi">'+MAT_LINE_ICON[m.v]+'</div>' : sfPic(m.bg, '<span class="sf-ico">'+m.icon+'</span>')), sel: SF.mat === m.v }; }) };
@@ -11653,13 +11707,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function sfApply(st, v){
     aiResultImage = null; aiResultImageBase64 = null; aiResultImageMime = null;
     if(semplApply(st, v)) return;
+    if(cgApply(st, v)) return;
     if(st === 'mat'){
       if(SF.mat !== v || !state.category){ SF.a = {}; }
       SF.mat = v;
       sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso') ? 'imbiancatura' : v);
       if(v === 'legno'){ state.material = null; }
       if(v === 'deco'){ var dcards = subGrid.children; if(dcards[0]) dcards[0].click(); SF.a.ctx = 'interno'; state.deco = state.deco && state.deco.fam ? state.deco : { eff:'medio', prot:'none' }; } else { state.deco = null; }
-      if(v === 'cartongesso'){ var cgc = subGrid.children; if(cgc[0]) cgc[0].click(); SF.a.ctx = 'interno'; state.cg = state.cg && state.cg.tipo ? state.cg : {}; } else { state.cg = null; }
+      if(v === 'cartongesso'){ var cgc = subGrid.children; if(cgc[0]) cgc[0].click(); SF.a.ctx = 'interno'; state.cg = state.cg && state.cg.list ? state.cg : { list:[], it:{} }; } else { state.cg = null; }
       if(v !== 'imbiancatura') state.capp = null;
       if(v === 'microcemento' || v === 'monolith'){ state.resinaArea = null; }
       return;
