@@ -32,23 +32,41 @@
 
 const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS } = require("./_auth-lib");
 const jobs = require("./_jobs");
-const DECO = require("./_deco");   // anteprime salvate: si ritrovano anche chiudendo l'app
+const DECO = require("./_deco");
+const SIST = require("./_sist");   // cappotto termico e cartongesso   // anteprime salvate: si ritrovano anche chiudendo l'app
 const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 
-// ---- Anteprime di prova (vedi supabase_anteprime_prova.sql) ----
-const FREE_PREVIEWS = 5;
-// Account senza limite: quelli di prova di Rendrum, più eventuali email in RD_UNLIMITED_EMAILS (separate da virgola) su Vercel.
-const UNLIMITED_EMAILS = () => ["prova@rendrum.com", "provalo@rendrum.com"].concat(String(process.env.RD_UNLIMITED_EMAILS || "").split(",").map(x => x.trim().toLowerCase()).filter(Boolean));
-// Prenota un'anteprima di prova. Ritorna il nuovo conteggio, "over" se finite, "missing" se manca la colonna.
-async function useTrial(acc) {
+// ---- Crediti e prova gratuita (vedi supabase_crediti.sql) ----
+// Senza abbonamento attivo: prima si usano i crediti comprati (pacchetti), poi la prova gratuita:
+// TRIAL_PRIVATO / TRIAL_PRO anteprime entro TRIAL_DAYS giorni dalla prima anteprima.
+const TRIAL_DAYS = 7, TRIAL_PRIVATO = 5, TRIAL_PRO = 10;
+// Account senza limite: quelli di prova di Rendrum, quelli di TEST_EMAILS e RD_UNLIMITED_EMAILS su Vercel (separati da virgola).
+const UNLIMITED_EMAILS = () => ["prova@rendrum.com", "provalo@rendrum.com", "info@rendrum.com", "info@dgmresine.com"]
+  .concat(String(process.env.TEST_EMAILS || "").split(","), String(process.env.RD_UNLIMITED_EMAILS || "").split(","))
+  .map(x => String(x).trim().toLowerCase()).filter(Boolean);
+const trialLimit = (acc) => (acc.account_type === "privato" ? TRIAL_PRIVATO : TRIAL_PRO);
+// Prenota un'anteprima. Ritorna { kind:"credit"|"trial", undo } oppure "missing" / "over" / "expired".
+async function useCredit(acc) {
+  const id = encodeURIComponent(acc.id);
   for (let i = 0; i < 3; i++) {
-    const r = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(acc.id) + "&select=trial_used", { method: "GET" }).catch(function () { return { ok: false }; });
+    const r = await supabaseRequest("/pro_accounts?id=eq." + id + "&select=trial_used,trial_start,credits", { method: "GET" }).catch(function () { return { ok: false }; });
     const row = r.ok && Array.isArray(r.data) && r.data[0];
-    if (!row || !Object.prototype.hasOwnProperty.call(row, "trial_used")) return "missing";
-    const used = Number(row.trial_used) || 0;
-    if (used >= FREE_PREVIEWS) return "over";
-    const p = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(acc.id) + "&trial_used=eq." + used, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ trial_used: used + 1 }) }).catch(function () { return { ok: false }; });
-    if (p.ok && Array.isArray(p.data) && p.data.length) return used + 1;
+    if (!row || !["trial_used", "trial_start", "credits"].every(function (k) { return Object.prototype.hasOwnProperty.call(row, k); })) return "missing";
+    const credits = Number(row.credits) || 0, used = Number(row.trial_used) || 0;
+    if (credits > 0) {
+      const p = await supabaseRequest("/pro_accounts?id=eq." + id + "&credits=eq." + credits, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ credits: credits - 1 }) }).catch(function () { return { ok: false }; });
+      if (p.ok && Array.isArray(p.data) && p.data.length) return { kind: "credit", undo: { filter: "&credits=eq." + (credits - 1), body: { credits: credits } } };
+      continue;
+    }
+    const start = row.trial_start ? Date.parse(row.trial_start) : null;
+    if (start && Date.now() - start > TRIAL_DAYS * 86400000) return "expired";
+    if (used >= trialLimit(acc)) return "over";
+    const patch = { trial_used: used + 1 }; if (!start) patch.trial_start = new Date().toISOString();
+    const p = await supabaseRequest("/pro_accounts?id=eq." + id + "&trial_used=eq." + used, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify(patch) }).catch(function () { return { ok: false }; });
+    if (p.ok && Array.isArray(p.data) && p.data.length) {
+      const back = { trial_used: used }; if (!start) back.trial_start = null;
+      return { kind: "trial", undo: { filter: "&trial_used=eq." + (used + 1), body: back } };
+    }
   }
   return "over";
 }
@@ -82,20 +100,23 @@ module.exports = async function handler(req, res) {
   let quotaAcc = null, quotaMonth = null, reserved = false, refunded = false;
   quotaAcc = await currentAccount(req).catch(function () { return null; });
   if (!quotaAcc) return res.status(401).json({ error: "Per creare l'anteprima accedi o registrati.", code: "login_required" });
-  // Chi non ha un abbonamento attivo ha FREE_PREVIEWS anteprime di prova in tutto (non al mese),
-  // così nel periodo di test nessuno può generare senza limite a spese di Rendrum.
+  // Chi non ha un abbonamento attivo usa i crediti comprati o la prova gratuita settimanale,
+  // così nessuno può generare senza limite a spese di Rendrum.
   const accEmail = String(quotaAcc.email || "").toLowerCase();
   const unlimited = UNLIMITED_EMAILS().includes(accEmail);
   const subActive = paymentsEnabled() && ["active", "trialing"].includes(quotaAcc.subscription_status);
   if (!unlimited && !subActive) {
-    const t = await useTrial(quotaAcc);
+    const t = await useCredit(quotaAcc);
     if (t === "missing") return res.status(503).json({ error: "Le anteprime non sono disponibili in questo momento. Riprova tra poco.", code: "trial_unavailable" });
-    if (t === "over") return res.status(429).json({ error: "Hai usato le " + FREE_PREVIEWS + " anteprime di prova gratuite. Grazie per aver provato Rendrum! Per continuare scrivi a info@rendrum.com.", code: "trial_over" });
+    if (t === "over" || t === "expired") {
+      const msg = t === "expired" ? "La tua settimana di prova gratuita è finita." : "Hai usato le " + trialLimit(quotaAcc) + " anteprime della prova gratuita.";
+      return res.status(429).json({ error: msg + " Grazie per aver provato Rendrum! Per continuare scrivi a info@rendrum.com.", code: t === "expired" ? "trial_expired" : "trial_over" });
+    }
     const origJsonT = res.json.bind(res); let backT = false;
     res.json = function (payload) {
       if (!backT && res.statusCode >= 400) {
         backT = true;
-        return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&trial_used=eq." + t, { method: "PATCH", body: JSON.stringify({ trial_used: t - 1 }) })
+        return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + t.undo.filter, { method: "PATCH", body: JSON.stringify(t.undo.body) })
           .catch(function () {}).then(function () { return origJsonT(payload); });
       }
       return origJsonT(payload);
@@ -791,7 +812,10 @@ module.exports = async function handler(req, res) {
     : " TEXTURE DEI MURI: la pittura cambia SOLO il colore. Se l'intonaco originale è ruvido, grezzo, a buccia d'arancia o irregolare, nel risultato resta ESATTAMENTE così (stessi rilievi, stesse ombre della grana), solo nel nuovo colore: non lisciare e non rasare i muri. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "");
   const colorContainNote = isExteriorFacade ? ""
     : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera.";
-  const prompt = isRigheStep ? righeStepPrompt : [
+  const cappSel = (materialId === "imbiancatura" && context === "esterno") ? SIST.parseCapp((req.body || {}).cappotto) : null;
+  const cgSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseCg((req.body || {}).cartongesso) : null;
+  const cappNote = cappSel ? SIST.cappNote(cappSel, null) : "";
+  const prompt = cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
@@ -833,6 +857,7 @@ module.exports = async function handler(req, res) {
     zonesSummary,
     colorCardNote,
     colorFidelityNote,
+    cappNote,
     realismNote,
     isExteriorFacade ? exteriorPreservationNote : globalPreservationNote,
     paddedBands ? "NOTA SUL FORMATO: ai bordi della foto ci sono bande sfocate aggiunte solo per adattare il formato: lasciale come sono e NON ingrandire, spostare o ritagliare la foto al centro, che deve restare esattamente nella stessa posizione e dimensione." : ""
