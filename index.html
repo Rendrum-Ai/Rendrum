@@ -1212,6 +1212,26 @@ button.ft-pr{ cursor:pointer; }
 /* logo dell'impresa nella scheda del menu: intero, mai tagliato */
 .rx-co-lg.img{ width:64px; height:48px; background-color:#fff; background-size:contain; background-repeat:no-repeat; background-position:center; background-origin:content-box; padding:5px; border-radius:12px; }
 
+/* Menu Altro: un colore per funzione (idea 4) */
+.rd-sheet-in .rx-gr button[data-rxgo2="cantieri"] .rx-ic{ background:#C8692E; }
+.rd-sheet-in .rx-gr button[data-rxgo2="agenda"] .rx-ic{ background:#5E8C6A; }
+.rd-sheet-in .rx-gr button[data-rdalt="sopr"] .rx-ic{ background:#B08A3E; }
+.rd-sheet-in .rx-gr button[data-rdalt="listino"] .rx-ic{ background:#7A6A5A; }
+.rd-sheet-in .rx-gr button[data-rxgo2="squadra"] .rx-ic{ background:#4F7A8C; }
+.rd-sheet-in .rx-gr button[data-rxgo2="lavori"] .rx-ic{ background:#6E8B3D; }
+.rd-sheet-in .rx-gr button[data-rxgo2="cosa"] .rx-ic{ background:#2B1408; }
+.rd-sheet-in .rx-gr button[data-rxgo2="incassi"] .rx-ic{ background:#2E7D4F; }
+.rd-sheet-in .rx-gr button[data-rxgo2="fatture"] .rx-ic{ background:#8A4B24; }
+.rd-sheet-in .rx-gr button[data-rxgo2="clienti"] .rx-ic{ background:#A0573A; }
+.rd-sheet-in .rx-gr button[data-rxgo2="recensioni"] .rx-ic{ background:#C99A2E; }
+.rd-sheet-in .rx-gr button[data-rxgo2="sito"] .rx-ic{ background:#3F6E8C; }
+.rd-sheet-in .rx-gr button[data-rxgo2="voto"] .rx-ic{ background:#7D5A86; }
+.rd-sheet-in .rx-gr button[data-rxgo2="stat"] .rx-ic{ background:#5C6B7A; }
+.rd-sheet-in .rx-gr button[data-rdalt="profilo"] .rx-ic{ background:#2B1408; }
+.rd-sheet-in .rx-gr button[data-rdalt="impresa"] .rx-ic{ background:#2B1408; }
+.rd-sheet-in .rx-gr button[data-rdalt="account"] .rx-ic{ background:#2B1408; }
+.rd-sheet-in .rx-gr button[data-rxgo2="assist"] .rx-ic{ background:#2B1408; }
+
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
   body.rd-v2 #proBar{ display:none !important; }
@@ -11193,7 +11213,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       { v:'graniglia_esterni', n:'Graniglia per esterni', d:'Vialetti, terrazzi, bordi piscina' }
     ];
     if(pro) L.push({ v:'resina_haccp', n:'Resina HACCP', d:'Cucine professionali e industria' });
-    if(rdIsTester()) L.splice(4, 0, { v:'deco', n:'Pareti decorate', d:'Decorazioni Loggia · in prova', cat:'imbiancatura' });
+    if(rdIsTester()) L.splice(4, 0, { v:'deco', n:'Pareti decorate', d:'Spatolati, marmi, metalli e altre finiture', cat:'imbiancatura' });
     return L.map(function(m){ var st = CATEGORY_STYLE[m.cat || m.v] || {}; m.bg = st.bg; m.icon = st.icon || ''; return m; });
   }
   function sfSteps(){
@@ -11299,7 +11319,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       case 'granScale': return { t:'Ci sono gradini da fare in graniglia?', s:'Se nella foto ci sono scalini, possiamo rivestire anche quelli.', opts:[
         { v:'no', n:'No, solo il pavimento', pic:sfPic('linear-gradient(135deg,#B7AC9F,#8C8375)', ''), sel: SF.a.granScale === 'no' },
         { v:'si', n:'Sì, anche i gradini', pic:sfPic('repeating-linear-gradient(180deg,#B7AC9F 0 18px,#6F675C 18px 22px)', ''), sel: SF.a.granScale === 'si' } ] };
-      case 'decoStile': return { t:'Che stile di decorazione?', s:'Decorazioni Loggia. Sezione in prova: la vedono solo gli account di prova.', opts: RD_DECO.fam.map(function(f){ return { v:f.id, n:f.n, d:f.items.length + ' decorazioni', pic:decoPic(f.items[0].k), sel: !!(state.deco && state.deco.fam === f.id) }; }) };
+      case 'decoStile': return { t:'Che stile di decorazione?', s:'Scegli la famiglia di finitura decorativa.', opts: RD_DECO.fam.map(function(f){ return { v:f.id, n:f.n, d:f.items.length + ' decorazioni', pic:decoPic(f.items[0].k), sel: !!(state.deco && state.deco.fam === f.id) }; }) };
       case 'decoProd': var df = decoFam(state.deco && state.deco.fam) || RD_DECO.fam[0]; return { t:df.n, s:df.s + ' · Loggia', opts: df.items.map(function(it){ return { v:it.k, n:it.n, d:it.d + (it.u === 'ie' ? ' · interni ed esterni' : ''), pic:decoPic(it.k), sel: !!(state.deco && state.deco.k === it.k) }; }) };
       case 'decoTinta':
         var dk = state.deco && state.deco.k;
