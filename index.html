@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <script>try{if(/[?&]i=[a-f0-9]{20}/.test(location.search))document.documentElement.classList.add("rd-inv");if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
-<script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
+<script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");var vm=document.querySelector('meta[name="viewport"]');if(vm)vm.setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <link rel="preload" as="image" href="/img/5298b64fd7df.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="/img/8ee849b00fb5.jpg" fetchpriority="high">
 <title>Rendrum – Vedi la tua casa rinnovata prima dei lavori</title>
@@ -1344,13 +1344,22 @@ html.rd-inv #layerBox, html.rd-inv #queueBox, html.rd-inv #queueAddBtn, html.rd-
 .iv-close{ display:block; width:100%; margin-top:6px; background:none; border:none; font-family:inherit; color:var(--ink-soft); font-size:13.5px; padding:8px; cursor:pointer; }
 /* ===== cantieri: prima foto sfocata nelle storie e nelle schede; schede centrate ===== */
 .v3a{ overflow:hidden; }
-.v3blur{ width:100%; height:100%; object-fit:cover; border-radius:50%; filter:blur(2px) saturate(1.05); transform:scale(1.15); }
-.v3cblur{ position:absolute; top:-24px; left:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(12px) brightness(.72) saturate(1.1); }
+.v3blur{ width:100%; height:100%; object-fit:cover; border-radius:50%; filter:blur(1px) saturate(1.05); transform:scale(1.08); }
+.v3cblur{ position:absolute; top:-6px; left:-6px; width:calc(100% + 12px); height:calc(100% + 12px); object-fit:cover; filter:blur(2.5px) brightness(.9); }
+.v3c{ isolation:isolate; -webkit-mask-image:-webkit-radial-gradient(white, black); transform:translateZ(0); }
 @media (max-width:759px){
   .v3cards{ margin:-8px -20px -6px; padding:8px 32px 26px; scroll-padding:0; scroll-snap-type:x mandatory; }
   .v3c{ width:calc(100vw - 64px); max-width:420px; scroll-snap-align:center; box-shadow:0 8px 18px rgba(43,20,8,.16); }
   .v3c:only-child{ width:calc(100vw - 64px); max-width:420px; margin:0 auto; }
 }
+
+/* condizioni di pagamento: la scelta attiva si vede */
+.q-seg button.on, html:not([data-theme="dark"]) .q-seg button.on{ background:var(--accent) !important; border-color:var(--accent) !important; color:#fff !important; font-weight:700; }
+/* niente scorrimento di lato: ogni pagina resta intera nello schermo */
+html, body{ overflow-x:clip; max-width:100%; }
+.pro-projects-modal, .pro-projects-card, #rdX, .rd-x{ overflow-x:hidden; }
+.so-row > *, .field, .row2 > *{ min-width:0; }
+input[type="date"], input[type="time"]{ min-width:0; max-width:100%; box-sizing:border-box; -webkit-appearance:none; appearance:none; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -13665,6 +13674,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }).catch(function(){ btn.disabled = false; });
   }
   function qRenderRate(){
+    try{ var pk = (qs.cur.rate || []).map(function(r){ return +r.pct || 0; }).join('/'); document.querySelectorAll('#qRatePresets button').forEach(function(b){ var P = Q_RATE_PRESETS[b.dataset.p]; b.classList.toggle('on', !!P && P.map(function(r){ return r.pct; }).join('/') === pk); }); }catch(e){}
     var box = document.getElementById('qRate'); box.innerHTML = '';
     qs.cur.rate.forEach(function(r, i){
       var d = document.createElement('div'); d.className = 'q-rata';
@@ -14659,24 +14669,36 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(d.lavori.indexOf(so.vsk) < 0) so.vsk = d.lavori[0];
     var sk = so.vsk, au = soAuto(d, sk), vv = soVoci(d, sk), pr = soPrezzi();
     var h = '<div class="so-lavsw">' + d.lavori.map(function(k){ return '<button type="button" class="pf-chip' + (k === sk ? ' on' : '') + '" data-sovsk="' + k + '">' + qEsc(SO_SCHEDE[k].n) + '</button>'; }).join('') + '</div>';
-    h += '<div class="pf-hint">Le voci in arancione si riempiono dalle misure (puoi correggerle). Le altre contale con − e ＋ o scrivi il numero. Le voci a zero non vanno nel preventivo.</div>';
+    h += '<div class="pf-hint">Qui ci sono solo le voci che ti servono: quelle in arancione arrivano dalle misure (puoi correggerle). Le altre le aggiungi tu dall’elenco qui sotto o scrivendole. Le voci a zero non vanno nel preventivo.</div>';
+    // si vedono solo le voci usate: dalle misure, scelte dall'artigiano o scritte da lui
+    function soVis(v){ var e = (d.voci[sk] || {})[v.k], q = soQ(d, sk, v, au); return v.ex != null || !!(e && (e.on || q > 0)) || !!(v.a && !e && q > 0); }
     h += '<label class="so-ck" style="margin:0 0 8px"><input type="checkbox" id="soPrz"' + (pr ? ' checked' : '') + '> Mostra i prezzi del listino</label>';
+    var hid = vv.filter(function(v){ return !soVis(v); });
+    if(!vv.some(soVis)) h += '<div class="pp-empty" style="margin:6px 0">Nessuna voce ancora: scegli dall’elenco qui sotto quelle che servono.</div>';
     h += vv.map(function(v, i){
+      if(!soVis(v)) return '';
       var e = (d.voci[sk] || {})[v.k], q = soQ(d, sk, v, au), isAuto = v.a && !(e && e.m);
       var price = pr ? (v.li && v.li.prezzo ? qpEur(v.li.prezzo) + '/' + soUm(v.um) : 'manca nel listino') : '';
-      return '<div class="so-voce' + (isAuto ? ' auto' : '') + (q > 0 ? ' pos' : '') + '" data-sov="' + i + '"><div class="so-voce-t"><b>' + qEsc(v.t) + '</b><span>' + (v.a ? (isAuto ? 'dalle misure' : 'corretta a mano · <button type="button" class="q-link" data-soreset="1">torna alle misure</button>') : (v.ex != null ? 'voce tua · <button type="button" class="q-link" data-soexdel="1">togli</button>' : '')) + (price ? (v.a || v.ex != null ? ' · ' : '') + qEsc(price) : '') + '</span></div>'
+      return '<div class="so-voce' + (isAuto ? ' auto' : '') + (q > 0 ? ' pos' : '') + '" data-sov="' + i + '" data-sovk="' + qEsc(v.k) + '"><div class="so-voce-t"><b>' + qEsc(v.t) + '</b><span>' + (v.a ? (isAuto ? 'dalle misure' : 'corretta a mano · <button type="button" class="q-link" data-soreset="1">torna alle misure</button>') + ' · <button type="button" class="q-link" data-sohide="1">togli</button>' : (v.ex != null ? 'voce tua · <button type="button" class="q-link" data-soexdel="1">togli</button>' : '<button type="button" class="q-link" data-sohide="1">togli</button>')) + (price ? ' · ' + qEsc(price) : '') + '</span></div>'
         + '<div class="so-step"><button type="button" data-sostep="-1" aria-label="Meno">−</button><input inputmode="decimal" value="' + qEsc(qFmtIn(q)) + '" placeholder="0"><button type="button" data-sostep="1" aria-label="Più">＋</button><i>' + qEsc(soUm(v.um)) + '</i></div></div>';
     }).join('');
+    if(hid.length) h += '<div class="pf-sec" style="margin-top:14px">Aggiungi una voce</div><div class="so-opts">' + hid.map(function(v){ return '<button type="button" class="pf-chip" data-sovadd="' + qEsc(v.k) + '">＋ ' + qEsc(v.t) + '</button>'; }).join('') + '</div>';
     h += '<div class="so-add" id="soAddV"><input id="soAddT" placeholder="＋ Voce tua (es. Pulizia grondaie)"><select id="soAddU">' + ['mq','ml','pz','a corpo'].map(function(u){ return '<option value="' + u + '">' + soUm(u) + '</option>'; }).join('') + '</select><button type="button" class="q-add" id="soAddB">Aggiungi</button></div>';
     box.innerHTML = h;
     box.querySelectorAll('[data-sovsk]').forEach(function(b){ b.addEventListener('click', function(){ so.vsk = b.dataset.sovsk; soDrawVoci(); }); });
+    box.querySelectorAll('[data-sovadd]').forEach(function(b){ b.addEventListener('click', function(){
+      var k = b.dataset.sovadd, v = vv.filter(function(x){ return x.k === k; })[0]; if(!v) return;
+      d.voci[sk] = d.voci[sk] || {}; d.voci[sk][k] = { q: 0, m: v.a ? 1 : 0, on: 1 }; soTouch(); soDrawVoci();
+      var row = box.querySelector('[data-sovk="' + k + '"] input'); if(row){ row.focus(); try{ row.scrollIntoView({ block:'center' }); }catch(e){} }
+    }); });
     document.getElementById('soPrz').addEventListener('change', function(){ soPrezzi(this.checked); soDrawVoci(); });
     box.querySelectorAll('[data-sov]').forEach(function(row){
       var v = vv[+row.dataset.sov], inp = row.querySelector('input');
-      function set(q){ d.voci[sk] = d.voci[sk] || {}; d.voci[sk][v.k] = { q: Math.max(0, soR(q)), m: v.a ? 1 : 0 }; row.classList.remove('auto'); row.classList.toggle('pos', q > 0); soTouch(); }
+      function set(q){ d.voci[sk] = d.voci[sk] || {}; d.voci[sk][v.k] = { q: Math.max(0, soR(q)), m: v.a ? 1 : 0, on: 1 }; row.classList.remove('auto'); row.classList.toggle('pos', q > 0); soTouch(); }
       inp.addEventListener('input', function(){ set(soN(inp.value)); });
       row.querySelectorAll('[data-sostep]').forEach(function(b){ b.addEventListener('click', function(){ var q = Math.max(0, soN(inp.value) + (+b.dataset.sostep)); inp.value = qFmtIn(soR(q)); set(q); }); });
       var rs = row.querySelector('[data-soreset]'); if(rs) rs.addEventListener('click', function(){ delete d.voci[sk][v.k]; soTouch(); soDrawVoci(); });
+      var hd = row.querySelector('[data-sohide]'); if(hd) hd.addEventListener('click', function(){ d.voci[sk] = d.voci[sk] || {}; d.voci[sk][v.k] = { q: 0, m: v.a ? 1 : 0 }; soTouch(); soDrawVoci(); });
       var xd = row.querySelector('[data-soexdel]'); if(xd) xd.addEventListener('click', function(){ d.extra.splice(v.ex, 1); if(d.voci[sk]) delete d.voci[sk][v.k]; soTouch(); soDrawVoci(); });
     });
     document.getElementById('soAddB').addEventListener('click', function(){
@@ -17917,6 +17939,19 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     });
   }
   if(RD_INV_T) invGuestStart();
+  // ===== Solo nell'app: barra in alto (ora, batteria) leggibile sullo sfondo chiaro =====
+  // Il plugin StatusBar è già nell'app: lo chiamiamo dal sito, così non serve una nuova versione.
+  (function(){
+    if(!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform())) return;
+    function sync(){
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark', P = Capacitor.Plugins || {};
+      try{ if(P.StatusBar && P.StatusBar.setStyle) P.StatusBar.setStyle({ style: dark ? 'DARK' : 'LIGHT' }).catch(function(){}); }catch(e){}
+      try{ if(P.SystemBars && P.SystemBars.setStyle) P.SystemBars.setStyle({ style: dark ? 'DARK' : 'LIGHT' }).catch(function(){}); }catch(e){}
+    }
+    sync(); setTimeout(sync, 800); setTimeout(sync, 3000);
+    try{ new MutationObserver(sync).observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] }); }catch(e){}
+    document.addEventListener('visibilitychange', function(){ if(!document.hidden) sync(); });
+  })();
   // ---------- Privati e professionisti separati: niente richieste ai professionisti per ora ----------
   // Al posto di "Trova un artigiano" il privato manda il prima e dopo a chi vuole lui.
   function rdShareImg(){
