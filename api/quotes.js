@@ -108,7 +108,7 @@ function validate(q) {
 
 function summary(row) {
   const d = row.data || {};
-  return { id: row.id, number: row.number, year: row.year, status: row.status, clientName: row.client_name, oggetto: d.oggetto || "", total: (row.total_cents || 0) / 100, date: d.data || null, updatedAt: row.updated_at };
+  return { id: row.id, number: row.number, year: row.year, status: row.status, clientName: row.client_name, oggetto: d.oggetto || "", total: (row.total_cents || 0) / 100, date: d.data || null, updatedAt: row.updated_at, cover: (d.anteprima && (d.anteprima.prima || d.anteprima.dopo)) || null };
 }
 function full(row) { return Object.assign(summary(row), { quote: row.data || {} }); }
 
@@ -170,9 +170,9 @@ module.exports = async function handler(req, res) {
     }
 
     if (action === "list") {
-      const r = await supabaseRequest("/pro_quotes?" + mine + "&select=id,number,year,status,client_name,total_cents,updated_at,data->oggetto,data->data&order=year.desc,number.desc&limit=300", { method: "GET" });
+      const r = await supabaseRequest("/pro_quotes?" + mine + "&select=id,number,year,status,client_name,total_cents,updated_at,data->oggetto,data->data,data->anteprima&order=year.desc,number.desc&limit=300", { method: "GET" });
       if (!r.ok) return res.status(502).json({ error: "Non riesco a caricare i preventivi." });
-      const list = (r.data || []).map(x => summary(Object.assign({}, x, { data: { oggetto: x.oggetto, data: x.data } })));
+      const list = (r.data || []).map(x => summary(Object.assign({}, x, { data: { oggetto: x.oggetto, data: x.data, anteprima: x.anteprima } })));
       return res.status(200).json({ quotes: list });
     }
 

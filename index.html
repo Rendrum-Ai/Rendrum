@@ -1342,6 +1342,15 @@ html.rd-inv #layerBox, html.rd-inv #queueBox, html.rd-inv #queueAddBtn, html.rd-
 .iv-pay{ display:block; width:100%; margin-top:14px; border:none; border-radius:16px; background:#2B1408; color:#fff; font-family:inherit; font-size:15.5px; font-weight:700; padding:15px; cursor:pointer; }
 .iv-sh-n{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:8px; } .iv-err{ color:#B4341A; font-size:13px; text-align:center; margin-top:6px; }
 .iv-close{ display:block; width:100%; margin-top:6px; background:none; border:none; font-family:inherit; color:var(--ink-soft); font-size:13.5px; padding:8px; cursor:pointer; }
+/* ===== cantieri: prima foto sfocata nelle storie e nelle schede; schede centrate ===== */
+.v3a{ overflow:hidden; }
+.v3blur{ width:100%; height:100%; object-fit:cover; border-radius:50%; filter:blur(2px) saturate(1.05); transform:scale(1.15); }
+.v3cblur{ position:absolute; top:-24px; left:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(12px) brightness(.72) saturate(1.1); }
+@media (max-width:759px){
+  .v3cards{ margin:-8px -20px -6px; padding:8px 32px 26px; scroll-padding:0; scroll-snap-type:x mandatory; }
+  .v3c{ width:calc(100vw - 64px); max-width:420px; scroll-snap-align:center; box-shadow:0 8px 18px rgba(43,20,8,.16); }
+  .v3c:only-child{ width:calc(100vw - 64px); max-width:420px; margin:0 auto; }
+}
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -15689,6 +15698,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     c.luogo = [].concat(g.sopr.map(function(s){ return s.address; }), g.agenda.map(function(a){ return a.data.indirizzo; }), g.lavoro.map(function(w){ return w.data.comune; }), L ? [[L.comune, L.provincia].filter(Boolean).join(' ')] : []).filter(Boolean)[0] || '';
     c.lavoro = [].concat(g.lavoro.map(function(w){ return w.data.titolo; }), g.quote.map(function(q){ return String(q.oggetto || '').replace(/^Offerta per:\s*/i, ''); }), L ? [L.lavorazioneNome] : [], g.sopr.map(function(s){ return (s.lavori || []).map(function(k){ return SO_SCHEDE[k] ? SO_SCHEDE[k].n : ''; }).join(' + '); }), g.agenda.map(function(a){ return a.data.titolo; })).filter(Boolean)[0] || '';
     c.img = [].concat(g.lavoro.map(function(w){ return (w.data.dopo || [])[0] || (w.data.prima || [])[0]; })).filter(Boolean)[0] || null;
+    // prima foto del cantiere (sopralluogo o anteprima del preventivo): sfocata nelle storie, così l'artigiano riconosce il cantiere
+    c.cover = [].concat(g.sopr.slice().reverse().map(function(s){ return s.cover; }), g.quote.slice().reverse().map(function(q){ return q.cover; })).filter(Boolean)[0] || null;
     var dates = [].concat(g.lead.map(function(x){ return x.createdAt; }), g.sopr.map(function(x){ return x.updatedAt; }), g.quote.map(function(x){ return x.updatedAt; }), g.agenda.map(function(x){ return x.updatedAt; }), g.lavoro.map(function(x){ return x.updatedAt; }), g.review.map(function(x){ return x.updatedAt; })).filter(Boolean).sort();
     c.agg = dates[dates.length - 1] || '';
     var today = ctDayIso(0), agSo = g.agenda.filter(function(a){ return a.data.tipo === 'sopralluogo'; }), agLav = g.agenda.filter(function(a){ return a.data.tipo === 'lavoro'; });
@@ -16064,13 +16075,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       L.forEach(function(c){ c.g.quote.forEach(function(q){ if(q.status === 'accettato' && Date.parse(q.updatedAt) >= week) acc += +q.total || 0; }); c.g.review.forEach(function(r){ if(r.data.stato === 'ricevuta') rv.push(+r.data.stelle || 0); }); });
       var media = rv.length ? rv.reduce(function(a, b){ return a + b; }, 0) / rv.length : 0;
       var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div>' + (L.length ? '<button type="button" class="v3all" id="v3All">Tutti ›</button>' : '') + '</div>';
-      if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
+      if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : c.cover ? '<img class="v3blur" src="' + qEsc(c.cover) + '" alt="">' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
       if(sera) h += ccSeraHtml(sera, tar);
       h += invHomeHtml();
       h += inHomeHtml(L);
       h += tmFeedHtml();
       if(open.length) h += '<div class="v3cards">' + open.slice(0, 10).map(function(c){ var i = L.indexOf(c);
-          return '<div class="v3c" data-v3c="' + i + '" style="' + v3Bg(c) + '"><div class="v3cs"></div>' + (c.img ? '' : '<span class="v3ci">' + qEsc(ctIni(c.nome)) + '</span>')
+          return '<div class="v3c" data-v3c="' + i + '" style="' + v3Bg(c) + '">' + (!c.img && c.cover ? '<img class="v3cblur" src="' + qEsc(c.cover) + '" alt="">' : '') + '<div class="v3cs"></div>' + (c.img || c.cover ? '' : '<span class="v3ci">' + qEsc(ctIni(c.nome)) + '</span>')
             + '<div class="v3ct"><span class="v3ph">' + CT_FASI[c.fase] + (c._td ? ' · oggi ' + qEsc(c._td.data.ora || '') : '') + '</span><b>' + qEsc(c.nome) + '</b><i>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ')) + '</i>'
             + '<div class="v3bar">' + [0, 1, 2, 3, 4].map(function(k){ return '<u class="' + (k < c.fase ? 'd' : k === c.fase ? 'c' : '') + '"></u>'; }).join('') + '</div>'
             + (c.next ? '<button type="button" class="v3nx" data-v3n="' + i + '">' + qEsc(c.next.t) + ' <span>›</span></button>' : '') + '</div></div>'; }).join('') + '</div>';

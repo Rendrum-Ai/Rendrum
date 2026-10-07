@@ -69,6 +69,7 @@ function totals(d) {
 function pub(row, full) {
   const d = row.data || {};
   const o = { id: row.id, clientName: row.client_name || "", address: row.address || "", phone: row.phone || "", leadId: row.lead_id || null, status: row.status || "bozza", updatedAt: row.updated_at, createdAt: row.created_at, tot: totals(d), lavori: Array.isArray(d.lavori) ? d.lavori : [], riassunto: d.riassunto || "" };
+  const f0 = Array.isArray(d.foto) && d.foto[0]; o.cover = f0 && photoUrl(f0.url) ? photoUrl(f0.url) : null;   // prima foto: copertina del cantiere
   if (full) o.data = d;
   return o;
 }
