@@ -8198,6 +8198,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     syncColorCatalogVisibility();
   }
 
+  window.rdFreshStart = function(){
+    try{ resetSelectionForNewCategory(); }catch(e){}
+    state.category = null; state.material = null; state.deco = null; state.cg = null; state.capp = null; state.semplZoc = null;
+    state.addAccento = false; state.accentoTipo = null; state.accentoPoint = null; state.colorAccento = null; state.addPlafone = false; state.effettoScatola = false; state.addPorte = false;
+    try{ Array.prototype.forEach.call(materialGrid.children, function(c){ c.classList.remove('selected'); }); }catch(e){}
+    if(typeof SF !== 'undefined'){ SF.mat = null; SF.a = {}; SF.step = 'foto'; }
+  };
+  window.rdSfStep = function(){ return typeof SF !== 'undefined' ? SF.step : ''; };
   // Effetto superficie (Materico/Corten): ha senso solo su Resina Spatolata/Marmo,
   // Microcemento e Scale — non su Pietra/Terrazzo (già hanno una texture a
   // graniglie) né su Imbiancatura/Decorazioni/HACCP.
@@ -16191,7 +16199,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('gbX').addEventListener('click', function(){ ov.hidden = true; });
   }
   // ---------- Nuovo ingresso professionisti (solo prova@): cantieri come storie + fotocamera al centro ----------
-  var v3 = { list: [], cat: 'monolith', si: 0 };
+  var v3 = { list: [], cat: null, si: 0 };
   var V3_LENS = [['monolith', 'Resina', '◐'], ['microcemento', 'Microcemento', '◑'], ['imbiancatura', 'Pittura', '🖌'], ['piastrelle', 'Piastrelle', '▦'], ['legno', 'Legno', '▤'], ['scale', 'Scale', '▙'], ['graniglia_esterni', 'Graniglia', '⁘']];
   function v3First(n){ var s = String(n || '').trim(); if(/^richiesta /i.test(s)) return 'Richiesta'; return s.split(/\s+/)[0] || 'Cliente'; }
   function v3Bg(c){ return c.img ? 'background-image:url(' + qEsc(c.img) + ')' : ''; }
@@ -16275,23 +16283,26 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   // fotocamera: scegli il materiale come un filtro e scatta
   function v3Cam(){
+    v3.cat = null;   // ogni volta si sceglie di nuovo: niente lavoro rimasto da prima
     var ov = document.getElementById('v3C');
     if(!ov){ ov = document.createElement('div'); ov.id = 'v3C'; ov.className = 'v3cam'; document.body.appendChild(ov);
       ov.addEventListener('click', function(e){ if(e.target === ov) ov.hidden = true; }); }
-    ov.innerHTML = '<div class="v3ci2"><div class="grab"></div><h3>Nuova anteprima</h3><p>Scegli il lavoro, poi scatta la foto della stanza o della facciata.</p>'
+    ov.innerHTML = '<div class="v3ci2"><div class="grab"></div><h3>Nuova anteprima</h3><p>Scatta la foto della stanza o della facciata. Il lavoro puoi sceglierlo qui o subito dopo.</p>'
       + '<div class="v3lens">' + V3_LENS.map(function(l){ return '<button type="button" data-v3l="' + l[0] + '"' + (v3.cat === l[0] ? ' class="on"' : '') + '><span>' + ((typeof MAT_LINE_ICON !== 'undefined' && MAT_LINE_ICON[l[0]]) || l[2]) + '</span><i>' + l[1] + '</i></button>'; }).join('') + '</div>'
       + '<div class="v3shut"><label class="v3gal">🖼️<i>Galleria</i><input type="file" accept="image/*" hidden id="v3G"></label><label class="v3sb" aria-label="Scatta"><u></u><input type="file" accept="image/*" capture="environment" hidden id="v3F"></label><span class="v3sp"></span></div></div>';
     ov.hidden = false;
-    ov.querySelectorAll('[data-v3l]').forEach(function(b){ b.addEventListener('click', function(){ v3.cat = b.dataset.v3l; ov.querySelectorAll('[data-v3l]').forEach(function(x){ x.classList.toggle('on', x === b); }); }); });
+    ov.querySelectorAll('[data-v3l]').forEach(function(b){ b.addEventListener('click', function(){ v3.cat = v3.cat === b.dataset.v3l ? null : b.dataset.v3l; ov.querySelectorAll('[data-v3l]').forEach(function(x){ x.classList.toggle('on', x.dataset.v3l === v3.cat); }); }); });
     ['v3F', 'v3G'].forEach(function(id){ document.getElementById(id).addEventListener('change', function(){ var f = this.files && this.files[0]; this.value = ''; if(!f) return; ov.hidden = true; v3Start(f, v3.cat); }); });
   }
   function v3Start(file, cat){
     try{ rxClose(); }catch(e){}
+    try{ if(window.rdFreshStart) window.rdFreshStart(); }catch(e){}
     var lp = document.getElementById('landingPro'); if(lp) lp.click();
     setTimeout(function(){
       var inp = document.getElementById('photoInput');
       try{ var dt = new DataTransfer(); dt.items.add(file); inp.files = dt.files; inp.dispatchEvent(new Event('change', { bubbles:true })); }catch(e){}
-      var tries = 0, t = setInterval(function(){ var b = document.querySelector('#sfBody [data-sfv="' + cat + '"]'); if(b && b.offsetParent){ clearInterval(t); b.click(); } if(++tries > 20) clearInterval(t); }, 250);
+      if(!cat) return;   // nessun lavoro scelto: dopo la foto si sceglie da «Cosa vuoi rifare?»
+      var tries = 0, t = setInterval(function(){ var st = window.rdSfStep ? window.rdSfStep() : 'mat'; var b = document.querySelector('#sfBody [data-sfv="' + cat + '"]'); if(st === 'mat' && b && b.offsetParent){ clearInterval(t); b.click(); } if(++tries > 20 || (st !== 'mat' && st !== 'foto')) clearInterval(t); }, 250);
     }, 400);
   }
   window.v3Cam = v3Cam;
