@@ -72,4 +72,18 @@ function cappFix(prompt, c) {
   return lead + p + after;
 }
 
-module.exports = { parseCapp, cappNote, parseCg, cgPrompt, cappFix, GRANA, CG_TIPO };
+// Zoccolo scelto come "parte in più" della facciata (senza cappotto o con cappotto senza zoccolatura)
+function parseZoc(z) {
+  if (!z || typeof z !== "object" || !/^#[0-9a-fA-F]{6}$/.test(String(z.hex || ""))) return null;
+  return { hex: String(z.hex).toUpperCase(), name: String(z.name || "").replace(/[^\w àèéìòù'.-]/gi, "").slice(0, 40) };
+}
+function zocNote(z) {
+  return z ? " ZOCCOLO: alla base di tutta la facciata dipingi uno zoccolo alto circa 70 cm, continuo e perfettamente dritto, nel colore \"" + (z.name || "zoccolo") + "\" (codice esadecimale esatto " + z.hex + "), con una sottile linea orizzontale di separazione dal resto della facciata." : "";
+}
+function zocFix(prompt, z) {
+  if (!z) return prompt;
+  return prompt.replace(/SUPERFICIE CONTINUA \(regola vincolante\): /, "SUPERFICIE CONTINUA (regola vincolante, tranne lo ZOCCOLO richiesto alla base): ")
+    + " ECCEZIONE ZOCCOLO (vale più delle regole sopra): lo zoccolo alto circa 70 cm alla base della facciata, nel colore " + z.hex + ", è RICHIESTO e va fatto; non conta come banda decorativa vietata.";
+}
+
+module.exports = { parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
