@@ -16219,7 +16219,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function ctCosaGo(k){
     if(k === 'ant'){ rxClose(); ppClose(); var lp = document.getElementById('landingPro'); if(lp) lp.click(); return; }
     if(k === 'sopr'){ rxClose(); soNew(); return; }
-    if(k === 'prev'){ rxClose(); pbModal(); rdTabOn('prev'); qNew(); return; }
+    if(k === 'prev'){ rxClose(); pbModal(); rdTabOn('prev'); qOpenList(); return; }
     var p = ctLoad().catch(function(){});
     p.then(function(){ if(k === 'app') ctChat('Nuovo appuntamento', ctStepsApp({})); if(k === 'fine') ctChat('Chiudi un lavoro', ctStepsChiudi(null)); if(k === 'rev') ctChat('Chiedi una recensione', ctStepsRev()); });
   }
