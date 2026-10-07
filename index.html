@@ -1374,6 +1374,12 @@ input[type="date"], input[type="time"]{ min-width:0; max-width:100%; box-sizing:
 .qr-t{ flex:1; min-width:0; } .qr-t b{ display:block; font-size:15px; } .qr-t span{ display:block; font-size:12.5px; color:var(--ink-soft); line-height:1.4; margin-top:3px; }
 .qr-pr{ margin-top:10px; font-family:inherit; font-size:13px; font-weight:700; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 12px; cursor:pointer; }
 @media (max-width:360px){ .qr-box{ flex-direction:column; align-items:stretch; } .qr-img{ margin:0 auto; } }
+/* registrazione: piani a pagamento nascosti finché non sono decisi */
+#proTierRow, [data-i18n="proTierLabel"], #proPriceNote{ display:none !important; }
+.reg-free{ background:#EAF4EC; color:#235C3A; border-radius:12px; padding:10px 12px; font-size:12.5px; line-height:1.4; margin:4px 0 14px; }
+.reg-free b{ display:block; font-size:14px; margin-bottom:2px; }
+html.rd-tm-reg #proAccountTypeRow, html.rd-tm-reg [data-i18n="proAccountTypeLabel"], html.rd-tm-reg #paRegPivaField{ display:none !important; }
+.reg-free:empty{ display:none; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -1878,7 +1884,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   <div class="pro-auth-card">
     <button type="button" class="pro-auth-close" id="proAuthClose" aria-label="Chiudi">✕</button>
     <div class="pro-auth-title" data-i18n="proAuthTitle">Accedi o registrati</div>
-    <div class="pro-auth-sub" data-i18n="proAuthSub">Accedi o registrati per salvare i tuoi dati e scegliere il tuo piano.</div>
+    <div class="pro-auth-sub" data-i18n="proAuthSub">Accedi o registrati per salvare i tuoi lavori.</div>
     <div class="pro-auth-tabs">
       <button type="button" class="pro-auth-tab active" id="proTabLogin" data-i18n="proTabLogin">Accedi</button>
       <button type="button" class="pro-auth-tab" id="proTabRegister" data-i18n="proTabRegister">Registrati</button>
@@ -1947,6 +1953,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         <button type="button" class="pro-auth-tier" data-tier="medium"><span class="t-name">Medium</span><span class="t-desc">49 €/mese · 150 foto</span></button>
         <button type="button" class="pro-auth-tier" data-tier="pro"><span class="t-name">Pro</span><span class="t-desc">99 €/mese · 400 foto</span></button>
       </div>
+      <div class="reg-free" id="regFreeNote"></div>
       <div class="pro-auth-tier-label" id="proPriceNote" style="font-size:11.5px;font-weight:500;margin-top:-4px">Prezzi IVA esclusa · rinnovo mensile · disdici quando vuoi</div>
       <div class="pro-auth-error" id="paRegError"></div>
       <label class="consent-row"><input type="checkbox" id="paRegConsent"><span><span data-i18n="consentRegText">Ho letto l'informativa privacy e acconsento al trattamento dei miei dati per la gestione dell'account.</span> <button type="button" class="privacy-link" data-open-privacy data-i18n="privacyLinkText">Leggi l'informativa</button></span></label>
@@ -3017,7 +3024,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     proAuthOpenBtn: { it:"Accedi", en:"Sign in" },
     proLogoutBtn: { it:"Esci", en:"Sign out" },
     proAuthTitle: { it:"Accedi o registrati", en:"Sign in or register" },
-    proAuthSub: { it:"Accedi o registrati per salvare i tuoi dati e scegliere il tuo piano.", en:"Sign in or register to save your details and choose your plan." },
+    proAuthSub: { it:"Accedi o registrati per salvare i tuoi lavori.", en:"Sign in or register to save your work." },
     proTabLogin: { it:"Accedi", en:"Sign in" },
     proTabRegister: { it:"Registrati", en:"Register" },
     proAccountTypeLabel: { it:"Sei un privato o un professionista?", en:"What type of account?" },
@@ -12548,6 +12555,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     Array.prototype.forEach.call(document.getElementById('proAccountTypeRow').children, function(b){
       b.classList.toggle('active', b.dataset.accountType === proSelectedAccountType);
     });
+    try{
+      var tm = window.RD_TM_IMPRESA, fn = document.getElementById('regFreeNote');
+      document.documentElement.classList.toggle('rd-tm-reg', !!tm);
+      if(fn) fn.innerHTML = tm ? '<b>Gratis</b>Vedi solo i cantieri che ti affida ' + qEsc(tm) + '. Nessun piano e nessun pagamento.'
+        : !proSelectedAccountType ? '' : isPrivato ? '<b>Gratis</b>Crei l’account e provi subito le anteprime. Nessun abbonamento.'
+        : '<b>7 giorni di prova gratis</b>Senza carta. Il piano lo scegli dopo, da Account.';
+    }catch(e){}
   }
 
   function proAuthOpen(){
@@ -16942,7 +16956,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var d = x.d;
       c.innerHTML = (d.logo ? '<img class="tm-jl" src="' + qEsc(d.logo) + '" alt="">' : '') + '<div class="tm-d">Invito alla squadra</div><h1 class="tm-h1">' + qEsc(d.impresa) + ' ti invita nella sua squadra</h1><p>Su Rendrum trovi i cantieri che ti affidano: indirizzo, cliente, cosa fare, colori e foto. Mandi le foto del lavoro e le ore direttamente dal telefono.</p>'
         + '<button type="button" class="pro-auth-submit cc-add" id="tmJr">Crea il tuo accesso</button><button type="button" class="qb-sec vr-cp" id="tmJl">Ho già un accesso</button><p class="tm-small">È gratis: paga ' + qEsc(d.impresa) + '.</p>';
-      var go = function(reg){ j.hidden = true; state.userType = 'privato'; proAuthOpen(); if(reg) proSwitchTab('register'); };
+      var go = function(reg){ j.hidden = true; state.userType = 'privato'; window.RD_TM_IMPRESA = d.impresa || 'la ditta'; try{ proSelectedAccountType = 'privato'; }catch(e){} proAuthOpen(); if(reg) proSwitchTab('register'); try{ proApplyAccountType(); }catch(e){} };
       document.getElementById('tmJr').onclick = function(){ go(true); };
       document.getElementById('tmJl').onclick = function(){ go(false); };
     }).catch(function(){ j.hidden = true; });
