@@ -1380,6 +1380,16 @@ input[type="date"], input[type="time"]{ min-width:0; max-width:100%; box-sizing:
 .reg-free b{ display:block; font-size:14px; margin-bottom:2px; }
 html.rd-tm-reg #proAccountTypeRow, html.rd-tm-reg [data-i18n="proAccountTypeLabel"], html.rd-tm-reg #paRegPivaField{ display:none !important; }
 .reg-free:empty{ display:none; }
+/* preventivo: bozza e avviso prima di chiudere */
+.qd-ask{ position:fixed; inset:0; z-index:10050; background:rgba(29,27,24,.5); display:flex; align-items:flex-end; justify-content:center; }
+.qd-in{ width:100%; max-width:460px; background:var(--bg, #F7F5F1); border-radius:22px 22px 0 0; padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 18px); }
+.qd-in > b{ display:block; font-size:18px; color:var(--ink); } .qd-in > span{ display:block; font-size:13.5px; color:var(--ink-soft); margin:4px 0 12px; }
+.qd-b1, .qd-b2, .qd-b3{ display:block; width:100%; font-family:inherit; font-size:15px; font-weight:700; border-radius:14px; padding:13px; margin-top:8px; cursor:pointer; }
+.qd-b1{ background:var(--accent); color:#fff; border:none; } .qd-b2{ background:var(--surface); color:#B4341A; border:1.5px solid var(--line); } .qd-b3{ background:none; color:var(--ink); border:none; }
+.qd-err{ color:#B4341A; font-size:13px; text-align:center; margin-top:6px; }
+.qd-ban{ background:#FDF0E6; border:1px solid #E9B48C; border-radius:14px; padding:12px; margin-bottom:12px; }
+.qd-ban b{ display:block; color:#6B2E0A; font-size:14.5px; } .qd-ban span{ display:block; color:#6B2E0A; font-size:12.5px; margin-top:2px; }
+.qd-ban div{ display:flex; gap:8px; } .qd-ban .qd-b1, .qd-ban .qd-b2{ flex:1; padding:10px; font-size:14px; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -13042,7 +13052,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     ppShowView('list');
     ppLoadProjects();
   }
-  function ppClose(){ document.getElementById('proProjectsModal').classList.remove('open'); }
+  function ppClose(force){ if(force !== true && qdBlock(function(){ ppClose(true); })) return; document.getElementById('proProjectsModal').classList.remove('open'); }
 
   function ppLoadProjects(){
     var listEl = document.getElementById('ppList');
@@ -13680,8 +13690,58 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('qNewBtn').hidden = !ok;
     return ok;
   }
+  // Bozza del preventivo: ogni modifica resta sul telefono finché non premi Salva.
+  var qd = { clean: null, timer: null };
+  function qdKey(){ var e = ''; try{ e = String((proAccount && proAccount.email) || '').toLowerCase(); }catch(x){} return 'rdQDraft:' + e; }
+  function qdGet(){ try{ var d = JSON.parse(localStorage.getItem(qdKey()) || 'null'); return d && d.cur ? d : null; }catch(e){ return null; } }
+  function qdClear(){ try{ localStorage.removeItem(qdKey()); }catch(e){} }
+  function qdOpen(){ var v = document.getElementById('ppViewQuote'), m = document.getElementById('proProjectsModal'); return !!(v && m && v.classList.contains('active') && m.classList.contains('open') && qs.cur); }
+  function qdDirty(){ return !!(qs.cur && qd.clean !== null && JSON.stringify(qs.cur) !== qd.clean); }
+  function qdClean(){ qd.clean = qs.cur ? JSON.stringify(qs.cur) : null; }
+  function qdSave(){
+    if(!qdOpen() || !qdDirty()) return;
+    try{ localStorage.setItem(qdKey(), JSON.stringify({ at: Date.now(), cur: qs.cur, curId: qs.curId, meta: qs.meta, leadId: qs.leadId || null })); }catch(e){}
+  }
+  setInterval(qdSave, 1500);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) qdSave(); });
+  window.addEventListener('pagehide', qdSave);
+  // chiedere prima di lasciare un preventivo con modifiche non salvate. Ritorna true se ha chiesto.
+  function qdBlock(next){
+    if(!qdOpen() || !qdDirty()) return false;
+    qdSave();
+    var o = document.getElementById('qdAsk'); if(o) o.remove();
+    o = document.createElement('div'); o.id = 'qdAsk'; o.className = 'qd-ask';
+    o.innerHTML = '<div class="qd-in"><b>Hai modifiche non salvate</b><span>Il preventivo' + (qs.cur.cliente && qs.cur.cliente.nome ? ' per ' + qEsc(qs.cur.cliente.nome) : '') + ' non è ancora salvato.</span>'
+      + '<button type="button" class="qd-b1" id="qdSaveGo">Salva ed esci</button><button type="button" class="qd-b2" id="qdNoSave">Esci senza salvare</button><button type="button" class="qd-b3" id="qdStay">Continua a scrivere</button><div class="qd-err" id="qdErr"></div></div>';
+    document.body.appendChild(o);
+    document.getElementById('qdStay').onclick = function(){ o.remove(); };
+    document.getElementById('qdNoSave').onclick = function(){ o.remove(); qdClear(); qdClean(); next(); };
+    document.getElementById('qdSaveGo').onclick = function(){ var b = this; b.disabled = true; qSave().then(function(){ o.remove(); next(); }, function(){ b.disabled = false; o.remove(); qScrollTop(); }); };
+    return true;
+  }
+  // riprendere una bozza rimasta
+  function qdBanner(){
+    var d = qdGet(), box = document.getElementById('qdBan'), list = document.getElementById('qList'); if(box) box.remove();
+    if(!d || !list) return;
+    var nm = (d.cur.cliente && d.cur.cliente.nome) || d.cur.oggetto || 'Senza nome cliente', quando = new Date(d.at).toLocaleString('it-IT', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+    box = document.createElement('div'); box.id = 'qdBan'; box.className = 'qd-ban';
+    box.innerHTML = '<b>Hai un preventivo non finito</b><span>' + qEsc(nm) + (d.meta ? ' · n. ' + ('00' + d.meta.number).slice(-3) + '/' + d.meta.year : '') + ' · ' + qEsc(quando) + '</span><div><button type="button" class="qd-b1" id="qdResume">Riprendi</button><button type="button" class="qd-b2" id="qdDrop">Butta via</button></div>';
+    list.parentNode.insertBefore(box, list);
+    document.getElementById('qdDrop').onclick = function(){ qdClear(); box.remove(); };
+    document.getElementById('qdResume').onclick = function(){
+      qLoadSettings().then(function(){
+        qs.cur = d.cur; qs.curId = d.curId || null; qs.meta = d.meta || null; qs.leadId = d.leadId || null; qs.newPreview = null; qs.introAuto = false;
+        ['cliente','cantiere','iva','pagamento','anteprima'].forEach(function(k){ qs.cur[k] = qs.cur[k] || {}; });
+        qs.cur.voci = qs.cur.voci || []; qs.cur.rate = qs.cur.rate || []; qs.cur.condizioni = qs.cur.condizioni || [];
+        qRenderEditor(); qCard(true); ppShowView('quote');
+        qScrollTop(); qd.clean = '';   // da salvare: resta "non salvato" finché non premi Salva
+        var m = document.getElementById('qEdMsg'); if(m) m.textContent = 'Bozza ripresa: ricordati di premere Salva.';
+      }).catch(function(e){ var el = document.getElementById('qListErr'); if(el) el.textContent = e.message; });
+    };
+  }
   function qOpenList(){
-    qCard(false); ppShowView('quotes'); qScrollTop();
+    if(qdBlock(qOpenList)) return;
+    qCard(false); ppShowView('quotes'); qScrollTop(); setTimeout(qdBanner, 0);
     document.getElementById('qPivaGate').hidden = true;
     qLoadSettings().then(qPivaGate).catch(function(){});
     var box = document.getElementById('qList'); box.innerHTML = '<div class="pp-empty">Caricamento…</div>';
@@ -13725,7 +13785,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(!vatCheck((s.impresa || {}).paese || 'IT', (s.impresa || {}).piva).ok){ qCard(false); ppShowView('quotes'); qPivaGate(); throw new Error('Per creare preventivi serve la partita IVA della tua impresa.'); }
       qs.cur = qBlank(s); qs.curId = null; qs.meta = null; qs.newPreview = null; qs.introAuto = true; qs.leadId = null;
       if(prefill) prefill(qs.cur);
-      qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop();
+      qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop(); qdClean();
     }).catch(function(e){ if(err) err.textContent = e.message; });
   }
   function qEdit(id){
@@ -13736,7 +13796,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qs.introAuto = qs.cur.intro === Q_INTRO.replace('{cliente}', qs.cur.cliente.nome || 'Cliente');
       ['cliente','cantiere','iva','pagamento','anteprima'].forEach(function(k){ qs.cur[k] = qs.cur[k] || {}; });
       qs.cur.voci = qs.cur.voci || []; qs.cur.rate = qs.cur.rate || []; qs.cur.condizioni = qs.cur.condizioni || [];
-      qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop();
+      qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop(); qdClean();
     }).catch(function(e){ var el = document.getElementById('qListErr'); if(el) el.textContent = e.message; });
   }
   // Dall'anteprima Rendrum appena generata
@@ -13967,7 +14027,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         err.textContent = (x.d && x.d.error) || (x.status === 413 ? 'Foto troppo pesanti.' : 'Salvataggio non riuscito. Riprova.'); throw null; }
       var keepPv = qs.newPreview;
       qs.cur = x.d.quote; qs.curId = x.d.id; qs.meta = { number:x.d.number, year:x.d.year };
-      qs.newPreview = null;
+      qs.newPreview = null; qdClean(); qdClear();
       if(keepPv && qs.cur.anteprima && qs.cur.anteprima.dopo) qs._pvLocal = keepPv; // immagini già in memoria per il PDF
       document.getElementById('qEdTitle').textContent = 'Preventivo n. ' + ('00'+qs.meta.number).slice(-3) + '/' + qs.meta.year;
       document.getElementById('qDeleteBtn').hidden = false; document.getElementById('qDupBtn').hidden = false;
@@ -18383,6 +18443,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   document.getElementById('rdTab').addEventListener('click', function(e){
     var b = e.target.closest('[data-rdtab]'); if(!b) return;
     var k = b.dataset.rdtab, sheet = document.getElementById('rdAltro');
+    if(k !== 'altro' && qdBlock(function(){ b.click(); })) return;
     if(k !== 'altro'){ var xx = document.getElementById('rdX'); if(xx && !xx.hidden){ xx.hidden = true; document.documentElement.classList.remove('rd-x-open'); } }
     if(k !== 'altro') sheet.classList.remove('open');
     if(k === 'home'){ ppClose(); if(currentPanel !== 'panelLanding') goTo('panelLanding'); window.scrollTo({ top:0, behavior:'smooth' }); rdTabOn('home'); rdOggiLoad(); return; }
@@ -18396,6 +18457,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   document.getElementById('rdAltro').addEventListener('click', function(e){
     var sheet = this; if(e.target === sheet){ sheet.classList.remove('open'); return; }
     var b = e.target.closest('[data-rdalt]'); if(!b) return; sheet.classList.remove('open');
+    if(qdBlock(function(){ b.click(); })) return;
     var k = b.dataset.rdalt; rdTabOn('altro');
     if(k === 'sopr') soOpen();
     if(k === 'listino'){ pbModal(); qOpenListino('quotes'); }
@@ -18583,7 +18645,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var b = this;
     if(!qs.delArm){ qs.delArm = true; b.textContent = 'Tocca di nuovo per confermare'; setTimeout(function(){ qs.delArm = false; b.textContent = 'Elimina preventivo'; }, 4000); return; }
     b.disabled = true;
-    qApi('delete', 'POST', { id: qs.curId }).then(function(x){ b.disabled = false; if(x.ok) qOpenList(); else document.getElementById('qEdErr').textContent = (x.d && x.d.error) || 'Eliminazione non riuscita.'; }).catch(function(){ b.disabled = false; });
+    qApi('delete', 'POST', { id: qs.curId }).then(function(x){ b.disabled = false; if(x.ok){ qdClean(); qdClear(); qOpenList(); } else document.getElementById('qEdErr').textContent = (x.d && x.d.error) || 'Eliminazione non riuscita.'; }).catch(function(){ b.disabled = false; });
   });
   ['qFromPreviewBtn','qFromPreviewBtn2'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('click', qOpenFromPreview); });
 
@@ -18609,7 +18671,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   })();
   document.getElementById('panel3SaveProjectBtn').addEventListener('click', function(){ ppOpen(); ppOpenForm(null); });
   document.getElementById('proProjectsClose').addEventListener('click', ppClose);
-  document.getElementById('proProjectsModal').addEventListener('click', function(e){ if(e.target.id === 'proProjectsModal') ppClose(); });
+  document.getElementById('proProjectsModal').addEventListener('click', function(e){ if(e.target.id === 'proProjectsModal' && !document.getElementById('ppViewQuote').classList.contains('active')) ppClose(); });
   document.getElementById('ppNewBtn').addEventListener('click', function(){ ppOpenForm(null); });
   document.getElementById('ppBackBtn').addEventListener('click', function(){ ppShowView('list'); ppLoadProjects(); });
 
@@ -18704,7 +18766,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       .then(function(x){
         btn.disabled = false; btn.textContent = old;
         if(!x.ok){ err.textContent = (x.d && x.d.error) || 'Non è stato possibile eliminare l\'account. Riprova.'; return; }
-        proAccount = null; proUpdateHeader(); ppClose();
+        proAccount = null; proUpdateHeader(); ppClose(true);
         document.getElementById('accPassword').value = '';
         alert('Il tuo account è stato eliminato. Grazie per aver usato Rendrum.');
         location.replace(location.pathname);
