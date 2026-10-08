@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <script>try{if(/[?&]i=[a-f0-9]{20}/.test(location.search))document.documentElement.classList.add("rd-inv");if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");var vm=document.querySelector('meta[name="viewport"]');if(vm)vm.setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
-<link rel="preload" as="image" href="/img/5298b64fd7df.jpg" fetchpriority="high">
-<link rel="preload" as="image" href="/img/8ee849b00fb5.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/img/bb9f00704090.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/img/6aa351ec523e.jpg" fetchpriority="high">
 <title>Rendrum – Vedi la tua casa rinnovata prima dei lavori</title>
 <meta name="description" content="Carica una foto e guarda in anteprima resine, microcemento, parquet, SPC, piastrelle, pittura e facciate con i colori reali che scegli. Anteprima realistica con intelligenza artificiale.">
 <meta property="og:type" content="website">
@@ -1585,6 +1585,43 @@ html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]::after, html.rd-s1 #rdAl
 html.rd-s1 #rdAltro .rx-gr button .rx-pl{ margin:0 0 0 auto; }
 html.rd-s1 #rdAltro .rd-esci{ order:9; margin-top:12px; }
 html.rd-s1 #rdAltro .rx-menu::after{ order:99; width:100%; }
+/* ===== planimetria -> misure (in prova) ===== */
+.qw-write.pl-go{ border-style:dashed; background:#FBEFE5; }
+.pl-up{ display:flex; flex-direction:column; align-items:center; gap:4px; margin:16px 0 10px; border:2px dashed #C8692E; background:#FBEFE5; border-radius:18px; padding:26px 12px; cursor:pointer; text-align:center; }
+.pl-up b{ font-size:17px; color:#2B1408; } .pl-up em{ font-style:normal; font-size:13px; color:#8a7b70; }
+.pl-upi{ width:52px; height:52px; border-radius:14px; background:#C8692E; color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:6px; } .pl-upi svg{ width:30px; height:30px; }
+.pl-hint{ font-size:12.5px; color:var(--ink-soft,#8a7b70); line-height:1.45; margin-top:8px; }
+.pl-th{ display:block; width:100%; max-height:260px; object-fit:contain; background:#fff; border:1px solid var(--line,#eadfd4); border-radius:12px; margin:12px 0; }
+.pl-spin{ display:flex; align-items:center; gap:10px; font-size:14px; font-weight:700; color:#2B1408; }
+.pl-spin i{ width:20px; height:20px; border-radius:50%; border:3px solid #F0D6C2; border-top-color:#C8692E; animation:plsp 0.9s linear infinite; flex:none; }
+@keyframes plsp{ to{ transform:rotate(360deg); } }
+.pl-card{ background:var(--surface,#fff); border:1.5px solid var(--line,#eadfd4); border-radius:16px; padding:12px 12px 10px; margin-top:10px; }
+.pl-card.on{ border-color:#C8692E; background:#FFF9F4; }
+.pl-ch{ display:flex; align-items:center; gap:10px; }
+.pl-ic{ width:38px; height:38px; border-radius:11px; background:#FBEFE5; color:#C8692E; display:flex; align-items:center; justify-content:center; flex:none; } .pl-ic svg{ width:24px; height:24px; }
+.pl-ch b{ font-size:16px; } .pl-ch strong{ margin-left:auto; font-family:"Playfair Display",Georgia,serif; font-size:22px; color:#2B1408; white-space:nowrap; }
+.pl-rows{ margin:8px 0 6px; }
+.pl-r{ display:flex; align-items:center; gap:6px; font-size:13px; padding:4px 0; border-top:1px solid #f3ece4; }
+.pl-r span{ flex:1; min-width:0; } .pl-r span i{ font-style:normal; font-size:11px; color:#8a7b70; } .pl-r span i.g{ color:#2f7a3b; font-weight:700; } .pl-r span i.w{ color:#C8692E; font-weight:800; }
+.pl-r input{ width:82px; text-align:right; font:700 14px inherit; font-family:inherit; border:none; border-bottom:1.5px dashed #D0844F; background:transparent; padding:3px 2px; color:var(--ink,#1D1B18); }
+.pl-r input:placeholder-shown{ border-bottom-style:solid; background:#FBEFE5; }
+.pl-r em{ font-style:normal; font-size:12px; color:#8a7b70; width:22px; }
+.pl-r.off{ opacity:.45; } .pl-r.none{ color:#8a7b70; font-style:italic; }
+.pl-lav{ width:100%; border:none; border-radius:11px; padding:11px; font:800 14.5px inherit; font-family:inherit; cursor:pointer; background:#F2EEE8; color:#2B1408; }
+.pl-card.on .pl-lav{ background:#C8692E; color:#fff; }
+.pl-warn{ margin-top:12px; background:#FBEFE5; border:1px solid #F0C9A8; border-radius:12px; padding:10px 12px; font-size:13px; color:#7a3d14; line-height:1.45; }
+.pl-av{ margin-top:8px; font-size:12px; color:#8a7b70; line-height:1.5; }
+.pl-opts{ display:flex; flex-direction:column; gap:7px; margin-top:12px; }
+.pl-opt{ text-align:left; border:1.5px solid var(--line,#e3d9cf); background:var(--surface,#fff); border-radius:13px; padding:12px 14px; cursor:pointer; font-family:inherit; color:var(--ink,#1D1B18); }
+.pl-opt b{ display:block; font-size:15.5px; } .pl-opt em{ display:block; font-style:normal; font-size:12.5px; color:#8a7b70; margin-top:2px; }
+.pl-opt.on{ background:#C8692E; border-color:#C8692E; color:#fff; } .pl-opt.on em{ color:#fde7d6; }
+.pl-opt.no{ text-align:center; color:#8a7b70; } .pl-opt.no.on{ background:#2B1408; border-color:#2B1408; color:#fff; }
+.pl-pr{ display:flex; align-items:center; gap:8px; margin-top:12px; font-weight:700; font-size:14px; }
+.pl-pr input{ flex:1; font:700 16px inherit; font-family:inherit; border:1.5px solid #D0844F; border-radius:10px; padding:10px; background:#fff; }
+.pl-dove{ display:flex; flex-wrap:wrap; gap:7px; }
+.pl-dove button{ border:1.5px solid var(--line,#e3d9cf); background:#fff; border-radius:999px; padding:9px 13px; font:700 13.5px inherit; font-family:inherit; cursor:pointer; color:var(--ink,#1D1B18); }
+.pl-dove button em{ font-style:normal; font-weight:500; opacity:.8; }
+.pl-dove button.on{ background:#2B1408; border-color:#2B1408; color:#fff; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -2577,8 +2614,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       </div>
       <figure class="lp-ba" id="lpBA">
         <div class="ba-frame" id="baFrame" style="--pos:50%">
-          <img fetchpriority="high" class="ba-img" id="baBefore" src="/img/5298b64fd7df.jpg" alt="Prima dei lavori" data-i18n-alt="baBeforeAlt" draggable="false">
-          <img fetchpriority="high" class="ba-img ba-after" id="baAfter" src="/img/8ee849b00fb5.jpg" alt="Anteprima dopo i lavori" data-i18n-alt="baAfterAlt" draggable="false">
+          <img fetchpriority="high" class="ba-img" id="baBefore" src="/img/bb9f00704090.jpg" alt="Prima dei lavori" data-i18n-alt="baBeforeAlt" draggable="false">
+          <img fetchpriority="high" class="ba-img ba-after" id="baAfter" src="/img/6aa351ec523e.jpg" alt="Anteprima dopo i lavori" data-i18n-alt="baAfterAlt" draggable="false">
           <span class="ba-line" aria-hidden="true"><span class="ba-knob"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6"/><path d="M15 6l6 6-6 6"/></svg></span></span>
           <span class="ba-lab ba-lab-l" data-i18n="baBefore">Prima</span>
           <span class="ba-lab ba-lab-r" data-i18n="baAfter">Dopo</span>
@@ -16341,7 +16378,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qwOpen(step){
     if(!qs.cur) return;
-    qwClean(); qw.add = false; qw.sub = ''; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    qwClean(); qw.add = false; qw.sub = ''; qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
     if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
     qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
   }
@@ -16354,6 +16391,155 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qwBar(){ return '<div class="qw-bar">' + [1, 2, 3].map(function(k){ return '<i class="' + (k <= qw.step ? 'on' : '') + '"></i>'; }).join('') + '</div>'; }
   function qwTop(back){ return '<div class="qw-top"><button type="button" class="pp-back-link" id="qwBack">' + back + '</button></div>' + qwBar(); }
+  // ===== Planimetria -> misure (in prova): 3 numeri (pavimenti, pareti, plafoni), poi scegli tu =====
+  // Vive dentro il passo 2 del preventivo (qw). Niente va nel preventivo senza "Metti nel preventivo".
+  var PL_S = [
+    { k:'pav', n:'Pavimenti', f:'pavimento', ic:'<path d="M4 22 16 15l12 7-12 7z"/><path d="M10 18.5 22 25.5M16 15v14"/>',
+      re:/pavim|resin|microcem|parquet|spc|piastrel|gres|granigl|laminat|monolith|massett|cemento|terrazz/i,
+      gen:['Pavimento in resina', 'Microcemento', 'Parquet', 'Pavimento SPC', 'Piastrelle'] },
+    { k:'par', n:'Pareti', f:'pareti', ic:'<rect x="5" y="7" width="22" height="18" rx="1"/><path d="M5 13h22M5 19h22M11 7v6M21 7v6M16 13v6M11 19v6M21 19v6"/>',
+      re:/paret|pittur|imbianc|tinteg|decorat|cartong|rasat|stucc|boiserie|smalt|velatur|spatolat/i,
+      gen:['Pittura pareti', 'Pittura decorativa', 'Rasatura pareti', 'Cartongesso'] },
+    { k:'pla', n:'Plafoni', f:'plafone', ic:'<path d="M4 9h24M7 9v4M25 9v4M4 13h24"/><path d="M12 13v3M20 13v3" stroke-dasharray="1 2"/><circle cx="16" cy="22" r="3"/><path d="M16 16v3"/>',
+      re:/soffitt|plafon|pittur|imbianc|tinteg|cartong|controsoff/i,
+      gen:['Pittura soffitti', 'Controsoffitto in cartongesso'] }
+  ];
+  var pl = null;
+  function plNum(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
+  function plSvg(d){ return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
+  function plOpen(){ pl = { st:'carica', data:null, ed:{}, sel:{}, on:{}, open:'' }; qw.pl = 1; qwRender(); qScrollTop(); }
+  function plClose(){ pl = null; qw.pl = 0; qwRender(); qScrollTop(); }
+  // misura di un piano per una superficie (con le correzioni dell'artigiano)
+  function plVal(s, i){
+    var e = pl.ed[s.k + i]; if(e != null) return { mq:e, fonte:'tuo' };
+    var p = pl.data.piani[i], m = p[s.f] || {};
+    if(m.mq != null) return { mq:m.mq, fonte:m.fonte || 'scritto' };
+    if(s.k === 'pla' && p.pavimento && p.pavimento.mq != null) return { mq:p.pavimento.mq, fonte:'come' };
+    return { mq:null, fonte:'' };
+  }
+  function plRows(s){
+    return pl.data.piani.map(function(p, i){ return { i:i, nome:p.nome, v:plVal(s, i) }; }).filter(function(r){
+      if(r.v.mq != null) return true;
+      if(s.k === 'pla') return false;
+      var p = pl.data.piani[r.i]; return [p.pavimento, p.pareti, p.plafone].every(function(m){ return !m || m.mq == null; }); // piano senza numeri: lo può scrivere lui
+    });
+  }
+  function plOn(s, i){ var o = pl.on[s.k]; return !o || o.indexOf(i) >= 0; }
+  function plTot(s){ return plRows(s).reduce(function(a, r){ return a + (plOn(s, r.i) && r.v.mq ? +r.v.mq : 0); }, 0); }
+  function plOpts(s){
+    var LI = (qs.settings && qs.settings.listino) || [], out = [], seen = {};
+    LI.forEach(function(v){ if((v.um === 'mq' || !v.um) && s.re.test((v.titolo || '') + ' ' + (v.lavorazione || '')) && !seen[v.titolo]){ seen[v.titolo] = 1; out.push({ t:v.titolo, p:+v.prezzo || 0, d:v.descrizione || '', lav:v.lavorazione || '', li:1 }); } });
+    s.gen.forEach(function(g){ if(!out.some(function(o){ return o.t.toLowerCase() === g.toLowerCase(); })) out.push({ t:g, p:0, d:'', lav:'', li:0 }); });
+    return out;
+  }
+  function plRender(box){
+    var h = '<div class="qw-top"><button type="button" class="pp-back-link" id="plBack">' + (pl.st === 'scegli' ? '← La tua casa' : '← Torna al preventivo') + '</button></div>';
+    if(pl.st === 'carica' || pl.st === 'err'){
+      h += '<div class="pro-projects-title">📐 Misure dal disegno</div><div class="qw-who">Carica la planimetria: Rendrum calcola pavimenti, pareti e plafoni. Poi scegli tu cosa fai.</div>'
+        + '<label class="pl-up"><input type="file" id="plFile" accept="image/*,application/pdf" hidden><span class="pl-upi">' + plSvg('<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M16 15v8M12.5 18.5 16 15l3.5 3.5"/>') + '</span><b>Carica il disegno</b><em>Foto o PDF della planimetria</em></label>'
+        + (pl.st === 'err' ? '<div class="pp-error">' + qEsc(pl.err || 'Non riesco a leggere il disegno.') + '</div>' : '')
+        + '<div class="pl-hint">Va bene la foto fatta col telefono, anche storta. Meglio se si leggono i numeri scritti (m², quote, altezze).</div>';
+      box.innerHTML = h; plBind(box);
+      document.getElementById('plFile').addEventListener('change', function(){ var f = this.files && this.files[0]; if(f) plLoad(f); });
+      return;
+    }
+    if(pl.st === 'leggo'){
+      h += '<div class="pro-projects-title">Sto leggendo il disegno…</div><div class="qw-who">Ci vogliono circa 20 secondi.</div>'
+        + (pl.thumb ? '<img class="pl-th" src="' + pl.thumb + '" alt="">' : '') + '<div class="pl-spin"><i></i>Cerco le misure scritte e rifaccio i conti</div>';
+      box.innerHTML = h; plBind(box); return;
+    }
+    if(pl.st === 'scegli'){
+      var s = PL_S.filter(function(x){ return x.k === pl.open; })[0], sel = pl.sel[s.k], rows = plRows(s), opts = plOpts(s);
+      h += '<div class="pro-projects-title">' + qEsc(s.n) + ' · ' + plNum(plTot(s)) + ' m²</div><div class="qw-who">Cosa fai?</div><div class="pl-opts">'
+        + opts.map(function(o, i){ var on = sel && sel.t === o.t; return '<button type="button" class="pl-opt' + (on ? ' on' : '') + '" data-plo="' + i + '"><b>' + qEsc(o.t) + '</b><em>' + (o.li ? qEsc(qwEur(o.p)) + ' / m² · dal tuo listino' : 'prezzo da mettere') + '</em></button>'; }).join('')
+        + '<button type="button" class="pl-opt no' + (sel === false ? ' on' : '') + '" data-plo="no"><b>Niente su questi</b></button></div>';
+      if(sel && !sel.li) h += '<div class="pl-pr"><span>Prezzo al m²</span><input type="text" inputmode="decimal" id="plPr" placeholder="es. 25" value="' + (sel.p ? qEsc(qpNum(sel.p)) : '') + '"><i>€</i></div><label class="qw-ck"><input type="checkbox" id="plSaveL" ' + (sel.save !== false ? 'checked' : '') + '> Salvalo nel mio listino</label>';
+      if(rows.length > 1) h += '<div class="qw-sec">Dove?</div><div class="pl-dove">' + rows.map(function(r){ return '<button type="button" class="' + (plOn(s, r.i) ? 'on' : '') + '" data-pld="' + r.i + '">' + qEsc(r.nome) + (r.v.mq ? ' <em>' + plNum(r.v.mq) + '</em>' : '') + '</button>'; }).join('') + '</div>';
+      h += '<button type="button" class="pro-auth-submit qw-next" id="plOk">Fatto</button>';
+      box.innerHTML = h; plBind(box);
+      box.querySelectorAll('[data-plo]').forEach(function(b){ b.addEventListener('click', function(){ var v = b.dataset.plo; if(v === 'no'){ pl.sel[s.k] = false; } else { var o = opts[+v]; pl.sel[s.k] = { t:o.t, p:o.p, d:o.d, lav:o.lav, li:o.li }; } plRender(box); }); });
+      box.querySelectorAll('[data-pld]').forEach(function(b){ b.addEventListener('click', function(){ var i = +b.dataset.pld, all = rows.map(function(r){ return r.i; }), cur = pl.on[s.k] ? pl.on[s.k].slice() : all.slice(), k = cur.indexOf(i);
+        if(k >= 0){ if(cur.length > 1) cur.splice(k, 1); } else cur.push(i); pl.on[s.k] = cur; plRender(box); }); });
+      var pr = document.getElementById('plPr'); if(pr) pr.addEventListener('input', function(){ pl.sel[s.k].p = qParse(pr.value); });
+      var sv = document.getElementById('plSaveL'); if(sv) sv.addEventListener('change', function(){ pl.sel[s.k].save = sv.checked; });
+      document.getElementById('plOk').onclick = function(){ pl.st = 'casa'; plRender(box); qScrollTop(); };
+      return;
+    }
+    // la casa: tre riquadri
+    var D = pl.data, ok = PL_S.filter(function(s){ return pl.sel[s.k] && plTot(s) > 0; });
+    h += '<div class="pro-projects-title">La tua casa</div><div class="qw-who">Letta dal disegno · ' + D.piani.length + (D.piani.length === 1 ? ' zona' : ' zone') + '. Tocca un numero per cambiarlo.</div>';
+    h += PL_S.map(function(s){ var sel = pl.sel[s.k], rows = plRows(s), tot = plTot(s);
+      return '<div class="pl-card' + (sel ? ' on' : '') + '" data-plc="' + s.k + '"><div class="pl-ch"><span class="pl-ic">' + plSvg(s.ic) + '</span><b>' + s.n + '</b><strong>' + (tot ? plNum(tot) + ' m²' : '—') + '</strong></div>'
+        + '<div class="pl-rows">' + (rows.length ? rows.map(function(r){ var v = r.v; return '<label class="pl-r' + (plOn(s, r.i) ? '' : ' off') + '"><span>' + qEsc(r.nome) + (v.fonte === 'come' ? ' <i>come il pavimento</i>' : v.fonte === 'calcolato' ? ' <i class="g">conto rifatto ✓</i>' : v.fonte === 'stimato' ? ' <i class="w">stimato: controlla</i>' : '') + '</span><input type="text" inputmode="decimal" data-ple="' + s.k + r.i + '" value="' + (v.mq != null ? qEsc(plNum(v.mq)) : '') + '" placeholder="scrivi"><em>m²</em></label>'; }).join('') : '<div class="pl-r none">Non trovato sul disegno</div>') + '</div>'
+        + '<button type="button" class="pl-lav" data-plg="' + s.k + '">' + (sel ? qEsc(sel.t) + ' ✓' : sel === false ? 'Niente' : 'Cosa fai? ›') + '</button></div>'; }).join('');
+    if(D.mancanti && D.mancanti.length) h += '<div class="pl-warn"><b>Mancano sul disegno:</b> ' + D.mancanti.map(qEsc).join(' · ') + '. Se ti servono, scrivili qui sopra.</div>';
+    if(D.avvisi && D.avvisi.length) h += '<div class="pl-av">' + D.avvisi.map(function(a){ return '• ' + qEsc(a); }).join('<br>') + '</div>';
+    if(ok.length){
+      h += '<div class="qw-sec">Va nel preventivo</div><div class="qw-sum">' + ok.map(function(s){ var sel = pl.sel[s.k], t = plTot(s); return '<div><span>' + qEsc(sel.t) + ' · ' + plNum(t) + ' m²' + (sel.p ? ' × ' + qEsc(qwEur(sel.p)) : '') + '</span><span>' + (sel.p ? qEsc(qwEur(t * sel.p)) : 'prezzo da mettere') + '</span></div>'; }).join('') + '</div>'
+        + '<button type="button" class="pro-auth-submit qw-next" id="plPut">Metti nel preventivo</button>';
+    } else h += '<div class="pl-hint" style="text-align:center">Tocca <b>Cosa fai?</b> su pavimenti, pareti o plafoni.</div>';
+    h += '<button type="button" class="q-link" id="plAgain" style="display:block;margin:12px auto 0">Carica un altro disegno</button>';
+    box.innerHTML = h; plBind(box);
+    box.querySelectorAll('[data-ple]').forEach(function(el){
+      el.addEventListener('click', function(e){ e.stopPropagation(); });
+      el.addEventListener('change', function(){ var v = qParse(el.value); pl.ed[el.dataset.ple] = v > 0 ? v : null; if(!(v > 0)) delete pl.ed[el.dataset.ple]; plRender(box); });
+    });
+    box.querySelectorAll('[data-plg]').forEach(function(b){ b.addEventListener('click', function(){ pl.open = b.dataset.plg; pl.st = 'scegli'; plRender(box); qScrollTop(); }); });
+    document.getElementById('plAgain').onclick = function(){ pl.st = 'carica'; plRender(box); };
+    var put = document.getElementById('plPut'); if(put) put.onclick = function(){
+      var q = qs.cur, save = [];
+      PL_S.forEach(function(s){ var sel = pl.sel[s.k], t = plTot(s); if(!sel || !(t > 0)) return;
+        var rows = plRows(s).filter(function(r){ return plOn(s, r.i) && r.v.mq; });
+        q.voci = (q.voci || []).filter(function(v){ return (v.titolo || '').trim() || +v.prezzo; });
+        q.voci.push({ titolo: sel.t, descrizione: (sel.d ? sel.d + '\n' : '') + rows.map(function(r){ return r.nome + ' ' + plNum(r.v.mq) + ' m²'; }).join(' · '), qta: Math.round(t * 100) / 100, um:'mq', prezzo: +sel.p || 0, lavorazione: sel.lav || q.lavorazione || '' });
+        if(!sel.li && sel.p > 0 && sel.save !== false) save.push({ titolo: sel.t, descrizione:'', qta:1, um:'mq', prezzo: sel.p, lavorazione: sel.lav || '' });
+      });
+      if(save.length){ try{ var st = qs.settings; st.listino = (st.listino || []).filter(function(x){ return !save.some(function(y){ return y.titolo === x.titolo; }); }).concat(save); qApi('listino', 'POST', { listino: st.listino }).catch(function(){}); }catch(e){} }
+      pl = null; qw.pl = 0; qwAuto(); qwRender(); qScrollTop();
+    };
+  }
+  function plBind(box){ var b = document.getElementById('plBack'); if(b) b.onclick = function(){ if(pl && pl.st === 'scegli'){ pl.st = 'casa'; plRender(box); } else plClose(); }; }
+  // foto o PDF -> immagine JPEG non troppo grande
+  function plToImg(file){
+    return new Promise(function(ok, ko){
+      var draw = function(src, w, h){ var M = 2000, k = Math.min(1, M / Math.max(w, h)), c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+        var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(src, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', 0.85); };
+      if(/pdf$/i.test(file.type) || /\.pdf$/i.test(file.name || '')){
+        plPdfLib().then(function(lib){ return file.arrayBuffer().then(function(buf){ return lib.getDocument({ data: buf }).promise; }); })
+          .then(function(doc){ return doc.getPage(1); }).then(function(pg){ var v0 = pg.getViewport({ scale:1 }), sc = 2000 / Math.max(v0.width, v0.height), v = pg.getViewport({ scale: sc }), c = document.createElement('canvas'); c.width = v.width; c.height = v.height;
+            var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); return pg.render({ canvasContext: x, viewport: v }).promise.then(function(){ ok(c.toDataURL('image/jpeg', 0.85)); }); })
+          .catch(function(){ ko(new Error('Non riesco ad aprire il PDF. Prova con una foto del disegno.')); });
+        return;
+      }
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function(){ try{ ok(draw(im, im.naturalWidth, im.naturalHeight)); }catch(e){ ko(e); } URL.revokeObjectURL(u); };
+      im.onerror = function(){ URL.revokeObjectURL(u); ko(new Error('Questo file non è un’immagine. Carica una foto o un PDF.')); };
+      im.src = u;
+    });
+  }
+  var plPdfP = null;
+  function plPdfLib(){
+    if(window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if(plPdfP) return plPdfP;
+    plPdfP = new Promise(function(ok, ko){ var s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = function(){ try{ window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; ok(window.pdfjsLib); }catch(e){ ko(e); } };
+      s.onerror = function(){ plPdfP = null; ko(new Error('pdf')); }; document.head.appendChild(s); });
+    return plPdfP;
+  }
+  function plLoad(file){
+    var box = document.getElementById('qwBox');
+    pl.st = 'leggo'; pl.thumb = null; plRender(box);
+    plToImg(file).then(function(img){
+      pl.thumb = img; if(pl.st === 'leggo') plRender(box);
+      return qApi('pl-read', 'POST', { image: img });
+    }).then(function(x){
+      if(!pl) return;
+      if(!x.ok){ pl.st = 'err'; pl.err = (x.d && x.d.error) || 'Non riesco a leggere il disegno. Riprova.'; plRender(box); return; }
+      var d = x.d || {};
+      if(!d.piani || !d.piani.length){ pl.st = 'err'; pl.err = 'Sul disegno non ho trovato misure scritte (m², quote, altezze). Prova con una foto più vicina o un altro disegno.'; plRender(box); return; }
+      pl.data = d; pl.ed = {}; pl.sel = {}; pl.on = {}; pl.st = 'casa'; plRender(box); qScrollTop();
+    }).catch(function(e){ if(!pl) return; pl.st = 'err'; pl.err = (e && e.message && e.message.length > 12) ? e.message : 'Connessione non riuscita. Riprova.'; plRender(box); });
+  }
   function qwRender(){
     var box = document.getElementById('qwBox'); if(!box) return;
     var q = qs.cur, h = '';
@@ -16400,6 +16586,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(!(q.cliente.nome || '').trim()) setTimeout(function(){ var n = document.getElementById('qwNome'); try{ n.focus(); }catch(e){} }, 50);
       return;
     }
+    if(qw.step === 2 && qw.pl && pl){ plRender(box); return; }
     if(qw.step === 2){
       var LI = (qs.settings && qs.settings.listino) || [], tot = qpTotals(q);
       h = qwTop('← Per chi') + '<div class="pro-projects-title">Cosa fai?</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + '</div>';
@@ -16416,6 +16603,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
           + '<label class="qw-ck"><input type="checkbox" id="qwSaveL" checked> Salvala nel mio listino</label>'
           + '<button type="button" class="q-add" id="qwAddOk">Aggiungi</button></div>';
       else h += '<button type="button" class="qw-write" id="qwAdd">＋ Scrivi una voce</button>';
+      if(semplOn() && !qw.add) h += '<button type="button" class="qw-write pl-go" id="qwPlan">📐 Prendi le misure dalla planimetria</button>';
       h += '<div class="pp-error" id="qwErr"></div><button type="button" class="pro-auth-submit qw-next" id="qwNext">Avanti · ' + qEsc(qwEur(tot.totale)) + '</button>';
       box.innerHTML = h;
       var upd = function(){ var t = qpTotals(q); document.getElementById('qwNext').textContent = 'Avanti · ' + qwEur(t.totale); };
@@ -16425,6 +16613,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       box.querySelectorAll('[data-qwx]').forEach(function(b){ b.addEventListener('click', function(){ q.voci.splice(+b.dataset.qwx, 1); qwAuto(); qwRender(); }); });
       box.querySelectorAll('[data-qwl]').forEach(function(b){ b.addEventListener('click', function(){ var v = LI[+b.dataset.qwl];
         q.voci.push({ titolo:v.titolo, descrizione:v.descrizione || '', qta: +v.qta || 1, um:v.um || 'a corpo', prezzo: +v.prezzo || 0, lavorazione:v.lavorazione || '' }); qwAuto(); qwRender(); }); });
+      var plb = document.getElementById('qwPlan'); if(plb) plb.onclick = plOpen;
       var ad = document.getElementById('qwAdd'); if(ad) ad.onclick = function(){ qw.add = true; qwRender(); var t = document.getElementById('qwT'); if(t) t.focus(); };
       var ok = document.getElementById('qwAddOk'); if(ok) ok.onclick = function(){
         var t = document.getElementById('qwT').value.trim(), qq = qParse(document.getElementById('qwQ').value) || 1, um = document.getElementById('qwU').value, pr = qParse(document.getElementById('qwP').value);
@@ -19813,6 +20002,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   if(document.body) start(); else document.addEventListener('DOMContentLoaded', start);
 })();
 </script>
-<script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/5298b64fd7df.jpg", "/img/8ee849b00fb5.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
+<script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/bb9f00704090.jpg", "/img/6aa351ec523e.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
 </body>
 </html>

@@ -3,23 +3,15 @@
     "api/generate-preview.js": {
       "memory": 1024,
       "maxDuration": 300
+    },
+    "api/quotes.js": {
+      "maxDuration": 60
     }
   },
   "crons": [
     {
       "path": "/api/leads?action=cron48",
       "schedule": "0 7 * * *"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/img/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
     }
   ]
 }
