@@ -411,6 +411,11 @@ async function insert(accountId, kind, token, data) {
   const r = await supabaseRequest("/pro_extra", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify([{ id: crypto.randomUUID(), account_id: accountId, kind, token, data, updated_at: now }]) });
   return r.ok && Array.isArray(r.data) ? r.data[0] : null;
 }
+async function rememberTipo(mem, d) {
+  const md = Object.assign({}, mem.data, { tipo: d.tipo || mem.data.tipo || "" });
+  if (d.compenso && d.compenso.modo === "ore") md.pagaOra = d.compenso.importo;
+  if (md.tipo !== mem.data.tipo || md.pagaOra !== mem.data.pagaOra) await patch(mem.id, md);
+}
 function cleanIncarico(d, old) {
   d = obj(d); old = obj(old);
   return {
@@ -424,10 +429,17 @@ function cleanIncarico(d, old) {
     nota: str(d.nota, 600), data: date(d.data), ora: time(d.ora), giorni: int(d.giorni, 1, 60),
     passaggi: (Array.isArray(d.passaggi) ? d.passaggi : []).slice(0, 10).map(p => ({ n: str(p && p.n, 40), p: num(p && p.p, 100) })).filter(p => p.n),
     mqTot: num(d.mqTot, 100000),
+    tipo: cleanTipo(d.tipo, old.tipo),
+    compenso: cleanTipo(d.tipo, old.tipo) === "piva" ? cleanComp(d.compenso !== undefined ? d.compenso : old.compenso) : null,
     stato: ["attivo", "chiuso", "confermato"].includes(old.stato) && old.stato !== "attivo" ? old.stato : "attivo",
     chiusoAt: old.chiusoAt || "",
   };
 }
+// dipendente o partita IVA; solo alla partita IVA si dà un compenso per il lavoro (a corpo o a ore)
+function cleanTipo(t, old) { return ["dip", "piva"].includes(t) ? t : (["dip", "piva"].includes(old) ? old : ""); }
+function cleanComp(c) { c = obj(c); const modo = c.modo === "ore" ? "ore" : "corpo"; const importo = num(c.importo, 1000000); return importo > 0 ? { modo, importo } : null; }
+// cosa vede il collaboratore: il compenso solo se è a partita IVA
+function pubMember(x) { const p = pub(x); if (p && p.data && p.data.tipo !== "piva") { p.data = Object.assign({}, p.data); delete p.data.compenso; } return p; }
 async function handleTeam(req, res, action, acc) {
   const b = req.body || {}, q = req.query || {}, me = acc.id, post = req.method === "POST";
   const owner = acc.account_type !== "privato";
@@ -448,7 +460,7 @@ async function handleTeam(req, res, action, acc) {
       row = ok;
     }
     const m = await rows("account_id=eq." + me + "&kind=eq.membro") || [];
-    return res.status(200).json({ code: row.token, members: m.filter(x => x.data.stato !== "rimosso").map(x => ({ id: x.id, memberId: x.data.memberId, nome: x.data.nome, email: x.data.email, stato: x.data.stato, at: x.created_at })) });
+    return res.status(200).json({ code: row.token, members: m.filter(x => x.data.stato !== "rimosso").map(x => ({ id: x.id, memberId: x.data.memberId, nome: x.data.nome, email: x.data.email, stato: x.data.stato, tipo: x.data.tipo || "", pagaOra: x.data.pagaOra || 0, at: x.created_at })) });
   }
   if (action === "tm-member") {
     if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
@@ -472,7 +484,25 @@ async function handleTeam(req, res, action, acc) {
       return s ? res.status(200).json({ item: pub(s) }) : res.status(502).json({ error: "Non riuscito, riprova." });
     }
     const s = await insert(me, "incarico", null, cleanIncarico(d, {}));
+    if (s) await rememberTipo(mem, s.data);
     return s ? res.status(200).json({ item: pub(s) }) : res.status(502).json({ error: "Non riuscito, riprova." });
+  }
+  // cambia dipendente/partita IVA e compenso di un incarico già affidato
+  if (action === "tm-compenso") {
+    if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    const g = await getOne("id=eq." + b.id + "&account_id=eq." + me + "&kind=eq.incarico"); if (!g.row) return res.status(404).json({ error: "Incarico non trovato." });
+    const tipo = cleanTipo(b.tipo, g.row.data.tipo);
+    const nd = Object.assign({}, g.row.data, { tipo, compenso: tipo === "piva" ? cleanComp(b.compenso) : null });
+    const r = await patch(g.row.id, nd); const s = r.ok && r.data && r.data[0];
+    if (s) { const mm = await rows("account_id=eq." + me + "&kind=eq.membro") || []; const mem = mm.find(x => x.data.memberId === nd.memberId); if (mem) await rememberTipo(mem, nd); }
+    return s ? res.status(200).json({ item: pub(s) }) : res.status(502).json({ error: "Non riuscito, riprova." });
+  }
+  // spesa anticipata dal collaboratore: il titolare la toglie o la rimette
+  if (action === "tm-spesa") {
+    if (!owner || !post || !UUID.test(String(b.id || ""))) return res.status(400).json({ error: "Richiesta non valida." });
+    const g = await getOne("id=eq." + b.id + "&account_id=eq." + me + "&kind=eq.diario"); if (!g.row || !(+g.row.data.spesa > 0)) return res.status(404).json({ error: "Spesa non trovata." });
+    const r = await patch(g.row.id, Object.assign({}, g.row.data, { spesaStato: b.stato === "no" ? "no" : "ok" }));
+    return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Non riuscito, riprova." });
   }
   if (action === "tm-owner") {
     if (!owner) return res.status(403).json({ error: "Solo per le imprese." });
@@ -516,7 +546,7 @@ async function handleTeam(req, res, action, acc) {
       const oa = await account(x.account_id, "company_name,logo_url,phone") || {};
       const t = { ownerId: x.account_id, impresa: oa.company_name || "", logo: oa.logo_url || null, telefono: oa.phone || "", stato: x.data.stato, incarichi: [], diario: [] };
       if (x.data.stato === "attivo") {
-        t.incarichi = (await rows("account_id=eq." + x.account_id + "&kind=eq.incarico&data->>memberId=eq." + me) || []).map(pub);
+        t.incarichi = (await rows("account_id=eq." + x.account_id + "&kind=eq.incarico&data->>memberId=eq." + me) || []).map(pubMember);
         t.diario = (await rows("account_id=eq." + x.account_id + "&kind=eq.diario&data->>memberId=eq." + me) || []).map(pub);
       }
       teams.push(t);
@@ -542,7 +572,12 @@ async function handleTeam(req, res, action, acc) {
       passaggio: pass.includes(b.passaggio) ? b.passaggio : "", mq: num(b.mq, 100000), ore: num(b.ore, 24),
       foto: urls(b.foto, 8), note: str(b.note, 600), chiusura: !!b.chiusura,
     };
-    if (!d.chiusura && !d.passaggio && !d.ore && !d.foto.length) return res.status(400).json({ error: "Segna almeno un passaggio, le ore o una foto." });
+    const spesa = num(b.spesa, 100000);
+    if (spesa > 0) {
+      if (g.row.data.tipo !== "piva") return res.status(403).json({ error: "Le spese le segna solo chi lavora a partita IVA." });
+      d.spesa = spesa; d.spesaNota = str(b.spesaNota, 160); d.spesaStato = "ok"; d.passaggio = ""; d.mq = 0; d.ore = 0; d.chiusura = false;
+    }
+    if (!d.spesa && !d.chiusura && !d.passaggio && !d.ore && !d.foto.length) return res.status(400).json({ error: "Segna almeno un passaggio, le ore o una foto." });
     if (d.chiusura && d.foto.length < 3) return res.status(400).json({ error: "Per chiudere il cantiere servono almeno 3 foto finali." });
     const s = await insert(g.row.account_id, "diario", null, d);
     if (!s) return res.status(502).json({ error: "Non riuscito, riprova." });

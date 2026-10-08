@@ -1518,6 +1518,18 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .v3tap.a{ left:0; right:0; width:auto; top:calc(env(safe-area-inset-top,0px) + 70px); bottom:0; }
 .v3body{ pointer-events:none; } .v3body button, .v3body a, .v3body input{ pointer-events:auto; }
 .v3bars i{ min-width:0; }
+/* loghi larghi: interi, non tagliati */
+.tm-jl{ width:auto !important; max-width:200px; height:64px !important; object-fit:contain !important; background:#fff; padding:6px 10px; box-sizing:border-box; }
+.hb-lg[style*="background-image"]{ width:64px; background-color:#fff; background-size:contain; background-origin:content-box; padding:5px; box-sizing:border-box; }
+#tmHd img{ width:auto !important; max-width:110px; height:40px !important; object-fit:contain !important; background:#fff; padding:4px 6px; border-radius:10px; box-sizing:border-box; }
+/* squadra: compenso e spese */
+.tm-comp{ display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:13px; font-weight:700; margin:6px 0 2px; padding:7px 10px; background:var(--accent-soft); border-radius:10px; }
+.tm-sps{ display:flex; flex-direction:column; gap:5px; margin-top:6px; }
+.tm-sp{ display:flex; align-items:center; gap:8px; font-size:12.5px; } .tm-sp span{ flex:1; min-width:0; } .tm-sp a{ font-size:12px; color:var(--accent); }
+.tm-sp.no span{ text-decoration:line-through; opacity:.6; }
+.tm-pay{ display:flex; justify-content:space-between; align-items:center; margin:10px 0 2px; padding:9px 12px; border-radius:12px; background:rgba(255,255,255,.1); }
+.tm-pay em{ font-style:normal; font-size:12px; opacity:.85; line-height:1.3; } .tm-pay strong{ font-size:22px; color:#F2B978; font-family:"Playfair Display", Georgia, serif; }
+#tmHd img{ width:auto !important; max-width:110px; height:40px !important; object-fit:contain !important; background:#fff; padding:4px 6px; border-radius:10px; box-sizing:border-box; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16866,7 +16878,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function ccNum2(v){ v = parseFloat(String(v == null ? '' : v).replace(',', '.')); return isFinite(v) && v > 0 ? Math.round(v * 100) / 100 : 0; }
   function ccQ(c){ var g = c.g.quote; return g.filter(function(q){ return q.status === 'accettato'; })[0] || g[0] || null; }
   function ccPrev(c){ var q = ccQ(c); return q && +q.total > 0 ? +q.total : 0; }
-  function ccSpesi(c, t){ return (c.g.costo || []).filter(function(x){ return !t || x.data.tipo === t; }).reduce(function(a, x){ return a + (+x.data.importo || 0); }, 0); }
+  function ccSpesi(c, t){ if(t === 'squadra') return ccSq(c).tot; return (c.g.costo || []).filter(function(x){ return !t || x.data.tipo === t; }).reduce(function(a, x){ return a + (+x.data.importo || 0); }, 0) + (t ? 0 : ccSq(c).tot); }
   function ccTar(){
     if(CC.tarOk) return Promise.resolve(CC.tar);
     return qApi('px-list', 'GET', null, '&kind=tariffe').then(function(x){ var it = x && x.ok && x.d.items && x.d.items[0]; CC.tar = it ? it.data : null; CC.tarId = it ? it.id : null; CC.tarOk = !!(x && x.ok); return CC.tar; }).catch(function(){ return null; });
@@ -16887,12 +16899,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function ctCostiBlock(c, box){
     var cs = (c.g.costo || []).slice().sort(function(a, b){ return String(b.data.data || b.createdAt).localeCompare(String(a.data.data || a.createdAt)); });
     if(c.fase < 2 && !cs.length) return;
-    var prev = ccPrev(c), sp = ccSpesi(c), resta = prev - sp, o = ccSpesi(c, 'ore'), m = ccSpesi(c, 'materiali'), z = ccSpesi(c, 'mezzi'), tot = Math.max(prev, sp) || 1;
+    if(typeof tmOwnerOn === 'function' && tmOwnerOn() && !TM.ok && !c._tmw){ c._tmw = 1; tmLoad().then(function(){ var s = document.getElementById('ccAdd'); if(s && document.body.contains(s)) ctScheda(c.id); }).catch(function(){}); }
+    var sq = ccSq(c), prev = ccPrev(c), sp = ccSpesi(c), resta = prev - sp, o = ccSpesi(c, 'ore'), m = ccSpesi(c, 'materiali'), z = ccSpesi(c, 'mezzi'), q = sq.tot, tot = Math.max(prev, sp) || 1;
     var h = '<div class="cc-sec">Quanto ci guadagni</div><div class="cc-card">'
       + (prev ? '<div class="cc-r"><span>Preventivo</span><b>' + ccE(prev) + '</b></div>' : '')
       + (function(){ var g = typeof inGot === 'function' ? inGot(c) : null; return g == null ? '' : '<div class="cc-r"><span>Incassato finora</span><b style="color:#2E7D4F" id="ccInc">' + ccE(g) + '</b></div>'; })()
-      + '<div class="cc-r"><span>Costi segnati</span><b>' + (sp ? '− ' : '') + ccE(sp) + '</b></div>'
-      + (sp ? '<div class="cc-meter"><u style="width:' + (o / tot * 100) + '%;background:#2B1408"></u><u style="width:' + (m / tot * 100) + '%;background:var(--accent)"></u><u style="width:' + (z / tot * 100) + '%;background:#E3A06B"></u></div><div class="cc-leg">' + (o ? '<span><i style="background:#2B1408"></i>Ore ' + ccE(o) + '</span>' : '') + (m ? '<span><i style="background:var(--accent)"></i>Materiali ' + ccE(m) + '</span>' : '') + (z ? '<span><i style="background:#E3A06B"></i>Mezzi ' + ccE(z) + '</span>' : '') + '</div>' : '')
+      + '<div class="cc-r"><span>Costi segnati</span><b>' + (sp - q ? '− ' : '') + ccE(sp - q) + '</b></div>'
+      + sq.righe.map(function(r){ return '<div class="cc-r"><span>Squadra · ' + qEsc(r[0]) + '</span><b>− ' + ccE(r[1]) + '</b></div>'; }).join('')
+      + (sp ? '<div class="cc-meter"><u style="width:' + (o / tot * 100) + '%;background:#2B1408"></u><u style="width:' + (m / tot * 100) + '%;background:var(--accent)"></u><u style="width:' + (z / tot * 100) + '%;background:#E3A06B"></u><u style="width:' + (q / tot * 100) + '%;background:#4F7A8C"></u></div><div class="cc-leg">' + (o ? '<span><i style="background:#2B1408"></i>Ore ' + ccE(o) + '</span>' : '') + (m ? '<span><i style="background:var(--accent)"></i>Materiali ' + ccE(m) + '</span>' : '') + (z ? '<span><i style="background:#E3A06B"></i>Mezzi ' + ccE(z) + '</span>' : '') + (q ? '<span><i style="background:#4F7A8C"></i>Squadra ' + ccE(q) + '</span>' : '') + '</div>' : '')
       + (prev ? '<div class="cc-tot"><span>' + (c.fase === 4 ? 'Guadagno' : 'Ti restano') + '</span><b class="' + (resta < 0 ? 'neg' : '') + '">' + ccE(resta) + (c.fase === 4 && sp ? ' · ' + Math.round(resta / prev * 100) + '%' : '') + '</b></div>' : '<div class="cc-hint">Quando c’è il preventivo vedi anche quanto ti resta.</div>')
       + '</div>';
     if(prev && sp >= prev * 0.8 && c.fase === 3) h += '<div class="cc-warn"><b>Attento al margine</b>Su questo cantiere hai già speso il ' + Math.round(sp / prev * 100) + '% del preventivo.</div>';
@@ -17166,6 +17180,16 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var ore = L.reduce(function(s, x){ return s + (+x.data.ore || 0); }, 0);
     return { pass:pp, pct:Math.min(100, tot), ore:ore, entries:L, foto:[].concat.apply([], L.map(function(x){ return x.data.foto || []; })) };
   }
+  // compenso: dipendente (ore × costo operaio) o partita IVA (a corpo / a ore) + spese anticipate
+  function tmEur(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits: (Math.round(+n || 0) === +n ? 0 : 2), maximumFractionDigits: 2 }) + ' €'; }
+  function tmCompTxt(d){ var c = d.compenso; if(d.tipo !== 'piva' || !c) return ''; return c.modo === 'ore' ? tmEur(c.importo) + '/ora' : tmEur(c.importo) + ' a corpo'; }
+  function tmSpese(i, dia){ return (dia || []).filter(function(x){ return x.data.incaricoId === i.id && +x.data.spesa > 0; }); }
+  function tmCosto(i, dia){
+    var d = i.data, av = tmAvanz(i, dia || []), sp = tmSpese(i, dia).filter(function(x){ return x.data.spesaStato !== 'no'; }).reduce(function(a, x){ return a + (+x.data.spesa || 0); }, 0), lav = 0, desc = '';
+    if(d.tipo === 'piva' && d.compenso){ lav = d.compenso.modo === 'ore' ? av.ore * d.compenso.importo : d.compenso.importo; desc = d.compenso.modo === 'ore' ? (Math.round(av.ore * 10) / 10) + ' h × ' + tmEur(d.compenso.importo) : 'a corpo'; }
+    else { var t = (typeof CC !== 'undefined' && CC.tar && +CC.tar.operaio) || 0; lav = av.ore * t; desc = (Math.round(av.ore * 10) / 10) + ' h' + (t ? ' × ' + tmEur(t) : ' (manca il costo operaio nelle tariffe)'); }
+    return { lav: lav, spese: sp, tot: lav + sp, desc: desc, ore: av.ore };
+  }
   function tmBars(av, mt){ return av.pass.map(function(x){ return '<div class="tm-ps' + (x.f >= 1 ? ' d' : '') + '"><div><b>' + (x.f >= 1 ? '✓ ' : '') + qEsc(x.n) + ' · ' + x.p + '%</b><em>' + (mt ? Math.round(x.mq * 10) / 10 + ' / ' + mt + ' m²' : (x.f ? 'fatto' : '')) + '</em></div><i><u style="width:' + Math.round(x.f * 100) + '%"></u></i></div>'; }).join(''); }
 
   // ===================== TITOLARE =====================
@@ -17213,7 +17237,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         h += '<div class="cc-card tm-inc"><div class="tm-ih"><span class="tm-av">' + qEsc(ctIni(d.memberNome)) + '</span><div><b>' + qEsc(d.memberNome) + '</b><em>' + qEsc(tmDays(i)) + (d.ora ? ' · ' + qEsc(d.ora) : '') + '</em></div><span class="vr-st ' + (d.stato === 'confermato' ? 'g' : d.stato === 'chiuso' ? 'y' : 'n') + '">' + ({ attivo:'in corso', chiuso:'da confermare', confermato:'chiuso' })[d.stato] + '</span></div>'
           + '<div class="tm-pct"><b>' + av.pct + '%</b><i><u style="width:' + av.pct + '%"></u></i></div>'
           + '<div class="tm-mini">' + tmBars(av, d.mqTot) + '</div>'
-          + (av.ore ? '<div class="cc-hint">Ore segnate: <b>' + (Math.round(av.ore * 10) / 10) + '</b>' + (CC.tar && CC.tar.operaio ? ' · circa ' + ccE(av.ore * CC.tar.operaio) + ' con la tariffa operaio' : '') + '</div>' : '')
+          + (function(){ var k = tmCosto(i, TM.dia), sl = tmSpese(i, TM.dia);
+              return '<div class="tm-comp"><span>' + (d.tipo === 'piva' ? 'Partita IVA' : d.tipo === 'dip' ? 'Dipendente' : 'Tipo non scelto') + (d.tipo === 'piva' && d.compenso ? ' · ' + qEsc(tmCompTxt(d)) : '') + '</span><button type="button" class="q-link" data-tmcomp="' + i.id + '">Cambia</button></div>'
+                + (k.ore || k.lav ? '<div class="cc-hint">Ore segnate: <b>' + (Math.round(k.ore * 10) / 10) + '</b>' + (k.lav ? ' · costo ' + ccE(k.lav) + (d.tipo === 'piva' ? '' : ' con il costo operaio') : '') + '</div>' : '')
+                + (sl.length ? '<div class="tm-sps">' + sl.map(function(x){ var no = x.data.spesaStato === 'no'; return '<div class="tm-sp' + (no ? ' no' : '') + '"><span>🧾 <b>' + ccE(x.data.spesa) + '</b> ' + qEsc(x.data.spesaNota || 'Spesa') + ' · ' + qEsc(rxDate(x.data.data)) + '</span>' + ((x.data.foto || [])[0] ? '<a href="' + qEsc(x.data.foto[0]) + '" target="_blank" rel="noopener">scontrino</a>' : '') + '<button type="button" class="q-link" data-tmsp="' + x.id + '" data-st="' + (no ? 'ok' : 'no') + '">' + (no ? 'Rimetti' : 'Togli') + '</button></div>'; }).join('') + '</div>' : ''); })()
           + (av.foto.length ? '<div class="tm-ph">' + av.foto.slice(-6).reverse().map(function(u){ return '<a href="' + qEsc(u) + '" target="_blank" rel="noopener"><img src="' + qEsc(u) + '" alt=""></a>'; }).join('') + '</div>' : '')
           + (last ? '<div class="cc-hint">Ultimo aggiornamento: ' + qEsc(rxDate(last.data.data)) + (last.data.note ? ' · “' + qEsc(last.data.note) + '”' : '') + '</div>' : '')
           + (d.stato === 'chiuso' ? '<button type="button" class="pro-auth-submit cc-add" data-tmcf="' + i.id + '">✓ Conferma la chiusura</button><button type="button" class="ct-link" data-tmro="' + i.id + '">Non è finito: riapri</button>' : '')
@@ -17222,6 +17249,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(att.length) h += '<button type="button" class="pro-auth-submit cc-add vr-add" id="tmAff">👷 Affida il cantiere</button>';
       w.innerHTML = h;
       var a = document.getElementById('tmAff'); if(a) a.addEventListener('click', function(){ tmAffida(c); });
+      w.querySelectorAll('[data-tmcomp]').forEach(function(b){ b.addEventListener('click', function(){ var i = TM.inc.filter(function(x){ return x.id === b.dataset.tmcomp; })[0]; if(i) tmCompForm(i, c); }); });
+      w.querySelectorAll('[data-tmsp]').forEach(function(b){ b.addEventListener('click', function(){ b.disabled = true; tmApi('tm-spesa', { id:b.dataset.tmsp, stato:b.dataset.st }).then(function(){ TM.ok = false; ctScheda(c.id); }).catch(rxFail); }); });
       w.querySelectorAll('[data-tmcf]').forEach(function(b){ b.addEventListener('click', function(){ b.disabled = true; tmApi('tm-confirm', { id:b.dataset.tmcf }).then(function(){ TM.ok = false; ctScheda(c.id); }).catch(rxFail); }); });
       w.querySelectorAll('[data-tmro]').forEach(function(b){ b.addEventListener('click', function(){ tmApi('tm-confirm', { id:b.dataset.tmro, riapri:true }).then(function(){ TM.ok = false; ctScheda(c.id); }).catch(rxFail); }); });
       w.querySelectorAll('[data-tmun]').forEach(function(b){ b.addEventListener('click', function(){ if(b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = 'Sicuro? Tocca di nuovo'; return; } tmApi('tm-unassign', { id:b.dataset.tmun }).then(function(){ TM.ok = false; ctScheda(c.id); }).catch(rxFail); }); });
@@ -17230,19 +17259,27 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // affida il cantiere: chi, quando, quanti giorni, nota. Il resto lo prende da preventivo e sopralluogo
   function tmAffida(c){
     var att = TM.members.filter(function(m){ return m.stato === 'attivo'; }), q = ccQ(c), s = (c.g.sopr || [])[0];
-    var st = { mem: att[0] && att[0].memberId, data: ctDayIso(1), ora:'08:00', giorni:1, snap:null };
+    var st = { mem: att[0] && att[0].memberId, data: ctDayIso(1), ora:'08:00', giorni:1, snap:null, tipo:(att[0] && att[0].tipo) || '', modo:'corpo', imp:0 };
     var box = rxOpen('Affida il cantiere', function(){ ctScheda(c.id); });
     box.innerHTML = '<div class="cc-h2">Affida il cantiere</div><div class="cc-sub">' + qEsc(c.nome) + (c.luogo ? ' · ' + qEsc(c.luogo) : '') + '. Riceve tutto nella sua app.</div>'
       + '<div class="cc-q">Chi ci va</div>' + ccChips('mem', att.map(function(m){ return [m.memberId, qEsc(m.nome)]; }), st.mem)
+      + '<div id="tmTipo"></div>'
       + '<div class="cc-q">Da quando</div>' + ccChips('data', [[ctDayIso(0), 'Oggi'], [ctDayIso(1), 'Domani'], [ctDayIso(2), 'Dopodomani'], ['x', 'Scegli…']], st.data)
       + '<label class="cc-fld" id="tmDF" hidden><span>Giorno</span><input type="date" id="tmD" value="' + ctDayIso(3) + '"></label>'
       + '<div class="cc-q">A che ora</div>' + ccChips('ora', [['07:30', '7:30'], ['08:00', '8:00'], ['09:00', '9:00'], ['14:00', '14:00']], st.ora)
       + '<div class="cc-q">Per quanti giorni</div>' + ccChips('giorni', [['1', '1'], ['2', '2'], ['3', '3'], ['5', '5'], ['10', '10']], '1')
       + '<div class="cc-q">Una nota per lui <i>(se vuoi)</i></div><label class="cc-fld"><input id="tmN" maxlength="600" placeholder="es. il cliente ha un cane, suonare 2 volte" style="text-align:left;font-size:15px;font-weight:600"></label>'
       + '<div class="cc-sec">Cosa gli mando</div><div class="cc-card" id="tmSnap"><div class="cc-hint" style="margin:0">Preparo i dati dal preventivo e dal sopralluogo…</div></div>'
-      + '<button type="button" class="pro-auth-submit cc-add" id="tmOk" disabled>Affida</button><div class="cc-hint" style="text-align:center">Non vede prezzi né importi.</div>';
-    function lbl(){ var m = att.filter(function(x){ return x.memberId === st.mem; })[0]; var b = document.getElementById('tmOk'); b.textContent = 'Affida a ' + (m ? v3First(m.nome) : '…'); b.disabled = !(m && st.snap); }
-    ccChipsBind(box, function(g, v){ if(g === 'mem') st.mem = v; if(g === 'ora') st.ora = v; if(g === 'giorni') st.giorni = +v; if(g === 'data'){ document.getElementById('tmDF').hidden = v !== 'x'; st.data = v === 'x' ? document.getElementById('tmD').value : v; } lbl(); });
+      + '<button type="button" class="pro-auth-submit cc-add" id="tmOk" disabled>Affida</button><div class="cc-hint" id="tmOkH" style="text-align:center">Non vede prezzi né importi.</div>';
+    function lbl(){ var m = att.filter(function(x){ return x.memberId === st.mem; })[0]; var b = document.getElementById('tmOk'), ok = st.tipo === 'dip' || (st.tipo === 'piva' && st.imp > 0);
+      b.textContent = 'Affida a ' + (m ? v3First(m.nome) : '…') + (st.tipo === 'piva' && st.imp > 0 ? ' · ' + tmEur(st.imp) + (st.modo === 'ore' ? '/ora' : '') : ''); b.disabled = !(m && st.snap && ok);
+      document.getElementById('tmOkH').textContent = st.tipo === 'piva' ? 'Vede solo il suo compenso, non il tuo preventivo.' : st.tipo ? 'Non vede prezzi né importi.' : 'Scegli se è dipendente o a partita IVA.'; }
+    function tipoDraw(){ var m = att.filter(function(x){ return x.memberId === st.mem; })[0], el = document.getElementById('tmTipo'); if(!m || !el) return;
+      el.innerHTML = tmTipoHtml(v3First(m.nome), st);
+      tmTipoBind(el, st, function(){ tipoDraw(); lbl(); }, lbl); }
+    function tmMemSet(v){ var m = att.filter(function(x){ return x.memberId === v; })[0]; st.mem = v; st.tipo = (m && m.tipo) || ''; st.modo = 'corpo'; st.imp = 0; st.paga = (m && m.pagaOra) || 0; tipoDraw(); }
+    st.paga = (att[0] && att[0].pagaOra) || 0; setTimeout(tipoDraw, 0);
+    ccChipsBind(box, function(g, v){ if(g === 'mem') tmMemSet(v); if(g === 'ora') st.ora = v; if(g === 'giorni') st.giorni = +v; if(g === 'data'){ document.getElementById('tmDF').hidden = v !== 'x'; st.data = v === 'x' ? document.getElementById('tmD').value : v; } lbl(); });
     document.getElementById('tmD').addEventListener('change', function(){ st.data = this.value; });
     var J = function(p){ return p.then(function(x){ return x && x.ok ? x.d : null; }).catch(function(){ return null; }); };
     Promise.all([q ? J(qApi('get', 'GET', null, '&id=' + encodeURIComponent(q.id))) : null, s && !s.local ? J(soApi('sopr-get', 'GET', null, '&id=' + encodeURIComponent(s.id))) : null]).then(function(r){
@@ -17267,9 +17304,38 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('tmOk').addEventListener('click', function(){
       var b = this; if(!st.snap || !st.mem) return; b.disabled = true;
       if(document.getElementById('tmDF').hidden === false) st.data = document.getElementById('tmD').value;
-      tmApi('tm-assign', { data: Object.assign({}, st.snap, { memberId: st.mem, data: st.data, ora: st.ora, giorni: st.giorni, nota: document.getElementById('tmN').value.trim() }) })
+      tmApi('tm-assign', { data: Object.assign({}, st.snap, { memberId: st.mem, data: st.data, ora: st.ora, giorni: st.giorni, nota: document.getElementById('tmN').value.trim(), tipo: st.tipo, compenso: st.tipo === 'piva' ? { modo: st.modo, importo: st.imp } : null }) })
         .then(function(){ TM.ok = false; return tmLoad(true); }).then(function(){ ctScheda(c.id); }).catch(function(e){ rxFail(e); b.disabled = false; });
     });
+  }
+  // "Marco è… Dipendente / Partita IVA" e, per la partita IVA, quanto gli dai
+  function tmTipoHtml(nome, st){
+    return '<div class="cc-q">' + qEsc(nome) + ' è…</div>' + ccChips('tipo', [['dip', 'Dipendente'], ['piva', 'Partita IVA']], st.tipo)
+      + (st.tipo === 'piva' ? '<div class="cc-q">Quanto gli dai per questo lavoro?</div>' + ccChips('modo', [['corpo', 'A corpo'], ['ore', 'A ore']], st.modo)
+        + '<label class="cc-fld"><span>' + (st.modo === 'ore' ? '€ all’ora' : '€ per tutto il lavoro') + '</span><input id="tmImp" inputmode="decimal" placeholder="' + (st.modo === 'ore' ? 'es. 20' : 'es. 800') + '" value="' + (st.imp ? String(st.imp).replace('.', ',') : '') + '"></label>'
+        + '<div class="cc-hint">' + (st.modo === 'ore' ? 'Il totale si fa con le ore che segna.' : '') + ' Più IVA, se la applica.</div>' : '');
+  }
+  function tmTipoBind(el, st, redraw, upd){
+    ccChipsBind(el, function(g, v){ if(g === 'tipo') st.tipo = v; if(g === 'modo'){ st.modo = v; st.imp = v === 'ore' ? (st.paga || 0) : 0; } redraw(); });
+    var inp = el.querySelector('#tmImp'); if(inp) inp.addEventListener('input', function(){ st.imp = ccNum2(this.value); upd(); });
+  }
+  function tmCompForm(i, c){
+    var d = i.data, st = { tipo: d.tipo || '', modo: (d.compenso && d.compenso.modo) || 'corpo', imp: (d.compenso && d.compenso.importo) || 0, paga: 0 };
+    var box = rxOpen('Compenso', function(){ ctScheda(c.id); });
+    function draw(){ box.innerHTML = '<div class="cc-h2">' + qEsc(d.memberNome || '') + '</div><div class="cc-sub">' + qEsc(d.cliente || '') + ' · ' + qEsc(tmDays(i)) + '</div><div id="tmTipo">' + tmTipoHtml(v3First(d.memberNome || ''), st) + '</div>'
+        + '<button type="button" class="pro-auth-submit cc-add" id="tmCs">Salva</button><div class="cc-hint" style="text-align:center">' + (st.tipo === 'piva' ? 'Vede la cifra aggiornata nella sua app.' : 'Non vede prezzi né importi.') + '</div>';
+      tmTipoBind(document.getElementById('tmTipo'), st, draw, function(){});
+      document.getElementById('tmCs').onclick = function(){ var b = this; if(!st.tipo || (st.tipo === 'piva' && !(st.imp > 0))){ rxFail({ d:{ error: st.tipo ? 'Scrivi quanto gli dai.' : 'Scegli dipendente o partita IVA.' } }); return; }
+        b.disabled = true; tmApi('tm-compenso', { id: i.id, tipo: st.tipo, compenso: st.tipo === 'piva' ? { modo: st.modo, importo: st.imp } : null }).then(function(){ TM.ok = false; return tmLoad(true); }).then(function(){ ctScheda(c.id); }).catch(function(e){ rxFail(e); b.disabled = false; }); }; }
+    draw();
+  }
+  // costi della squadra per la scheda del cantiere ("Quanto ci guadagni")
+  function ccSq(c){
+    if(typeof tmOwnerOn !== 'function' || !tmOwnerOn() || !TM.ok) return { tot:0, righe:[] };
+    var R = []; tmIncOf(c).forEach(function(i){ var k = tmCosto(i, TM.dia), n = v3First(i.data.memberNome || '');
+      if(k.lav) R.push([n + (i.data.tipo === 'piva' ? ' (P. IVA) · ' : ' (dipendente) · ') + k.desc, k.lav]);
+      if(k.spese) R.push(['Spese di ' + n, k.spese]); });
+    return { tot: R.reduce(function(a, r){ return a + r[1]; }, 0), righe: R };
   }
   // in home: cosa è successo oggi nei cantieri affidati
   function tmFeedHtml(){
@@ -17279,7 +17345,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(!L.length && !chiusi.length) return '';
     return '<div class="rd-o-sec">Dalla squadra</div><div class="cc-card cc-list tm-feed">' + chiusi.map(function(i){ return '<button type="button" class="tm-fi" data-tmc="' + qEsc(i.data.cliente) + '"><span class="tm-av">' + qEsc(ctIni(i.data.memberNome)) + '</span><div><b>' + qEsc(v3First(i.data.memberNome)) + ' ha chiuso ' + qEsc(i.data.cliente) + '</b><em>tocca per confermare la chiusura</em></div></button>'; }).join('')
       + L.map(function(x){ var d = x.data, inc = TM.inc.filter(function(i){ return i.id === d.incaricoId; })[0] || { data:{} };
-        return '<button type="button" class="tm-fi" data-tmc="' + qEsc(inc.data.cliente || '') + '"><span class="tm-av">' + qEsc(ctIni(d.nome)) + '</span><div><b>' + qEsc(v3First(d.nome)) + ' · ' + qEsc(inc.data.cliente || '') + '</b><em>' + qEsc([d.chiusura ? 'chiusura' : d.passaggio, d.mq ? d.mq + ' m²' : '', d.ore ? d.ore + ' ore' : '', (d.foto || []).length ? d.foto.length + ' foto' : ''].filter(Boolean).join(' · ')) + '</em>'
+        return '<button type="button" class="tm-fi" data-tmc="' + qEsc(inc.data.cliente || '') + '"><span class="tm-av">' + qEsc(ctIni(d.nome)) + '</span><div><b>' + qEsc(v3First(d.nome)) + ' · ' + qEsc(inc.data.cliente || '') + '</b><em>' + qEsc(+d.spesa > 0 ? 'spesa ' + tmEur(d.spesa) + (d.spesaNota ? ' · ' + d.spesaNota : '') : [d.chiusura ? 'chiusura' : d.passaggio, d.mq ? d.mq + ' m²' : '', d.ore ? d.ore + ' ore' : '', (d.foto || []).length ? d.foto.length + ' foto' : ''].filter(Boolean).join(' · ')) + '</em>'
           + ((d.foto || []).length ? '<span class="tm-ph">' + d.foto.slice(0, 3).map(function(u){ return '<img src="' + qEsc(u) + '" alt="">'; }).join('') + '</span>' : '') + '</div></button>'; }).join('') + '</div>';
   }
   function tmFeedBind(box){ box.querySelectorAll('[data-tmc]').forEach(function(b){ b.addEventListener('click', function(){ var n = ctNorm(b.dataset.tmc), c = v3.list.filter(function(k){ return ctNorm(k.nome) === n; })[0]; if(c){ ct.list = v3.list; ctScheda(c.id); } else tmSquadra(); }); }); }
@@ -17330,7 +17396,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     tmOggi();
   }
   function tmHero(i, lab){ var d = i.data, tel = String(d.telefono || '').replace(/[^\d+]/g, '');
-    return '<div class="tm-hero"><div class="k">' + qEsc(lab) + '</div><h2>' + qEsc(d.cliente) + '</h2><p>' + qEsc([d.indirizzo, d.titolo].filter(Boolean).join(' · ')) + '</p><div class="tm-b2">'
+    var cp = d.tipo === 'piva' && d.compenso ? (function(){ var k = tmCosto(i, (TM.me && TM.me.diario) || []); return '<div class="tm-pay"><em>Il tuo compenso<br>' + (d.compenso.modo === 'ore' ? tmEur(d.compenso.importo) + '/ora' + (k.ore ? ' · ' + (Math.round(k.ore * 10) / 10) + ' h finora' : '') : 'a corpo') + '</em><strong>' + tmEur(d.compenso.modo === 'ore' ? k.lav : d.compenso.importo) + '</strong></div>'; })() : '';
+    return '<div class="tm-hero"><div class="k">' + qEsc(lab) + '</div><h2>' + qEsc(d.cliente) + '</h2><p>' + qEsc([d.indirizzo, d.titolo].filter(Boolean).join(' · ')) + '</p>' + cp + '<div class="tm-b2">'
       + (tel ? '<a href="tel:' + qEsc(tel) + '">📞 Chiama</a>' : '<span class="off">📞 Chiama</span>') + (d.indirizzo ? '<button type="button" id="tmMap">📍 Portami lì</button>' : '<span class="off">📍 Portami lì</span>') + '</div></div>'; }
   function tmOggi(){
     var box = tmB(), i = tmToday(), t = ctDayIso(0), next = tmIncs().filter(function(x){ return x.data.stato === 'attivo' && x.data.data > t; })[0];
@@ -17340,6 +17407,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + tmHero(i, (d.ora ? 'ORE ' + d.ora + ' · ' : '') + (d.giorni > 1 ? 'GIORNO ' + Math.max(1, Math.min(n, d.giorni)) + ' DI ' + d.giorni : 'OGGI'))
       + (d.nota ? '<div class="tm-note">📝 ' + qEsc(d.nota) + '</div>' : '')
       + '<button type="button" class="pro-auth-submit cc-add" id="tmDo">' + (oggi ? '＋ Aggiungi altro di oggi' : '📷 Cosa hai fatto oggi?') + '</button>'
+      + (d.tipo === 'piva' ? '<button type="button" class="qb-sec vr-cp" id="tmSpBtn">🧾 Segna una spesa</button>' : '')
       + '<div class="cc-sec">Cosa c’è da fare</div><div class="cc-card cc-list">' + (d.lavori.length ? d.lavori.map(function(l){ return '<div class="tm-todo"><b>' + qEsc(l.t) + '</b>' + (l.q ? '<em>' + qEsc(l.q) + '</em>' : '') + '</div>'; }).join('') : '<div class="tm-todo"><b>' + qEsc(d.titolo || 'Lavoro') + '</b></div>') + '</div>'
       + (d.ambienti.length ? '<div class="cc-sec">Stanze</div><div class="tm-chips">' + d.ambienti.map(function(a){ return '<span>' + qEsc(a.n) + (a.mq ? ' · ' + String(a.mq).replace('.', ',') + ' m²' : '') + '</span>'; }).join('') + '</div>' : '')
       + (d.colori.length ? '<div class="cc-sec">Colori e scelte</div><div class="cc-card cc-list">' + d.colori.map(function(c){ return '<div class="tm-todo"><b>' + qEsc(c) + '</b></div>'; }).join('') + '</div>' : '')
@@ -17348,6 +17416,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<button type="button" class="ct-link" id="tmEnd">Lavoro finito? Chiudi il cantiere</button>';
     box.innerHTML = h; tmMapBind(i);
     document.getElementById('tmDo').onclick = function(){ tmDiario(i); };
+    var spb = document.getElementById('tmSpBtn'); if(spb) spb.onclick = function(){ tmSpesa(i); };
     document.getElementById('tmEnd').onclick = function(){ tmChiudi(i); };
   }
   function tmMapBind(i){ var m = document.getElementById('tmMap'); if(m && i) m.onclick = function(){ ctOpenUrl(ctMaps(i.data.indirizzo)); }; }
@@ -17361,9 +17430,24 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function tmIo(){
     var box = tmB(), me = TM.me;
     box.innerHTML = '<h1 class="tm-h1">' + qEsc((proAccount && proAccount.companyName) || '') + '</h1><div class="cc-card"><div class="cc-r"><span>Lavori per</span><b>' + qEsc(me.impresa) + '</b></div><div class="cc-r"><span>Email</span><b>' + qEsc((proAccount && proAccount.email) || '') + '</b></div></div>'
+      + tmMeseHtml(me)
       + (me.telefono ? '<a class="pro-auth-submit cc-add" style="display:block;text-align:center;text-decoration:none" href="tel:' + qEsc(String(me.telefono).replace(/[^\d+]/g, '')) + '">📞 Chiama ' + qEsc(me.impresa) + '</a>' : '')
       + '<button type="button" class="qb-sec vr-cp" id="tmLo">Esci</button>';
+    tmMeseBind(me);
     document.getElementById('tmLo').onclick = function(){ try{ localStorage.removeItem('rdTeam'); }catch(e){} document.getElementById('proLogoutBtn').click(); };
+  }
+  var tmYmOff = 0;
+  function tmMeseHtml(me){
+    if(!(me.incarichi || []).some(function(i){ return i.data.tipo === 'piva' && i.data.compenso; })) return '';
+    var ym = tmYm(tmYmOff), m = tmMese(me, ym);
+    return '<div class="cc-sec">I miei lavori</div><div class="cc-chips" data-ccg="ym"><button type="button" data-v="0"' + (tmYmOff === 0 ? ' class="on"' : '') + '>Questo mese</button><button type="button" data-v="-1"' + (tmYmOff === -1 ? ' class="on"' : '') + '>Mese scorso</button></div>'
+      + '<div class="cc-card"><div class="cc-hint" style="margin:0 0 6px">' + qEsc(tmYmTxt(ym)) + ' · per ' + qEsc(me.impresa) + '</div>' + (m.righe.length ? m.righe.map(function(r){ return '<div class="cc-r"><span>' + qEsc(r[0]) + '</span><b>' + tmEur(r[1]) + '</b></div>'; }).join('') : '<div class="cc-hint" style="margin:0">Niente in questo mese.</div>')
+      + '<div class="cc-tot"><span>Da fatturare</span><b>' + tmEur(m.tot) + '</b></div><div class="cc-hint" style="margin:2px 0 0">Più IVA se la applichi.</div></div>'
+      + (m.righe.length ? '<button type="button" class="qb-sec vr-cp" id="tmMPdf">📄 Scarica il riepilogo (PDF)</button>' : '');
+  }
+  function tmMeseBind(me){
+    var g = document.querySelector('#tmB [data-ccg="ym"]'); if(g) g.addEventListener('click', function(e){ var b = e.target.closest('[data-v]'); if(!b) return; tmYmOff = +b.dataset.v; tmIo(); });
+    var p = document.getElementById('tmMPdf'); if(p) p.onclick = function(){ var ym = tmYm(tmYmOff); tmMesePdf(me, ym, tmMese(me, ym)); };
   }
   function tmPhotos(st, el, max){
     function draw(){ var er = document.getElementById('tmErr'); if(er) er.textContent = ''; el.innerHTML = st.foto.map(function(u, k){ return '<span class="tm-pf"><img src="' + u + '" alt=""><button type="button" data-tmx="' + k + '">×</button></span>'; }).join('') + (st.foto.length < max ? '<label class="vr-add-ph">📷<input type="file" accept="image/*" hidden></label>' : '');
@@ -17397,6 +17481,53 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         .then(function(r){ TM.me.diario = (TM.me.diario || []).concat([r.item]); var bx = tmB(); bx.innerHTML = '<div class="tm-wait"><div class="tm-big">✅</div><h1>Mandato a ' + qEsc(TM.me.impresa) + '</h1><p>' + qEsc([st.pass, m && m.value ? m.value + ' m²' : '', st.ore ? st.ore + ' ore' : '', st.foto.length ? st.foto.length + ' foto' : ''].filter(Boolean).join(' · ')) + '</p><button type="button" class="pro-auth-submit" id="tmHome">Ok</button></div>'; document.getElementById('tmHome').onclick = function(){ tmShow('oggi'); }; })
         .catch(function(e){ tmFail(e); b.disabled = false; b.textContent = 'Manda a ' + TM.me.impresa; });
     };
+  }
+  // spesa anticipata (solo partita IVA): importo, cosa, foto dello scontrino
+  function tmSpesa(i){
+    var d = i.data, st = { foto: [] }, box = tmB(); tmHead(d.cliente);
+    box.innerHTML = '<button type="button" class="tm-back" id="tmBk">‹ Indietro</button><h1 class="tm-h1">Segna una spesa</h1><div class="cc-sub">' + qEsc(d.cliente) + ' · la vede ' + qEsc(TM.me.impresa) + ' e te la rimborsa.</div>'
+      + '<div class="cc-q">Quanto hai speso</div><label class="cc-fld"><span>€</span><input id="tmSpI" inputmode="decimal" placeholder="es. 35"></label>'
+      + '<div class="cc-q">Cosa hai comprato</div><label class="cc-fld"><input id="tmSpN" maxlength="160" placeholder="es. silicone e nastro" style="text-align:left;font-size:15px;font-weight:600"></label>'
+      + '<div class="cc-q">Foto dello scontrino</div><div class="vr-ph" id="tmPh"></div>'
+      + '<button type="button" class="pro-auth-submit cc-add" id="tmSend">Manda a ' + qEsc(TM.me.impresa) + '</button>';
+    tmPhotos(st, document.getElementById('tmPh'), 2);
+    document.getElementById('tmBk').onclick = function(){ tmShow('oggi'); };
+    document.getElementById('tmSend').onclick = function(){
+      var v = ccNum2(document.getElementById('tmSpI').value), n = document.getElementById('tmSpN').value.trim(), b = this;
+      if(!(v > 0)){ document.getElementById('tmErr').textContent = 'Scrivi quanto hai speso.'; return; }
+      b.disabled = true; b.textContent = 'Mando…';
+      tmUpload(st.foto).then(function(u){ return tmApi('tm-diario', { incaricoId: i.id, spesa: v, spesaNota: n, foto: u, data: ctDayIso(0) }); })
+        .then(function(r){ TM.me.diario = (TM.me.diario || []).concat([r.item]); var bx = tmB(); bx.innerHTML = '<div class="tm-wait"><div class="tm-big">🧾</div><h1>Spesa mandata</h1><p>' + qEsc(tmEur(v) + (n ? ' · ' + n : '')) + '</p><button type="button" class="pro-auth-submit" id="tmHome">Ok</button></div>'; document.getElementById('tmHome').onclick = function(){ tmShow('oggi'); }; })
+        .catch(function(e){ tmFail(e); b.disabled = false; b.textContent = 'Manda a ' + TM.me.impresa; });
+    };
+  }
+  // riepilogo del mese per chi è a partita IVA (per fare la fattura)
+  function tmMese(me, ym){
+    var dia = me.diario || [], R = [], tot = 0;
+    (me.incarichi || []).filter(function(i){ return i.data.tipo === 'piva' && i.data.compenso; }).forEach(function(i){
+      var d = i.data, v = 0, t = '';
+      if(d.compenso.modo === 'ore'){ var h = dia.filter(function(x){ return x.data.incaricoId === i.id && String(x.data.data).slice(0, 7) === ym; }).reduce(function(a, x){ return a + (+x.data.ore || 0); }, 0); v = h * d.compenso.importo; t = (Math.round(h * 10) / 10) + ' h × ' + tmEur(d.compenso.importo); }
+      else if(String(d.data).slice(0, 7) === ym){ v = d.compenso.importo; t = 'a corpo'; }
+      if(v) R.push([d.cliente + ' · ' + t, v]);
+    });
+    var sp = dia.filter(function(x){ return +x.data.spesa > 0 && x.data.spesaStato !== 'no' && String(x.data.data).slice(0, 7) === ym; });
+    if(sp.length) R.push(['Spese anticipate (' + sp.length + ')', sp.reduce(function(a, x){ return a + (+x.data.spesa || 0); }, 0)]);
+    R.forEach(function(r){ tot += r[1]; });
+    return { righe: R, tot: tot };
+  }
+  function tmYm(off){ var d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + off); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2); }
+  function tmYmTxt(ym){ return new Date(ym + '-15T12:00:00').toLocaleDateString('it-IT', { month:'long', year:'numeric' }); }
+  function tmMesePdf(me, ym, m){
+    loadJsPdf().then(function(J){
+      var doc = new J({ unit:'mm', format:'a4' }), y = 22, nome = (proAccount && proAccount.companyName) || '';
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(17); doc.text('Riepilogo lavori · ' + tmYmTxt(ym), 18, y); y += 8;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5); doc.text(nome + ' per ' + (me.impresa || ''), 18, y); y += 12;
+      m.righe.forEach(function(r){ doc.text(String(r[0]).slice(0, 80), 18, y); doc.text(tmEur(r[1]).replace(' €', ' EUR'), 192, y, { align:'right' }); y += 7; });
+      doc.setDrawColor(43, 20, 8); doc.line(18, y - 3, 192, y - 3); y += 4;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(12.5); doc.text('Da fatturare', 18, y); doc.text(tmEur(m.tot).replace(' €', ' EUR'), 192, y, { align:'right' }); y += 7;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(110); doc.text('Promemoria preparato con Rendrum: non è una fattura. Più IVA se la applichi.', 18, y);
+      return rdSavePdf(doc, 'Riepilogo_' + ym + '_' + String(me.impresa || 'lavori').replace(/[^A-Za-z0-9]+/g, '_') + '.pdf');
+    }).catch(function(e){ tmFail(e); });
   }
   function tmChiudi(i){
     var d = i.data, av = tmAvanz(i, TM.me.diario || []), st = { foto: [] }, box = tmB(); tmHead(d.cliente);
