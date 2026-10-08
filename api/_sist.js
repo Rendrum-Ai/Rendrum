@@ -176,24 +176,64 @@ const BS_ALT = {
   "23": "fino a circa due terzi dell'altezza della parete, chiusa in alto da una cornice orizzontale continua",
   "1m": "solo nella parte bassa, dal battiscopa fino a circa 1 metro di altezza, chiusa in alto da una cornice orizzontale continua",
 };
+// con le misure scelte dall'artigiano: lo stile senza numeri (i numeri arrivano da bsMisure)
+const BS_STILE2 = {
+  classica: "classica a riquadri: cornici rettangolari in rilievo che formano pannelli regolari, tutti uguali e allineati",
+  inglese: "all'inglese (wainscoting): pannelli rettangolari bassi delimitati da cornici in rilievo, tutti uguali, con una fascia orizzontale continua più marcata sopra i pannelli",
+  listelli: "moderna a listelli verticali in rilievo, dritti e paralleli",
+  geometrica: "geometrica: cornici in rilievo che formano un disegno regolare e simmetrico di rettangoli con diagonali (effetto a rombi)",
+};
+const BS_LARG = { "2": 2.2, "3": 3, "4": 4, "5": 5 };
+const BS_CORN = { sottile: 2, media: 4, importante: 6 };
+const BS_LIST = { fitti: [2, 2], medi: [3, 6], radi: [4, 12] };
 function parseBs(b) {
   if (!b || typeof b !== "object") return null;
   const stile = BS_STILE[b.stile] ? b.stile : null; if (!stile) return null;
-  return { stile, dove: BS_DOVE[b.dove] ? b.dove : "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
+  const o = { stile, dove: BS_DOVE[b.dove] ? b.dove : "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
+  if (BS_LARG[b.larg]) o.larg = b.larg;
+  if (stile === "listelli" ? BS_LIST[b.corn] : BS_CORN[b.corn]) o.corn = b.corn;
+  return o;
+}
+function r5(n) { return Math.round(n / 5) * 5; }
+// misure vere: quanti riquadri, quanto larghi, cornici di che spessore
+function bsMisure(b) {
+  const W = BS_LARG[b.larg], out = [];
+  const h = b.alt === "1m" ? 100 : b.alt === "23" ? 170 : 255;
+  if (b.stile === "listelli") {
+    const L = BS_LIST[b.corn] || [3, 6];
+    out.push("Listelli larghi " + L[0] + " cm e distanziati " + L[1] + " cm uno dall'altro, tutti uguali, dritti e perfettamente verticali" + (W ? ": su questa parete larga circa " + String(W).replace(".", ",") + " m ci stanno circa " + Math.round(W * 100 / (L[0] + L[1])) + " listelli" : "") + ".");
+    return out.join(" ");
+  }
+  const c = BS_CORN[b.corn] || 4;
+  out.push("Cornici in rilievo con profilo sagomato larghe circa " + c + " cm, sporgenti circa " + Math.max(1, Math.round(c / 2)) + " cm.");
+  if (W && b.stile !== "geometrica") {
+    const n = Math.max(2, Math.round(W / 0.7)), gap = 8, pw = r5((W * 100 - gap * (n + 1)) / n);
+    if (b.stile === "classica" && b.alt === "tutta") out.push("Due file di riquadri separate da una cornice orizzontale continua a circa 90 cm da terra: in basso " + n + " riquadri uguali alti circa 60 cm, sopra " + n + " riquadri uguali alti fino a circa 20 cm sotto il soffitto, allineati in colonna con quelli sotto.");
+    else out.push("Esattamente " + n + " riquadri uguali per fila, ognuno largo circa " + pw + " cm.");
+    out.push("Distanza costante di circa " + gap + " cm tra un riquadro e l'altro e dai bordi della zona con la boiserie; il disegno è centrato e simmetrico sulla parete (parete larga circa " + String(W).replace(".", ",") + " m).");
+  } else if (b.stile === "classica" && b.alt === "tutta") {
+    out.push("Due file di riquadri separate da una cornice orizzontale continua a circa 90 cm da terra: in basso riquadri bassi (circa 60 cm), sopra riquadri alti, allineati in colonna; riquadri larghi circa 60–70 cm.");
+  } else if (b.stile !== "geometrica") out.push("Riquadri larghi circa 60–70 cm, tutti uguali, con circa 8 cm tra uno e l'altro.");
+  if (b.alt !== "tutta") out.push("La cornice orizzontale che chiude la boiserie in alto (fascia) è più marcata delle altre, alta circa " + (c + 3) + " cm, a circa " + h + " cm da terra.");
+  return out.join(" ");
 }
 function bsPrompt(b, colorDesc) {
   const colore = b.col === "tono"
-    ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura opaca: la boiserie si riconosce solo grazie al rilievo e alle ombre."
+    ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura satinata leggera: la boiserie si riconosce solo grazie al rilievo e alle ombre."
     : "Le cornici e i pannelli della boiserie sono dipinti nel colore " + colorDesc + ", finitura opaca" + (b.alt === "tutta" ? ", su tutta la parete con la boiserie." : "; la parte di parete sopra la boiserie resta del colore attuale.");
+  const mis = (b.larg || b.corn) ? bsMisure(b) : "";
   return [
     "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + BS_DOVE[b.dove] + ", " + BS_ALT[b.alt] + ".",
-    "Stile: " + BS_STILE[b.stile] + ".",
+    "Stile: " + (mis ? BS_STILE2[b.stile] : BS_STILE[b.stile]) + ".",
+    mis,
     colore,
+    mis ? "In basso un battiscopa coordinato alto circa 10 cm, dello stesso colore della boiserie. Per la scala usa le cose della foto (una porta è alta circa 210 cm, un letto circa 50 cm, un tavolo circa 75 cm)." : "",
     "Linee perfettamente dritte e parallele che seguono esattamente la prospettiva della parete; disegno simmetrico rispetto al centro della parete; proporzioni realistiche rispetto alla stanza, alle porte e ai mobili.",
     "Le cornici si interrompono intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti.",
-    "Rilievo realistico con ombre leggere coerenti con la luce della stanza.",
+    "Rilievo realistico con ombre leggere coerenti con la luce della stanza" + (mis ? ": un'ombra sottile sotto ogni cornice orizzontale e di lato a quelle verticali, nella direzione della luce." : "."),
     "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: aggiungi SOLO la boiserie.",
-  ].join(" ");
+    mis ? "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering." : "",
+  ].filter(Boolean).join(" ");
 }
 
 module.exports = { parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };

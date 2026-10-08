@@ -11841,8 +11841,19 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="' + W + '"/>' + rail + g + '<rect y="84" width="120" height="6" fill="' + (dark ? '#1E1913' : '#D9CFC1') + '"/></svg>';
   }
   var BS_STILI = [['classica', 'Classica', 'A riquadri'], ['inglese', 'All’inglese', 'Riquadri bassi con fascia'], ['listelli', 'Moderna', 'A listelli verticali'], ['geometrica', 'Geometrica', 'Rombi e diagonali']];
+  // misure vere: larghezza della parete (quanti riquadri) e spessore delle cornici
+  function bsSteps(){ var b = state.bs || {}, L = ['bsStile', 'bsDove']; if(b.dove !== 'tutta' && b.dove !== 'letto') L.push('bsLarg'); L.push('bsAlt', 'bsCorn', 'bsCol'); return L; }
+  var BS_LARG = [['2','Fino a 2,5 m','Parete piccola'],['3','Da 2,5 a 3,5 m',''],['4','Da 3,5 a 4,5 m',''],['5','Più di 4,5 m','Parete grande'],['nonso','Non lo so','Decide Rendrum dalla foto']];
+  function bsLargPic(v){ var w = { '2':44, '3':64, '4':84, '5':104, nonso:70 }[v]; return '<svg viewBox="0 0 120 70" aria-hidden="true"><rect width="120" height="70" fill="#FBFAF7"/><rect x="' + (60 - w / 2) + '" y="14" width="' + w + '" height="34" fill="#EFE9DF" stroke="#9C8C77"/><path d="M' + (60 - w / 2) + ' 58h' + w + '" stroke="#C8692E" stroke-width="2"/><path d="M' + (60 - w / 2) + ' 54v8M' + (60 + w / 2) + ' 54v8" stroke="#C8692E" stroke-width="2"/>' + (v === 'nonso' ? '<text x="60" y="36" text-anchor="middle" font-size="16" font-family="Arial" fill="#9C8C77">?</text>' : '') + '</svg>'; }
+  function bsCornO(stile){ return stile === 'listelli' ? [['fitti','Fitti','Listelli da 2 cm, vicini'],['medi','Medi','Listelli da 3 cm, ogni 6 cm'],['radi','Radi','Listelli da 4 cm, ogni 12 cm']] : [['sottile','Sottili','Cornici da circa 2 cm'],['media','Medie','Cornici da circa 4 cm'],['importante','Importanti','Cornici da circa 6 cm']]; }
+  function bsCornPic(stile, v){ var k = { sottile:1.4, media:3, importante:5, fitti:2, medi:3, radi:4 }[v] || 2, g = '';
+    if(stile === 'listelli'){ var gap = v === 'fitti' ? 5 : v === 'medi' ? 9 : 15; for(var x = 12; x < 110; x += gap) g += '<line x1="' + x + '" y1="10" x2="' + x + '" y2="60" stroke="#9C8C77" stroke-width="' + k + '"/>'; }
+    else g = '<rect x="22" y="12" width="76" height="46" fill="none" stroke="#9C8C77" stroke-width="' + k + '"/><rect x="' + (22 + k + 2) + '" y="' + (12 + k + 2) + '" width="' + (76 - 2 * (k + 2)) + '" height="' + (46 - 2 * (k + 2)) + '" fill="none" stroke="#C9BCAA" stroke-width="1"/>';
+    return '<svg viewBox="0 0 120 70" aria-hidden="true"><rect width="120" height="70" fill="#EFE9DF"/>' + g + '</svg>'; }
   function bsQ(st){
     var b = bsS();
+    if(st === 'bsLarg') return { t:'Quanto è larga la parete?', s:'Serve per fare i riquadri della misura giusta.', opts: BS_LARG.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsLargPic(x[0])), sel: b.larg === x[0] }; }) };
+    if(st === 'bsCorn') return { t: b.stile === 'listelli' ? 'Come sono i listelli?' : 'Come sono le cornici?', opts: bsCornO(b.stile).map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsCornPic(b.stile, x[0])), sel: b.corn === x[0] }; }) };
     if(st === 'bsStile') return { t:'Che boiserie?', s:'Tocca lo stile.', opts: BS_STILI.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(x[0], x[0] === 'inglese' ? '1m' : 'tutta')), sel: b.stile === x[0] }; }) };
     if(st === 'bsDove') return { t:'Su quale parete?', s:'Guardando la foto.', opts: [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra',''],['letto','Dietro il letto o il divano','Solo in quella zona'],['tutta','Tutta la stanza','Tutte le pareti che si vedono']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', cgWall(x[0] === 'letto' ? 'fondo' : x[0] === 'tutta' ? 'giro' : x[0])), sel: b.dove === x[0] }; }) };
     if(st === 'bsAlt') return { t:'Fino a che altezza?', opts: [['tutta','Tutta la parete',''],['23','Due terzi','Con una fascia sopra'],['1m','Fino a 1 metro','Con una fascia sopra']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(b.stile || 'classica', x[0])), sel: b.alt === x[0] }; }) };
@@ -11850,17 +11861,19 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return null;
   }
   function bsApply(st, v){
-    if(st.indexOf('bs') !== 0 || ['bsStile','bsDove','bsAlt','bsCol'].indexOf(st) < 0) return false;
+    if(st.indexOf('bs') !== 0 || ['bsStile','bsDove','bsLarg','bsAlt','bsCorn','bsCol'].indexOf(st) < 0) return false;
     var b = bsS();
-    if(st === 'bsStile'){ b.stile = v; if(v === 'inglese' && !b.alt) b.alt = '1m'; }
+    if(st === 'bsStile'){ if(b.stile && (b.stile === 'listelli') !== (v === 'listelli')) b.corn = null; b.stile = v; if(v === 'inglese' && !b.alt) b.alt = '1m'; }
+    if(st === 'bsLarg') b.larg = v;
+    if(st === 'bsCorn') b.corn = v;
     if(st === 'bsDove') b.dove = v;
     if(st === 'bsAlt') b.alt = v;
     if(st === 'bsCol'){ if(v === 'tono'){ b.col = 'tono'; state.colorA = semplCol('Tono su tono', '#EFE8DC'); } else { var nm = v.slice(2), c = SEMPL_INT.filter(function(x){ return x[0] === nm; })[0]; if(c){ b.col = c[0]; state.colorA = semplCol(c[0], c[1]); } } }
     return true;
   }
-  function bsAnswered(st){ var b = state.bs || {}; return st === 'bsStile' ? !!b.stile : st === 'bsDove' ? !!b.dove : st === 'bsAlt' ? !!b.alt : st === 'bsCol' ? !!(b.col && state.colorA) : null; }
+  function bsAnswered(st){ var b = state.bs || {}; return st === 'bsStile' ? !!b.stile : st === 'bsDove' ? !!b.dove : st === 'bsLarg' ? !!b.larg : st === 'bsCorn' ? !!b.corn : st === 'bsAlt' ? !!b.alt : st === 'bsCol' ? !!(b.col && state.colorA) : null; }
   function bsDone(){ return !!(SF_ON && SF.mat === 'boiserie' && state.bs && state.bs.col && state.colorA); }
-  function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove || 'fondo', alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore' }; }
+  function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove || 'fondo', alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore', larg: (b.dove === 'tutta' || b.dove === 'letto') ? 'nonso' : (b.larg || 'nonso'), corn: b.corn || '' }; }
   // ===== Cartongesso "perfetto" (in prova): misure vere, tagli di luce, scuretto, veletta curva =====
   function cgV2(){ try{ return semplOn(); }catch(e){ return false; } }
   CG_ICO.taglio = '<svg viewBox="0 0 120 62" fill="none" stroke="#C8692E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="10" y="6" width="100" height="50" rx="2" stroke="#B9AD9E"/><path d="M60 14v34M40 31h40" stroke-width="4"/><path d="M60 14v34M40 31h40" stroke="#F6D9A8" stroke-width="1.5"/></svg>';
@@ -11918,7 +11931,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'microcemento') s.push('dove');
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
     else if(c === 'imbiancatura'){ s.push('ctx'); if(SF.a.ctx === 'interno'){ s.push('pitCosa', 'pitMuro'); if(semplOn()) semplIntSteps(s); } else if(SF.a.ctx === 'esterno'){ s.push('capp'); if(state.capp && state.capp.on) s.push('cappZoc'); if(semplOn()) semplFacSteps(s); } }
-    else if(c === 'boiserie'){ s.push('bsStile', 'bsDove', 'bsAlt', 'bsCol'); }
+    else if(c === 'boiserie'){ bsSteps().forEach(function(x){ s.push(x); }); }
     else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(cgV2() && CG_MIS[t]) s.push('cgM_' + t); if(cgV2() && t === 'taglio') s.push('cgW_taglio'); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
     else if(c === 'legno') s.push('legnoTipo');
