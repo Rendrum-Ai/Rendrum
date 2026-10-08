@@ -1539,6 +1539,12 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .q-srch-w{ margin-top:10px; } .q-srch-w input{ border-color:var(--line); }
 #qSrchRes{ display:flex; flex-direction:column; gap:8px; margin-top:8px; } #qSrchRes:empty{ display:none; }
 #qwRes{ margin-top:8px; }
+/* home in prova: tre numeri grandi */
+.s2-nums{ display:flex; gap:8px; margin:6px 0 4px; }
+.s2-num{ flex:1; min-width:0; background:var(--surface); border:1.5px solid var(--line); border-radius:16px; padding:14px 6px 12px; text-align:center; cursor:pointer; font-family:inherit; color:var(--ink,#1D1B18); }
+.s2-num strong{ display:block; font-family:"Playfair Display",Georgia,serif; font-size:34px; line-height:1; color:#C8692E; margin-bottom:6px; }
+.s2-num span{ display:block; font-size:12.5px; font-weight:700; line-height:1.25; }
+.s2-num.on{ border-color:#C8692E; background:#FBEFE5; box-shadow:0 0 0 2px rgba(200,105,46,.18); }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16220,6 +16226,17 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(ln){ ln.innerHTML = ok ? '<span><b>' + qEsc(c.clientName) + '</b>' + qEsc([c.phone, c.address].filter(Boolean).join(' · ') ? ' · ' + [c.phone, c.address].filter(Boolean).join(' · ') : '') + '</span><button type="button" class="q-link" id="soCliEd">Modifica</button>' : '';
       var e = document.getElementById('soCliEd'); if(e) e.onclick = function(){ so._cliEdit = true; soS1Ui(so.tab); }; }
   }
+  // ===== Home in prova: "Ti aspettano anche" con tre numeri grandi; tocchi il numero e vedi solo quelli =====
+  var s2h = { open: '' };
+  var S2_GR = [['sopr', 'Sopralluogo o richiesta', 'Sopralluoghi e richieste'], ['prev', 'Preventivo', 'Preventivi'], ['lav', 'Lavoro', 'Lavori']];
+  function s2Gr(c){ return c.fase >= 3 ? 'lav' : c.fase === 2 ? 'prev' : 'sopr'; }
+  // mai "Cliente": se il nome manca, la via o la data
+  function s2Nome(c){
+    if(c.nome && c.nome !== 'Cliente') return c.nome;
+    if(c.luogo) return c.luogo;
+    var d = c.agg ? new Date(c.agg) : null, cosa = c.fase >= 3 ? 'Lavoro' : c.fase === 2 ? 'Preventivo' : 'Sopralluogo';
+    return d && !isNaN(d) ? cosa + ' del ' + d.toLocaleDateString('it-IT', { day:'numeric', month:'long' }) : cosa + ' senza nome';
+  }
   // ===== Semplificazione fase 2 (in prova): home "Da fare oggi" =====
   function v3HomeS1(box, L, sera, tar){
     var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
@@ -16230,12 +16247,17 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(todo.length){
       var c0 = todo[0], i0 = L.indexOf(c0);
       h += '<div class="v3cards s2-one"><div class="v3c" data-v3c="' + i0 + '" style="' + v3Bg(c0) + '">' + (!c0.img && c0.cover ? '<img class="v3cblur" src="' + qEsc(c0.cover) + '" alt="">' : '') + '<div class="v3cs"></div>' + (c0.img || c0.cover ? '' : '<span class="v3ci">' + qEsc(ctIni(c0.nome)) + '</span>')
-        + '<div class="v3ct"><span class="v3ph">' + qEsc(c0.next.s || CT_FASI[c0.fase]) + (c0._td ? ' · oggi ' + qEsc(c0._td.data.ora || '') : '') + '</span><b>' + qEsc(c0.nome) + '</b><i>' + qEsc([c0.lavoro, c0.luogo].filter(Boolean).join(' · ')) + '</i>'
+        + '<div class="v3ct"><span class="v3ph">' + qEsc(c0.next.s || CT_FASI[c0.fase]) + (c0._td ? ' · oggi ' + qEsc(c0._td.data.ora || '') : '') + '</span><b>' + qEsc(s2Nome(c0)) + '</b><i>' + qEsc([c0.lavoro, c0.luogo].filter(Boolean).join(' · ')) + '</i>'
         + '<button type="button" class="v3nx" data-v3n="' + i0 + '">' + qEsc(c0.next.t) + ' <span>›</span></button></div></div></div>';
-      var rest = todo.slice(1, 7);
-      if(rest.length) h += '<div class="s2-rows">' + rest.map(function(c){ var i = L.indexOf(c), verbo = String(c.next.t).split(/\s+/)[0];
-          return '<div class="s2-row" data-v3c="' + i + '"><span class="s2-av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span><span class="s2-t"><b>' + qEsc(c.nome) + '</b><em>' + qEsc(c.next.s || c.next.t) + '</em></span><button type="button" class="s2-go" data-v3n="' + i + '" aria-label="' + qEsc(c.next.t) + '">' + qEsc(verbo) + ' ›</button></div>'; }).join('') + '</div>';
-      if(todo.length > 7) h += '<button type="button" class="s2-all" id="v3All">Vedi tutti i cantieri ›</button>';
+      var rest = todo.slice(1);
+      if(rest.length){
+        h += '<div class="rd-o-sec">Ti aspettano anche</div><div class="s2-nums">' + S2_GR.map(function(gr){ var n = rest.filter(function(c){ return s2Gr(c) === gr[0]; }).length;
+            return n ? '<button type="button" class="s2-num' + (s2h.open === gr[0] ? ' on' : '') + '" data-s2g="' + gr[0] + '"><strong>' + n + '</strong><span>' + qEsc(n === 1 ? gr[1] : gr[2]) + '</span></button>' : ''; }).join('') + '</div>';
+        var sel = s2h.open ? rest.filter(function(c){ return s2Gr(c) === s2h.open; }) : [];
+        if(sel.length) h += '<div class="s2-rows">' + sel.slice(0, 8).map(function(c){ var i = L.indexOf(c), verbo = String(c.next.t).split(/\s+/)[0];
+            return '<div class="s2-row" data-v3c="' + i + '"><span class="s2-av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(s2Nome(c)))) + '</span><span class="s2-t"><b>' + qEsc(s2Nome(c)) + '</b><em>' + qEsc(c.next.s || c.next.t) + '</em></span><button type="button" class="s2-go" data-v3n="' + i + '" aria-label="' + qEsc(c.next.t) + '">' + qEsc(verbo) + ' ›</button></div>'; }).join('') + '</div>';
+        if(sel.length > 8) h += '<button type="button" class="s2-all" id="v3All">Vedi tutti i cantieri ›</button>';
+      }
     } else {
       h += '<div class="v3empty"><b>Niente da fare per ora 👍</b><span>Quando un cliente aspetta qualcosa da te (un preventivo, una data, una recensione) lo trovi qui.</span></div>';
     }
@@ -16252,6 +16274,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     box.querySelectorAll('[data-v3n]').forEach(function(b){ b.addEventListener('click', function(){ var c = v3.list[+b.dataset.v3n]; if(c && c.next) c.next.fn(); }); });
     box.querySelectorAll('[data-s2]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.s2; if(k === 'cam') v3Cam(); else if(k === 'prev'){ rxClose(); pbModal(); rdTabOn('prev'); qNew(); } else ctCosaGo('app'); }); });
     var all = document.getElementById('v3All'); if(all) all.addEventListener('click', ctOpen);
+    box.querySelectorAll('[data-s2g]').forEach(function(b){ b.addEventListener('click', function(){ var g = b.dataset.s2g; s2h.open = s2h.open === g ? '' : g; v3HomeS1(box, L, sera, tar); var r = box.querySelector('.s2-rows'); if(r && r.scrollIntoView) r.scrollIntoView({ block:'nearest', behavior:'smooth' }); }); });
     ctCosaBind(box);
     if(sera) ccSeraBind(box, sera, tar);
     tmFeedBind(box);
