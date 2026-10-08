@@ -1436,7 +1436,7 @@ html.rd-tm-reg #proAccountTypeRow, html.rd-tm-reg [data-i18n="proAccountTypeLabe
 html.rd-s1 #rdAltro .rx-gr button.rx-s1only{ display:flex; }
 html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="cantieri"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="lavori"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="cosa"],
 html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="incassi"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="fatture"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="stat"],
-html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="recensioni"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"], html.rd-s1 #rdAltro .rx-gr button[data-rdalt="sopr"]{ display:none !important; }
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="recensioni"]{ display:none !important; }
 .rd-sheet-in .rx-gr button[data-rxgo2="soldi"] .rx-ic{ background:#3E7D4E; }
 html.rd-s1 #langToggle, html.rd-s1 #proBadge{ display:none !important; }
 html.rd-s1 #qBackList, html.rd-s1 #ppViewQuotes > .pro-projects-sub, html.rd-s1 .v3hint{ display:none !important; }
@@ -1513,6 +1513,11 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .so-more{ margin-top:6px; } .so-more summary{ cursor:pointer; color:var(--ink-soft); font-size:13.5px; padding:8px 0; text-align:center; list-style:none; }
 .so-more summary::-webkit-details-marker{ display:none; }
 .so-more[open]{ display:flex; flex-direction:column; gap:8px; }
+/* storie: foto del cantiere nitida, un tocco va avanti */
+.v3cblur{ top:0 !important; left:0 !important; width:100% !important; height:100% !important; filter:none !important; }
+.v3tap.a{ left:0; right:0; width:auto; top:calc(env(safe-area-inset-top,0px) + 70px); bottom:0; }
+.v3body{ pointer-events:none; } .v3body button, .v3body a, .v3body input{ pointer-events:auto; }
+.v3bars i{ min-width:0; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16178,7 +16183,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<button type="button" class="s2-b p" data-s2="cam"><i>' + V3_SVG('<path d="M4 11h5l2-3h10l2 3h5v15H4z"/><circle cx="16" cy="18" r="5"/>') + '</i><span><b>Fai vedere il risultato</b><em>Foto + anteprima per il cliente</em></span></button>'
       + '<button type="button" class="s2-b" data-s2="prev"><i>' + V3_SVG('<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/>') + '</i><span><b>Nuovo preventivo</b></span></button>'
       + '<button type="button" class="s2-b" data-s2="app"><i>' + V3_SVG('<rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/>') + '</i><span><b>Appuntamento</b></span></button>'
-      + '</div><div class="s2-more">' + v3Acts().filter(function(x){ return ['app', 'prev'].indexOf(x[0]) < 0; }).map(function(x){ return '<button type="button" data-cosa="' + x[0] + '">' + qEsc(x[2]) + '</button>'; }).join('') + '</div>';
+      + '</div>';
     box.innerHTML = h; box.dataset.ready = 1;
     box.querySelectorAll('[data-v3c]').forEach(function(b){ b.addEventListener('click', function(e){ if(e.target.closest('[data-v3n]')) return; v3Story(+b.dataset.v3c); }); });
     box.querySelectorAll('[data-v3n]').forEach(function(b){ b.addEventListener('click', function(){ var c = v3.list[+b.dataset.v3n]; if(c && c.next) c.next.fn(); }); });
@@ -16796,20 +16801,27 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var ov = document.getElementById('v3S');
     if(!ov){ ov = document.createElement('div'); ov.id = 'v3S'; ov.className = 'v3sv'; document.body.appendChild(ov); }
     var q = c.g.quote[0], extra = c._td ? 'Oggi alle ' + (c._td.data.ora || '') + (c._td.data.indirizzo ? ' · ' + c._td.data.indirizzo : '') : q ? 'Preventivo n. ' + ('00' + q.number).slice(-3) + (q.total ? ' · ' + Math.round(q.total).toLocaleString('it-IT') + ' €' : '') : (c.luogo || '');
-    ov.innerHTML = '<div class="v3bg' + (c.img ? '' : ' nf') + '" style="' + v3Bg(c) + '"></div><div class="v3sh"></div>'
-      + '<div class="v3bars">' + [0, 1, 2, 3, 4].map(function(k){ return '<i class="' + (k < c.fase || (!c.next && c.fase === 4) ? 'd' : k === c.fase ? 'c' : '') + '"></i>'; }).join('') + '</div>'
+    var bgi = c.img || c.cover, n = v3.list.length;
+    ov.innerHTML = '<div class="v3bg' + (bgi ? '' : ' nf') + '" style="' + (bgi ? 'background-image:url(' + qEsc(bgi) + ')' : '') + '"></div><div class="v3sh"></div>'
+      + '<div class="v3bars">' + v3.list.map(function(x, k){ return '<i class="' + (k < i ? 'd' : k === i ? 'c' : '') + '"></i>'; }).join('') + '</div>'
       + '<div class="v3top"><span class="v3av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span><div><b>' + qEsc(c.nome) + '</b><i>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ')) + '</i></div><button type="button" id="v3X" aria-label="Chiudi">✕</button></div>'
-      + '<button type="button" class="v3tap l" id="v3P" aria-label="Precedente"></button><button type="button" class="v3tap r" id="v3N" aria-label="Successivo"></button>'
+      + '<button type="button" class="v3tap a" id="v3N" aria-label="' + (i < n - 1 ? 'Cliente dopo' : 'Chiudi') + '"></button>'
       + '<div class="v3body"><span class="v3f">Fase ' + (c.fase + 1) + ' di 5 · ' + CT_FASI[c.fase] + '</span><h2>' + qEsc(String(c.stato || CT_FASI[c.fase]).replace(/^./, function(x){ return x.toUpperCase(); })) + '</h2>' + (extra ? '<p>' + qEsc(extra) + '</p>' : '')
       + (c.next ? '<button type="button" class="v3go" id="v3Go">' + qEsc(c.next.t) + '</button>' : '')
       + (c.fase >= 3 ? '<button type="button" class="v3cost" id="v3Cost">＋ Segna un costo' + (ccSpesi(c) ? ' · spesi ' + ccE(ccSpesi(c)) + (ccPrev(c) ? ' su ' + ccE(ccPrev(c)) : '') : '') + '</button>' : '')
       + '<div class="v3b3">' + (c.tel ? '<a href="tel:' + qEsc(String(c.tel).replace(/[^\d+]/g, '')) + '">📞<i>Chiama</i></a>' : '<span class="off">📞<i>Chiama</i></span>') + (c.luogo ? '<button type="button" id="v3Map">📍<i>Portami lì</i></button>' : '<span class="off">📍<i>Portami lì</i></span>') + '<button type="button" id="v3Sch">📂<i>Scheda</i></button></div>'
-      + '<div class="v3hint">' + (i < v3.list.length - 1 ? 'Tocca a destra per il prossimo cliente ›' : 'Ultimo cliente') + '</div></div>';
+      + '</div>';
     ov.hidden = false; document.documentElement.classList.add('rd-x-open');
     var close = function(){ ov.hidden = true; document.documentElement.classList.remove('rd-x-open'); };
     document.getElementById('v3X').onclick = close;
-    document.getElementById('v3P').onclick = function(){ if(i > 0) v3Story(i - 1); };
     document.getElementById('v3N').onclick = function(){ if(i < v3.list.length - 1) v3Story(i + 1); else close(); };
+    // come Instagram: un tocco va avanti; col dito verso destra torni indietro, verso il basso chiudi
+    if(!ov._sw){ ov._sw = 1; var sx = 0, sy = 0, st = 0;
+      ov.addEventListener('touchstart', function(e){ var t = e.touches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); }, { passive:true });
+      ov.addEventListener('touchend', function(e){ var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; if(Date.now() - st > 800 || ov.hidden) return;
+        if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.3){ e.preventDefault(); if(dx > 0){ if(v3.si > 0) v3Story(v3.si - 1); } else if(v3.si < v3.list.length - 1) v3Story(v3.si + 1); else { ov.hidden = true; document.documentElement.classList.remove('rd-x-open'); } }
+        else if(dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.3){ e.preventDefault(); ov.hidden = true; document.documentElement.classList.remove('rd-x-open'); }
+      }); }
     var go = document.getElementById('v3Go'); if(go) go.onclick = function(){ close(); c.next.fn(); };
     var mp = document.getElementById('v3Map'); if(mp) mp.onclick = function(){ ctOpenUrl(ctMaps(c.luogo)); };
     var cst = document.getElementById('v3Cost'); if(cst) cst.onclick = function(){ close(); ct.list = v3.list; ctCostoAdd(c); };
