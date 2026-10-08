@@ -11649,11 +11649,12 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function cgList(){ return (state.cg && state.cg.list) || []; }
   function cgIt(t){ return (state.cg && state.cg.it && state.cg.it[t]) || {}; }
   function cgQ(st){
-    if(st === 'cgTipo') return { t:'Cosa aggiungi in cartongesso?', s:'Puoi sceglierne più di uno (fino a 3), poi premi Continua.', multi:true, opts: [['veletta','Veletta','Fascia ribassata, anche con luci'],['soffitto','Controsoffitto','Abbassa tutto il soffitto'],['nicchia','Nicchia','Per TV o mensole'],['parete','Parete divisoria','Divide la stanza'],['libreria','Libreria','A tutta parete'],['controparete','Controparete','Riveste un muro']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic:sfPic('#FBFAF7', CG_ICO[x[0]]), sel: cgList().indexOf(x[0]) > -1 }; }) };
+    if(st === 'cgTipo') return { t:'Cosa aggiungi in cartongesso?', s:'Puoi sceglierne più di uno (fino a 3), poi premi Continua.', multi:true, opts: [['veletta','Veletta','Fascia ribassata, anche con luci'],['soffitto','Controsoffitto','Abbassa tutto il soffitto'],['nicchia','Nicchia','Per TV o mensole'],['parete','Parete divisoria','Divide la stanza'],['libreria','Libreria','A tutta parete'],['controparete','Controparete','Riveste un muro']].concat(cgV2() ? [['taglio','Taglio di luce','Righe di luce nel muro o nel soffitto']] : []).map(function(x){ return { v:x[0], n:x[1], d:x[2], pic:sfPic('#FBFAF7', CG_ICO[x[0]]), sel: cgList().indexOf(x[0]) > -1 }; }) };
     if(st.indexOf('cgD_') === 0){
       var t = st.slice(4), T = { veletta:'Dove va la veletta?', nicchia:'Su quale parete la nicchia?', parete:'Dove passa la parete divisoria?', libreria:'Su quale parete la libreria?', controparete:'Quale parete rivesti?' }[t] || 'Su quale parete?';
       var O = [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra','']];
       if(t === 'veletta') O.push(['giro','Tutto intorno','Su tutto il perimetro della stanza']);
+      if(t === 'taglio'){ T = 'Dove va la luce?'; O.push(['soffitto','Sul soffitto','']); }
       return { t:T, s:'Guardando la foto.', opts: O.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', cgWall(x[0])), sel: cgIt(t).dove === x[0] }; }) };
     }
     if(st.indexOf('cgL_') === 0){
@@ -11692,8 +11693,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function cgPayload(){
     var c = state.cg; if(!(SF_ON && SF.mat === 'cartongesso') || !c || !c.list || !c.list.length) return null;
-    var items = c.list.map(function(t){ var it = c.it[t] || {}; return { tipo:t, dove: it.dove || (t === 'soffitto' ? 'soffitto' : 'fondo'), luci: it.luci || 'no' }; });
-    return { items: items, tipo: items[0].tipo, dove: items[0].dove, luci: items[0].luci };
+    var items = c.list.map(function(t){ var it = c.it[t] || {}; var o = { tipo:t, dove: it.dove || (t === 'soffitto' ? 'soffitto' : 'fondo'), luci: it.luci || 'no' }; if(cgV2()){ o.mis = it.mis || ''; o.w = it.w || ''; } return o; });
+    var out = { items: items, tipo: items[0].tipo, dove: items[0].dove, luci: items[0].luci }; if(cgV2()) out.v2 = 1; return out;
   }
   function cgPayloadOld(){
     var c = state.cg; if(!(SF_ON && SF.mat === 'cartongesso') || !c || !c.tipo) return null;
@@ -11860,6 +11861,37 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function bsAnswered(st){ var b = state.bs || {}; return st === 'bsStile' ? !!b.stile : st === 'bsDove' ? !!b.dove : st === 'bsAlt' ? !!b.alt : st === 'bsCol' ? !!(b.col && state.colorA) : null; }
   function bsDone(){ return !!(SF_ON && SF.mat === 'boiserie' && state.bs && state.bs.col && state.colorA); }
   function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove || 'fondo', alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore' }; }
+  // ===== Cartongesso "perfetto" (in prova): misure vere, tagli di luce, scuretto, veletta curva =====
+  function cgV2(){ try{ return semplOn(); }catch(e){ return false; } }
+  CG_ICO.taglio = '<svg viewBox="0 0 120 62" fill="none" stroke="#C8692E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="10" y="6" width="100" height="50" rx="2" stroke="#B9AD9E"/><path d="M60 14v34M40 31h40" stroke-width="4"/><path d="M60 14v34M40 31h40" stroke="#F6D9A8" stroke-width="1.5"/></svg>';
+  var CG_MIS = {
+    veletta: { t:'Com’è la veletta?', s:'Quanto scende dal soffitto.', o:[['30','30 cm','La più comune'],['50','50 cm','Più importante'],['100','1 metro','Per soffitti alti'],['curva','Curva','30 cm, bordo arrotondato']] },
+    soffitto: { t:'Il bordo del controsoffitto', s:'Dove tocca i muri.', o:[['scuretto','Con scuretto','Una fessura d’ombra: sembra sospeso'],['liscio','Liscio fino al muro','Spigolo pulito']] },
+    nicchia: { t:'Che nicchia?', o:[['tv','Per la TV','160 × 60 cm'],['mensole','Per mensole','100 × 40 cm'],['alta','Alta e stretta','50 × 150 cm']] },
+    taglio: { t:'Che forma ha la luce?', s:'Righe di luce incassate nel cartongesso.', o:[['linea','Linea','Una riga dritta'],['angolo','Angolo','Due righe a L'],['croce','Croce','Due righe incrociate'],['stella','Stella','Quattro righe incrociate']] }
+  };
+  function cgMisPic(t, v){
+    var B = '<svg viewBox="0 0 120 70" aria-hidden="true"><rect width="120" height="70" fill="#FBFAF7"/>', L = ' stroke="#C8692E" stroke-width="2" fill="#F3EDE4"';
+    if(t === 'veletta'){ var h = v === '50' ? 18 : v === '100' ? 30 : 12; return B + (v === 'curva' ? '<path d="M8 6h104v' + h + 'H40Q12 ' + h + ' 8 6z"' + L + '/>' : '<rect x="8" y="6" width="104" height="' + h + '"' + L + '/>') + '<path d="M8 6h104" stroke="#2B1408" stroke-width="1.5"/><text x="60" y="62" text-anchor="middle" font-size="10" font-family="Arial" fill="#6b5e54">' + (v === 'curva' ? 'curva' : v === '100' ? '100 cm' : v + ' cm') + '</text></svg>'; }
+    if(t === 'soffitto') return B + '<rect x="8" y="14" width="104" height="8"' + L + '/>' + (v === 'scuretto' ? '<path d="M8 14v30M112 14v30" stroke="#2B1408" stroke-width="3"/><path d="M11 14v30M109 14v30" stroke="#FBFAF7" stroke-width="2"/>' : '<path d="M8 14v30M112 14v30" stroke="#2B1408" stroke-width="1.5"/>') + '</svg>';
+    if(t === 'nicchia'){ var r = v === 'tv' ? [26,16,68,22] : v === 'mensole' ? [38,20,44,16] : [50,8,20,50]; return B + '<rect x="6" y="4" width="108" height="62" fill="#F3EDE4" stroke="#B9AD9E"/><rect x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" fill="#E2D8CA" stroke="#C8692E" stroke-width="2"/></svg>'; }
+    if(t === 'taglio'){ var p = { linea:'M60 10v50', angolo:'M45 10v40h35', croce:'M60 8v54M34 35h52', stella:'M60 8v54M33 35h54M41 16l38 38M79 16 41 54' }[v]; return B + '<rect x="6" y="4" width="108" height="62" fill="#8a7f72"/><path d="' + p + '" stroke="#FFF1D6" stroke-width="4" stroke-linecap="round" fill="none"/></svg>'; }
+    return B + '</svg>';
+  }
+  function cg3Q(st){
+    if(st.indexOf('cgM_') === 0){ var t = st.slice(4), M = CG_MIS[t]; if(!M) return null; var cur = cgIt(t).mis;
+      return { t:M.t, s:M.s || '', opts: M.o.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', cgMisPic(t, x[0])), sel: cur === x[0] }; }) }; }
+    if(st === 'cgW_taglio'){ var w = cgIt('taglio').w;
+      return { t:'Quanto è larga la riga di luce?', opts:[['18','Sottile','circa 2 cm'],['40','Larga','circa 4 cm']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('#8a7f72', '<svg viewBox="0 0 120 70" aria-hidden="true"><path d="M20 35h80" stroke="#FFF1D6" stroke-width="' + (x[0] === '40' ? 9 : 4) + '" stroke-linecap="round"/></svg>'), sel: w === x[0] }; }) }; }
+    return null;
+  }
+  function cg3Apply(st, v){
+    if(st.indexOf('cgM_') !== 0 && st !== 'cgW_taglio') return false;
+    state.cg = state.cg && state.cg.list ? state.cg : { list:[], it:{} };
+    var t = st === 'cgW_taglio' ? 'taglio' : st.slice(4), it = state.cg.it[t] = state.cg.it[t] || {};
+    if(st === 'cgW_taglio') it.w = v; else it.mis = v;
+    return true;
+  }
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -11887,7 +11919,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
     else if(c === 'imbiancatura'){ s.push('ctx'); if(SF.a.ctx === 'interno'){ s.push('pitCosa', 'pitMuro'); if(semplOn()) semplIntSteps(s); } else if(SF.a.ctx === 'esterno'){ s.push('capp'); if(state.capp && state.capp.on) s.push('cappZoc'); if(semplOn()) semplFacSteps(s); } }
     else if(c === 'boiserie'){ s.push('bsStile', 'bsDove', 'bsAlt', 'bsCol'); }
-    else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
+    else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(cgV2() && CG_MIS[t]) s.push('cgM_' + t); if(cgV2() && t === 'taglio') s.push('cgW_taglio'); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
     else if(c === 'legno') s.push('legnoTipo');
     else if(c === 'scale') s.push('scaleMat');
@@ -11899,6 +11931,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var sa = semplAnswered(st); if(sa !== null) return sa;
     var ba = bsAnswered(st); if(ba !== null) return ba;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
+    if(st.indexOf('cgM_') === 0) return !!cgIt(st.slice(4)).mis;
+    if(st === 'cgW_taglio') return !!cgIt('taglio').w;
     if(st.indexOf('cgL_') === 0) return !!cgIt(st.slice(4)).luci;
     switch(st){
       case 'foto': return !!photoImg;
@@ -11951,6 +11985,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var sq0 = semplQ(st); if(sq0) return sq0;
     var cq = cgQ(st); if(cq) return cq;
     var bq = bsQ(st); if(bq) return bq;
+    var c3 = cg3Q(st); if(c3) return c3;
     var catObj = state.category;
     switch(st){
       case 'mat': return { t:'Cosa vuoi rifare?', s: ((queueAddPending && genQueue.length) || (layerAddPending && layers.length)) ? 'Lavorazione ' + (genQueue.length + layers.length + 1) + ': tocca il lavoro. Hai sbagliato? Premi Indietro per annullare.' : 'Tocca il lavoro.', opts: sfMats().map(function(m){ return { v:m.v, n:m.n, d:m.d, pic:(MAT_LINE_ICON[m.v] ? '<div class="sf-mi">'+MAT_LINE_ICON[m.v]+'</div>' : sfPic(m.bg, '<span class="sf-ico">'+m.icon+'</span>')), sel: sfMatSel(m.v) }; }) };
@@ -12040,6 +12075,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function sfApply(st, v){
     aiResultImage = null; aiResultImageBase64 = null; aiResultImageMime = null;
     if(semplApply(st, v)) return;
+    if(cg3Apply(st, v)) return;
     if(cgApply(st, v)) return;
     if(bsApply(st, v)) return;
     if(st === 'mat'){

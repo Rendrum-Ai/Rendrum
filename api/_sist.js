@@ -34,25 +34,81 @@ const CG_LUCI = {
   no: "senza luci",
 };
 const CG_NOLUCI = ["parete", "controparete"];
-function parseOne(c) {
-  if (!c || typeof c !== "object" || !CG_TIPO[c.tipo]) return null;
+// versione 2 (in prova): misure vere e soluzioni dei sistemi a secco (tagli di luce, scuretto, veletta curva)
+const CG_MIS = { veletta: ["30", "50", "100", "curva"], soffitto: ["scuretto", "liscio"], nicchia: ["tv", "mensole", "alta"], taglio: ["linea", "angolo", "croce", "stella"] };
+function parseOne(c, v2) {
+  if (!c || typeof c !== "object") return null;
+  if (!(CG_TIPO[c.tipo] || (v2 && c.tipo === "taglio"))) return null;
   let dove = CG_DOVE[c.dove] ? c.dove : (c.tipo === "soffitto" ? "soffitto" : "fondo");
   if (dove === "giro" && c.tipo !== "veletta") dove = "fondo";
-  return { tipo: c.tipo, dove: c.tipo === "soffitto" ? "soffitto" : dove, luci: CG_NOLUCI.includes(c.tipo) ? "no" : (CG_LUCI[c.luci] ? c.luci : "no") };
+  if (dove === "soffitto" && c.tipo !== "soffitto" && c.tipo !== "taglio") dove = "fondo";
+  const o = { tipo: c.tipo, dove: c.tipo === "soffitto" ? "soffitto" : dove, luci: (CG_NOLUCI.includes(c.tipo) || c.tipo === "taglio") ? "no" : (CG_LUCI[c.luci] ? c.luci : "no") };
+  if (v2) {
+    const M = CG_MIS[c.tipo] || [];
+    o.mis = M.includes(c.mis) ? c.mis : (M[0] || "");
+    if (c.tipo === "taglio") o.w = c.w === "40" ? "40" : "18";
+  }
+  return o;
 }
 // Uno o più lavori in cartongesso (massimo 3, senza doppioni): { items:[{tipo,dove,luci}] }
 function parseCg(c) {
   if (!c || typeof c !== "object") return null;
-  const src = Array.isArray(c.items) ? c.items : [c], seen = {}, items = [];
-  src.slice(0, 6).forEach(function (x) { const o = parseOne(x); if (o && !seen[o.tipo] && items.length < 3) { seen[o.tipo] = 1; items.push(o); } });
-  return items.length ? { items: items } : null;
+  const v2 = !!c.v2, src = Array.isArray(c.items) ? c.items : [c], seen = {}, items = [];
+  src.slice(0, 6).forEach(function (x) { const o = parseOne(x, v2); if (o && !seen[o.tipo] && items.length < 3) { seen[o.tipo] = 1; items.push(o); } });
+  return items.length ? (v2 ? { items: items, v2: true } : { items: items }) : null;
 }
 function cgOne(o) {
   const luci = o.luci === "no" || CG_NOLUCI.includes(o.tipo) ? "" : ", " + CG_LUCI[o.luci];
   return CG_TIPO[o.tipo] + (o.tipo === "soffitto" ? "" : ", " + CG_DOVE[o.dove]) + luci;
 }
 // prompt completo per il cartongesso: si COSTRUISCE qualcosa che prima non c'era
+const CG_DOVE2 = Object.assign({}, CG_DOVE, { soffitto: "sul soffitto, al centro della stanza" });
+function cgOne2(o) {
+  const dove = o.tipo === "soffitto" ? "" : " Si trova " + CG_DOVE2[o.dove] + ".";
+  if (o.tipo === "veletta") {
+    const h = o.mis === "50" ? 50 : o.mis === "100" ? 100 : 30;
+    let t = o.mis === "curva"
+      ? "una VELETTA in cartongesso che scende esattamente 30 cm dal soffitto e sporge circa 40 cm dalla parete, con il bordo frontale CURVO: una linea morbida e continua, senza spigoli, che si raccorda dolcemente alla parete"
+      : "una VELETTA in cartongesso: un volume pieno che scende esattamente " + h + " cm dal soffitto (misura verticale) e sporge circa 40 cm dalla parete, con la faccia inferiore piana e orizzontale e gli spigoli vivi, dritti e paralleli al soffitto";
+    t += "." + dove;
+    if (o.luci === "led") t += " Dentro la veletta, nascosta alla vista, c'è una striscia LED a luce calda 3000 K: NON si vede la striscia, si vede solo una lama di luce morbida e uniforme che illumina dall'alto la parete sotto la veletta, più intensa vicino alla veletta e che sfuma verso il basso.";
+    if (o.luci === "faretti") t += " Nella faccia inferiore della veletta ci sono 3–5 faretti tondi piccoli a incasso, allineati al centro e alla stessa distanza tra loro, accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "soffitto") {
+    let t = "un CONTROSOFFITTO in cartongesso che abbassa tutto il soffitto della stanza di circa 10 cm: superficie liscia, piana e continua, senza giunti visibili";
+    t += o.mis === "scuretto" ? ". Lungo TUTTI i muri, tra il controsoffitto e la parete, corre una FESSURA D'OMBRA (scuretto perimetrale) dritta e scura larga circa 1–2 cm: il soffitto sembra sospeso." : ", raccordato ai muri con uno spigolo pulito e dritto.";
+    if (o.luci === "led") t += " Lungo il perimetro c'è una gola luminosa con LED nascosti a luce calda 3000 K che illumina le pareti dall'alto con una luce morbida; la striscia non si vede.";
+    if (o.luci === "faretti") t += " Nel controsoffitto ci sono faretti tondi piccoli a incasso disposti in file regolari, alla stessa distanza tra loro e dai muri, accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "nicchia") {
+    const n = { tv: "larga 160 cm e alta 60 cm, con il bordo inferiore a circa 100 cm da terra (per la TV)", mensole: "larga 100 cm e alta 40 cm, con il bordo inferiore a circa 120 cm da terra", alta: "larga 50 cm e alta 150 cm, che parte da circa 50 cm da terra" }[o.mis] || "larga 160 cm e alta 60 cm";
+    let t = "una NICCHIA rettangolare incassata in una controparete in cartongesso spessa circa 15 cm che riveste la parete; la nicchia è " + n + ", profonda circa 15 cm, con spigoli netti e dritti." + dove;
+    if (o.luci === "led") t += " Nel bordo superiore della nicchia ci sono LED nascosti a luce calda 3000 K che illuminano l'interno della nicchia; la striscia non si vede.";
+    if (o.luci === "faretti") t += " Nel lato superiore della nicchia 2–3 piccoli faretti a incasso accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "taglio") {
+    const w = o.w === "40" ? "larghe circa 4 cm" : "sottili, larghe circa 2 cm";
+    const f = { linea: "una sola riga di luce verticale lunga circa 120 cm", angolo: "due righe di luce a forma di L che si toccano ad angolo retto, ognuna lunga circa 80 cm", croce: "due righe di luce che si incrociano al centro: la verticale lunga circa 120 cm, l'orizzontale circa 100 cm", stella: "quattro righe di luce che si incrociano nello stesso punto (verticale, orizzontale e due diagonali), ognuna lunga circa 70 cm" }[o.mis] || "una riga di luce lunga circa 120 cm";
+    return "un TAGLIO DI LUCE nel cartongesso: " + f + ", " + w + ", incassate A FILO nella superficie (non sporgono e non sono lampade appese). Luce bianca calda 3000 K, uniforme lungo tutta la riga, con un leggero alone morbido sulla superficie intorno; il resto della superficie è cartongesso liscio pitturato." + dove;
+  }
+  return CG_TIPO[o.tipo] + "." + dove;
+}
+function cgPrompt2(c, colorDesc) {
+  const L = c.items, more = L.length > 1;
+  return [
+    "Modifica la foto di questo interno aggiungendo " + (more ? L.length + " lavori in cartongesso" : "un lavoro in cartongesso") + " realizzati da un professionista con un sistema a secco (orditura metallica e lastre).",
+    more ? "Aggiungi TUTTI questi elementi, ognuno al suo posto: " + L.map(function (o, i) { return (i + 1) + ") " + cgOne2(o); }).join(" ") : "Aggiungi " + cgOne2(L[0]),
+    "Rispetta le MISURE indicate: per la scala usa le cose della foto (una porta è alta circa 210 cm, un tavolo circa 75 cm, un soffitto di solito circa 270 cm).",
+    "Il cartongesso nuovo è pitturato " + colorDesc + ", opaco, con stuccature invisibili; spigoli perfettamente dritti e paralleli alle linee della stanza; ombre morbide e realistiche sotto velette e sporgenze; le luci accese sono coerenti con la luce della stanza.",
+    "Mantieni IDENTICI pavimento, mobili, finestre, porte, oggetti, colori, esposizione e inquadratura: aggiungi SOLO " + (more ? "gli elementi descritti" : "l'elemento descritto") + ". Non spostare, non eliminare e non aggiungere altro.",
+    "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
+  ].join(" ");
+}
 function cgPrompt(c, colorDesc) {
+  if (c && c.v2 && Array.isArray(c.items)) return cgPrompt2(c, colorDesc);
   const L = c.items || [c], more = L.length > 1;
   return [
     "Modifica la foto di questo interno aggiungendo " + (more ? L.length + " lavori in cartongesso" : "un lavoro in cartongesso") + " realizzati da un professionista.",
