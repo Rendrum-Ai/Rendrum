@@ -1554,6 +1554,37 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .s2-num.z i{ color:#CFC3B7; } .s2-num.z span{ color:#8a7b70; }
 .s2-bd{ position:absolute; top:-8px; right:-6px; min-width:24px; height:24px; padding:0 6px; border-radius:12px; background:#D93B2B; color:#fff; font-size:13px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; border:2.5px solid var(--bg,#F7F5F1); box-sizing:border-box; }
 .s2-nums{ padding-top:6px; }
+/* ===== menu Altro in prova: Ogni giorno / Ogni tanto ===== */
+.rx-s1sec, .rx-s1d{ display:none; }
+html.rd-s1 #rdAltro .rx-menu{ display:flex; flex-direction:row; flex-wrap:wrap; align-content:flex-start; justify-content:space-between; column-gap:0; }
+html.rd-s1 #rdAltro .rx-menu > *{ width:100%; order:50; }
+html.rd-s1 #rdAltro .rd-sheet-grab{ order:0; width:40px; margin-left:calc(50% - 20px); margin-right:calc(50% - 20px); flex:none; }
+html.rd-s1 #rdAltro .rx-co{ order:1; }
+html.rd-s1 #rdAltro .rx-sec{ display:none; }
+html.rd-s1 #rdAltro .rx-gr{ display:contents; }
+html.rd-s1 #rdAltro .rx-s1sec{ display:block; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#8a7b70; margin:16px 2px 8px; }
+html.rd-s1 #rdAltro .rx-s1sec.a{ order:2; } html.rd-s1 #rdAltro .rx-s1sec.b{ order:4; }
+/* 4 grandi */
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="agenda"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="soldi"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="clienti"], html.rd-s1 #rdAltro .rx-gr button[data-rdalt="sopr"]{
+  order:3; width:calc(50% - 5px); display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:0; background:var(--surface,#fff); border:1px solid var(--line,#eadfd4); border-radius:16px; padding:14px; margin-bottom:10px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="agenda"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="soldi"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="clienti"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rdalt="sopr"] .rx-ic{
+  width:42px; height:42px; border-radius:12px; background:#C8692E; box-shadow:none; margin-bottom:10px; }
+html.rd-s1 #rdAltro .rx-gr button .rx-ic svg{ width:24px; height:24px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="agenda"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="soldi"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="clienti"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rdalt="sopr"] .rx-lb{ font-size:16px; font-weight:800; }
+html.rd-s1 #rdAltro .rx-s1d{ display:block; font-style:normal; font-size:12.5px; font-weight:500; color:#8a7b70; margin-top:3px; }
+/* elenco "ogni tanto" + assistenza */
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]{
+  order:5; width:100%; display:flex; flex-direction:row; align-items:center; gap:12px; text-align:left; background:var(--surface,#fff); border:1px solid var(--line,#eadfd4); border-top:none; border-radius:0; padding:11px 14px; font-size:15px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]{ border-top:1px solid var(--line,#eadfd4); border-radius:16px 16px 0 0; }
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"]{ border-radius:0 0 16px 16px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]{ order:6; border-top:1px solid var(--line,#eadfd4); border-radius:16px; margin-top:12px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic{
+  width:34px; height:34px; border-radius:10px; background:#FBEFE5; color:#C8692E; box-shadow:none; flex:none; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic svg{ width:20px; height:20px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]::after{ content:"›"; margin-left:auto; color:#b7a99c; font-size:20px; font-weight:400; }
+html.rd-s1 #rdAltro .rx-gr button .rx-pl{ margin:0 0 0 auto; }
+html.rd-s1 #rdAltro .rd-esci{ order:9; margin-top:12px; }
+html.rd-s1 #rdAltro .rx-menu::after{ order:99; width:100%; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16473,6 +16504,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(SF.mat === v) return true;
     return SF.mat === 'imbiancatura' && !!SF.a.ctxPre && v === (SF.a.ctx === 'esterno' ? 'pit_est' : 'pit_int');
   }
+  // ===== Menu Altro in prova: "Ogni giorno" (4 grandi) / "Ogni tanto" (elenco) =====
+  (function(){
+    var m = document.querySelector('#rdAltro .rx-menu'); if(!m || m.querySelector('.rx-s1sec')) return;
+    [['Ogni giorno', 'a'], ['Ogni tanto', 'b']].forEach(function(x){ var d = document.createElement('div'); d.className = 'rx-s1sec ' + x[1]; d.textContent = x[0]; m.appendChild(d); });
+    var SUB = { '[data-rxgo2="agenda"]':'Appuntamenti e lavori', '[data-rxgo2="soldi"]':'Incassi e fatture', '[data-rxgo2="clienti"]':'La tua rubrica', '[data-rdalt="sopr"]':'Misure e foto' };
+    Object.keys(SUB).forEach(function(q){ var b = m.querySelector('.rx-gr button' + q); if(!b) return; var e = document.createElement('em'); e.className = 'rx-s1d'; e.textContent = SUB[q]; var lb = b.querySelector('.rx-lb'); if(lb) lb.after(e); });
+  })();
   document.getElementById('rdAltro').addEventListener('click', function(e){
     var b = e.target.closest('[data-rxgo2]'); if(!b) return;
     this.classList.remove('open'); rdTabOn('altro');
