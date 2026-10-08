@@ -858,9 +858,10 @@ module.exports = async function handler(req, res) {
     : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera.";
   const cappSel = (materialId === "imbiancatura" && context === "esterno") ? SIST.parseCapp((req.body || {}).cappotto) : null;
   const cgSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseCg((req.body || {}).cartongesso) : null;
+  const bsSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseBs((req.body || {}).boiserie) : null;
   const zocSel = (materialId === "imbiancatura" && context === "esterno" && !(cappSel && cappSel.zoc)) ? SIST.parseZoc((req.body || {}).zoccolo) : null;
   const cappNote = (cappSel ? SIST.cappNote(cappSel, null) : "") + (zocSel ? SIST.zocNote(zocSel) : "");
-  const prompt = cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
+  const prompt = bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,

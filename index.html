@@ -10956,6 +10956,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         deco: decoPayload(),
         invito: window.RD_INV_T || null,
         cartongesso: cgPayload(),
+        boiserie: bsPayload(),
         cappotto: cappPayload(),
         zoccolo: semplZoc(),
         segni: (marksAvailable() && state.marks && state.marks.length) ? state.marks.map(function(m, i){ return { n: i+1, target: m.target }; }) : null,
@@ -11717,6 +11718,41 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var MAT_LINE_ICON = {"monolith": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4c4 5 7 8.6 7 12.2A7 7 0 0 1 9 16.2C9 12.6 12 9 16 4z\"/><path d=\"M4 27c3-1.6 5-1.6 8 0s5 1.6 8 0 5-1.6 8 0\"/></svg>", "microcemento": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 20h18l3-4H8z\"/><path d=\"M15 16v-5a3 3 0 0 1 3-3h2\"/><path d=\"M4 26h24\"/></svg>", "piastrelle": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"22\" height=\"22\" rx=\"2\"/><path d=\"M16 5v22M5 16h22\"/></svg>", "imbiancatura": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"18\" height=\"7\" rx=\"2\"/><path d=\"M23 8.5h3v6H15v4\"/><rect x=\"13\" y=\"18.5\" width=\"4\" height=\"9\" rx=\"1.5\"/></svg>", "legno": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"6\" width=\"24\" height=\"20\" rx=\"2\"/><path d=\"M4 12.7h24M4 19.3h24M13 6v6.7M21 12.7v6.6M10 19.3V26\"/></svg>", "scale": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 27h6v-6h6v-6h6V9h6\"/><path d=\"M4 27h24\"/></svg>", "graniglia_esterni": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"10\" r=\"2.5\"/><circle cx=\"18\" cy=\"8\" r=\"1.8\"/><circle cx=\"24\" cy=\"13\" r=\"2.6\"/><circle cx=\"12\" cy=\"18\" r=\"1.8\"/><circle cx=\"20\" cy=\"21\" r=\"2.8\"/><circle cx=\"8\" cy=\"25\" r=\"2\"/><circle cx=\"26\" cy=\"25\" r=\"1.5\"/></svg>", "resina_haccp": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4l10 4v7c0 6.5-4.3 11-10 13-5.7-2-10-6.5-10-13V8z\"/><path d=\"M11.5 16l3 3 6-6\"/></svg>"};
   MAT_LINE_ICON.deco = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="17" height="21" rx="2"/><path d="M7 11c2-1.6 3.4 1.6 5.4 0s3.4 1.6 5.4 0M7 16.5c2-1.6 3.4 1.6 5.4 0s3.4 1.6 5.4 0M7 22c2-1.6 3.4 1.6 5.4 0"/><path d="M18 23.5l6.5-6.5 3 3-6.5 6.5h-3z"/><path d="M24.5 17l2-5"/></svg>';
   MAT_LINE_ICON.cartongesso = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h24M4 26h24M4 6v20M28 6v20"/><path d="M4 11h11v4H4"/><path d="M19 13h6v6h-6z"/></svg>';
+  // ===== Boiserie (in prova): stile, dove, altezza, colore =====
+  MAT_LINE_ICON.boiserie = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="1.5"/><path d="M4 15h24"/><rect x="7.5" y="18" width="7" height="7"/><rect x="17.5" y="18" width="7" height="7"/><rect x="7.5" y="7" width="7" height="5"/><rect x="17.5" y="7" width="7" height="5"/></svg>';
+  function bsS(){ return state.bs || (state.bs = {}); }
+  // disegnino della boiserie (stile e altezza)
+  function bsPic(stile, alt){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark', W = dark ? '#2A241C' : '#EFE9DF', L = dark ? '#C9BBA6' : '#9C8C77', s = ' stroke="' + L + '" stroke-width="1.6" fill="none"';
+    var top = alt === 'tutta' ? 8 : alt === '23' ? 30 : 48, g = '';
+    if(stile === 'listelli'){ for(var i = 0; i < 14; i++) g += '<line x1="' + (10 + i * 7.3) + '" y1="' + top + '" x2="' + (10 + i * 7.3) + '" y2="82"' + s + '/>'; }
+    else if(stile === 'geometrica'){ g += '<rect x="10" y="' + top + '" width="100" height="' + (82 - top) + '"' + s + '/><path d="M10 ' + top + 'L60 ' + ((top + 82) / 2) + 'L110 ' + top + 'M10 82L60 ' + ((top + 82) / 2) + 'L110 82"' + s + '/>'; }
+    else { var rows = stile === 'classica' && alt === 'tutta' ? 2 : 1, h = (82 - top - 6 * (rows + 1)) / rows;
+      for(var r = 0; r < rows; r++) for(var c = 0; c < 3; c++) g += '<rect x="' + (12 + c * 33) + '" y="' + (top + 6 + r * (h + 6)) + '" width="28" height="' + h + '"' + s + '/>'; }
+    var rail = alt !== 'tutta' && stile !== 'listelli' ? '<line x1="4" y1="' + (top - 3) + '" x2="116" y2="' + (top - 3) + '" stroke="' + L + '" stroke-width="2.6"/>' : '';
+    return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="' + W + '"/>' + rail + g + '<rect y="84" width="120" height="6" fill="' + (dark ? '#1E1913' : '#D9CFC1') + '"/></svg>';
+  }
+  var BS_STILI = [['classica', 'Classica', 'A riquadri'], ['inglese', 'All’inglese', 'Riquadri bassi con fascia'], ['listelli', 'Moderna', 'A listelli verticali'], ['geometrica', 'Geometrica', 'Rombi e diagonali']];
+  function bsQ(st){
+    var b = bsS();
+    if(st === 'bsStile') return { t:'Che boiserie?', s:'Tocca lo stile.', opts: BS_STILI.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(x[0], x[0] === 'inglese' ? '1m' : 'tutta')), sel: b.stile === x[0] }; }) };
+    if(st === 'bsDove') return { t:'Su quale parete?', s:'Guardando la foto.', opts: [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra',''],['letto','Dietro il letto o il divano','Solo in quella zona'],['tutta','Tutta la stanza','Tutte le pareti che si vedono']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', cgWall(x[0] === 'letto' ? 'fondo' : x[0] === 'tutta' ? 'giro' : x[0])), sel: b.dove === x[0] }; }) };
+    if(st === 'bsAlt') return { t:'Fino a che altezza?', opts: [['tutta','Tutta la parete',''],['23','Due terzi','Con una fascia sopra'],['1m','Fino a 1 metro','Con una fascia sopra']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(b.stile || 'classica', x[0])), sel: b.alt === x[0] }; }) };
+    if(st === 'bsCol') return { t:'Di che colore?', s:'Tono su tono: stesso colore della parete, si vede solo il rilievo.', cls:'sf-sw', opts: [{ v:'tono', n:'Tono su tono', d:'Come la parete', pic: sfPic('linear-gradient(135deg,#EFE8DC,#D9CFC1)', ''), sel: b.col === 'tono' }].concat(SEMPL_INT.slice(0, 11).map(function(c){ return { v:'c:' + c[0], n:c[0], pic: sfPic(c[1], ''), sel: b.col === c[0] }; })) };
+    return null;
+  }
+  function bsApply(st, v){
+    if(st.indexOf('bs') !== 0 || ['bsStile','bsDove','bsAlt','bsCol'].indexOf(st) < 0) return false;
+    var b = bsS();
+    if(st === 'bsStile'){ b.stile = v; if(v === 'inglese' && !b.alt) b.alt = '1m'; }
+    if(st === 'bsDove') b.dove = v;
+    if(st === 'bsAlt') b.alt = v;
+    if(st === 'bsCol'){ if(v === 'tono'){ b.col = 'tono'; state.colorA = semplCol('Tono su tono', '#EFE8DC'); } else { var nm = v.slice(2), c = SEMPL_INT.filter(function(x){ return x[0] === nm; })[0]; if(c){ b.col = c[0]; state.colorA = semplCol(c[0], c[1]); } } }
+    return true;
+  }
+  function bsAnswered(st){ var b = state.bs || {}; return st === 'bsStile' ? !!b.stile : st === 'bsDove' ? !!b.dove : st === 'bsAlt' ? !!b.alt : st === 'bsCol' ? !!(b.col && state.colorA) : null; }
+  function bsDone(){ return !!(SF_ON && SF.mat === 'boiserie' && state.bs && state.bs.col && state.colorA); }
+  function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove || 'fondo', alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore' }; }
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -11727,6 +11763,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       { v:'pit_int', n:'Pittura interni', d:'Pareti e soffitti di casa', cat:'imbiancatura', s1:1 },
       { v:'pit_est', n:'Facciata', d:'Pittura esterna della casa', cat:'imbiancatura', s1:1 },
       { v:'cartongesso', n:'Cartongesso', d:'Velette, controsoffitti, nicchie, pareti', cat:'imbiancatura' },
+      { v:'boiserie', n:'Boiserie', d:'Cornici e riquadri sulle pareti', cat:'imbiancatura', s1:1 },
       { v:'legno', n:'Pavimenti in legno', d:'Parquet, SPC o laminato', cat:'parquet' },
       { v:'scale', n:'Scale', d:'Resina, microcemento, piastrelle, parquet o graniglia' },
       { v:'graniglia_esterni', n:'Graniglia per esterni', d:'Vialetti, terrazzi, bordi piscina' }
@@ -11742,6 +11779,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'microcemento') s.push('dove');
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
     else if(c === 'imbiancatura'){ s.push('ctx'); if(SF.a.ctx === 'interno'){ s.push('pitCosa', 'pitMuro'); if(semplOn()) semplIntSteps(s); } else if(SF.a.ctx === 'esterno'){ s.push('capp'); if(state.capp && state.capp.on) s.push('cappZoc'); if(semplOn()) semplFacSteps(s); } }
+    else if(c === 'boiserie'){ s.push('bsStile', 'bsDove', 'bsAlt', 'bsCol'); }
     else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
     else if(c === 'legno') s.push('legnoTipo');
@@ -11752,6 +11790,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function sfAnswered(st){
     var sa = semplAnswered(st); if(sa !== null) return sa;
+    var ba = bsAnswered(st); if(ba !== null) return ba;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
     if(st.indexOf('cgL_') === 0) return !!cgIt(st.slice(4)).luci;
     switch(st){
@@ -11804,6 +11843,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function sfQ(st){
     var sq0 = semplQ(st); if(sq0) return sq0;
     var cq = cgQ(st); if(cq) return cq;
+    var bq = bsQ(st); if(bq) return bq;
     var catObj = state.category;
     switch(st){
       case 'mat': return { t:'Cosa vuoi rifare?', s: ((queueAddPending && genQueue.length) || (layerAddPending && layers.length)) ? 'Lavorazione ' + (genQueue.length + layers.length + 1) + ': tocca il lavoro. Hai sbagliato? Premi Indietro per annullare.' : 'Tocca il lavoro.', opts: sfMats().map(function(m){ return { v:m.v, n:m.n, d:m.d, pic:(MAT_LINE_ICON[m.v] ? '<div class="sf-mi">'+MAT_LINE_ICON[m.v]+'</div>' : sfPic(m.bg, '<span class="sf-ico">'+m.icon+'</span>')), sel: sfMatSel(m.v) }; }) };
@@ -11894,12 +11934,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     aiResultImage = null; aiResultImageBase64 = null; aiResultImageMime = null;
     if(semplApply(st, v)) return;
     if(cgApply(st, v)) return;
+    if(bsApply(st, v)) return;
     if(st === 'mat'){
       var pre = v === 'pit_int' ? 'interno' : v === 'pit_est' ? 'esterno' : null; if(pre) v = 'imbiancatura';
       if(pre && SF.mat === v && SF.a.ctx !== pre){ SF.a = {}; }
       if(SF.mat !== v || !state.category){ SF.a = {}; }
       SF.mat = v;
-      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso') ? 'imbiancatura' : v);
+      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie') ? 'imbiancatura' : v);
+      if(v === 'boiserie'){ var bsc = subGrid.children; if(bsc[0]) bsc[0].click(); SF.a.ctx = 'interno'; state.bs = state.bs || {}; } else { state.bs = null; }
       if(v === 'legno'){ state.material = null; }
       if(v === 'deco'){ var dcards = subGrid.children; if(dcards[0]) dcards[0].click(); SF.a.ctx = 'interno'; state.deco = state.deco && state.deco.fam ? state.deco : { eff:'medio', prot:'none' }; } else { state.deco = null; }
       if(v === 'cartongesso'){ var cgc = subGrid.children; if(cgc[0]) cgc[0].click(); SF.a.ctx = 'interno'; state.cg = state.cg && state.cg.list ? state.cg : { list:[], it:{} }; } else { state.cg = null; }
@@ -12086,7 +12128,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     // panelLanding non è un "passo" del wizard: è la schermata di ingresso, non entra
     // nel calcolo della barra di avanzamento né nella navigazione avanti/indietro.
     if(SF_ON){
-      var sq = (decoAllOn() || semplDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
+      var sq = (decoAllOn() || semplDone() || bsDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
       if(accentoActive() || showerActive()) sq.push('panelPhoto');
       return sq.concat(['panelResult']);
     }

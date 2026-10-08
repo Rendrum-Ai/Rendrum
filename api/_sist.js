@@ -100,4 +100,44 @@ function zocFix(prompt, z) {
     + " ECCEZIONE ZOCCOLO (vale più delle regole sopra): lo zoccolo alto circa 70 cm alla base della facciata, nel colore " + z.hex + ", è RICHIESTO e va fatto; non conta come banda decorativa vietata.";
 }
 
-module.exports = { parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
+
+// ---------- boiserie: cornici e riquadri in rilievo sulle pareti ----------
+const BS_STILE = {
+  classica: "classica a riquadri: cornici rettangolari in rilievo con profilo sagomato (circa 4 cm) che formano pannelli regolari, tutti della stessa larghezza, allineati e con la stessa distanza tra loro",
+  inglese: "all'inglese (wainscoting): pannelli rettangolari bassi delimitati da cornici in rilievo, tutti uguali, con una cornice orizzontale continua più marcata sopra i pannelli",
+  listelli: "moderna a listelli verticali: listelli in rilievo dritti e paralleli, larghi circa 3 cm e distanziati in modo regolare di circa 8-10 cm",
+  geometrica: "geometrica: cornici sottili in rilievo che formano un disegno regolare e simmetrico di rettangoli con diagonali (effetto a rombi)",
+};
+const BS_DOVE = {
+  fondo: "sulla parete di fondo (quella di fronte nella foto)",
+  sinistra: "sulla parete di sinistra",
+  destra: "sulla parete di destra",
+  letto: "sulla parete dietro il letto o il divano, solo nella zona del letto o del divano, centrata",
+  tutta: "su tutte le pareti che si vedono nella foto",
+};
+const BS_ALT = {
+  tutta: "dal battiscopa fino quasi al soffitto (lascia circa 15 cm sotto il soffitto)",
+  "23": "fino a circa due terzi dell'altezza della parete, chiusa in alto da una cornice orizzontale continua",
+  "1m": "solo nella parte bassa, dal battiscopa fino a circa 1 metro di altezza, chiusa in alto da una cornice orizzontale continua",
+};
+function parseBs(b) {
+  if (!b || typeof b !== "object") return null;
+  const stile = BS_STILE[b.stile] ? b.stile : null; if (!stile) return null;
+  return { stile, dove: BS_DOVE[b.dove] ? b.dove : "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
+}
+function bsPrompt(b, colorDesc) {
+  const colore = b.col === "tono"
+    ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura opaca: la boiserie si riconosce solo grazie al rilievo e alle ombre."
+    : "Le cornici e i pannelli della boiserie sono dipinti nel colore " + colorDesc + ", finitura opaca" + (b.alt === "tutta" ? ", su tutta la parete con la boiserie." : "; la parte di parete sopra la boiserie resta del colore attuale.");
+  return [
+    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + BS_DOVE[b.dove] + ", " + BS_ALT[b.alt] + ".",
+    "Stile: " + BS_STILE[b.stile] + ".",
+    colore,
+    "Linee perfettamente dritte e parallele che seguono esattamente la prospettiva della parete; disegno simmetrico rispetto al centro della parete; proporzioni realistiche rispetto alla stanza, alle porte e ai mobili.",
+    "Le cornici si interrompono intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti.",
+    "Rilievo realistico con ombre leggere coerenti con la luce della stanza.",
+    "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: aggiungi SOLO la boiserie.",
+  ].join(" ");
+}
+
+module.exports = { parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
