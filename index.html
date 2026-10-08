@@ -1530,6 +1530,15 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .tm-pay{ display:flex; justify-content:space-between; align-items:center; margin:10px 0 2px; padding:9px 12px; border-radius:12px; background:rgba(255,255,255,.1); }
 .tm-pay em{ font-style:normal; font-size:12px; opacity:.85; line-height:1.3; } .tm-pay strong{ font-size:22px; color:#F2B978; font-family:"Playfair Display", Georgia, serif; }
 #tmHd img{ width:auto !important; max-width:110px; height:40px !important; object-fit:contain !important; background:#fff; padding:4px 6px; border-radius:10px; box-sizing:border-box; }
+/* preventivo: due bottoni grandi e ricerca */
+.qw-big{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid var(--line); background:var(--surface); border-radius:16px; padding:16px 14px; margin-top:12px; cursor:pointer; font-family:inherit; color:var(--ink); }
+.qw-big i{ font-style:normal; width:46px; height:46px; border-radius:13px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; font-size:22px; flex:none; }
+.qw-big b{ display:block; font-size:17px; } .qw-big em{ display:block; font-style:normal; font-size:13px; color:var(--ink-soft); }
+.qw-big.p{ background:linear-gradient(90deg,#E9B98F,#D9894F); border:none; color:#2B1408; } .qw-big.p i{ background:rgba(255,255,255,.45); } .qw-big.p em{ color:#4a2a14; }
+.qw-srch input, .q-srch-w input{ width:100%; font-size:16px; padding:12px 14px; border:1.5px solid var(--accent); border-radius:12px; background:var(--surface); color:var(--ink); font-family:inherit; box-sizing:border-box; }
+.q-srch-w{ margin-top:10px; } .q-srch-w input{ border-color:var(--line); }
+#qSrchRes{ display:flex; flex-direction:column; gap:8px; margin-top:8px; } #qSrchRes:empty{ display:none; }
+#qwRes{ margin-top:8px; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -13905,13 +13914,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qOpenList(){
     if(qdBlock(qOpenList)) return;
-    qCard(false); ppShowView('quotes'); qScrollTop(); setTimeout(qdBanner, 0);
+    qCard(false); ppShowView('quotes'); qScrollTop(); setTimeout(qdBanner, 0); try{ var qsi = document.getElementById('qSrch'); if(qsi){ qsi.value = ''; qsrDraw(); } }catch(e){}
     document.getElementById('qPivaGate').hidden = true;
     qLoadSettings().then(qPivaGate).catch(function(){});
     var box = document.getElementById('qList'); box.innerHTML = '<div class="pp-empty">Caricamento…</div>';
     qApi('list').then(function(x){
       if(!x.ok){ box.innerHTML = '<div class="pp-empty">' + qEsc((x.d && x.d.error) || 'Non riesco a caricare i preventivi.') + '</div>'; return; }
-      var list = x.d.quotes || []; qfCount(list.length);
+      var list = x.d.quotes || []; qfCount(list.length); qs._all = list; try{ if(rdS1()){ qsrInit(); qsrDraw(); } }catch(e){}
       if(!list.length){ box.innerHTML = '<div class="pp-empty">Non hai ancora creato nessun preventivo.</div>'; return; }
       box.innerHTML = '';
       list.forEach(function(it){
@@ -16230,9 +16239,16 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qwOpen(step){
     if(!qs.cur) return;
-    qwClean(); qw.add = false; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    qwClean(); qw.add = false; qw.sub = ''; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
     if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
     qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
+  }
+  function qwClienti(){
+    var seen = {}, A = [];
+    var add = function(n, tel, luogo){ n = String(n || '').trim(); var k = ctNorm(n); if(n.length < 2 || /^(richiesta |cliente$|cliente \d+$|senza nome|nuovo cliente|x$)/i.test(n)) return; if(seen[k]){ var o = seen[k]; o.tel = o.tel || tel || ''; o.luogo = o.luogo || luogo || ''; return; } seen[k] = { nome:n, tel:tel || '', luogo:luogo || '' }; A.push(seen[k]); };
+    ((typeof ct !== 'undefined' && ct.list) || []).forEach(function(c){ add(c.nome, c.tel, c.luogo); });
+    (qs._all || []).forEach(function(x){ add(x.clientName, '', ''); });
+    return A;
   }
   function qwBar(){ return '<div class="qw-bar">' + [1, 2, 3].map(function(k){ return '<i class="' + (k <= qw.step ? 'on' : '') + '"></i>'; }).join('') + '</div>'; }
   function qwTop(back){ return '<div class="qw-top"><button type="button" class="pp-back-link" id="qwBack">' + back + '</button></div>' + qwBar(); }
@@ -16240,23 +16256,46 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var box = document.getElementById('qwBox'); if(!box) return;
     var q = qs.cur, h = '';
     if(qw.step === 1){
-      h = qwTop('← Preventivi') + '<div class="pro-projects-title">Per chi è?</div>';
-      var L = ((typeof ct !== 'undefined' && ct.list) || []).filter(function(c){ return c.nome && !/^richiesta /i.test(c.nome); }).slice(0, 6);
-      if(L.length) h += '<div class="qw-sec">Clienti recenti</div>' + L.map(function(c, i){ return '<button type="button" class="hb-row qw-cl" data-qwc="' + i + '"><span class="s2-av">' + qEsc(ctIni(c.nome)) + '</span><span class="hb-t"><b>' + qEsc(c.nome) + '</b><em>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ') || ' ') + '</em></span><span class="hb-go">›</span></button>'; }).join('');
-      h += '<div class="qw-sec">' + (L.length ? 'Cliente nuovo' : 'Il cliente') + '</div>'
-        + '<div class="field"><input type="text" id="qwNome" maxlength="160" placeholder="Nome e cognome" value="' + qEsc(q.cliente.nome || '') + '"></div>'
+      // B: due bottoni grandi. "Cliente che ho già" apre la ricerca, "Cliente nuovo" il modulo
+      var sub = qw.sub || ((q.cliente.nome || '').trim() ? 'nuovo' : '');
+      h = qwTop(sub ? '← Per chi è' : '← Preventivi') + '<div class="pro-projects-title">' + (sub === 'cerca' ? 'Cerca il cliente' : sub === 'nuovo' ? ((q.cliente.nome || '').trim() ? 'Il cliente' : 'Cliente nuovo') : 'Per chi è?') + '</div>';
+      if(!sub){
+        h += '<button type="button" class="qw-big p" id="qwOld"><i>👤</i><span><b>Cliente che ho già</b><em>Lo cerchi per nome</em></span></button>'
+          + '<button type="button" class="qw-big" id="qwNew"><i>＋</i><span><b>Cliente nuovo</b><em>Nome, telefono, indirizzo</em></span></button>';
+        box.innerHTML = h;
+        document.getElementById('qwOld').onclick = function(){ qw.sub = 'cerca'; qwRender(); };
+        document.getElementById('qwNew').onclick = function(){ qw.sub = 'nuovo'; qwRender(); };
+        document.getElementById('qwBack').onclick = function(){ qOpenList(); };
+        return;
+      }
+      if(sub === 'cerca'){
+        h += '<div class="field qw-srch"><input type="search" id="qwQ" placeholder="🔎 Scrivi le prime lettere del nome" autocomplete="off"></div><div id="qwRes"></div>'
+          + '<button type="button" class="qw-write" id="qwNew2">＋ Non c’è? Cliente nuovo</button>';
+        box.innerHTML = h;
+        var A = qwClienti(), inp = document.getElementById('qwQ'), res = document.getElementById('qwRes');
+        var draw = function(){ var t = ctNorm(inp.value);
+          if(!t){ res.innerHTML = '<div class="qw-hint">Scrivi 2 o 3 lettere: compaiono solo i clienti che iniziano così.</div>'; return; }
+          var F = A.filter(function(c){ var n = ctNorm(c.nome); return n.indexOf(t) === 0 || n.indexOf(' ' + t) > -1; }).slice(0, 8);
+          res.innerHTML = F.length ? F.map(function(c, k){ return '<button type="button" class="hb-row qw-cl" data-qwc="' + k + '"><span class="s2-av">' + qEsc(ctIni(c.nome)) + '</span><span class="hb-t"><b>' + qEsc(c.nome) + '</b><em>' + qEsc(c.luogo || c.tel || ' ') + '</em></span><span class="hb-go">›</span></button>'; }).join('') : '<div class="qw-hint">Nessun cliente con questo nome.</div>';
+          res.querySelectorAll('[data-qwc]').forEach(function(b){ b.addEventListener('click', function(){ var c = F[+b.dataset.qwc];
+            q.cliente.nome = c.nome; q.cliente.telefono = c.tel || ''; if(c.luogo){ q.cliente.indirizzo = c.luogo; q.cantiere.indirizzo = c.luogo; }
+            qw.sub = ''; qwAuto(); qw.step = 2; qwRender(); qScrollTop(); }); }); };
+        inp.addEventListener('input', draw); draw(); setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 50);
+        document.getElementById('qwNew2').onclick = function(){ var v = inp.value.trim(); qw.sub = 'nuovo'; if(v && !(q.cliente.nome || '').trim()) q.cliente.nome = v.replace(/^./, function(x){ return x.toUpperCase(); }); qwRender(); };
+        document.getElementById('qwBack').onclick = function(){ qw.sub = ''; qwRender(); };
+        return;
+      }
+      h += '<div class="field"><input type="text" id="qwNome" maxlength="160" placeholder="Nome e cognome" value="' + qEsc(q.cliente.nome || '') + '"></div>'
         + '<div class="field"><input type="tel" id="qwTel" maxlength="40" placeholder="Telefono (per mandarlo su WhatsApp)" value="' + qEsc(q.cliente.telefono || '') + '"></div>'
         + '<div class="field"><input type="text" id="qwInd" maxlength="200" placeholder="Indirizzo del lavoro (facoltativo)" value="' + qEsc(q.cantiere.indirizzo || q.cliente.indirizzo || '') + '"></div>'
         + '<div class="pp-error" id="qwErr"></div><button type="button" class="pro-auth-submit qw-next" id="qwNext">Avanti</button>';
       box.innerHTML = h;
-      box.querySelectorAll('[data-qwc]').forEach(function(b){ b.addEventListener('click', function(){ var c = L[+b.dataset.qwc];
-        q.cliente.nome = c.nome; q.cliente.telefono = c.tel || q.cliente.telefono || ''; if(c.luogo){ q.cliente.indirizzo = q.cliente.indirizzo || c.luogo; q.cantiere.indirizzo = c.luogo; }
-        qwAuto(); qw.step = 2; qwRender(); qScrollTop(); }); });
       document.getElementById('qwNext').onclick = function(){
         var n = document.getElementById('qwNome').value.trim(); if(n.length < 2){ document.getElementById('qwErr').textContent = 'Scrivi il nome del cliente.'; return; }
         q.cliente.nome = n; q.cliente.telefono = document.getElementById('qwTel').value.trim(); var ind = document.getElementById('qwInd').value.trim(); if(ind){ q.cantiere.indirizzo = ind; if(!q.cliente.indirizzo) q.cliente.indirizzo = ind; }
-        qwAuto(); qw.step = 2; qwRender(); qScrollTop(); };
-      document.getElementById('qwBack').onclick = function(){ qOpenList(); };
+        qw.sub = ''; qwAuto(); qw.step = 2; qwRender(); qScrollTop(); };
+      document.getElementById('qwBack').onclick = function(){ qw.sub = ''; if(!(q.cliente.nome || '').trim() || !q.voci.length){ q.cliente.nome = ''; } qwRender(); };
+      if(!(q.cliente.nome || '').trim()) setTimeout(function(){ var n = document.getElementById('qwNome'); try{ n.focus(); }catch(e){} }, 50);
       return;
     }
     if(qw.step === 2){
@@ -16332,6 +16371,23 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(e.innerHTML !== src[0].innerHTML){ e.innerHTML = src[0].innerHTML; qwLinks(e); }
       m.textContent = src[1].textContent; };
     qwObs = new MutationObserver(sync); src.forEach(function(s){ if(s) qwObs.observe(s, { childList:true, subtree:true, characterData:true }); }); sync();
+  }
+
+  // ===== Preventivi: cerca per cliente o numero (in prova) =====
+  function qsrInit(){
+    var nb = document.getElementById('qNewBtn'); if(!nb || document.getElementById('qSrch')) return;
+    var w = document.createElement('div'); w.id = 'qSrchW'; w.className = 'q-srch-w';
+    w.innerHTML = '<input type="search" id="qSrch" placeholder="🔎 Cerca: cliente o numero" autocomplete="off"><div id="qSrchRes"></div>';
+    nb.parentNode.insertBefore(w, nb.nextSibling);
+    document.getElementById('qSrch').addEventListener('input', qsrDraw);
+  }
+  function qsrDraw(){
+    var inp = document.getElementById('qSrch'), res = document.getElementById('qSrchRes'); if(!inp || !res) return;
+    var t = ctNorm(inp.value), L = qs._all || [];
+    if(!t){ res.innerHTML = ''; return; }
+    var num = t.replace(/\D/g, ''), F = L.filter(function(it){ var n = ctNorm(it.clientName); return n.indexOf(t) === 0 || n.indexOf(' ' + t) > -1 || ctNorm(it.oggetto).indexOf(t) > -1 || (num && String(it.number) === String(+num)); }).slice(0, 10);
+    res.innerHTML = F.length ? F.map(function(it){ return '<button type="button" class="pp-card q-card q-sr" data-qsr="' + qEsc(it.id) + '"><div class="pp-card-info"><div class="pp-card-name">N. ' + ('00' + it.number).slice(-3) + ' · ' + qEsc(it.clientName) + '</div><div class="pp-card-meta">' + qEsc(String(it.oggetto || '').replace(/^Offerta per:\s*/i, '')) + '</div></div><div class="q-card-right"><span class="q-chip q-' + qEsc(it.status) + '">' + qEsc(Q_STATUS[it.status] || it.status) + '</span></div></button>'; }).join('') : '<div class="pp-empty">Nessun preventivo trovato.</div>';
+    res.querySelectorAll('[data-qsr]').forEach(function(b){ b.addEventListener('click', function(){ qEdit(b.dataset.qsr); }); });
   }
   // azioni della home: in prova c'è anche il voto del condominio (tolto dal menu)
   function v3Acts(){
