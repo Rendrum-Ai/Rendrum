@@ -1444,6 +1444,75 @@ html.rd-s1ai #progressLabel{ visibility:hidden; }
 html.rd-s1ai #queueBox{ display:none !important; }
 .s1-bd{ display:inline-block; text-decoration:none; background:#C0392B; color:#fff; font-size:11px; font-weight:800; border-radius:99px; padding:1px 7px; margin-left:4px; vertical-align:1px; }
 html.rd-s1ai #heroHint{ display:none !important; }
+/* ===== Fase 2: home "Da fare oggi" ===== */
+.s2-sub{ display:block; font-size:14px; color:var(--ink-soft); margin-top:2px; }
+.v3cards.s2-one{ overflow:visible; }
+.v3cards.s2-one .v3c{ width:100%; flex:1 1 100%; max-width:none; }
+.s2-rows{ display:flex; flex-direction:column; gap:8px; margin:12px 0 4px; }
+.s2-row{ display:flex; align-items:center; gap:11px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 10px 10px 12px; cursor:pointer; }
+.s2-av{ width:38px; height:38px; border-radius:50%; background:var(--accent-soft) center/cover no-repeat; color:var(--accent); font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex:none; }
+.s2-t{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.s2-t b{ font-size:15px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.s2-t em{ font-style:normal; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.s2-go{ border:none; background:var(--accent); color:#fff; font:700 13.5px inherit; font-family:inherit; border-radius:10px; padding:9px 12px; cursor:pointer; flex:none; }
+.s2-all{ width:100%; border:none; background:none; color:var(--accent); font:700 14px inherit; font-family:inherit; padding:8px; cursor:pointer; }
+.s2-big{ display:flex; flex-direction:column; gap:9px; }
+.s2-b{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid var(--line); background:var(--surface); border-radius:16px; padding:14px; cursor:pointer; font-family:inherit; color:var(--ink); }
+.s2-b i{ width:44px; height:44px; border-radius:13px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; flex:none; }
+.s2-b i svg{ width:24px; height:24px; }
+.s2-b b{ display:block; font-size:16px; } .s2-b em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft); }
+.s2-b.p{ background:linear-gradient(90deg,#E9B98F,#D9894F); border:none; color:#2B1408; }
+.s2-b.p i{ background:rgba(255,255,255,.45); color:#2B1408; } .s2-b.p em{ color:#4a2a14; }
+.s2-more{ display:flex; flex-wrap:wrap; gap:7px; margin:12px 0 6px; }
+.s2-more button{ border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 12px; font:600 13px inherit; font-family:inherit; cursor:pointer; }
+/* ===== Fase 2: preventivo in 3 passi ===== */
+.qw-top{ display:flex; align-items:center; }
+.qw-bar{ display:flex; gap:5px; margin:6px 0 12px; } .qw-bar i{ flex:1; height:5px; border-radius:9px; background:var(--line); } .qw-bar i.on{ background:var(--accent); }
+.qw-sec{ font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin:16px 0 8px; }
+.qw-who{ font-size:13.5px; color:var(--ink-soft); margin:-4px 0 6px; }
+.qw-hint{ font-size:13px; color:var(--ink-soft); background:var(--accent-soft); border-radius:10px; padding:10px 12px; margin-top:12px; line-height:1.4; }
+.qw-next{ margin-top:16px; }
+.qw-v{ display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:9px 8px 9px 11px; margin-bottom:7px; }
+.qw-vt{ flex:1; min-width:0; display:flex; flex-direction:column; } .qw-vt b{ font-size:14px; overflow:hidden; text-overflow:ellipsis; } .qw-vt em{ font-style:normal; font-size:12px; color:var(--ink-soft); }
+.qw-q{ display:flex; align-items:center; gap:3px; flex:none; }
+.qw-q button{ width:30px; height:30px; border-radius:50%; border:none; background:var(--accent-soft); color:var(--accent); font:800 18px inherit; font-family:inherit; cursor:pointer; line-height:1; }
+.qw-q input{ width:52px; text-align:center; border:1px solid var(--line); border-radius:8px; padding:6px 2px; font:700 14px inherit; font-family:inherit; background:var(--bg); color:var(--ink); }
+.qw-q i{ font-style:normal; font-size:11.5px; color:var(--ink-soft); min-width:0; }
+.qw-x{ border:none; background:none; color:var(--ink-soft); font-size:15px; cursor:pointer; padding:4px; flex:none; }
+.qw-li{ display:flex; flex-direction:column; gap:6px; }
+.qw-li button{ display:flex; align-items:center; gap:8px; text-align:left; border:1px dashed var(--accent); background:var(--surface); border-radius:12px; padding:10px 12px; cursor:pointer; font-family:inherit; color:var(--ink); }
+.qw-li b{ flex:1; font-size:14px; } .qw-li em{ font-style:normal; font-size:12.5px; color:var(--ink-soft); } .qw-li span{ color:var(--accent); font-weight:800; font-size:18px; }
+.qw-write{ width:100%; margin-top:10px; border:1.5px solid var(--accent); background:var(--surface); color:var(--ink); border-radius:12px; padding:12px; font:700 14px inherit; font-family:inherit; cursor:pointer; }
+.qw-add{ border:1.5px solid var(--accent); border-radius:12px; padding:10px 12px 12px; margin-top:10px; background:var(--surface); }
+.qw-ck{ display:flex; align-items:center; gap:7px; font-size:13px; margin:2px 0 8px; }
+.qw-sum{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:9px 12px; margin-top:8px; font-size:13.5px; }
+.qw-sum div{ display:flex; justify-content:space-between; gap:10px; padding:3px 0; } .qw-sum div span:last-child{ white-space:nowrap; font-weight:700; }
+.qw-tot{ display:flex; justify-content:space-between; align-items:baseline; margin-top:14px; font-size:16px; font-weight:700; } .qw-tot b{ font-size:26px; font-family:Georgia,serif; color:var(--ink); }
+.qw-iva{ font-size:12.5px; color:var(--ink-soft); text-align:right; }
+.qw-chips{ display:flex; gap:7px; flex-wrap:wrap; }
+.qw-chips button{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:9px 14px; font:700 14px inherit; font-family:inherit; cursor:pointer; }
+.qw-chips button.on{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.qw-opt{ display:block; width:100%; text-align:left; margin-top:14px; border:none; background:none; color:var(--ink); font:600 14px inherit; font-family:inherit; cursor:pointer; padding:6px 0; }
+.qw-opt em{ font-style:normal; color:var(--ink-soft); font-weight:400; font-size:12.5px; }
+.qw-wa{ background:#25D366 !important; color:#fff !important; margin-top:14px; }
+.qw-sec2{ background:var(--surface) !important; color:var(--ink) !important; border:1.5px solid var(--accent) !important; margin-top:9px; }
+.qw-save{ display:block; margin:12px auto 0; }
+.v3cards.s2-one .v3c{ height:230px; min-height:0; }
+html body .pro-auth-submit.qw-wa, html:not([data-theme="dark"]) body .pro-auth-submit.qw-wa{ background:#25D366 !important; background-image:none !important; color:#fff !important; box-shadow:none !important; }
+html body .pro-auth-submit.qw-sec2, html:not([data-theme="dark"]) body .pro-auth-submit.qw-sec2{ background:var(--surface) !important; background-image:none !important; color:var(--ink) !important; border:1.5px solid var(--accent) !important; box-shadow:none !important; }
+/* ===== Fase 3: sopralluogo in 3 schede ===== */
+html.rd-s1:not(.so-s1-fine) #ppViewSoprEd .so-actions{ display:none !important; }
+html.rd-s1 #soBody [data-sosec="cli"] > .pro-auth-submit, html.rd-s1 #soBody [data-sosec="voci"] > .pro-auth-submit, html.rd-s1 #soBody [data-sosec="foto"] > .pro-auth-submit{ display:none !important; }
+html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ display:none !important; }
+#soBody.so-cli-ok [data-sosec="cli"] > .field, #soBody.so-cli-ok [data-sosec="cli"] > .so-row{ display:none !important; }
+.so-cli-line:empty{ display:none; }
+.so-cli-line{ display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--accent-soft); border-radius:12px; padding:10px 12px; margin:4px 0 12px; font-size:14px; }
+.so-cli-line span{ min-width:0; overflow:hidden; text-overflow:ellipsis; }
+.so-foglio{ display:flex !important; flex-direction:column; align-items:flex-start; gap:2px; border-style:solid !important; background:var(--surface); }
+.so-foglio em{ font-style:normal; font-weight:400; font-size:12.5px; color:var(--ink-soft); }
+.so-more{ margin-top:6px; } .so-more summary{ cursor:pointer; color:var(--ink-soft); font-size:13.5px; padding:8px 0; text-align:center; list-style:none; }
+.so-more summary::-webkit-details-marker{ display:none; }
+.so-more[open]{ display:flex; flex-direction:column; gap:8px; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -2060,6 +2129,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <button type="button" class="pp-profile-btn" id="qListinoBtn">📋 Il mio listino prezzi</button>
       <button type="button" class="pp-profile-btn" id="qSettingsBtn" hidden>⚙︎ Dati impresa, banca e condizioni</button>
     </div>
+
+    <!-- Preventivi: 3 passi (in prova) -->
+    <div class="pro-projects-view" id="ppViewQWiz"><div id="qwBox"></div></div>
 
     <!-- Preventivi: editor -->
     <div class="pro-projects-view" id="ppViewQuote">
@@ -11499,8 +11571,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   // ===== Percorso semplice per facciata e interni (prova: account staff o ?semplice=1) =====
   // Una domanda per schermata, i colori più usati davanti; la cartella completa resta in «Tutti i colori».
-  var RD_SEMPL = (function(){ try{ var q = new URLSearchParams(location.search).get('semplice'); if(q === '1') localStorage.setItem('rdSempl', '1'); if(q === '0') localStorage.removeItem('rdSempl'); return localStorage.getItem('rdSempl') === '1'; }catch(e){ return false; } })();
-  function semplOn(){ return !!(SF_ON && (RD_SEMPL || (typeof rdIsStaff === 'function' && rdIsStaff()))); }
+  var RD_SEMPL = (function(){ try{ var q = new URLSearchParams(location.search).get('semplice'); if(q === '1') localStorage.setItem('rdSempl', '1'); if(q === '0') localStorage.setItem('rdSempl', '0'); var v = localStorage.getItem('rdSempl'); return v === '1' ? true : v === '0' ? false : null; }catch(e){ return null; } })();
+  function semplOn(){ return !!(SF_ON && (RD_SEMPL === true || (RD_SEMPL !== false && typeof rdIsStaff === 'function' && rdIsStaff()))); }
   var SEMPL_FAC = [['Bianco caldo','#EFE8DC'],['Avorio','#E9DFC8'],['Sabbia','#E2D3B5'],['Paglia','#E6CE97'],['Pesca','#E9C3A2'],['Terracotta','#C98663'],['Rosa antico','#D9AFA3'],['Grigio perla','#CFCCC5'],['Grigio pietra','#A9A49A'],['Salvia','#B9C2A8'],['Ocra','#CFA25A'],['Antracite','#5A5A57']];
   var SEMPL_INT = [['Bianco','#F4F2EC'],['Bianco caldo','#EFE8DC'],['Tortora','#CDBFAE'],['Greige','#C9C0B3'],['Grigio perla','#D3D1CB'],['Sabbia','#E2D3B5'],['Salvia','#B7C1A9'],['Azzurro polvere','#BBCAD3'],['Rosa cipria','#E3C7BF'],['Verde bosco','#5E6F5A'],['Blu notte','#3B4654'],['Terracotta','#C98663']];
   var SEMPL_PART = {
@@ -13114,7 +13186,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('ppViewForm').classList.toggle('active', view === 'form');
     document.getElementById('ppViewProfile').classList.toggle('active', view === 'profile');
     document.getElementById('ppViewAccount').classList.toggle('active', view === 'account');
-    ['hub','quotes','quote','qsettings','listino','find','myreq','leads','lead','art','sopr','soprEd'].forEach(function(v){ document.getElementById({ hub:'ppViewHub', quotes:'ppViewQuotes', quote:'ppViewQuote', qsettings:'ppViewQSettings', listino:'ppViewListino', find:'ppViewFind', myreq:'ppViewMyReq', leads:'ppViewLeads', lead:'ppViewLead', art:'ppViewArt', sopr:'ppViewSopr', soprEd:'ppViewSoprEd' }[v]).classList.toggle('active', view === v); });
+    ['hub','qwiz','quotes','quote','qsettings','listino','find','myreq','leads','lead','art','sopr','soprEd'].forEach(function(v){ document.getElementById({ hub:'ppViewHub', qwiz:'ppViewQWiz', quotes:'ppViewQuotes', quote:'ppViewQuote', qsettings:'ppViewQSettings', listino:'ppViewListino', find:'ppViewFind', myreq:'ppViewMyReq', leads:'ppViewLeads', lead:'ppViewLead', art:'ppViewArt', sopr:'ppViewSopr', soprEd:'ppViewSoprEd' }[v]).classList.toggle('active', view === v); });
     if(['quote','qsettings','listino'].indexOf(view) < 0) document.querySelector('#proProjectsModal .pro-projects-card').classList.remove('wide');
   }
 
@@ -13769,7 +13841,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function qdKey(){ var e = ''; try{ e = String((proAccount && proAccount.email) || '').toLowerCase(); }catch(x){} return 'rdQDraft:' + e; }
   function qdGet(){ try{ var d = JSON.parse(localStorage.getItem(qdKey()) || 'null'); return d && d.cur ? d : null; }catch(e){ return null; } }
   function qdClear(){ try{ localStorage.removeItem(qdKey()); }catch(e){} }
-  function qdOpen(){ var v = document.getElementById('ppViewQuote'), m = document.getElementById('proProjectsModal'); return !!(v && m && v.classList.contains('active') && m.classList.contains('open') && qs.cur); }
+  function qdOpen(){ var v = document.getElementById('ppViewQuote'), w = document.getElementById('ppViewQWiz'), m = document.getElementById('proProjectsModal'); return !!(v && m && (v.classList.contains('active') || (w && w.classList.contains('active'))) && m.classList.contains('open') && qs.cur); }
   function qdDirty(){ return !!(qs.cur && qd.clean !== null && JSON.stringify(qs.cur) !== qd.clean); }
   function qdClean(){ qd.clean = qs.cur ? JSON.stringify(qs.cur) : null; }
   function qdSave(){
@@ -13809,6 +13881,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         qs.cur.voci = qs.cur.voci || []; qs.cur.rate = qs.cur.rate || []; qs.cur.condizioni = qs.cur.condizioni || [];
         qRenderEditor(); qCard(true); ppShowView('quote');
         qScrollTop(); qd.clean = '';   // da salvare: resta "non salvato" finché non premi Salva
+        if(rdS1()){ qwOpen(3); qd.clean = ''; }
         var m = document.getElementById('qEdMsg'); if(m) m.textContent = 'Bozza ripresa: ricordati di premere Salva.';
       }).catch(function(e){ var el = document.getElementById('qListErr'); if(el) el.textContent = e.message; });
     };
@@ -13860,6 +13933,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qs.cur = qBlank(s); qs.curId = null; qs.meta = null; qs.newPreview = null; qs.introAuto = true; qs.leadId = null;
       if(prefill) prefill(qs.cur);
       qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop(); qdClean();
+      if(rdS1()){ qwOpen(); qdClean(); }
     }).catch(function(e){ if(err) err.textContent = e.message; });
   }
   function qEdit(id){
@@ -13871,6 +13945,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       ['cliente','cantiere','iva','pagamento','anteprima'].forEach(function(k){ qs.cur[k] = qs.cur[k] || {}; });
       qs.cur.voci = qs.cur.voci || []; qs.cur.rate = qs.cur.rate || []; qs.cur.condizioni = qs.cur.condizioni || [];
       qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop(); qdClean();
+      if(rdS1()){ qwOpen(3); qdClean(); }
     }).catch(function(e){ var el = document.getElementById('qListErr'); if(el) el.textContent = e.message; });
   }
   // Dall'anteprima Rendrum appena generata
@@ -14141,6 +14216,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function qOpenSettings(){
     qLoadSettings().then(function(s){
       qs._fromQuote = document.getElementById('ppViewQuote').classList.contains('active');
+      qs._fromWiz = document.getElementById('ppViewQWiz').classList.contains('active'); if(qs._fromWiz) qs._fromQuote = true;
       var root = document.getElementById('ppViewQSettings');
       var ps = document.getElementById('qSetPaese');
       if(!ps.options.length){ var ks = Object.keys(VAT_RULES).filter(function(k){ return k !== 'IT' && k !== 'XX'; }).sort(function(a, b){ return VAT_RULES[a].name.localeCompare(VAT_RULES[b].name); });
@@ -14184,7 +14260,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qs.settings = null;
       return qLoadSettings().then(function(){
         msg.textContent = '✓ Impostazioni salvate.';
-        if(qs._fromQuote && qs.cur){ setTimeout(function(){ qRenderEditor(); ppShowView('quote'); qScrollTop(); }, 500); }
+        if(qs._fromWiz && qs.cur){ setTimeout(function(){ qRenderEditor(); qwOpen(3); }, 500); }
+        else if(qs._fromQuote && qs.cur){ setTimeout(function(){ qRenderEditor(); ppShowView('quote'); qScrollTop(); }, 500); }
         else setTimeout(hub.ret === 'qsettings' ? hubOpen : qOpenList, 700);
       });
     }).catch(function(){ err.textContent = 'Connessione non riuscita.'; }).finally(function(){ btn.disabled = false; });
@@ -14823,13 +14900,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function soNew(prefill){
     so.cur = { id: soUuid(), clientName:'', address:'', phone:'', leadId:null, status:'bozza', data: soFix({ tipo:'', note:'', firma:'', firmaNome:'', firmaData:'', data: qToday() }) };
     if(prefill) prefill(so.cur);
+    so._cliEdit = false; so._cliLock = !!(so.cur.clientName || '').trim();
     so.dirty = false; so.tab = 'cli'; so.vsk = null; so.room = undefined;
     qLoadSettings().catch(function(){}).then(function(){ soRender(); });
     soRender(); pbModal(); qCard(false); ppShowView('soprEd'); qScrollTop();
   }
   function soEdit(id){
     var loc = soLocalAll().filter(function(x){ return x.id === id; })[0];
-    function open(item){ so.cur = item; delete so.cur._local; so.cur.data = soFix(so.cur.data || {}); so.dirty = !!loc; so.tab = 'cli'; so.vsk = null; so.room = undefined; qLoadSettings().catch(function(){}).then(function(){ if(so.cur === item) soRender(); }); soRender(); ppShowView('soprEd'); qScrollTop(); }
+    function open(item){ so._cliEdit = false; so._cliLock = true; so.cur = item; delete so.cur._local; so.cur.data = soFix(so.cur.data || {}); so.dirty = !!loc; so.tab = 'cli'; so.vsk = null; so.room = undefined; qLoadSettings().catch(function(){}).then(function(){ if(so.cur === item) soRender(); }); soRender(); ppShowView('soprEd'); qScrollTop(); }
     if(loc){ open(loc); return; }
     soApi('sopr-get', 'GET', null, '&id=' + encodeURIComponent(id)).then(function(x){
       if(!x.ok){ document.getElementById('soErr').textContent = (x.d && x.d.error) || 'Sopralluogo non trovato.'; return; }
@@ -14844,16 +14922,18 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function soMsg(t, bad){ var m = document.getElementById('soMsg'), e = document.getElementById('soEdErr'); m.textContent = bad ? '' : t; e.textContent = bad ? t : ''; }
   function soShow(tab){
+    if(rdS1()){ if(tab === 'cli' || tab === 'foto') tab = 'mis'; if(tab === 'sc') tab = 'voci'; }
     so.tab = tab;
     document.querySelectorAll('#soTabs [data-sotab]').forEach(function(b){ b.classList.toggle('on', b.dataset.sotab === tab); if(b.dataset.sotab === tab){ var bar = b.parentNode; bar.scrollLeft = Math.max(0, b.offsetLeft - bar.clientWidth / 2 + b.offsetWidth / 2); } });
-    document.querySelectorAll('#soBody [data-sosec]').forEach(function(s){ s.hidden = s.dataset.sosec !== tab; });
-    if(tab === 'voci') soDrawVoci(); if(tab === 'sc') soDrawSc(); if(tab === 'fine') soDrawFine(); if(tab === 'mis') soDrawMis();
+    document.querySelectorAll('#soBody [data-sosec]').forEach(function(s){ s.hidden = !soSecOn(s.dataset.sosec, tab); });
+    if(tab === 'voci') soDrawVoci(); if(tab === 'sc' || (rdS1() && tab === 'voci')) soDrawSc(); if(tab === 'fine') soDrawFine(); if(tab === 'mis') soDrawMis();
+    soS1Ui(tab);
     qScrollTop();
   }
   function soRender(){
     var c = so.cur, d = c.data, b = document.getElementById('soBody');
     document.getElementById('soTitle').textContent = c.clientName ? 'Sopralluogo · ' + c.clientName : 'Nuovo sopralluogo';
-    var h = '<div class="so-tabs" id="soTabs">' + SO_TABS.map(function(t, i){ return '<button type="button" data-sotab="' + t[0] + '"><b>' + (i + 1) + '</b> ' + t[1] + '</button>'; }).join('') + '</div>';
+    var h = '<div class="so-tabs" id="soTabs">' + soTabs().map(function(t, i){ return '<button type="button" data-sotab="' + t[0] + '"><b>' + (i + 1) + '</b> ' + t[1] + '</button>'; }).join('') + '</div>';
     h += '<div data-sosec="cli">'
       + '<div class="field"><label>Nome e cognome *</label><input id="soNome" value="' + qEsc(c.clientName) + '" autocomplete="off"></div>'
       + '<div class="so-row"><div class="field"><label>Telefono</label><input id="soTel" type="tel" value="' + qEsc(c.phone) + '"></div><div class="field"><label>Data</label><input id="soData" type="date" value="' + qEsc(d.data || qToday()) + '"></div></div>'
@@ -14885,7 +14965,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }); });
     soDrawFoto(); soDrawFirma();
     var del = document.getElementById('soDel'); del.hidden = false; delete del.dataset.arm; del.textContent = 'Elimina sopralluogo';
-    soMsg(''); soShow(so.tab || 'cli');
+    soS1Prep(); soMsg(''); soShow(so.tab || 'cli');
   }
   function soLive(){
     // aggiorna i numeri senza ridisegnare i campi (così la tastiera non si chiude)
@@ -15093,15 +15173,16 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var d = so.cur.data, box = document.getElementById('soFoto'), ids = {};
     var groups = soRooms(d).map(function(r){ ids[r.id] = 1; return { id:r.id, n:r.n }; });
     groups.push({ id:'', n: groups.length ? 'Altre foto' : 'Foto' });
+    if(rdS1()){ ids.foglio = 1; groups.unshift({ id:'foglio', n:'Fogli scritti a mano', foglio:1 }); }
     function one(f, i){
       return '<div class="so-ph"><img data-soimg="' + i + '" alt="Foto ' + (i + 1) + '"><div class="so-ph-b"><textarea data-sonota="' + i + '" rows="2" placeholder="Cosa si vede? (1 = …, 2 = …)">' + qEsc(f.nota) + '</textarea>'
         + '<div class="so-ph-a"><button type="button" class="q-link" data-somark="' + i + '">✎ Segna punti</button>' + (f.local ? '<span class="so-pend">📱 da inviare</span>' : '') + '<button type="button" class="q-link" style="color:#C0392B" data-sofdel="' + i + '">Togli</button></div></div></div>';
     }
     box.innerHTML = groups.map(function(g){
       var ph = d.foto.map(function(f, i){ return { f:f, i:i }; }).filter(function(x){ return g.id ? x.f.rif === g.id : !ids[x.f.rif]; });
-      if(g.id && !ph.length) return '';
+      if(g.id && !ph.length && !g.foglio) return '';
       return '<div class="so-fg"><div class="so-fg-h">' + qEsc(g.n) + (ph.length ? ' <span>' + ph.length + '</span>' : '') + '</div>' + ph.map(function(x){ return one(x.f, x.i); }).join('')
-        + '<label class="q-add so-file">📷 ' + (g.id ? 'Altra foto di ' + qEsc(g.n) : 'Aggiungi foto') + '<input type="file"' + (g.id ? '' : ' id="soFile"') + ' accept="image/*" multiple hidden data-sofile="' + g.id + '"></label></div>';
+        + '<label class="q-add so-file' + (g.foglio ? ' so-foglio' : '') + '">' + (g.foglio ? '📝 Foto del foglio <em>Hai scritto a mano? Fotografalo: resta nel sopralluogo</em>' : '📷 ' + (g.id ? 'Altra foto di ' + qEsc(g.n) : 'Aggiungi foto')) + '<input type="file"' + (g.id ? '' : ' id="soFile"') + ' accept="image/*" multiple hidden data-sofile="' + g.id + '"></label></div>';
     }).join('');
     box.querySelectorAll('[data-soimg]').forEach(function(im){ var f = d.foto[+im.dataset.soimg]; im.src = f.local || f.url; });
     box.querySelectorAll('[data-sonota]').forEach(function(t){ t.addEventListener('input', function(){ d.foto[+t.dataset.sonota].nota = t.value; soTouch(); }); });
@@ -15128,7 +15209,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     Promise.all(files.map(function(f){ return soReadImg(f).then(function(i){ return i ? soShrink(i, 1400, 0.72) : null; }); })).then(function(urls){
       urls.filter(Boolean).forEach(function(u){ d.foto.push({ url:'', local:u, nota:'', rif:rif || '' }); });
       soFotoRefresh(); soTouch();
-      if(urls.filter(Boolean).length === 1) soMark(first);
+      if(urls.filter(Boolean).length === 1 && rif !== 'foglio') soMark(first);
     });
   }
   // segni numerati sulla foto: tocchi un punto, compare un cerchio rosso col numero
@@ -16025,7 +16106,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       ['stat', '<path d="M6 26V14M13 26V8M20 26v-9M27 26V4"/>', 'Andamento', 'Quanto hai lavorato e incassato']
     ];
     var al = 0; try{ al = inAll((typeof ct !== 'undefined' && ct.list) || []).filter(function(a){ return a.x.alert; }).length; }catch(e){}
-    box.innerHTML = R.map(function(r){
+    box.innerHTML = s2Week() + R.map(function(r){
       return '<button type="button" class="hb-row" data-soldi="' + r[0] + '"><span class="hb-ic">' + hbSvg(r[1]) + '</span><span class="hb-t"><b>' + r[2] + (r[0] === 'incassi' && al ? ' <u class="s1-bd">' + (al > 9 ? '9+' : al) + '</u>' : '') + '</b><em>' + r[3] + '</em></span><span class="hb-go">›</span></button>';
     }).join('');
     box.querySelectorAll('[data-soldi]').forEach(function(b){ b.addEventListener('click', function(){
@@ -16036,6 +16117,205 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }); });
   }
   RX_GO.soldi = soldiOpen;
+  // ===== Semplificazione fase 3 (in prova): sopralluogo in 3 schede + "Foto del foglio" =====
+  var SO_TABS_S1 = [['mis', 'Misure e foto'], ['voci', 'Lavori'], ['fine', 'Firma']];
+  function soTabs(){ return rdS1() ? SO_TABS_S1 : SO_TABS; }
+  function soSecOn(sec, tab){
+    if(!rdS1()) return sec === tab;
+    return ({ mis:['cli', 'foto', 'mis'], voci:['voci', 'sc'], fine:['fine'] }[tab] || [tab]).indexOf(sec) > -1;
+  }
+  function soS1Prep(){
+    if(!rdS1()) return;
+    var b = document.getElementById('soBody'); if(!b) return;
+    var cli = b.querySelector('[data-sosec="cli"]'), mis = b.querySelector('[data-sosec="mis"]'), foto = b.querySelector('[data-sosec="foto"]'), sc = b.querySelector('[data-sosec="sc"]');
+    if(foto && mis) mis.parentNode.insertBefore(foto, mis);          // prima le foto, poi le misure
+    if(cli && !document.getElementById('soCliLine')){
+      var ln = document.createElement('div'); ln.id = 'soCliLine'; ln.className = 'so-cli-line'; cli.insertBefore(ln, cli.firstChild);
+    }
+    var a = mis && mis.querySelector('[data-sogo="voci"]'); if(a) a.textContent = 'Avanti: lavori →';
+    var s = sc && sc.querySelector('[data-sogo]'); if(s){ s.dataset.sogo = 'fine'; s.textContent = 'Avanti: firma →'; s.onclick = function(e){ e.stopImmediatePropagation(); soShow('fine'); }; }
+    var acts = document.querySelector('#ppViewSoprEd .so-actions');
+    if(acts && !document.getElementById('soMore')){
+      var det = document.createElement('details'); det.id = 'soMore'; det.className = 'so-more'; det.innerHTML = '<summary>⋯ Altro: salva, PDF, WhatsApp, elimina</summary>';
+      ['soSave', 'soPdf', 'rxWaSopr', 'soDel'].forEach(function(id){ var el = document.getElementById(id); if(!el || det.contains(el)) return; var row = el.closest('.so-row'); det.appendChild(row && row.parentNode === acts ? row : el); });
+      acts.appendChild(det);
+    }
+  }
+  function soS1Ui(tab){
+    var h = document.documentElement, on = rdS1();
+    h.classList.toggle('so-s1-fine', on && tab === 'fine');
+    if(!on) return;
+    var q = document.getElementById('soQuote'); if(q) q.textContent = '📄 Fai il preventivo';
+    var c = so.cur, ln = document.getElementById('soCliLine'), body = document.getElementById('soBody');
+    var ok = !!(c && (c.clientName || '').trim().length > 1 && !so._cliEdit && so._cliLock);
+    if(body) body.classList.toggle('so-cli-ok', ok);
+    if(ln){ ln.innerHTML = ok ? '<span><b>' + qEsc(c.clientName) + '</b>' + qEsc([c.phone, c.address].filter(Boolean).join(' · ') ? ' · ' + [c.phone, c.address].filter(Boolean).join(' · ') : '') + '</span><button type="button" class="q-link" id="soCliEd">Modifica</button>' : '';
+      var e = document.getElementById('soCliEd'); if(e) e.onclick = function(){ so._cliEdit = true; soS1Ui(so.tab); }; }
+  }
+  // ===== Semplificazione fase 2 (in prova): home "Da fare oggi" =====
+  function v3HomeS1(box, L, sera, tar){
+    var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
+    var todo = L.filter(function(c){ return c.aperto !== false && c.next; });
+    var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">Da fare oggi</h1>'
+      + '<span class="s2-sub">' + (todo.length ? (todo.length === 1 ? '1 cliente aspetta te' : todo.length + ' clienti aspettano te') : 'Nessun cliente in attesa') + '</span></div></div>';
+    if(sera) h += ccSeraHtml(sera, tar);
+    if(todo.length){
+      var c0 = todo[0], i0 = L.indexOf(c0);
+      h += '<div class="v3cards s2-one"><div class="v3c" data-v3c="' + i0 + '" style="' + v3Bg(c0) + '">' + (!c0.img && c0.cover ? '<img class="v3cblur" src="' + qEsc(c0.cover) + '" alt="">' : '') + '<div class="v3cs"></div>' + (c0.img || c0.cover ? '' : '<span class="v3ci">' + qEsc(ctIni(c0.nome)) + '</span>')
+        + '<div class="v3ct"><span class="v3ph">' + qEsc(c0.next.s || CT_FASI[c0.fase]) + (c0._td ? ' · oggi ' + qEsc(c0._td.data.ora || '') : '') + '</span><b>' + qEsc(c0.nome) + '</b><i>' + qEsc([c0.lavoro, c0.luogo].filter(Boolean).join(' · ')) + '</i>'
+        + '<button type="button" class="v3nx" data-v3n="' + i0 + '">' + qEsc(c0.next.t) + ' <span>›</span></button></div></div></div>';
+      var rest = todo.slice(1, 7);
+      if(rest.length) h += '<div class="s2-rows">' + rest.map(function(c){ var i = L.indexOf(c), verbo = String(c.next.t).split(/\s+/)[0];
+          return '<div class="s2-row" data-v3c="' + i + '"><span class="s2-av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(c.nome))) + '</span><span class="s2-t"><b>' + qEsc(c.nome) + '</b><em>' + qEsc(c.next.s || c.next.t) + '</em></span><button type="button" class="s2-go" data-v3n="' + i + '" aria-label="' + qEsc(c.next.t) + '">' + qEsc(verbo) + ' ›</button></div>'; }).join('') + '</div>';
+      if(todo.length > 7) h += '<button type="button" class="s2-all" id="v3All">Vedi tutti i cantieri ›</button>';
+    } else {
+      h += '<div class="v3empty"><b>Niente da fare per ora 👍</b><span>Quando un cliente aspetta qualcosa da te (un preventivo, una data, una recensione) lo trovi qui.</span></div>';
+    }
+    h += invHomeHtml();
+    h += inHomeHtml(L);
+    h += tmFeedHtml();
+    h += '<div class="rd-o-sec">Fai una cosa nuova</div><div class="s2-big">'
+      + '<button type="button" class="s2-b p" data-s2="cam"><i>' + V3_SVG('<path d="M4 11h5l2-3h10l2 3h5v15H4z"/><circle cx="16" cy="18" r="5"/>') + '</i><span><b>Fai vedere il risultato</b><em>Foto + anteprima per il cliente</em></span></button>'
+      + '<button type="button" class="s2-b" data-s2="prev"><i>' + V3_SVG('<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/>') + '</i><span><b>Nuovo preventivo</b></span></button>'
+      + '<button type="button" class="s2-b" data-s2="app"><i>' + V3_SVG('<rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/>') + '</i><span><b>Appuntamento</b></span></button>'
+      + '</div><div class="s2-more">' + v3Acts().filter(function(x){ return ['app', 'prev'].indexOf(x[0]) < 0; }).map(function(x){ return '<button type="button" data-cosa="' + x[0] + '">' + qEsc(x[2]) + '</button>'; }).join('') + '</div>';
+    box.innerHTML = h; box.dataset.ready = 1;
+    box.querySelectorAll('[data-v3c]').forEach(function(b){ b.addEventListener('click', function(e){ if(e.target.closest('[data-v3n]')) return; v3Story(+b.dataset.v3c); }); });
+    box.querySelectorAll('[data-v3n]').forEach(function(b){ b.addEventListener('click', function(){ var c = v3.list[+b.dataset.v3n]; if(c && c.next) c.next.fn(); }); });
+    box.querySelectorAll('[data-s2]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.s2; if(k === 'cam') v3Cam(); else if(k === 'prev'){ rxClose(); pbModal(); rdTabOn('prev'); qNew(); } else ctCosaGo('app'); }); });
+    var all = document.getElementById('v3All'); if(all) all.addEventListener('click', ctOpen);
+    ctCosaBind(box);
+    if(sera) ccSeraBind(box, sera, tar);
+    tmFeedBind(box);
+    inHomeBind(box, L, function(){ v3Home(box); });
+    try{ invHomeBind(box); }catch(e){}
+  }
+  // riga della settimana: dalla home a "Soldi"
+  function s2Week(){
+    var L = (typeof v3 !== 'undefined' && v3.list) || [], week = Date.now() - 7 * 86400000, acc = 0, rv = [];
+    L.forEach(function(c){ (c.g.quote || []).forEach(function(q){ if(q.status === 'accettato' && Date.parse(q.updatedAt) >= week) acc += +q.total || 0; }); (c.g.review || []).forEach(function(r){ if(r.data.stato === 'ricevuta') rv.push(+r.data.stelle || 0); }); });
+    var media = rv.length ? rv.reduce(function(a, b){ return a + b; }, 0) / rv.length : 0;
+    return '<div class="v3line" style="margin:0 0 12px">Questa settimana: <b>' + Math.round(acc).toLocaleString('it-IT') + ' € accettati</b> · ' + (rv.length ? '<b>' + rxMedia(media) + ' ★</b> su ' + rv.length + (rv.length === 1 ? ' recensione' : ' recensioni') : 'nessuna recensione') + '</div>';
+  }
+
+  // ===== Semplificazione fase 2 (in prova): preventivo in 3 passi =====
+  // Usa lo stesso preventivo dell'editor (qs.cur): "Altre opzioni" apre l'editor completo, il PDF è identico.
+  var qw = { step: 1, add: false };
+  function qwEur(n){ return qpEur(Math.round((+n || 0) * 100) / 100); }
+  function qwClean(){ var L = qs.cur.voci || []; qs.cur.voci = L.filter(function(v){ return (v.titolo || '').trim() || (v.descrizione || '').trim() || +v.prezzo; }); }
+  function qwAuto(){
+    var q = qs.cur, nome = (q.cliente.nome || '').trim();
+    if(qs.introAuto) q.intro = Q_INTRO.replace('{cliente}', nome || 'Cliente');
+    if(!q.lavorazione){ var lv = (q.voci || []).map(function(v){ return v.lavorazione; }).filter(Boolean)[0]; if(lv) qSetLav(lv); }
+    if(!qw.ogg0 && (!(q.oggetto || '').trim() || q._ogAuto)){ var t = (q.voci || []).map(function(v){ return (v.titolo || '').trim(); }).filter(Boolean);
+      if(t.length){ q.oggetto = ('Offerta per: ' + t.slice(0, 3).join(', ')).slice(0, 120); q._ogAuto = 1; } }
+    if(!q.cantiere.indirizzo && q.cliente.indirizzo) q.cantiere.indirizzo = q.cliente.indirizzo;
+  }
+  function qwOpen(step){
+    if(!qs.cur) return;
+    qwClean(); qw.add = false; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
+    qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
+  }
+  function qwBar(){ return '<div class="qw-bar">' + [1, 2, 3].map(function(k){ return '<i class="' + (k <= qw.step ? 'on' : '') + '"></i>'; }).join('') + '</div>'; }
+  function qwTop(back){ return '<div class="qw-top"><button type="button" class="pp-back-link" id="qwBack">' + back + '</button></div>' + qwBar(); }
+  function qwRender(){
+    var box = document.getElementById('qwBox'); if(!box) return;
+    var q = qs.cur, h = '';
+    if(qw.step === 1){
+      h = qwTop('← Preventivi') + '<div class="pro-projects-title">Per chi è?</div>';
+      var L = ((typeof ct !== 'undefined' && ct.list) || []).filter(function(c){ return c.nome && !/^richiesta /i.test(c.nome); }).slice(0, 6);
+      if(L.length) h += '<div class="qw-sec">Clienti recenti</div>' + L.map(function(c, i){ return '<button type="button" class="hb-row qw-cl" data-qwc="' + i + '"><span class="s2-av">' + qEsc(ctIni(c.nome)) + '</span><span class="hb-t"><b>' + qEsc(c.nome) + '</b><em>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ') || ' ') + '</em></span><span class="hb-go">›</span></button>'; }).join('');
+      h += '<div class="qw-sec">' + (L.length ? 'Cliente nuovo' : 'Il cliente') + '</div>'
+        + '<div class="field"><input type="text" id="qwNome" maxlength="160" placeholder="Nome e cognome" value="' + qEsc(q.cliente.nome || '') + '"></div>'
+        + '<div class="field"><input type="tel" id="qwTel" maxlength="40" placeholder="Telefono (per mandarlo su WhatsApp)" value="' + qEsc(q.cliente.telefono || '') + '"></div>'
+        + '<div class="field"><input type="text" id="qwInd" maxlength="200" placeholder="Indirizzo del lavoro (facoltativo)" value="' + qEsc(q.cantiere.indirizzo || q.cliente.indirizzo || '') + '"></div>'
+        + '<div class="pp-error" id="qwErr"></div><button type="button" class="pro-auth-submit qw-next" id="qwNext">Avanti</button>';
+      box.innerHTML = h;
+      box.querySelectorAll('[data-qwc]').forEach(function(b){ b.addEventListener('click', function(){ var c = L[+b.dataset.qwc];
+        q.cliente.nome = c.nome; q.cliente.telefono = c.tel || q.cliente.telefono || ''; if(c.luogo){ q.cliente.indirizzo = q.cliente.indirizzo || c.luogo; q.cantiere.indirizzo = c.luogo; }
+        qwAuto(); qw.step = 2; qwRender(); qScrollTop(); }); });
+      document.getElementById('qwNext').onclick = function(){
+        var n = document.getElementById('qwNome').value.trim(); if(n.length < 2){ document.getElementById('qwErr').textContent = 'Scrivi il nome del cliente.'; return; }
+        q.cliente.nome = n; q.cliente.telefono = document.getElementById('qwTel').value.trim(); var ind = document.getElementById('qwInd').value.trim(); if(ind){ q.cantiere.indirizzo = ind; if(!q.cliente.indirizzo) q.cliente.indirizzo = ind; }
+        qwAuto(); qw.step = 2; qwRender(); qScrollTop(); };
+      document.getElementById('qwBack').onclick = function(){ qOpenList(); };
+      return;
+    }
+    if(qw.step === 2){
+      var LI = (qs.settings && qs.settings.listino) || [], tot = qpTotals(q);
+      h = qwTop('← Per chi') + '<div class="pro-projects-title">Cosa fai?</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + '</div>';
+      if(q.voci.length) h += '<div class="qw-sec">Nel preventivo</div>' + q.voci.map(function(v, i){
+          return '<div class="qw-v"><span class="qw-vt"><b>' + qEsc(v.titolo || 'Voce senza titolo') + '</b><em>' + qEsc(qwEur(v.prezzo)) + (v.um && v.um !== 'a corpo' ? ' / ' + qEsc(v.um) : '') + '</em></span>'
+            + '<span class="qw-q"><button type="button" data-qwm="' + i + '" aria-label="Meno">−</button><input type="text" inputmode="decimal" data-qwq="' + i + '" value="' + qEsc(qpNum(v.qta || 0)) + '"><i>' + qEsc(v.um === 'a corpo' ? '' : (v.um || '')) + '</i><button type="button" data-qwp="' + i + '" aria-label="Più">+</button></span>'
+            + '<button type="button" class="qw-x" data-qwx="' + i + '" aria-label="Togli">✕</button></div>'; }).join('');
+      var free = LI.map(function(v, i){ return [v, i]; }).filter(function(x){ return !q.voci.some(function(v){ return v.titolo === x[0].titolo; }); });
+      if(free.length) h += '<div class="qw-sec">Dal tuo listino</div><div class="qw-li">' + free.map(function(x){ return '<button type="button" data-qwl="' + x[1] + '"><b>' + qEsc(x[0].titolo) + '</b><em>' + qEsc(qwEur(x[0].prezzo)) + (x[0].um && x[0].um !== 'a corpo' ? ' / ' + qEsc(x[0].um) : '') + '</em><span>＋</span></button>'; }).join('') + '</div>';
+      else if(!LI.length) h += '<div class="qw-hint">Il listino è vuoto: scrivi le voci qui sotto. Ogni voce che scrivi la puoi salvare nel listino per la prossima volta.</div>';
+      if(qw.add) h += '<div class="qw-add"><div class="field"><input type="text" id="qwT" maxlength="160" placeholder="Cosa fai (es. Pavimento in resina)"></div>'
+          + '<div class="row2"><div class="field"><input type="text" inputmode="decimal" id="qwQ" placeholder="Quantità" value="1"></div><div class="field"><select id="qwU">' + Q_UNITS.map(function(u){ return '<option>' + u + '</option>'; }).join('') + '</select></div></div>'
+          + '<div class="field"><input type="text" inputmode="decimal" id="qwP" placeholder="Prezzo € (per unità)"></div>'
+          + '<label class="qw-ck"><input type="checkbox" id="qwSaveL" checked> Salvala nel mio listino</label>'
+          + '<button type="button" class="q-add" id="qwAddOk">Aggiungi</button></div>';
+      else h += '<button type="button" class="qw-write" id="qwAdd">＋ Scrivi una voce</button>';
+      h += '<div class="pp-error" id="qwErr"></div><button type="button" class="pro-auth-submit qw-next" id="qwNext">Avanti · ' + qEsc(qwEur(tot.totale)) + '</button>';
+      box.innerHTML = h;
+      var upd = function(){ var t = qpTotals(q); document.getElementById('qwNext').textContent = 'Avanti · ' + qwEur(t.totale); };
+      box.querySelectorAll('[data-qwq]').forEach(function(el){ el.addEventListener('input', function(){ q.voci[+el.dataset.qwq].qta = qParse(el.value); upd(); }); });
+      box.querySelectorAll('[data-qwm],[data-qwp]').forEach(function(b){ b.addEventListener('click', function(){ var i = +(b.dataset.qwm || b.dataset.qwp), v = q.voci[i], st = (v.um === 'a corpo' || v.um === 'pz' || v.um === 'n.') ? 1 : 1;
+        v.qta = Math.max(0, Math.round(((+v.qta || 0) + (b.dataset.qwm ? -st : st)) * 100) / 100); var inp = box.querySelector('[data-qwq="' + i + '"]'); if(inp) inp.value = qpNum(v.qta); upd(); }); });
+      box.querySelectorAll('[data-qwx]').forEach(function(b){ b.addEventListener('click', function(){ q.voci.splice(+b.dataset.qwx, 1); qwAuto(); qwRender(); }); });
+      box.querySelectorAll('[data-qwl]').forEach(function(b){ b.addEventListener('click', function(){ var v = LI[+b.dataset.qwl];
+        q.voci.push({ titolo:v.titolo, descrizione:v.descrizione || '', qta: +v.qta || 1, um:v.um || 'a corpo', prezzo: +v.prezzo || 0, lavorazione:v.lavorazione || '' }); qwAuto(); qwRender(); }); });
+      var ad = document.getElementById('qwAdd'); if(ad) ad.onclick = function(){ qw.add = true; qwRender(); var t = document.getElementById('qwT'); if(t) t.focus(); };
+      var ok = document.getElementById('qwAddOk'); if(ok) ok.onclick = function(){
+        var t = document.getElementById('qwT').value.trim(), qq = qParse(document.getElementById('qwQ').value) || 1, um = document.getElementById('qwU').value, pr = qParse(document.getElementById('qwP').value);
+        if(t.length < 2){ document.getElementById('qwErr').textContent = 'Scrivi cosa fai.'; return; }
+        var v = { titolo:t, descrizione:'', qta:qq, um:um, prezzo:pr, lavorazione: q.lavorazione || '' }; q.voci.push(v);
+        if(document.getElementById('qwSaveL').checked){ try{ var s = qs.settings; s.listino = (s.listino || []).filter(function(x){ return x.titolo !== t; }); s.listino.push({ titolo:t, descrizione:'', qta:1, um:um, prezzo:pr, lavorazione:v.lavorazione }); qApi('listino', 'POST', { listino: s.listino }).catch(function(){}); }catch(e){} }
+        qw.add = false; qwAuto(); qwRender(); };
+      document.getElementById('qwNext').onclick = function(){
+        if(!q.voci.length){ document.getElementById('qwErr').textContent = 'Aggiungi almeno una voce.'; return; }
+        if(q.voci.some(function(v){ return !(+v.qta > 0); })){ document.getElementById('qwErr').textContent = 'Metti la quantità a ogni voce.'; return; }
+        qwAuto(); qw.step = 3; qwRender(); qScrollTop(); };
+      document.getElementById('qwBack').onclick = function(){ qw.step = 1; qwRender(); };
+      return;
+    }
+    // passo 3: controlla e manda
+    var t3 = qpTotals(q), rk = Object.keys(Q_RATE_PRESETS).filter(function(k){ return JSON.stringify(Q_RATE_PRESETS[k]) === JSON.stringify(q.rate); })[0];
+    h = qwTop('← Cosa fai') + '<div class="pro-projects-title">' + qEsc(q.cliente.nome || 'Cliente') + '</div><div class="qw-who">' + (qs.meta ? 'Preventivo n. ' + ('00' + qs.meta.number).slice(-3) + '/' + qs.meta.year : 'Nuovo preventivo') + ' · ' + qEsc(new Date(q.data || Date.now()).toLocaleDateString('it-IT')) + '</div>'
+      + '<div class="qw-sum">' + q.voci.map(function(v){ return '<div><span>' + qEsc(v.titolo || '') + (v.um && v.um !== 'a corpo' ? ' · ' + qEsc(qpNum(v.qta)) + ' ' + qEsc(v.um) : '') + '</span><span>' + qEsc(qwEur((v.qta || 0) * (v.prezzo || 0))) + '</span></div>'; }).join('')
+      + '<button type="button" class="q-link" id="qwEditV">Cambia le voci</button></div>'
+      + '<div class="qw-tot"><span>Totale</span><b>' + qEsc(qwEur(t3.totale)) + '</b></div><div class="qw-iva">IVA ' + qEsc(String(q.iva.aliquota)) + '% compresa' + (t3.sconto ? ' · sconto ' + qEsc(qpNum(q.scontoPct)) + '%' : '') + '</div>'
+      + '<div class="qw-sec">Come ti paga</div><div class="qw-chips">' + [['50/50', '50 / 50'], ['30/40/30', '30 / 40 / 30'], ['100% fine lavori', 'A fine lavori']].map(function(r){ return '<button type="button" data-qwr="' + r[0] + '" class="' + (rk === r[0] ? 'on' : '') + '">' + r[1] + '</button>'; }).join('') + '</div>'
+      + '<button type="button" class="qw-opt" id="qwOpt">⚙︎ Altre opzioni <em>IVA, sconto, condizioni, note</em></button>'
+      + '<div class="pp-error" id="qwErr"></div><div class="pf-hint" id="qwMsg" style="color:var(--ink)"></div>'
+      + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : '')
+      + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
+      + '<button type="button" class="q-link qw-save" id="qwSave">Salva e chiudi</button>';
+    box.innerHTML = h;
+    box.querySelectorAll('[data-qwr]').forEach(function(b){ b.addEventListener('click', function(){ q.rate = qClone(Q_RATE_PRESETS[b.dataset.qwr]); qwRender(); }); });
+    document.getElementById('qwEditV').onclick = function(){ qw.step = 2; qwRender(); };
+    document.getElementById('qwBack').onclick = function(){ qw.step = 2; qwRender(); };
+    document.getElementById('qwOpt').onclick = function(){ document.getElementById('qBackQuotes').textContent = '← Torna al riepilogo'; qRenderEditor(); qCard(true); ppShowView('quote'); qScrollTop(); };
+    var go = function(fn){ var e = document.getElementById('qwErr'), m = document.getElementById('qwMsg'); e.textContent = ''; m.textContent = '';
+      qRenderEditor(); qwMirror(); fn(); };
+    var wa = document.getElementById('qwWa'); if(wa) wa.onclick = function(){ if(q.status === 'bozza') q.status = 'inviato'; go(function(){ var b = document.getElementById('rxWaQuote'); if(b) b.click(); else document.getElementById('qPdfBtn').click(); }); };
+    document.getElementById('qwPdf').onclick = function(){ go(function(){ document.getElementById('qPdfBtn').click(); }); };
+    document.getElementById('qwSave').onclick = function(){ var e = document.getElementById('qwErr'); e.textContent = ''; qRenderEditor();
+      qSave().then(function(){ qOpenList(); }, function(){ e.innerHTML = document.getElementById('qEdErr').innerHTML || 'Salvataggio non riuscito.'; qwLinks(e); }); };
+  }
+  // i messaggi dell'editor (PDF pronto, dati impresa mancanti…) compaiono anche qui
+  function qwLinks(el){ el.querySelectorAll('button[id^="qGoSettings"]').forEach(function(b){ b.addEventListener('click', function(){ hub.next = /IBAN/.test(el.textContent) ? 'banca' : 'impresa'; qOpenSettings(); }); }); }
+  var qwObs = null;
+  function qwMirror(){
+    if(qwObs) qwObs.disconnect();
+    var src = [document.getElementById('qEdErr'), document.getElementById('qEdMsg')];
+    var sync = function(){ var e = document.getElementById('qwErr'), m = document.getElementById('qwMsg'); if(!e || !m) return;
+      if(e.innerHTML !== src[0].innerHTML){ e.innerHTML = src[0].innerHTML; qwLinks(e); }
+      m.textContent = src[1].textContent; };
+    qwObs = new MutationObserver(sync); src.forEach(function(s){ if(s) qwObs.observe(s, { childList:true, subtree:true, characterData:true }); }); sync();
+  }
   // azioni della home: in prova c'è anche il voto del condominio (tolto dal menu)
   function v3Acts(){
     var L = V3_ACT.slice();
@@ -16474,7 +16754,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // home
   function v3Home(box){
     var data = new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
-    if(!box.dataset.ready) box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div></div><div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div><div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
+    if(!box.dataset.ready) box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">' + (rdS1() ? 'Da fare oggi' : 'I tuoi cantieri') + '</h1></div></div>' + (rdS1() ? '' : '<div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div>') + '<div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
     return Promise.all([ctLoad(), ccTar(), tmOwnerOn() ? tmLoad(true).catch(function(){ return null; }) : null, inLoad(true).catch(function(){ return null; }), invLoad(true).catch(function(){ return null; })]).then(function(R){
       var L = v3Order(R[0].slice()), tar = R[1]; v3.list = L;
       var sera = ccSeraFind(L);
@@ -16483,6 +16763,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var week = Date.now() - 7 * 86400000, acc = 0, rv = [];
       L.forEach(function(c){ c.g.quote.forEach(function(q){ if(q.status === 'accettato' && Date.parse(q.updatedAt) >= week) acc += +q.total || 0; }); c.g.review.forEach(function(r){ if(r.data.stato === 'ricevuta') rv.push(+r.data.stelle || 0); }); });
       var media = rv.length ? rv.reduce(function(a, b){ return a + b; }, 0) / rv.length : 0;
+      if(rdS1()){ v3HomeS1(box, L, sera, tar); return; }
       var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div>' + (L.length ? '<button type="button" class="v3all" id="v3All">Tutti ›</button>' : '') + '</div>';
       if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : c.cover ? '<img class="v3blur" src="' + qEsc(c.cover) + '" alt="">' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
       if(sera) h += ccSeraHtml(sera, tar);
@@ -18732,8 +19013,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   });
   document.getElementById('qlSave').addEventListener('click', qlSave);
 
-  document.getElementById('qBackQuotes').addEventListener('click', qOpenList);
-  document.getElementById('qSetBack').addEventListener('click', function(){ if(qs._fromQuote && qs.cur){ qCard(true); ppShowView('quote'); } else qOpenList(); });
+  document.getElementById('qBackQuotes').addEventListener('click', function(){ if(rdS1() && qs.cur){ qwOpen(3); } else qOpenList(); });
+  document.getElementById('qSetBack').addEventListener('click', function(){ if(qs._fromWiz && qs.cur){ qwOpen(3); } else if(qs._fromQuote && qs.cur){ qCard(true); ppShowView('quote'); } else qOpenList(); });
   document.getElementById('qSetSave').addEventListener('click', qSaveSettings);
   document.getElementById('qSetCondReset').addEventListener('click', function(){ qSetCond = qDefaultCond(''); qRenderCond('qSetCondBox', qSetCond); });
   document.getElementById('qSetCondAdd').addEventListener('click', function(){ qSetCond.push({ titolo:'', testo:'', approva:false }); qRenderCond('qSetCondBox', qSetCond); });
@@ -18968,7 +19249,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   ['pfBackBtn', 'accBack', 'qSetBack'].forEach(function(id){
     var el = document.getElementById(id); if(!el) return;
     var want = { pfBackBtn:'profile', accBack:'account', qSetBack:'qsettings' }[id];
-    el.addEventListener('click', function(e){ if(hub.ret === want){ e.stopImmediatePropagation(); hub.prof = null; hubOpen(); } }, true);
+    el.addEventListener('click', function(e){ if(want === 'qsettings' && qs._fromWiz && qs.cur){ e.stopImmediatePropagation(); hub.ret = null; qwOpen(3); return; } if(hub.ret === want){ e.stopImmediatePropagation(); hub.prof = null; hubOpen(); } }, true);
   });
   // dopo aver salvato il profilo pubblico, il riepilogo si aggiorna
   (function(){ var b = document.getElementById('pfSaveBtn'); if(b) b.addEventListener('click', function(){ hub.prof = null; }); })();
