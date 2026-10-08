@@ -1545,6 +1545,15 @@ html.rd-s1 #soBody .field:has(#soData), html.rd-s1 #soBody .field:has(#soTipo){ 
 .s2-num strong{ display:block; font-family:"Playfair Display",Georgia,serif; font-size:34px; line-height:1; color:#C8692E; margin-bottom:6px; }
 .s2-num span{ display:block; font-size:12.5px; font-weight:700; line-height:1.25; }
 .s2-num.on{ border-color:#C8692E; background:#FBEFE5; box-shadow:0 0 0 2px rgba(200,105,46,.18); }
+/* quadrati fissi con numerino (notifica) */
+.s2-num{ position:relative; padding:14px 4px 11px; }
+.s2-num i{ display:block; width:30px; height:30px; margin:0 auto 6px; color:#C8692E; }
+.s2-num i svg{ width:30px; height:30px; }
+.s2-num span{ font-size:13.5px; font-weight:800; }
+.s2-num em{ display:block; font-style:normal; font-size:11.5px; color:#8a7b70; margin-top:2px; }
+.s2-num.z i{ color:#CFC3B7; } .s2-num.z span{ color:#8a7b70; }
+.s2-bd{ position:absolute; top:-8px; right:-6px; min-width:24px; height:24px; padding:0 6px; border-radius:12px; background:#D93B2B; color:#fff; font-size:13px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; border:2.5px solid var(--bg,#F7F5F1); box-sizing:border-box; }
+.s2-nums{ padding-top:6px; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -16226,9 +16235,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(ln){ ln.innerHTML = ok ? '<span><b>' + qEsc(c.clientName) + '</b>' + qEsc([c.phone, c.address].filter(Boolean).join(' · ') ? ' · ' + [c.phone, c.address].filter(Boolean).join(' · ') : '') + '</span><button type="button" class="q-link" id="soCliEd">Modifica</button>' : '';
       var e = document.getElementById('soCliEd'); if(e) e.onclick = function(){ so._cliEdit = true; soS1Ui(so.tab); }; }
   }
-  // ===== Home in prova: "Ti aspettano anche" con tre numeri grandi; tocchi il numero e vedi solo quelli =====
+  // ===== Home in prova: tre quadrati fissi con il numerino rosso; tocchi il numero e vedi solo quelli =====
   var s2h = { open: '' };
-  var S2_GR = [['sopr', 'Sopralluogo o richiesta', 'Sopralluoghi e richieste'], ['prev', 'Preventivo', 'Preventivi'], ['lav', 'Lavoro', 'Lavori']];
+  var S2_GR = [['sopr', 'Sopralluoghi', '', '<rect x="8" y="5" width="16" height="23" rx="2"/><path d="M12 5h8v4h-8zM12 15h8M12 20h6"/>'], ['prev', 'Preventivi', '', '<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/>'], ['lav', 'Lavori', '', '<rect x="5" y="6" width="18" height="8" rx="2"/><path d="M23 10h3v6H15v4M13 20h4v8h-4z"/>']];
   function s2Gr(c){ return c.fase >= 3 ? 'lav' : c.fase === 2 ? 'prev' : 'sopr'; }
   // mai "Cliente": se il nome manca, la via o la data
   function s2Nome(c){
@@ -16249,18 +16258,15 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       h += '<div class="v3cards s2-one"><div class="v3c" data-v3c="' + i0 + '" style="' + v3Bg(c0) + '">' + (!c0.img && c0.cover ? '<img class="v3cblur" src="' + qEsc(c0.cover) + '" alt="">' : '') + '<div class="v3cs"></div>' + (c0.img || c0.cover ? '' : '<span class="v3ci">' + qEsc(ctIni(c0.nome)) + '</span>')
         + '<div class="v3ct"><span class="v3ph">' + qEsc(c0.next.s || CT_FASI[c0.fase]) + (c0._td ? ' · oggi ' + qEsc(c0._td.data.ora || '') : '') + '</span><b>' + qEsc(s2Nome(c0)) + '</b><i>' + qEsc([c0.lavoro, c0.luogo].filter(Boolean).join(' · ')) + '</i>'
         + '<button type="button" class="v3nx" data-v3n="' + i0 + '">' + qEsc(c0.next.t) + ' <span>›</span></button></div></div></div>';
-      var rest = todo.slice(1);
-      if(rest.length){
-        h += '<div class="rd-o-sec">Ti aspettano anche</div><div class="s2-nums">' + S2_GR.map(function(gr){ var n = rest.filter(function(c){ return s2Gr(c) === gr[0]; }).length;
-            return n ? '<button type="button" class="s2-num' + (s2h.open === gr[0] ? ' on' : '') + '" data-s2g="' + gr[0] + '"><strong>' + n + '</strong><span>' + qEsc(n === 1 ? gr[1] : gr[2]) + '</span></button>' : ''; }).join('') + '</div>';
-        var sel = s2h.open ? rest.filter(function(c){ return s2Gr(c) === s2h.open; }) : [];
-        if(sel.length) h += '<div class="s2-rows">' + sel.slice(0, 8).map(function(c){ var i = L.indexOf(c), verbo = String(c.next.t).split(/\s+/)[0];
-            return '<div class="s2-row" data-v3c="' + i + '"><span class="s2-av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(s2Nome(c)))) + '</span><span class="s2-t"><b>' + qEsc(s2Nome(c)) + '</b><em>' + qEsc(c.next.s || c.next.t) + '</em></span><button type="button" class="s2-go" data-v3n="' + i + '" aria-label="' + qEsc(c.next.t) + '">' + qEsc(verbo) + ' ›</button></div>'; }).join('') + '</div>';
-        if(sel.length > 8) h += '<button type="button" class="s2-all" id="v3All">Vedi tutti i cantieri ›</button>';
-      }
     } else {
       h += '<div class="v3empty"><b>Niente da fare per ora 👍</b><span>Quando un cliente aspetta qualcosa da te (un preventivo, una data, una recensione) lo trovi qui.</span></div>';
     }
+    h += '<div class="rd-o-sec">I tuoi lavori</div><div class="s2-nums">' + S2_GR.map(function(gr){ var n = todo.filter(function(c){ return s2Gr(c) === gr[0]; }).length;
+        return '<button type="button" class="s2-num' + (n ? '' : ' z') + (s2h.open === gr[0] ? ' on' : '') + '" data-s2g="' + gr[0] + '" data-n="' + n + '"><i>' + V3_SVG(gr[3]) + '</i>' + (n ? '<u class="s2-bd">' + n + '</u>' : '') + '<span>' + qEsc(gr[1]) + '</span><em>' + (n ? 'da fare' : 'nessuno') + '</em></button>'; }).join('') + '</div>';
+    var sel = s2h.open ? todo.filter(function(c){ return s2Gr(c) === s2h.open; }) : [];
+    if(sel.length) h += '<div class="s2-rows">' + sel.slice(0, 8).map(function(c){ var i = L.indexOf(c), verbo = String(c.next.t).split(/\s+/)[0];
+        return '<div class="s2-row" data-v3c="' + i + '"><span class="s2-av" style="' + v3Bg(c) + '">' + (c.img ? '' : qEsc(ctIni(s2Nome(c)))) + '</span><span class="s2-t"><b>' + qEsc(s2Nome(c)) + '</b><em>' + qEsc(c.next.s || c.next.t) + '</em></span><button type="button" class="s2-go" data-v3n="' + i + '" aria-label="' + qEsc(c.next.t) + '">' + qEsc(verbo) + ' ›</button></div>'; }).join('') + '</div>';
+    if(sel.length > 8) h += '<button type="button" class="s2-all" id="v3All">Vedi tutti i cantieri ›</button>';
     h += invHomeHtml();
     h += inHomeHtml(L);
     h += tmFeedHtml();
@@ -16274,7 +16280,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     box.querySelectorAll('[data-v3n]').forEach(function(b){ b.addEventListener('click', function(){ var c = v3.list[+b.dataset.v3n]; if(c && c.next) c.next.fn(); }); });
     box.querySelectorAll('[data-s2]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.s2; if(k === 'cam') v3Cam(); else if(k === 'prev'){ rxClose(); pbModal(); rdTabOn('prev'); qNew(); } else ctCosaGo('app'); }); });
     var all = document.getElementById('v3All'); if(all) all.addEventListener('click', ctOpen);
-    box.querySelectorAll('[data-s2g]').forEach(function(b){ b.addEventListener('click', function(){ var g = b.dataset.s2g; s2h.open = s2h.open === g ? '' : g; v3HomeS1(box, L, sera, tar); var r = box.querySelector('.s2-rows'); if(r && r.scrollIntoView) r.scrollIntoView({ block:'nearest', behavior:'smooth' }); }); });
+    box.querySelectorAll('[data-s2g]').forEach(function(b){ b.addEventListener('click', function(){ var g = b.dataset.s2g; if(b.dataset.n === '0'){ s2h.open = ''; ctOpen(); return; } s2h.open = s2h.open === g ? '' : g; v3HomeS1(box, L, sera, tar); var r = box.querySelector('.s2-rows'); if(r && r.scrollIntoView) r.scrollIntoView({ block:'nearest', behavior:'smooth' }); }); });
     ctCosaBind(box);
     if(sera) ccSeraBind(box, sera, tar);
     tmFeedBind(box);
