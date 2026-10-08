@@ -1622,6 +1622,29 @@ html.rd-s1 #rdAltro .rx-menu::after{ order:99; width:100%; }
 .pl-dove button{ border:1.5px solid var(--line,#e3d9cf); background:#fff; border-radius:999px; padding:9px 13px; font:700 13.5px inherit; font-family:inherit; cursor:pointer; color:var(--ink,#1D1B18); }
 .pl-dove button em{ font-style:normal; font-weight:500; opacity:.8; }
 .pl-dove button.on{ background:#2B1408; border-color:#2B1408; color:#fff; }
+.pl-ov{ position:fixed; inset:0; z-index:100000; background:var(--bg,#F7F5F1); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.pl-ov[hidden]{ display:none; }
+.pl-ov-in{ max-width:560px; margin:0 auto; padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(40px + env(safe-area-inset-bottom,0px)); }
+html.pl-ov-on, html.pl-ov-on body{ overflow:hidden; }
+.so-plan-w{ margin:0 0 14px; }
+.so-plan{ background:#FFF9F4; border:1.5px solid #C8692E; border-radius:16px; padding:12px 14px; }
+.so-plan-h{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; } .so-plan-h b{ font-size:15px; } .so-plan-h span{ font-size:12px; color:#8a7b70; }
+.so-plan-r{ display:flex; justify-content:space-between; gap:8px; font-size:14px; padding:6px 0; border-top:1px solid #f1e3d6; } .so-plan-r b{ white-space:nowrap; }
+.so-plan-a{ display:flex; justify-content:space-between; margin-top:6px; }
+/* anteprima del preventivo */
+#qPvBtn{ display:none; } html.rd-s1 #qPvBtn{ display:block; margin-bottom:8px; }
+.qw-pv{ margin:12px 0 8px; }
+.rd-pv{ position:fixed; inset:0; z-index:100001; background:#3a3530; display:flex; flex-direction:column; }
+.rd-pv[hidden]{ display:none; }
+.rd-pv-top{ display:flex; align-items:center; justify-content:space-between; padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px; color:#fff; background:#2B1408; }
+.rd-pv-top b{ font-family:"Playfair Display",Georgia,serif; font-size:19px; }
+.rd-pv-top button{ width:36px; height:36px; border-radius:50%; border:none; background:rgba(255,255,255,.14); color:#fff; font-size:16px; cursor:pointer; }
+.rd-pv-body{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:12px; display:flex; flex-direction:column; align-items:center; gap:12px; }
+.rd-pv-pg{ background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.35); border-radius:3px; max-width:100%; height:auto; }
+.rd-pv-if{ width:100%; flex:1; min-height:70vh; border:none; background:#fff; }
+.rd-pv-bar{ display:flex; gap:10px; padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px)); background:#2B1408; }
+.rd-pv-bar button{ flex:1; border:none; border-radius:12px; padding:14px 10px; font:800 15px inherit; font-family:inherit; cursor:pointer; }
+.rd-pv-ed{ background:rgba(255,255,255,.14); color:#fff; } .rd-pv-ok{ background:linear-gradient(90deg,#E9B98F,#D9894F); color:#2B1408; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -2321,6 +2344,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <button type="button" class="pp-new-btn" id="qSendLead" hidden style="margin-top:12px">📤 Invia il preventivo al cliente</button>
       <div class="q-actions">
         <button type="button" class="pro-auth-submit" id="qSaveBtn" style="background:none;color:var(--ink);border:1.5px solid var(--accent)">Salva</button>
+        <button type="button" class="qw-write qw-pv rx-s1only" id="qPvBtn">👁 Guarda l’anteprima</button>
         <button type="button" class="pro-auth-submit" id="qPdfBtn">Salva e scarica PDF</button>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:12px">
@@ -13002,7 +13026,36 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // Salva un PDF creato con jsPDF. Nel browser lo scarica; nell'app (dove i
   // download non esistono) lo scrive nella cache e apre "Condividi / Salva".
   // Restituisce una Promise: true se salvato/condiviso, false se annullato.
+  // ===== Anteprima del preventivo (in prova): vedi il PDF prima di scaricarlo o mandarlo =====
+  function rdPvShow(doc, fname){
+    var o = document.getElementById('rdPv');
+    if(!o){ o = document.createElement('div'); o.id = 'rdPv'; o.className = 'rd-pv';
+      o.innerHTML = '<div class="rd-pv-top"><b>Anteprima</b><button type="button" id="rdPvX" aria-label="Chiudi">✕</button></div><div class="rd-pv-body" id="rdPvBody"></div>'
+        + '<div class="rd-pv-bar"><button type="button" class="rd-pv-ed" id="rdPvEd">✏️ Correggi</button><button type="button" class="rd-pv-ok" id="rdPvOk">📄 Va bene: scarica</button></div>';
+      document.body.appendChild(o); }
+    var body = document.getElementById('rdPvBody'), close = function(){ o.hidden = true; document.documentElement.classList.remove('pl-ov-on'); body.innerHTML = ''; };
+    o.hidden = false; document.documentElement.classList.add('pl-ov-on'); body.scrollTop = 0;
+    body.innerHTML = '<div class="pl-spin" style="justify-content:center;margin:40px 0;color:#fff"><i></i>Preparo l’anteprima…</div>';
+    document.getElementById('rdPvX').onclick = close; document.getElementById('rdPvEd').onclick = close;
+    document.getElementById('rdPvOk').onclick = function(){ close(); rdSavePdf(doc, fname); };
+    var buf = doc.output('arraybuffer');
+    plPdfLib().then(function(lib){ return lib.getDocument({ data: new Uint8Array(buf) }).promise; }).then(function(pdf){
+      body.innerHTML = ''; var W = Math.min(body.clientWidth - 24, 900), dpr = Math.min(2.5, window.devicePixelRatio || 1), chain = Promise.resolve();
+      for(var n = 1; n <= pdf.numPages; n++) (function(n){ chain = chain.then(function(){ return pdf.getPage(n); }).then(function(pg){
+        var v0 = pg.getViewport({ scale:1 }), sc = W / v0.width, v = pg.getViewport({ scale: sc * dpr }), c = document.createElement('canvas');
+        c.width = v.width; c.height = v.height; c.style.width = W + 'px'; c.className = 'rd-pv-pg'; body.appendChild(c);
+        return pg.render({ canvasContext: c.getContext('2d'), viewport: v }).promise; }); })(n);
+      return chain;
+    }).catch(function(e){
+      try{ console.warn('anteprima', e); }catch(x){}
+      // senza pdf.js: il PDF dentro la pagina
+      try{ var u = URL.createObjectURL(new Blob([buf], { type:'application/pdf' })); body.innerHTML = '<iframe class="rd-pv-if" src="' + u + '"></iframe>'; }
+      catch(e){ body.innerHTML = '<div style="color:#fff;text-align:center;margin:40px 16px">Non riesco a mostrare l’anteprima. Usa “Va bene: scarica”.</div>'; }
+    });
+    return Promise.resolve(false);
+  }
   function rdSavePdf(doc, fname){
+    if(window.rdPvNext && Date.now() - window.rdPvNext < 120000){ window.rdPvNext = null; return rdPvShow(doc, fname); }
     if(window.rdWaNext && window.rxWaPdf){ var waN = window.rdWaNext; window.rdWaNext = null; if(Date.now() - (waN.at || 0) < 120000) return window.rxWaPdf(doc, fname, waN); }
     var P = IS_APP && window.Capacitor && window.Capacitor.Plugins;
     if(!(P && P.Filesystem && P.Share)){ doc.save(fname); return Promise.resolve(true); }
@@ -14338,6 +14391,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function qImgFromUrl(url){
     return loadImgCors(url).then(function(im){ if(!im) return null; var j = imgToJpeg(im, 1400); return { url:j.url, w:j.w, h:j.h }; });
   }
+  // anteprima: stesso PDF di "scarica", ma si apre qui. Se mancano dati il PDF non parte e l'anteprima si annulla
+  function qPvGo(){ var b = document.getElementById('qPdfBtn'); window.rdPvNext = Date.now(); b.click(); if(!b.disabled){ window.rdPvNext = null; return false; } return true; }
+  (function(){ var b = document.getElementById('qPvBtn'); if(b) b.addEventListener('click', function(){ document.getElementById('qEdErr').textContent = ''; qPvGo(); }); })();
   function qPdf(){
     var btn = document.getElementById('qPdfBtn'), msg = document.getElementById('qEdMsg'), err = document.getElementById('qEdErr');
     var miss = qImpresaMissing(qs.settings);
@@ -15434,7 +15490,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var jobs = d.foto.map(function(f){ return f.local ? soUpload(f.local).then(function(u){ f.url = u; delete f.local; }) : Promise.resolve(); });
     if(d.firmaLocal) jobs.push(soUpload(d.firmaLocal).then(function(u){ d.firma = u; delete d.firmaLocal; }));
     return Promise.all(jobs).then(function(){
-      var out = { lavori:d.lavori, tipo:d.tipo, ambienti:d.ambienti, prospetti:d.prospetti, aree:d.aree, gradini:d.gradini, voci:d.voci, extra:d.extra, scelte:d.scelte, controlli:d.controlli,
+      var out = { lavori:d.lavori, tipo:d.tipo, ambienti:d.ambienti, prospetti:d.prospetti, aree:d.aree, gradini:d.gradini, voci:d.voci, extra:d.extra, plan:d.plan, scelte:d.scelte, controlli:d.controlli,
         foto:d.foto.map(function(f){ return { url:f.url, nota:f.nota, rif:f.rif || '' }; }), note:d.note, firma:d.firma, firmaNome:d.firmaNome, firmaData:d.firmaData, data:d.data,
         riassunto: soSummary(d).map(function(x){ return x.top; }).filter(Boolean).join(' · ').slice(0, 200) };
       return soApi('sopr-save', 'POST', { id:c.id, clientName:c.clientName, address:c.address, phone:c.phone, leadId:c.leadId, status: status || c.status, data: out });
@@ -15473,7 +15529,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return righe;
   }
   function soToQuote(){
-    if(!so.cur.data.lavori.length){ soMsg('Scegli almeno un lavoro nella pagina Cliente.', true); soShow('cli'); return; }
+    if(!so.cur.data.lavori.length && !((so.cur.data.plan || {}).voci || []).length){ soMsg('Scegli almeno un lavoro nella pagina Cliente.', true); soShow('cli'); return; }
     qLoadSettings().catch(function(){}).then(function(){ return soSave('chiuso'); }).then(function(){
       var c = so.cur, d = c.data, righe = soRighe(d), lavs = [];
       righe.forEach(function(r){ if(lavs.indexOf(r.lavorazione) < 0) lavs.push(r.lavorazione); });
@@ -15484,7 +15540,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         q.cantiere.indirizzo = c.address || ''; q.cantiere.descrizione = 'Sopralluogo del ' + dt + (d.tipo ? ' · ' + d.tipo : '');
         q.lavorazione = lav;
         q.condizioni.forEach(function(k){ if(k.key === 'finiture') k.testo = Q_FINITURE[qFinKey(lav)]; });
-        q.oggetto = 'Offerta per: ' + d.lavori.map(function(sk){ return SO_SCHEDE[sk].n; }).join(', ');
+        q.oggetto = 'Offerta per: ' + d.lavori.map(function(sk){ return SO_SCHEDE[sk].n; }).concat(((d.plan || {}).voci || []).map(function(v){ return v.titolo; })).join(', ');
         q.intro = Q_INTRO.replace('{cliente}', c.clientName); qs.introAuto = true;
         if(righe.length) q.voci = righe;
         var sp = []; if(is.ko.length) sp.push('Dal sopralluogo del ' + dt + ' risultano da trattare: ' + is.ko.join(', ') + '.'); if(is.dub.length) sp.push('Da verificare in fase esecutiva: ' + is.dub.join(', ') + '.');
@@ -16407,8 +16463,21 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var pl = null;
   function plNum(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
   function plSvg(d){ return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
-  function plOpen(){ pl = { st:'carica', data:null, ed:{}, sel:{}, on:{}, open:'' }; qw.pl = 1; qwRender(); qScrollTop(); }
-  function plClose(){ pl = null; qw.pl = 0; qwRender(); qScrollTop(); }
+  function plOpen(ctx){ pl = { st:'carica', data:null, ed:{}, sel:{}, on:{}, open:'', ctx: ctx === 'so' ? 'so' : 'qw' };
+    if(pl.ctx === 'so'){ plRender(plBox()); plTop(); return; }
+    qw.pl = 1; qwRender(); qScrollTop(); }
+  function plClose(){ var so1 = pl && pl.ctx === 'so'; pl = null;
+    if(so1){ var o = document.getElementById('plOv'); if(o) o.hidden = true; document.documentElement.classList.remove('pl-ov-on'); try{ soDrawMis(); }catch(e){} return; }
+    qw.pl = 0; qwRender(); qScrollTop(); }
+  // dal sopralluogo: pagina a tutto schermo sopra la scheda
+  function plBox(){
+    if(!pl || pl.ctx !== 'so') return document.getElementById('qwBox');
+    var o = document.getElementById('plOv');
+    if(!o){ o = document.createElement('div'); o.id = 'plOv'; o.className = 'pl-ov'; o.innerHTML = '<div class="pl-ov-in" id="plOvIn"></div>'; document.body.appendChild(o); }
+    o.hidden = false; document.documentElement.classList.add('pl-ov-on');
+    return document.getElementById('plOvIn');
+  }
+  function plTop(){ if(pl && pl.ctx === 'so'){ var o = document.getElementById('plOv'); if(o) o.scrollTop = 0; } else qScrollTop(); }
   // misura di un piano per una superficie (con le correzioni dell'artigiano)
   function plVal(s, i){
     var e = pl.ed[s.k + i]; if(e != null) return { mq:e, fonte:'tuo' };
@@ -16433,7 +16502,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return out;
   }
   function plRender(box){
-    var h = '<div class="qw-top"><button type="button" class="pp-back-link" id="plBack">' + (pl.st === 'scegli' ? '← La tua casa' : '← Torna al preventivo') + '</button></div>';
+    var h = '<div class="qw-top"><button type="button" class="pp-back-link" id="plBack">' + (pl.st === 'scegli' ? '← La tua casa' : pl.ctx === 'so' ? '← Torna al sopralluogo' : '← Torna al preventivo') + '</button></div>';
     if(pl.st === 'carica' || pl.st === 'err'){
       h += '<div class="pro-projects-title">📐 Misure dal disegno</div><div class="qw-who">Carica la planimetria: Rendrum calcola pavimenti, pareti e plafoni. Poi scegli tu cosa fai.</div>'
         + '<label class="pl-up"><input type="file" id="plFile" accept="image/*,application/pdf" hidden><span class="pl-upi">' + plSvg('<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M16 15v8M12.5 18.5 16 15l3.5 3.5"/>') + '</span><b>Carica il disegno</b><em>Foto o PDF della planimetria</em></label>'
@@ -16462,7 +16531,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         if(k >= 0){ if(cur.length > 1) cur.splice(k, 1); } else cur.push(i); pl.on[s.k] = cur; plRender(box); }); });
       var pr = document.getElementById('plPr'); if(pr) pr.addEventListener('input', function(){ pl.sel[s.k].p = qParse(pr.value); });
       var sv = document.getElementById('plSaveL'); if(sv) sv.addEventListener('change', function(){ pl.sel[s.k].save = sv.checked; });
-      document.getElementById('plOk').onclick = function(){ pl.st = 'casa'; plRender(box); qScrollTop(); };
+      document.getElementById('plOk').onclick = function(){ pl.st = 'casa'; plRender(box); plTop(); };
       return;
     }
     // la casa: tre riquadri
@@ -16476,7 +16545,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(D.avvisi && D.avvisi.length) h += '<div class="pl-av">' + D.avvisi.map(function(a){ return '• ' + qEsc(a); }).join('<br>') + '</div>';
     if(ok.length){
       h += '<div class="qw-sec">Va nel preventivo</div><div class="qw-sum">' + ok.map(function(s){ var sel = pl.sel[s.k], t = plTot(s); return '<div><span>' + qEsc(sel.t) + ' · ' + plNum(t) + ' m²' + (sel.p ? ' × ' + qEsc(qwEur(sel.p)) : '') + '</span><span>' + (sel.p ? qEsc(qwEur(t * sel.p)) : 'prezzo da mettere') + '</span></div>'; }).join('') + '</div>'
-        + '<button type="button" class="pro-auth-submit qw-next" id="plPut">Metti nel preventivo</button>';
+        + '<button type="button" class="pro-auth-submit qw-next" id="plPut">' + (pl.ctx === 'so' ? 'Salva nel sopralluogo' : 'Metti nel preventivo') + '</button>';
     } else h += '<div class="pl-hint" style="text-align:center">Tocca <b>Cosa fai?</b> su pavimenti, pareti o plafoni.</div>';
     h += '<button type="button" class="q-link" id="plAgain" style="display:block;margin:12px auto 0">Carica un altro disegno</button>';
     box.innerHTML = h; plBind(box);
@@ -16484,17 +16553,24 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       el.addEventListener('click', function(e){ e.stopPropagation(); });
       el.addEventListener('change', function(){ var v = qParse(el.value); pl.ed[el.dataset.ple] = v > 0 ? v : null; if(!(v > 0)) delete pl.ed[el.dataset.ple]; plRender(box); });
     });
-    box.querySelectorAll('[data-plg]').forEach(function(b){ b.addEventListener('click', function(){ pl.open = b.dataset.plg; pl.st = 'scegli'; plRender(box); qScrollTop(); }); });
+    box.querySelectorAll('[data-plg]').forEach(function(b){ b.addEventListener('click', function(){ pl.open = b.dataset.plg; pl.st = 'scegli'; plRender(box); plTop(); }); });
     document.getElementById('plAgain').onclick = function(){ pl.st = 'carica'; plRender(box); };
     var put = document.getElementById('plPut'); if(put) put.onclick = function(){
-      var q = qs.cur, save = [];
+      var voci = [], save = [];
       PL_S.forEach(function(s){ var sel = pl.sel[s.k], t = plTot(s); if(!sel || !(t > 0)) return;
         var rows = plRows(s).filter(function(r){ return plOn(s, r.i) && r.v.mq; });
-        q.voci = (q.voci || []).filter(function(v){ return (v.titolo || '').trim() || +v.prezzo; });
-        q.voci.push({ titolo: sel.t, descrizione: (sel.d ? sel.d + '\n' : '') + rows.map(function(r){ return r.nome + ' ' + plNum(r.v.mq) + ' m²'; }).join(' · '), qta: Math.round(t * 100) / 100, um:'mq', prezzo: +sel.p || 0, lavorazione: sel.lav || q.lavorazione || '' });
+        voci.push({ titolo: sel.t, descrizione: (sel.d ? sel.d + '\n' : '') + rows.map(function(r){ return r.nome + ' ' + plNum(r.v.mq) + ' m²'; }).join(' · '), qta: Math.round(t * 100) / 100, um:'mq', prezzo: +sel.p || 0, lavorazione: sel.lav || '' });
         if(!sel.li && sel.p > 0 && sel.save !== false) save.push({ titolo: sel.t, descrizione:'', qta:1, um:'mq', prezzo: sel.p, lavorazione: sel.lav || '' });
       });
       if(save.length){ try{ var st = qs.settings; st.listino = (st.listino || []).filter(function(x){ return !save.some(function(y){ return y.titolo === x.titolo; }); }).concat(save); qApi('listino', 'POST', { listino: st.listino }).catch(function(){}); }catch(e){} }
+      if(pl.ctx === 'so'){
+        var d = so.cur.data; d.plan = { voci: voci };
+        if(pl.thumb && !pl.fotoOk && d.foto.length < 40){ d.foto.push({ url:'', local: pl.thumb, nota:'Planimetria', rif:'foglio' }); pl.fotoOk = 1; }
+        soTouch(); plClose(); try{ soFotoRefresh(); }catch(e){}
+        return;
+      }
+      var q = qs.cur; q.voci = (q.voci || []).filter(function(v){ return (v.titolo || '').trim() || +v.prezzo; });
+      voci.forEach(function(v){ if(!v.lavorazione) v.lavorazione = q.lavorazione || ''; q.voci.push(v); });
       pl = null; qw.pl = 0; qwAuto(); qwRender(); qScrollTop();
     };
   }
@@ -16527,7 +16603,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return plPdfP;
   }
   function plLoad(file){
-    var box = document.getElementById('qwBox');
+    var box = plBox();
     pl.st = 'leggo'; pl.thumb = null; plRender(box);
     plToImg(file).then(function(img){
       pl.thumb = img; if(pl.st === 'leggo') plRender(box);
@@ -16537,9 +16613,29 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(!x.ok){ pl.st = 'err'; pl.err = (x.d && x.d.error) || 'Non riesco a leggere il disegno. Riprova.'; plRender(box); return; }
       var d = x.d || {};
       if(!d.piani || !d.piani.length){ pl.st = 'err'; pl.err = 'Sul disegno non ho trovato misure scritte (m², quote, altezze). Prova con una foto più vicina o un altro disegno.'; plRender(box); return; }
-      pl.data = d; pl.ed = {}; pl.sel = {}; pl.on = {}; pl.st = 'casa'; plRender(box); qScrollTop();
+      pl.data = d; pl.ed = {}; pl.sel = {}; pl.on = {}; pl.st = 'casa'; plRender(box); plTop();
     }).catch(function(e){ if(!pl) return; pl.st = 'err'; pl.err = (e && e.message && e.message.length > 12) ? e.message : 'Connessione non riuscita. Riprova.'; plRender(box); });
   }
+  // ----- nel sopralluogo: riquadro "Misure dal disegno" in cima alle misure -----
+  function soPlanHtml(d){
+    var P = d.plan && d.plan.voci && d.plan.voci.length ? d.plan.voci : null;
+    if(!P) return '<button type="button" class="qw-write pl-go" id="soPlan">📐 Misure dalla planimetria</button>';
+    return '<div class="so-plan"><div class="so-plan-h"><b>📐 Dal disegno</b><span>vanno nel preventivo</span></div>' + P.map(function(v){ return '<div class="so-plan-r"><span>' + qEsc(v.titolo) + '</span><b>' + plNum(v.qta) + ' m²</b></div>'; }).join('')
+      + '<div class="so-plan-a"><button type="button" class="q-link" id="soPlanRe">Rifai dal disegno</button><button type="button" class="q-link" id="soPlanDel">Togli</button></div></div>';
+  }
+  function soPlanBind(){
+    var a = document.getElementById('soPlan'), b = document.getElementById('soPlanRe'), c = document.getElementById('soPlanDel');
+    if(a) a.onclick = function(){ plOpen('so'); };
+    if(b) b.onclick = function(){ plOpen('so'); };
+    if(c) c.onclick = function(){ delete so.cur.data.plan; soTouch(); soDrawMis(); };
+  }
+  (function(){
+    var dm = soDrawMis, rg = soRighe;
+    soDrawMis = function(){ dm.apply(this, arguments);
+      if(!semplOn() || !so.cur) return; var box = document.getElementById('soMis'); if(!box) return;
+      var w = document.createElement('div'); w.className = 'so-plan-w'; w.innerHTML = soPlanHtml(so.cur.data); box.insertBefore(w, box.firstChild); soPlanBind(); };
+    soRighe = function(d){ var r = rg.apply(this, arguments); return r.concat(((d.plan || {}).voci || []).map(function(v){ return qClone(v); })); };
+  })();
   function qwRender(){
     var box = document.getElementById('qwBox'); if(!box) return;
     var q = qs.cur, h = '';
@@ -16637,6 +16733,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<div class="qw-sec">Come ti paga</div><div class="qw-chips">' + [['50/50', '50 / 50'], ['30/40/30', '30 / 40 / 30'], ['100% fine lavori', 'A fine lavori']].map(function(r){ return '<button type="button" data-qwr="' + r[0] + '" class="' + (rk === r[0] ? 'on' : '') + '">' + r[1] + '</button>'; }).join('') + '</div>'
       + '<button type="button" class="qw-opt" id="qwOpt">⚙︎ Altre opzioni <em>IVA, sconto, condizioni, note</em></button>'
       + '<div class="pp-error" id="qwErr"></div><div class="pf-hint" id="qwMsg" style="color:var(--ink)"></div>'
+      + '<button type="button" class="qw-write qw-pv" id="qwPv">👁 Guarda l\u2019anteprima</button>'
       + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : '')
       + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
       + '<button type="button" class="q-link qw-save" id="qwSave">Salva e chiudi</button>';
@@ -16649,6 +16746,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qRenderEditor(); qwMirror(); fn(); };
     var wa = document.getElementById('qwWa'); if(wa) wa.onclick = function(){ if(q.status === 'bozza') q.status = 'inviato'; go(function(){ var b = document.getElementById('rxWaQuote'); if(b) b.click(); else document.getElementById('qPdfBtn').click(); }); };
     document.getElementById('qwPdf').onclick = function(){ go(function(){ document.getElementById('qPdfBtn').click(); }); };
+    document.getElementById('qwPv').onclick = function(){ go(function(){ if(!qPvGo()){ var e = document.getElementById('qEdErr'), we = document.getElementById('qwErr'); if(e && we){ we.innerHTML = e.innerHTML; qwLinks(we); } } }); };
     document.getElementById('qwSave').onclick = function(){ var e = document.getElementById('qwErr'); e.textContent = ''; qRenderEditor();
       qSave().then(function(){ qOpenList(); }, function(){ e.innerHTML = document.getElementById('qEdErr').innerHTML || 'Salvataggio non riuscito.'; qwLinks(e); }); };
   }

@@ -47,9 +47,11 @@ function clean(d) {
   Object.keys(obj(d.scelte)).forEach(sk => { if (!SCHEDE.includes(sk)) return; const o = {}; Object.keys(obj(d.scelte[sk])).slice(0, 20).forEach(k => { const kk = key(k, 30); if (kk) o[kk] = str(d.scelte[sk][k], 160); }); scelte[sk] = o; });
   const controlli = {};
   Object.keys(obj(d.controlli)).slice(0, 200).forEach(k => { const kk = key(k, 60); const v = d.controlli[k]; if (kk && ["ok", "ko", "?"].includes(v)) controlli[kk] = v; });
+  const pv = obj(d.plan).voci;
+  const plan = { voci: (Array.isArray(pv) ? pv : []).slice(0, 10).map(v => ({ titolo: str(v && v.titolo, 120), descrizione: str(v && v.descrizione, 500), qta: num(v && v.qta, 1000000), um: "mq", prezzo: num(v && v.prezzo, 1000000), lavorazione: key(v && v.lavorazione, 40) })).filter(v => v.titolo && v.qta > 0) };
   const foto = (Array.isArray(d.foto) ? d.foto : []).slice(0, 40).map(f => ({ url: photoUrl(f && f.url), nota: str(f && f.nota, 300), rif: key(f && f.rif, 16) })).filter(f => f.url);
   return {
-    lavori, tipo: str(d.tipo, 40), ambienti, prospetti, aree, gradini, voci, extra, scelte, controlli, foto,
+    lavori, tipo: str(d.tipo, 40), ambienti, prospetti, aree, gradini, voci, extra, plan, scelte, controlli, foto,
     note: str(d.note, 4000),
     firma: photoUrl(d.firma), firmaNome: str(d.firmaNome, 80), firmaData: str(d.firmaData, 30),
     data: str(d.data, 10), riassunto: str(d.riassunto, 200),
