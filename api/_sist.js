@@ -249,4 +249,40 @@ function bsPrompt(b, colorDesc) {
   ].filter(Boolean).join(" ");
 }
 
-module.exports = { parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
+
+// ---------- battiscopa / zoccolino dei pavimenti (in prova) ----------
+function btFam(materialId) {
+  const m = String(materialId || "");
+  if (m.indexOf("monolith") === 0) return "resina";
+  if (m === "microcemento") return "microcemento";
+  if (["parquet", "spc", "laminato", "legno"].includes(m)) return "legno";
+  if (m === "piastrelle") return "piastrelle";
+  if (m === "graniglia_esterni") return "graniglia";
+  return null;
+}
+const BT_OK = { resina: ["vecchio", "tinta", "sguscia", "bianco", "filo"], microcemento: ["vecchio", "tinta", "bianco", "filo"], legno: ["vecchio", "tinta", "bianco", "muro"], piastrelle: ["vecchio", "tinta", "bianco"], graniglia: ["vecchio", "tinta", "nessuno"] };
+function parseBt(b, materialId) {
+  const fam = btFam(materialId); if (!fam || !b || typeof b !== "object") return null;
+  if (!BT_OK[fam].includes(b.tipo)) return null;
+  const H = fam === "graniglia" ? ["8", "10", "15"] : ["6", "8", "10"];
+  return { fam, tipo: b.tipo, h: H.includes(String(b.h)) ? String(b.h) : (fam === "graniglia" ? "10" : "8") };
+}
+function btNote(b) {
+  if (!b) return "";
+  const h = b.h + " cm";
+  const via = " Rimuovi il battiscopa vecchio.";
+  const regole = " È dritto e continuo lungo tutte le pareti visibili che toccano il pavimento, raccordato negli angoli, interrotto alle porte, intorno ai termosifoni e agli stipiti. Non cambiare pareti, porte, mobili e oggetti.";
+  if (b.tipo === "vecchio") return " BATTISCOPA: il battiscopa esistente resta IDENTICO alla foto (stesso materiale, colore e altezza): non toglierlo, non ridipingerlo e non inventarne uno nuovo; il pavimento nuovo arriva fin sotto il battiscopa.";
+  if (b.fam === "graniglia") {
+    if (b.tipo === "nessuno") return " ZOCCOLINO: nessuno zoccolino. Il pavimento in graniglia arriva fino al muro e si ferma con un bordo pulito; il muro sopra resta com'è.";
+    return " ZOCCOLINO IN GRANIGLIA: lungo il muro della casa, dei muretti e alla base dei gradini, la STESSA graniglia del pavimento sale sul muro per " + h + ", senza stacco e senza fuga: è la continuazione del pavimento, stesso colore e stessi sassolini, con il bordo superiore dritto e rifinito. Il muro sopra lo zoccolino resta identico.";
+  }
+  if (b.tipo === "sguscia") return " BATTISCOPA A SGUSCIA: tra pavimento e parete un raccordo CURVO in resina, dello stesso colore e finitura del pavimento, alto circa 8 cm, senza spigolo e senza battiscopa sporgente: il pavimento sembra salire morbido sul muro." + via + regole;
+  if (b.tipo === "filo") return " BATTISCOPA FILO MURO: nessun battiscopa sporgente. Alla base del muro si vede solo una sottile riga d'ombra dritta (battiscopa incassato a filo della parete)." + via + regole;
+  if (b.tipo === "bianco") return " BATTISCOPA: nuovo battiscopa BIANCO laccato alto " + h + ", sottile, con il bordo superiore dritto e leggermente smussato." + via + regole;
+  if (b.tipo === "muro") return " BATTISCOPA: nuovo battiscopa alto " + h + " dello STESSO colore della parete, così si confonde con il muro." + via + regole;
+  const t = { resina: "in RESINA, stesso colore e stessa finitura del pavimento (risvolto a muro, senza stacco)", microcemento: "in MICROCEMENTO, stesso colore e stessa texture del pavimento (risvolto a muro)", legno: "in LEGNO, stessa essenza, stesso colore e stessa finitura del pavimento", piastrelle: "ricavato dalla STESSA PIASTRELLA del pavimento (stesso colore e disegno), con le fughe allineate a quelle del pavimento" }[b.fam];
+  return " BATTISCOPA: nuovo battiscopa " + t + ", alto " + h + "." + via + regole;
+}
+
+module.exports = { parseBt, btNote, parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };

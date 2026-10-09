@@ -11069,6 +11069,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         invito: window.RD_INV_T || null,
         cartongesso: cgPayload(),
         boiserie: bsPayload(),
+        battiscopa: btPayload(),
         cappotto: cappPayload(),
         zoccolo: semplZoc(),
         segni: (marksAvailable() && state.marks && state.marks.length) ? state.marks.map(function(m, i){ return { n: i+1, target: m.target }; }) : null,
@@ -11911,6 +11912,62 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(st === 'cgW_taglio') it.w = v; else it.mis = v;
     return true;
   }
+  // ===== Battiscopa / zoccolino nei pavimenti (in prova) =====
+  function btMat(){ var c = SF.mat; if(c === 'piastrelle' && state.piaDove === 'riv') return null; return ['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1 ? c : null; }
+  function btOn(){ try{ return semplOn() && !!btMat(); }catch(e){ return false; } }
+  function btS(){ return state.bt || (state.bt = {}); }
+  function btOpts(){
+    var m = btMat(), legSub = state.material && state.material.id;
+    if(m === 'graniglia_esterni') return [['vecchio','Lascia quello di adesso','Non lo tocco'],['tinta','Zoccolino in graniglia','Continuo con il pavimento, stesso colore'],['nessuno','Nessuno','Il pavimento arriva al muro']];
+    var L = [['vecchio','Lascia quello di adesso','Non lo tocco']];
+    if(m === 'monolith') L.push(['tinta','In resina, come il pavimento','Risvolto a muro'],['sguscia','Sguscia arrotondata','Raccordo curvo, senza spigolo']);
+    if(m === 'microcemento') L.push(['tinta','In microcemento, come il pavimento','Risvolto a muro']);
+    if(m === 'legno') L.push(['tinta', legSub === 'parquet' ? 'Stessa essenza del parquet' : 'Coordinato al pavimento', 'Stesso colore del pavimento']);
+    if(m === 'piastrelle') L.push(['tinta','Dalla stessa piastrella','Tagliato dalla piastrella']);
+    L.push(['bianco','Bianco','Laccato']);
+    if(m === 'legno') L.push(['muro','Come il muro','Sparisce nella parete']);
+    if(m === 'monolith' || m === 'microcemento') L.push(['filo','Filo muro','Incassato: solo una riga d’ombra']);
+    return L;
+  }
+  function btNeedH(t){ return ['tinta','bianco','muro'].indexOf(t) > -1; }
+  function btSteps(s){ if(!btOn()) return; s.push('btTipo'); if(btNeedH(btS().tipo)) s.push('btAlt'); }
+  function btPic(k){
+    var fl = btMat() === 'legno' ? '#C49A5C' : btMat() === 'graniglia_esterni' ? '#A9A08F' : btMat() === 'piastrelle' ? '#C9B7A0' : '#9A9A9A', wall = btMat() === 'graniglia_esterni' ? '#E8DFD2' : '#EFE8DE';
+    var b = { tinta:'<rect x="0" y="62" width="120" height="10" fill="' + fl + '"/>', bianco:'<rect x="0" y="62" width="120" height="10" fill="#FFFFFF" stroke="#D9CFC2" stroke-width=".8"/>', muro:'<rect x="0" y="62" width="120" height="10" fill="' + wall + '" stroke="#D9CFC2" stroke-width=".6"/>',
+      filo:'<rect x="0" y="69" width="120" height="2" fill="#3B332B"/>', sguscia:'<path d="M0 58Q0 72 14 72H120V72H0Z" fill="' + fl + '"/>', vecchio:'<rect x="0" y="62" width="120" height="10" fill="#8A6A4A"/>', nessuno:'' }[k] || '';
+    return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="72" fill="' + wall + '"/><rect y="72" width="120" height="18" fill="' + fl + '"/>' + b + '</svg>';
+  }
+  function btQ(st){
+    if(st === 'btTipo'){ var cur = btS().tipo; return { t: btMat() === 'graniglia_esterni' ? 'E lo zoccolino?' : 'E il battiscopa?', s: btMat() === 'graniglia_esterni' ? 'Lungo il muro della casa e sui muretti.' : 'Lungo i muri, sopra il pavimento nuovo.', opts: btOpts().map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', btPic(x[0])), sel: cur === x[0] }; }) }; }
+    if(st === 'btAlt'){ var h = btS().h, H = btMat() === 'graniglia_esterni' ? ['8','10','15'] : ['6','8','10']; return { t:'Quanto alto?', opts: H.map(function(x){ return { v:x, n:x + ' cm', pic: sfPic('', '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#EFE8DE"/><rect y="74" width="120" height="16" fill="#B8A58C"/><rect x="0" y="' + (74 - (+x) * 1.6) + '" width="120" height="' + ((+x) * 1.6) + '" fill="#C8692E" opacity=".75"/></svg>'), sel: h === x }; }) }; }
+    return null;
+  }
+  function btApply(st, v){ if(st !== 'btTipo' && st !== 'btAlt') return false; var b = btS(); if(st === 'btTipo'){ b.tipo = v; if(!btNeedH(v)) b.h = null; } else b.h = v; return true; }
+  function btAnswered(st){ var b = state.bt || {}; return st === 'btTipo' ? !!b.tipo : st === 'btAlt' ? !!b.h : null; }
+  function btPayload(){ if(!btOn()) return null; var b = state.bt; if(!b || !b.tipo) return null; return { tipo: b.tipo, h: b.h || '', mat: btMat() }; }
+  // nel preventivo dall'anteprima: la voce del battiscopa a metri (stimati dai m², da controllare)
+  function btFamOf(id){ id = String(id || ''); return id.indexOf('monolith') === 0 ? 'resina' : id === 'microcemento' ? 'microcemento' : ['parquet','spc','laminato'].indexOf(id) > -1 ? 'legno' : id === 'piastrelle' ? 'piastrelle' : id === 'graniglia_esterni' ? 'graniglia' : null; }
+  function btTitle(b, fam){
+    var h = b.h ? ' h ' + b.h + ' cm' : '';
+    if(fam === 'graniglia') return 'Zoccolino in graniglia' + h;
+    if(b.tipo === 'sguscia') return 'Sguscia in resina (raccordo curvo pavimento-parete)';
+    if(b.tipo === 'filo') return 'Battiscopa filo muro';
+    if(b.tipo === 'bianco') return 'Battiscopa bianco laccato' + h;
+    if(b.tipo === 'muro') return 'Battiscopa in tinta parete' + h;
+    return ({ resina:'Battiscopa in resina', microcemento:'Battiscopa in microcemento', legno:'Battiscopa in legno coordinato', piastrelle:'Battiscopa in piastrella' }[fam] || 'Battiscopa') + h;
+  }
+  function btVoci(snaps, mqv){
+    var out = [], seen = {};
+    snaps.forEach(function(sn){ var b = sn && sn.bt, fam = btFamOf(sn && sn.material && sn.material.id);
+      if(!b || !b.tipo || !fam || b.tipo === 'vecchio' || b.tipo === 'nessuno') return;
+      var t = btTitle(b, fam); if(seen[t]) return; seen[t] = 1;
+      var ml = mqv > 0 ? Math.max(1, Math.round((4 * Math.sqrt(mqv) - 0.9) * 10) / 10) : 0;
+      var want = { bianco:/bianc/i, filo:/filo/i, sguscia:/sguscia/i, muro:/parete|muro/i }[b.tipo] || { resina:/resin/i, microcemento:/microcem/i, legno:/legno|parquet|rovere|spc|laminat/i, piastrelle:/piastrell|gres|ceram/i, graniglia:/granigl/i }[fam];
+      var li = ((qs.settings && qs.settings.listino) || []).filter(function(v){ var t = v.titolo || ''; return v.um === 'ml' && /battiscop|zoccol|sguscia/i.test(t) && want.test(t); })[0];
+      out.push({ titolo: li ? li.titolo : t, descrizione: (li && li.titolo !== t ? t + '\n' : '') + (ml ? 'Metri stimati dalla superficie: controllali (perimetro meno le porte).' : 'Scrivi i metri: perimetro meno le porte.'), qta: ml || 1, um:'ml', prezzo: li ? (+li.prezzo || 0) : 0, lavorazione: sn.material.id });
+    });
+    return out;
+  }
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -11943,12 +12000,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'legno') s.push('legnoTipo');
     else if(c === 'scale') s.push('scaleMat');
     else if(c === 'graniglia_esterni') s.push('granLayout', 'granScale');
+    if(['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1) btSteps(s);
     if(window.RD_INV_MAT || SF.a.ctxPre) s = s.filter(function(x){ return x !== 'ctx'; });
     return s;
   }
   function sfAnswered(st){
     var sa = semplAnswered(st); if(sa !== null) return sa;
     var ba = bsAnswered(st); if(ba !== null) return ba;
+    var bta = btAnswered(st); if(bta !== null) return bta;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
     if(st.indexOf('cgM_') === 0) return !!cgIt(st.slice(4)).mis;
     if(st === 'cgW_taglio') return !!cgIt('taglio').w;
@@ -12005,6 +12064,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var cq = cgQ(st); if(cq) return cq;
     var bq = bsQ(st); if(bq) return bq;
     var c3 = cg3Q(st); if(c3) return c3;
+    var btq = btQ(st); if(btq) return btq;
     var catObj = state.category;
     switch(st){
       case 'mat': return { t:'Cosa vuoi rifare?', s: ((queueAddPending && genQueue.length) || (layerAddPending && layers.length)) ? 'Lavorazione ' + (genQueue.length + layers.length + 1) + ': tocca il lavoro. Hai sbagliato? Premi Indietro per annullare.' : 'Tocca il lavoro.', opts: sfMats().map(function(m){ return { v:m.v, n:m.n, d:m.d, pic:(MAT_LINE_ICON[m.v] ? '<div class="sf-mi">'+MAT_LINE_ICON[m.v]+'</div>' : sfPic(m.bg, '<span class="sf-ico">'+m.icon+'</span>')), sel: sfMatSel(m.v) }; }) };
@@ -12095,12 +12155,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     aiResultImage = null; aiResultImageBase64 = null; aiResultImageMime = null;
     if(semplApply(st, v)) return;
     if(cg3Apply(st, v)) return;
+    if(btApply(st, v)) return;
     if(cgApply(st, v)) return;
     if(bsApply(st, v)) return;
     if(st === 'mat'){
       var pre = v === 'pit_int' ? 'interno' : v === 'pit_est' ? 'esterno' : null; if(pre) v = 'imbiancatura';
       if(pre && SF.mat === v && SF.a.ctx !== pre){ SF.a = {}; }
-      if(SF.mat !== v || !state.category){ SF.a = {}; }
+      if(SF.mat !== v || !state.category){ SF.a = {}; state.bt = null; }
       SF.mat = v;
       sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie') ? 'imbiancatura' : v);
       if(v === 'boiserie'){ var bsc = subGrid.children; if(bsc[0]) bsc[0].click(); SF.a.ctx = 'interno'; state.bs = state.bs || {}; } else { state.bs = null; }
@@ -14240,6 +14301,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         qs._missingPrices.push(t);
         return { titolo: t, descrizione: scelte, qta: mqv || 1, um: mqv ? 'mq' : 'a corpo', prezzo:0, lavorazione: matId };
       }) : q.voci;
+      try{ var _bts = (typeof layers !== 'undefined' ? layers.map(function(L){ return L.stateSnap || {}; }) : []).concat(state.material ? [state] : []); btVoci(_bts, mqv).forEach(function(v){ q.voci.push(v); }); }catch(e){}
       var nome = (document.getElementById('fName') || {}).value || '', city = (document.getElementById('fCity') || {}).value || '';
       var tel = (document.getElementById('fPhone') || {}).value || '', mail = (document.getElementById('fEmail') || {}).value || '';
       var mq = (document.getElementById('fMq') || {}).value || '';

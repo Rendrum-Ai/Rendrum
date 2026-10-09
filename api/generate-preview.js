@@ -861,12 +861,14 @@ module.exports = async function handler(req, res) {
   const bsSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseBs((req.body || {}).boiserie) : null;
   const zocSel = (materialId === "imbiancatura" && context === "esterno" && !(cappSel && cappSel.zoc)) ? SIST.parseZoc((req.body || {}).zoccolo) : null;
   const cappNote = (cappSel ? SIST.cappNote(cappSel, null) : "") + (zocSel ? SIST.zocNote(zocSel) : "");
+  const btSel = SIST.parseBt((req.body || {}).battiscopa, materialId);
   const prompt = bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
     finitura ? `Finitura superficiale ${finitura} (${finitura === "lucido" ? "molto riflettente" : finitura === "opaco" ? "senza riflessi" : "leggermente satinata"}).` : "",
     continuityNote,
+    SIST.btNote(btSel),
     buildNote,
     colorContainNote,
     paintTextureNote,
