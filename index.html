@@ -11070,6 +11070,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         cartongesso: cgPayload(),
         boiserie: bsPayload(),
         battiscopa: btPayload(),
+        piaEst: peEstPayload(),
+        piscina: piscinaPayload(),
         cappotto: cappPayload(),
         zoccolo: semplZoc(),
         segni: (marksAvailable() && state.marks && state.marks.length) ? state.marks.map(function(m, i){ return { n: i+1, target: m.target }; }) : null,
@@ -11968,6 +11970,57 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     });
     return out;
   }
+  // ===== Piastrelle per esterni e Piscine (in prova) =====
+  MAT_LINE_ICON.pia_est = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 26 9 14h14l6 12z"/><path d="M6 20h20M12.5 14 11 26M19.5 14 21 26"/><circle cx="24" cy="7" r="3"/></svg>';
+  MAT_LINE_ICON.piscina = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="24" height="17" rx="2"/><path d="M8 15q2-2 4 0t4 0 4 0 4 0M8 20q2-2 4 0t4 0 4 0 4 0"/></svg>';
+  function esS(k){ return state[k] || (state[k] = {}); }
+  var PE_EFF = [['pietra_g','Pietra grigia','linear-gradient(135deg,#B9B3AA,#8F887E)'],['pietra_b','Pietra beige','linear-gradient(135deg,#DCCDB4,#B8A68A)'],['legno_n','Legno naturale','repeating-linear-gradient(90deg,#C49A5C 0 18px,#B58A4E 18px 19px)'],['legno_g','Legno grigio','repeating-linear-gradient(90deg,#A8A39B 0 18px,#97928A 18px 19px)'],['cemento_c','Cemento chiaro','linear-gradient(135deg,#CFCCC6,#B5B1AA)'],['cemento_s','Cemento scuro','linear-gradient(135deg,#7E7B76,#5E5B57)'],['cotto','Cotto','linear-gradient(135deg,#C98A5A,#A9653A)']];
+  var PE_FMT = [['60x60','60 × 60','Quadrata grande'],['30x60','30 × 60','Rettangolare'],['20x120','20 × 120','Doga effetto legno'],['2cm','60 × 60 spessore 2 cm','Posata su ghiaia o piedini']];
+  var PE_POSA = [['dritta','Dritta','Fughe allineate'],['correre','A correre','Sfalsata a caso'],['terzo','Sfalsata 1/3','Ogni fila spostata di un terzo']];
+  var PE_BORDO = [['toro','Bordo con gradino toro','Pezzo arrotondato dove finisce'],['zoccolino','Zoccolino in piastrella','Lungo il muro di casa'],['entrambi','Tutti e due',''],['vecchio','Lascia quelli di adesso','Non li tocco']];
+  var PS_COL = [['Bianco','#F4F6F7'],['Azzurro chiaro','#BFE6F2'],['Azzurro','#3FA9D6'],['Blu','#1E5E9C'],['Verde laguna','#2C7F86'],['Sabbia','#D9C7A3'],['Grigio','#8C8F94'],['Antracite','#2B2F33']];
+  var PS_BORDO = [['graniglia','Graniglia','Continua con il solarium o a contrasto'],['piastrella','Piastrella bordo toro','Gres antiscivolo'],['pietra','Pietra','Lastre di pietra chiara']];
+  var PS_SOL = [['graniglia','Graniglia','Drenante, continua col bordo'],['piastrelle','Piastrelle','Gres effetto pietra o legno'],['legno','Legno','Doghe da esterno']];
+  function esPic(bg){ return sfPic(bg, ''); }
+  var ES_PIC = { vasca:'linear-gradient(180deg,#3FA9D6,#1E7DB0)', bordo:'linear-gradient(180deg,#E8E1D6 0 30%,#3FA9D6 30%)', solarium:'linear-gradient(180deg,#C9B79F 0 55%,#E8E1D6 55% 70%,#3FA9D6 70%)',
+    graniglia:'radial-gradient(circle at 20% 30%,#7d7468 0 2px,transparent 3px),radial-gradient(circle at 60% 70%,#9b9284 0 2px,transparent 3px),radial-gradient(circle at 80% 20%,#5f584f 0 2px,transparent 3px),#C9C0B2', piastrella:'repeating-linear-gradient(90deg,#EDE6DC 0 22px,#cfc4b5 22px 23px)', piastrelle:'repeating-linear-gradient(90deg,#DCD3C5 0 22px,#bfb3a3 22px 23px),#DCD3C5', pietra:'linear-gradient(135deg,#d8d0c4,#b9ae9e)', legno:'repeating-linear-gradient(90deg,#C49A5C 0 14px,#A57E45 14px 15px)',
+    dritta:'repeating-linear-gradient(90deg,#D8CFC2 0 20px,#B9AD9E 20px 21px),repeating-linear-gradient(0deg,#D8CFC2 0 10px,#B9AD9E 10px 11px)', correre:'repeating-linear-gradient(90deg,#D8CFC2 0 26px,#B9AD9E 26px 27px)', terzo:'repeating-linear-gradient(90deg,#D8CFC2 0 30px,#B9AD9E 30px 31px)',
+    toro:'linear-gradient(180deg,#D8CFC2 0 60%,#b9ad9e 60% 66%,#8a7f72 66%)', zoccolino:'linear-gradient(180deg,#EFE8DE 0 55%,#D8CFC2 55% 65%,#C9BCAA 65%)', entrambi:'linear-gradient(180deg,#EFE8DE 0 30%,#D8CFC2 30% 38%,#C9BCAA 38% 70%,#8a7f72 70%)', vecchio:'linear-gradient(180deg,#EFE8DE 0 55%,#8A6A4A 55% 63%,#B8A58C 63%)' };
+  function estSteps(s, c){
+    if(c === 'pia_est'){ var p = state.pe || {}; s.push('peEff', 'peFmt'); if(p.fmt && p.fmt !== '60x60' && p.fmt !== '2cm') s.push('pePosa'); s.push('peBordo'); }
+    if(c === 'piscina'){ var q = state.ps || {}, L = q.cosa || []; s.push('psCosa'); if(L.indexOf('vasca') > -1) s.push('psCol'); if(L.indexOf('bordo') > -1) s.push('psBordo'); if(L.indexOf('solarium') > -1) s.push('psSol'); }
+  }
+  function estQ(st){
+    var p = state.pe || {}, q = state.ps || {};
+    if(st === 'peEff') return { t:'Che effetto?', s:'Gres per esterni, antiscivolo.', opts: PE_EFF.map(function(x){ return { v:x[0], n:x[1], pic: esPic(x[2]), sel: p.eff === x[0] }; }) };
+    if(st === 'peFmt') return { t:'Che formato?', opts: PE_FMT.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(x[0] === '20x120' ? 'repeating-linear-gradient(90deg,#D8CFC2 0 10px,#B9AD9E 10px 11px)' : 'repeating-linear-gradient(90deg,#D8CFC2 0 ' + (x[0] === '30x60' ? 20 : 30) + 'px,#B9AD9E ' + (x[0] === '30x60' ? 20 : 30) + 'px ' + (x[0] === '30x60' ? 21 : 31) + 'px),repeating-linear-gradient(0deg,#D8CFC2 0 ' + (x[0] === '30x60' ? 10 : 30) + 'px,#B9AD9E ' + (x[0] === '30x60' ? 10 : 30) + 'px ' + (x[0] === '30x60' ? 11 : 31) + 'px)'), sel: p.fmt === x[0] }; }) };
+    if(st === 'pePosa') return { t:'Come le posi?', opts: PE_POSA.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(ES_PIC[x[0]]), sel: p.posa === x[0] }; }) };
+    if(st === 'peBordo') return { t:'E i bordi?', s:'Dove il terrazzo finisce e lungo il muro.', opts: PE_BORDO.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(ES_PIC[x[0]]), sel: p.bordo === x[0] }; }) };
+    if(st === 'psCosa') return { t:'Cosa rifai nella piscina?', s:'Puoi sceglierne più di uno, poi premi Continua.', multi:true, opts: [['vasca','Verniciatura della vasca','Fondo e pareti'],['bordo','Bordo piscina','Graniglia, piastrelle o pietra'],['solarium','Solarium intorno','Il pavimento intorno alla piscina']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(ES_PIC[x[0]]), sel: (q.cosa || []).indexOf(x[0]) > -1 }; }) };
+    if(st === 'psCol') return { t:'Di che colore la vasca?', s:'Cambia anche il colore dell’acqua.', cls:'sf-sw', opts: PS_COL.map(function(x){ return { v:x[0], n:x[0], pic: esPic(x[1]), sel: q.col === x[0] }; }) };
+    if(st === 'psBordo') return { t:'Il bordo piscina', opts: PS_BORDO.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(ES_PIC[x[0]]), sel: q.bordo === x[0] }; }) };
+    if(st === 'psSol') return { t:'Il solarium', opts: PS_SOL.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: esPic(ES_PIC[x[0]]), sel: q.sol === x[0] }; }) };
+    return null;
+  }
+  function estApply(st, v){
+    if(['peEff','peFmt','pePosa','peBordo','psCosa','psCol','psBordo','psSol'].indexOf(st) < 0) return false;
+    if(st.indexOf('pe') === 0){ var p = esS('pe'); if(st === 'peEff'){ p.eff = v; var e = PE_EFF.filter(function(x){ return x[0] === v; })[0]; state.colorA = semplCol(e[1], '#B9B3AA'); } if(st === 'peFmt'){ p.fmt = v; if(v === '60x60' || v === '2cm') p.posa = 'dritta'; } if(st === 'pePosa') p.posa = v; if(st === 'peBordo') p.bordo = v; return true; }
+    var q = esS('ps');
+    if(st === 'psCosa'){ q.cosa = q.cosa || []; var i = q.cosa.indexOf(v); if(i > -1) q.cosa.splice(i, 1); else q.cosa.push(v); if(!state.colorA) state.colorA = semplCol('Piscina', '#3FA9D6'); }
+    if(st === 'psCol'){ q.col = v; var c = PS_COL.filter(function(x){ return x[0] === v; })[0]; state.colorA = semplCol(c[0], c[1]); }
+    if(st === 'psBordo') q.bordo = v;
+    if(st === 'psSol') q.sol = v;
+    return true;
+  }
+  function estAnswered(st){
+    var p = state.pe || {}, q = state.ps || {};
+    switch(st){ case 'peEff': return !!p.eff; case 'peFmt': return !!p.fmt; case 'pePosa': return !!p.posa; case 'peBordo': return !!p.bordo;
+      case 'psCosa': return !!(q.cosa && q.cosa.length); case 'psCol': return !!q.col; case 'psBordo': return !!q.bordo; case 'psSol': return !!q.sol; }
+    return null;
+  }
+  function estDone(){ if(!SF_ON) return false; if(SF.mat === 'pia_est') return !!(state.pe && state.pe.bordo && state.colorA); if(SF.mat === 'piscina') return !!(state.ps && state.ps.cosa && state.ps.cosa.length && state.colorA); return false; }
+  function peEstPayload(){ var p = state.pe; if(!(SF_ON && SF.mat === 'pia_est') || !p || !p.eff) return null; return { eff:p.eff, fmt:p.fmt || '60x60', posa:p.posa || 'dritta', bordo:p.bordo || 'vecchio' }; }
+  function piscinaPayload(){ var q = state.ps; if(!(SF_ON && SF.mat === 'piscina') || !q || !q.cosa || !q.cosa.length) return null; return { cosa:q.cosa.slice(), col:q.col || '', bordo:q.bordo || '', sol:q.sol || '' }; }
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -11979,6 +12032,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       { v:'pit_est', n:'Facciata', d:'Pittura esterna della casa', cat:'imbiancatura', s1:1 },
       { v:'cartongesso', n:'Cartongesso', d:'Velette, controsoffitti, nicchie, pareti', cat:'imbiancatura' },
       { v:'boiserie', n:'Boiserie', d:'Cornici e riquadri sulle pareti', cat:'imbiancatura', s1:1 },
+      { v:'pia_est', n:'Piastrelle esterne', d:'Terrazzi, balconi, cortili', cat:'piastrelle', s1:1 },
+      { v:'piscina', n:'Piscina', d:'Vasca, bordo e solarium', cat:'imbiancatura', s1:1 },
       { v:'legno', n:'Pavimenti in legno', d:'Parquet, SPC o laminato', cat:'parquet' },
       { v:'scale', n:'Scale', d:'Resina, microcemento, piastrelle, parquet o graniglia' },
       { v:'graniglia_esterni', n:'Graniglia per esterni', d:'Vialetti, terrazzi, bordi piscina' }
@@ -12001,6 +12056,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'scale') s.push('scaleMat');
     else if(c === 'graniglia_esterni') s.push('granLayout', 'granScale');
     if(['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1) btSteps(s);
+    if(c === 'pia_est' || c === 'piscina') estSteps(s, c);
     if(window.RD_INV_MAT || SF.a.ctxPre) s = s.filter(function(x){ return x !== 'ctx'; });
     return s;
   }
@@ -12008,6 +12064,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var sa = semplAnswered(st); if(sa !== null) return sa;
     var ba = bsAnswered(st); if(ba !== null) return ba;
     var bta = btAnswered(st); if(bta !== null) return bta;
+    var esa = estAnswered(st); if(esa !== null) return esa;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
     if(st.indexOf('cgM_') === 0) return !!cgIt(st.slice(4)).mis;
     if(st === 'cgW_taglio') return !!cgIt('taglio').w;
@@ -12065,6 +12122,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var bq = bsQ(st); if(bq) return bq;
     var c3 = cg3Q(st); if(c3) return c3;
     var btq = btQ(st); if(btq) return btq;
+    var esq = estQ(st); if(esq) return esq;
     var catObj = state.category;
     switch(st){
       case 'mat': return { t:'Cosa vuoi rifare?', s: ((queueAddPending && genQueue.length) || (layerAddPending && layers.length)) ? 'Lavorazione ' + (genQueue.length + layers.length + 1) + ': tocca il lavoro. Hai sbagliato? Premi Indietro per annullare.' : 'Tocca il lavoro.', opts: sfMats().map(function(m){ return { v:m.v, n:m.n, d:m.d, pic:(MAT_LINE_ICON[m.v] ? '<div class="sf-mi">'+MAT_LINE_ICON[m.v]+'</div>' : sfPic(m.bg, '<span class="sf-ico">'+m.icon+'</span>')), sel: sfMatSel(m.v) }; }) };
@@ -12156,6 +12214,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(semplApply(st, v)) return;
     if(cg3Apply(st, v)) return;
     if(btApply(st, v)) return;
+    if(estApply(st, v)) return;
     if(cgApply(st, v)) return;
     if(bsApply(st, v)) return;
     if(st === 'mat'){
@@ -12163,7 +12222,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(pre && SF.mat === v && SF.a.ctx !== pre){ SF.a = {}; }
       if(SF.mat !== v || !state.category){ SF.a = {}; state.bt = null; }
       SF.mat = v;
-      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie') ? 'imbiancatura' : v);
+      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie' || v === 'piscina') ? 'imbiancatura' : v === 'pia_est' ? 'piastrelle' : v);
+      if(v === 'pia_est' || v === 'piscina'){ var esc = subGrid.children; if(esc[0]) esc[0].click(); SF.a.ctx = 'esterno'; state.colorA = null; if(v === 'pia_est'){ state.pe = state.pe || {}; state.ps = null; } else { state.ps = state.ps || {}; state.pe = null; } } else { state.pe = null; state.ps = null; }
       if(v === 'boiserie'){ var bsc = subGrid.children; if(bsc[0]) bsc[0].click(); SF.a.ctx = 'interno'; state.bs = state.bs || {}; } else { state.bs = null; }
       if(v === 'legno'){ state.material = null; }
       if(v === 'deco'){ var dcards = subGrid.children; if(dcards[0]) dcards[0].click(); SF.a.ctx = 'interno'; state.deco = state.deco && state.deco.fam ? state.deco : { eff:'medio', prot:'none' }; } else { state.deco = null; }
@@ -12351,7 +12411,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     // panelLanding non è un "passo" del wizard: è la schermata di ingresso, non entra
     // nel calcolo della barra di avanzamento né nella navigazione avanti/indietro.
     if(SF_ON){
-      var sq = (decoAllOn() || semplDone() || bsDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
+      var sq = (decoAllOn() || semplDone() || bsDone() || estDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
       if(accentoActive() || showerActive()) sq.push('panelPhoto');
       return sq.concat(['panelResult']);
     }

@@ -285,4 +285,51 @@ function btNote(b) {
   return " BATTISCOPA: nuovo battiscopa " + t + ", alto " + h + "." + via + regole;
 }
 
-module.exports = { parseBt, btNote, parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
+
+// ---------- piastrelle per esterni (in prova) ----------
+const PE_EFF = { pietra_g: "gres porcellanato effetto PIETRA naturale grigia, con leggere variazioni di tono tra una piastrella e l'altra", pietra_b: "gres porcellanato effetto PIETRA naturale beige/sabbia, con leggere variazioni di tono", legno_n: "gres porcellanato effetto LEGNO naturale (rovere miele), con venature e nodi realistici diversi da doga a doga", legno_g: "gres porcellanato effetto LEGNO grigio sbiancato, con venature realistiche diverse da doga a doga", cemento_c: "gres porcellanato effetto CEMENTO chiaro, leggermente nuvolato", cemento_s: "gres porcellanato effetto CEMENTO scuro antracite, leggermente nuvolato", cotto: "gres porcellanato effetto COTTO (terracotta), caldo, con variazioni di tono naturali" };
+const PE_FMT = { "60x60": "piastrelle quadrate 60 × 60 cm", "30x60": "piastrelle rettangolari 30 × 60 cm", "20x120": "doghe lunghe 20 × 120 cm", "2cm": "lastre 60 × 60 cm spessore 2 cm, posate a secco con fughe un po' più larghe" };
+const PE_POSA = { dritta: "posa dritta con fughe allineate", correre: "posa a correre (giunti sfalsati in modo casuale)", terzo: "posa sfalsata di un terzo (ogni fila spostata di 1/3 della lunghezza)" };
+function parsePiaEst(b) {
+  if (!b || typeof b !== "object" || !PE_EFF[b.eff]) return null;
+  const fmt = PE_FMT[b.fmt] ? b.fmt : "60x60";
+  return { eff: b.eff, fmt, posa: (fmt === "60x60" || fmt === "2cm") ? "dritta" : (PE_POSA[b.posa] ? b.posa : "dritta"), bordo: ["toro", "zoccolino", "entrambi", "vecchio"].includes(b.bordo) ? b.bordo : "vecchio" };
+}
+function piaEstPrompt(b) {
+  const bordi = {
+    toro: "Dove il pavimento finisce verso il vuoto, un gradino o il giardino, il bordo è fatto con pezzi speciali a GRADINO TORO (spigolo arrotondato) dello stesso gres.",
+    zoccolino: "Lungo il muro della casa uno zoccolino ricavato dalla stessa piastrella, alto circa 8 cm.",
+    entrambi: "Dove il pavimento finisce verso il vuoto o un gradino, pezzi speciali a GRADINO TORO (spigolo arrotondato) dello stesso gres; lungo il muro della casa uno zoccolino dalla stessa piastrella alto circa 8 cm.",
+    vecchio: "Bordi, soglie e zoccolini esistenti restano identici.",
+  }[b.bordo];
+  return [
+    "Modifica la foto di questo spazio ESTERNO (terrazzo, balcone, cortile o portico) rifacendo SOLO il pavimento con un pavimento per esterni posato da un professionista.",
+    "Pavimento: " + PE_EFF[b.eff] + ", " + PE_FMT[b.fmt] + ", " + PE_POSA[b.posa] + ", fughe strette in colore coordinato.",
+    "Superficie OPACA antiscivolo da esterno (non lucida, nessun riflesso a specchio); segue le pendenze e i livelli del pavimento esistente; le piastrelle diventano più piccole in lontananza seguendo esattamente la prospettiva.",
+    bordi,
+    "Ombre, luce del sole e umidità coerenti con la scena. Non cambiare ringhiere, parapetti, vasi, piante, mobili da esterno, facciata, serramenti, cielo e inquadratura.",
+    "Il risultato deve sembrare una fotografia reale dello stesso spazio dopo i lavori, non un rendering.",
+  ].join(" ");
+}
+// ---------- piscine (in prova) ----------
+const PS_COL = { "Bianco": "bianco", "Azzurro chiaro": "azzurro chiaro", "Azzurro": "azzurro", "Blu": "blu intenso", "Verde laguna": "verde laguna (verde-acqua)", "Sabbia": "sabbia chiaro", "Grigio": "grigio medio", "Antracite": "grigio antracite scuro" };
+function parsePiscina(b) {
+  if (!b || typeof b !== "object") return null;
+  const cosa = (Array.isArray(b.cosa) ? b.cosa : []).filter((x, i, a) => ["vasca", "bordo", "solarium"].includes(x) && a.indexOf(x) === i);
+  if (!cosa.length) return null;
+  return { cosa, col: PS_COL[b.col] ? b.col : "Azzurro", bordo: ["graniglia", "piastrella", "pietra"].includes(b.bordo) ? b.bordo : "graniglia", sol: ["graniglia", "piastrelle", "legno"].includes(b.sol) ? b.sol : "graniglia" };
+}
+function piscinaPrompt(b) {
+  const L = [];
+  if (b.cosa.includes("vasca")) L.push("VASCA: il fondo e le pareti interne della piscina sono verniciati di nuovo in colore " + PS_COL[b.col] + " uniforme, finitura satinata, senza macchie. L'acqua è limpida e trasparente e prende il tono del fondo: più chiara dove l'acqua è bassa e più intensa dove è profonda, con riflessi del cielo e leggere increspature naturali. Se nella foto la piscina è vuota o con poca acqua, mostrala PIENA d'acqua pulita fino a pochi centimetri dal bordo.");
+  if (b.cosa.includes("bordo")) L.push("BORDO PISCINA: tutto intorno alla vasca un bordo nuovo largo circa 35–40 cm " + { graniglia: "in GRANIGLIA (piccoli sassolini levigati legati in resina), chiaro, con lo spigolo verso l'acqua arrotondato (bordo toro)" + (b.cosa.includes("solarium") && b.sol === "graniglia" ? ", continuo con il solarium" : ""), piastrella: "in pezzi speciali di GRES antiscivolo chiaro a BORDO TORO (spigolo arrotondato), con fughe allineate", pietra: "in LASTRE DI PIETRA chiara con lo spigolo arrotondato, posate con fughe sottili" }[b.bordo] + ", continuo e dritto, che segue esattamente la forma della vasca.");
+  if (b.cosa.includes("solarium")) L.push("SOLARIUM: il pavimento intorno alla piscina è rifatto " + { graniglia: "in GRANIGLIA drenante (sassolini legati in resina), uniforme, colore chiaro naturale", piastrelle: "in piastrelle di GRES per esterni antiscivolo effetto pietra chiara, formato 60 × 60, posa dritta", legno: "in DOGHE di legno per esterni (decking) color miele, parallele, con fughe sottili" }[b.sol] + ", fino ai bordi del prato o dei muretti, seguendo la prospettiva.");
+  return [
+    "Modifica la foto di questa piscina con i lavori fatti da un professionista. Cambia SOLO quello che è descritto qui sotto.",
+    L.join(" "),
+    "La piscina mantiene esattamente forma, dimensioni, scalette, skimmer e fari. Non cambiare casa, giardino, prato, piante, sdraio, ombrelloni, recinzioni, cielo e inquadratura.",
+    "Luce del sole e ombre coerenti con la scena. Il risultato deve sembrare una fotografia reale della stessa piscina dopo i lavori, non un rendering.",
+  ].join(" ");
+}
+
+module.exports = { parsePiaEst, piaEstPrompt, parsePiscina, piscinaPrompt, parseBt, btNote, parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };

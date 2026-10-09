@@ -862,7 +862,9 @@ module.exports = async function handler(req, res) {
   const zocSel = (materialId === "imbiancatura" && context === "esterno" && !(cappSel && cappSel.zoc)) ? SIST.parseZoc((req.body || {}).zoccolo) : null;
   const cappNote = (cappSel ? SIST.cappNote(cappSel, null) : "") + (zocSel ? SIST.zocNote(zocSel) : "");
   const btSel = SIST.parseBt((req.body || {}).battiscopa, materialId);
-  const prompt = bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
+  const peSel = materialId === "piastrelle" ? SIST.parsePiaEst((req.body || {}).piaEst) : null;
+  const psSel = SIST.parsePiscina((req.body || {}).piscina);
+  const prompt = psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
