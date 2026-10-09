@@ -170,6 +170,7 @@ const BS_DOVE = {
   destra: "sulla parete di destra",
   letto: "sulla parete dietro il letto o il divano, solo nella zona del letto o del divano, centrata",
   tutta: "su tutte le pareti che si vedono nella foto",
+  scala: "sul muro lungo la scala (il muro accanto ai gradini)",
 };
 const BS_ALT = {
   tutta: "dal battiscopa fino quasi al soffitto (lascia circa 15 cm sotto il soffitto)",
@@ -194,6 +195,11 @@ function parseBs(b) {
   if (stile === "listelli" ? BS_LIST[b.corn] : BS_CORN[b.corn]) o.corn = b.corn;
   return o;
 }
+const BS_ALT_SCALA = {
+  tutta: "dal battiscopa fino a circa 20 cm sotto il soffitto",
+  "23": "fino a circa 150 cm sopra i gradini, chiusa in alto da una fascia continua che sale parallela alla scala",
+  "1m": "solo nella parte bassa, fino a circa 90 cm sopra i gradini, chiusa in alto da una fascia continua che sale parallela alla scala",
+};
 function r5(n) { return Math.round(n / 5) * 5; }
 // misure vere: quanti riquadri, quanto larghi, cornici di che spessore
 function bsMisure(b) {
@@ -222,16 +228,23 @@ function bsPrompt(b, colorDesc) {
     ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura satinata leggera: la boiserie si riconosce solo grazie al rilievo e alle ombre."
     : "Le cornici e i pannelli della boiserie sono dipinti nel colore " + colorDesc + ", finitura opaca" + (b.alt === "tutta" ? ", su tutta la parete con la boiserie." : "; la parte di parete sopra la boiserie resta del colore attuale.");
   const mis = (b.larg || b.corn) ? bsMisure(b) : "";
+  const scala = b.dove === "scala"
+    ? "IMPORTANTE, SCALA: la boiserie SEGUE LA PENDENZA DELLA SCALA. Il battiscopa e la fascia in alto sono INCLINATI, paralleli alla linea dei gradini (come un corrimano), con la fascia sempre a circa " + (b.alt === "1m" ? "90" : b.alt === "23" ? "150" : "200") + " cm misurati in verticale dal gradino sotto. I riquadri sono PARALLELOGRAMMI: lati verticali dritti, lato sopra e lato sotto inclinati come la scala, tutti uguali e alla stessa distanza. Dove il pavimento torna in piano la boiserie torna orizzontale, con un raccordo pulito. Non farla orizzontale lungo la scala."
+    : "";
   return [
-    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + BS_DOVE[b.dove] + ", " + BS_ALT[b.alt] + ".",
-    "Stile: " + (mis ? BS_STILE2[b.stile] : BS_STILE[b.stile]) + ".",
-    mis,
+    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + BS_DOVE[b.dove] + ", " + (b.dove === "scala" ? BS_ALT_SCALA[b.alt] : BS_ALT[b.alt]) + ".",
+    scala,
+    "Stile: " + ((mis ? BS_STILE2[b.stile] : BS_STILE[b.stile]).replace(b.dove === "scala" ? /orizzontale |rettangolari /g : /$^/, "")) + ".",
+    b.dove === "scala" ? mis.replace(/La cornice orizzontale che chiude[^.]*\./, "") : mis,
     colore,
     mis ? "In basso un battiscopa coordinato alto circa 10 cm, dello stesso colore della boiserie. Per la scala usa le cose della foto (una porta è alta circa 210 cm, un letto circa 50 cm, un tavolo circa 75 cm)." : "",
     "Linee perfettamente dritte e parallele che seguono esattamente la prospettiva della parete; disegno simmetrico rispetto al centro della parete; proporzioni realistiche rispetto alla stanza, alle porte e ai mobili.",
     "Le cornici si interrompono intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti.",
     "Rilievo realistico con ombre leggere coerenti con la luce della stanza" + (mis ? ": un'ombra sottile sotto ogni cornice orizzontale e di lato a quelle verticali, nella direzione della luce." : "."),
-    "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: aggiungi SOLO la boiserie.",
+    "Le PORTE restano esattamente dove sono e come sono, anche se aperte o socchiuse: non spostarle, non chiuderle, non rimpicciolirle; la boiserie si ferma prima della porta e dei suoi stipiti.",
+    b.alt !== "tutta" ? "La parte di muro SOPRA la boiserie resta IDENTICA alla foto: stesso intonaco, stessa texture, stesse macchie e imperfezioni; non pulirla e non ridipingerla." : "",
+    b.col === "tono" ? "Tono su tono significa lo stesso colore reale del muro nella foto (anche se crema, beige o sporco), non grigio e non bianco." : "",
+    "Mantieni identici pavimento, soffitto, scale, gradini, mobili, porte, finestre, oggetti, cavi, luci e inquadratura: aggiungi SOLO la boiserie.",
     mis ? "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering." : "",
   ].filter(Boolean).join(" ");
 }
