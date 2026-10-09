@@ -34,25 +34,81 @@ const CG_LUCI = {
   no: "senza luci",
 };
 const CG_NOLUCI = ["parete", "controparete"];
-function parseOne(c) {
-  if (!c || typeof c !== "object" || !CG_TIPO[c.tipo]) return null;
+// versione 2 (in prova): misure vere e soluzioni dei sistemi a secco (tagli di luce, scuretto, veletta curva)
+const CG_MIS = { veletta: ["30", "50", "100", "curva"], soffitto: ["scuretto", "liscio"], nicchia: ["tv", "mensole", "alta"], taglio: ["linea", "angolo", "croce", "stella"] };
+function parseOne(c, v2) {
+  if (!c || typeof c !== "object") return null;
+  if (!(CG_TIPO[c.tipo] || (v2 && c.tipo === "taglio"))) return null;
   let dove = CG_DOVE[c.dove] ? c.dove : (c.tipo === "soffitto" ? "soffitto" : "fondo");
   if (dove === "giro" && c.tipo !== "veletta") dove = "fondo";
-  return { tipo: c.tipo, dove: c.tipo === "soffitto" ? "soffitto" : dove, luci: CG_NOLUCI.includes(c.tipo) ? "no" : (CG_LUCI[c.luci] ? c.luci : "no") };
+  if (dove === "soffitto" && c.tipo !== "soffitto" && c.tipo !== "taglio") dove = "fondo";
+  const o = { tipo: c.tipo, dove: c.tipo === "soffitto" ? "soffitto" : dove, luci: (CG_NOLUCI.includes(c.tipo) || c.tipo === "taglio") ? "no" : (CG_LUCI[c.luci] ? c.luci : "no") };
+  if (v2) {
+    const M = CG_MIS[c.tipo] || [];
+    o.mis = M.includes(c.mis) ? c.mis : (M[0] || "");
+    if (c.tipo === "taglio") o.w = c.w === "40" ? "40" : "18";
+  }
+  return o;
 }
 // Uno o più lavori in cartongesso (massimo 3, senza doppioni): { items:[{tipo,dove,luci}] }
 function parseCg(c) {
   if (!c || typeof c !== "object") return null;
-  const src = Array.isArray(c.items) ? c.items : [c], seen = {}, items = [];
-  src.slice(0, 6).forEach(function (x) { const o = parseOne(x); if (o && !seen[o.tipo] && items.length < 3) { seen[o.tipo] = 1; items.push(o); } });
-  return items.length ? { items: items } : null;
+  const v2 = !!c.v2, src = Array.isArray(c.items) ? c.items : [c], seen = {}, items = [];
+  src.slice(0, 6).forEach(function (x) { const o = parseOne(x, v2); if (o && !seen[o.tipo] && items.length < 3) { seen[o.tipo] = 1; items.push(o); } });
+  return items.length ? (v2 ? { items: items, v2: true } : { items: items }) : null;
 }
 function cgOne(o) {
   const luci = o.luci === "no" || CG_NOLUCI.includes(o.tipo) ? "" : ", " + CG_LUCI[o.luci];
   return CG_TIPO[o.tipo] + (o.tipo === "soffitto" ? "" : ", " + CG_DOVE[o.dove]) + luci;
 }
 // prompt completo per il cartongesso: si COSTRUISCE qualcosa che prima non c'era
+const CG_DOVE2 = Object.assign({}, CG_DOVE, { soffitto: "sul soffitto, al centro della stanza" });
+function cgOne2(o) {
+  const dove = o.tipo === "soffitto" ? "" : " Si trova " + CG_DOVE2[o.dove] + ".";
+  if (o.tipo === "veletta") {
+    const h = o.mis === "50" ? 50 : o.mis === "100" ? 100 : 30;
+    let t = o.mis === "curva"
+      ? "una VELETTA in cartongesso che scende esattamente 30 cm dal soffitto e sporge circa 40 cm dalla parete, con il bordo frontale CURVO: una linea morbida e continua, senza spigoli, che si raccorda dolcemente alla parete"
+      : "una VELETTA in cartongesso: un volume pieno che scende esattamente " + h + " cm dal soffitto (misura verticale) e sporge circa 40 cm dalla parete, con la faccia inferiore piana e orizzontale e gli spigoli vivi, dritti e paralleli al soffitto";
+    t += "." + dove;
+    if (o.luci === "led") t += " Dentro la veletta, nascosta alla vista, c'è una striscia LED a luce calda 3000 K: NON si vede la striscia, si vede solo una lama di luce morbida e uniforme che illumina dall'alto la parete sotto la veletta, più intensa vicino alla veletta e che sfuma verso il basso.";
+    if (o.luci === "faretti") t += " Nella faccia inferiore della veletta ci sono 3–5 faretti tondi piccoli a incasso, allineati al centro e alla stessa distanza tra loro, accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "soffitto") {
+    let t = "un CONTROSOFFITTO in cartongesso che abbassa tutto il soffitto della stanza di circa 10 cm: superficie liscia, piana e continua, senza giunti visibili";
+    t += o.mis === "scuretto" ? ". Lungo TUTTI i muri, tra il controsoffitto e la parete, corre una FESSURA D'OMBRA (scuretto perimetrale) dritta e scura larga circa 1–2 cm: il soffitto sembra sospeso." : ", raccordato ai muri con uno spigolo pulito e dritto.";
+    if (o.luci === "led") t += " Lungo il perimetro c'è una gola luminosa con LED nascosti a luce calda 3000 K che illumina le pareti dall'alto con una luce morbida; la striscia non si vede.";
+    if (o.luci === "faretti") t += " Nel controsoffitto ci sono faretti tondi piccoli a incasso disposti in file regolari, alla stessa distanza tra loro e dai muri, accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "nicchia") {
+    const n = { tv: "larga 160 cm e alta 60 cm, con il bordo inferiore a circa 100 cm da terra (per la TV)", mensole: "larga 100 cm e alta 40 cm, con il bordo inferiore a circa 120 cm da terra", alta: "larga 50 cm e alta 150 cm, che parte da circa 50 cm da terra" }[o.mis] || "larga 160 cm e alta 60 cm";
+    let t = "una NICCHIA rettangolare incassata in una controparete in cartongesso spessa circa 15 cm che riveste la parete; la nicchia è " + n + ", profonda circa 15 cm, con spigoli netti e dritti." + dove;
+    if (o.luci === "led") t += " Nel bordo superiore della nicchia ci sono LED nascosti a luce calda 3000 K che illuminano l'interno della nicchia; la striscia non si vede.";
+    if (o.luci === "faretti") t += " Nel lato superiore della nicchia 2–3 piccoli faretti a incasso accesi a luce calda.";
+    return t;
+  }
+  if (o.tipo === "taglio") {
+    const w = o.w === "40" ? "larghe circa 4 cm" : "sottili, larghe circa 2 cm";
+    const f = { linea: "una sola riga di luce verticale lunga circa 120 cm", angolo: "due righe di luce a forma di L che si toccano ad angolo retto, ognuna lunga circa 80 cm", croce: "due righe di luce che si incrociano al centro: la verticale lunga circa 120 cm, l'orizzontale circa 100 cm", stella: "quattro righe di luce che si incrociano nello stesso punto (verticale, orizzontale e due diagonali), ognuna lunga circa 70 cm" }[o.mis] || "una riga di luce lunga circa 120 cm";
+    return "un TAGLIO DI LUCE nel cartongesso: " + f + ", " + w + ", incassate A FILO nella superficie (non sporgono e non sono lampade appese). Luce bianca calda 3000 K, uniforme lungo tutta la riga, con un leggero alone morbido sulla superficie intorno; il resto della superficie è cartongesso liscio pitturato." + dove;
+  }
+  return CG_TIPO[o.tipo] + "." + dove;
+}
+function cgPrompt2(c, colorDesc) {
+  const L = c.items, more = L.length > 1;
+  return [
+    "Modifica la foto di questo interno aggiungendo " + (more ? L.length + " lavori in cartongesso" : "un lavoro in cartongesso") + " realizzati da un professionista con un sistema a secco (orditura metallica e lastre).",
+    more ? "Aggiungi TUTTI questi elementi, ognuno al suo posto: " + L.map(function (o, i) { return (i + 1) + ") " + cgOne2(o); }).join(" ") : "Aggiungi " + cgOne2(L[0]),
+    "Rispetta le MISURE indicate: per la scala usa le cose della foto (una porta è alta circa 210 cm, un tavolo circa 75 cm, un soffitto di solito circa 270 cm).",
+    "Il cartongesso nuovo è pitturato " + colorDesc + ", opaco, con stuccature invisibili; spigoli perfettamente dritti e paralleli alle linee della stanza; ombre morbide e realistiche sotto velette e sporgenze; le luci accese sono coerenti con la luce della stanza.",
+    "Mantieni IDENTICI pavimento, mobili, finestre, porte, oggetti, colori, esposizione e inquadratura: aggiungi SOLO " + (more ? "gli elementi descritti" : "l'elemento descritto") + ". Non spostare, non eliminare e non aggiungere altro.",
+    "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
+  ].join(" ");
+}
 function cgPrompt(c, colorDesc) {
+  if (c && c.v2 && Array.isArray(c.items)) return cgPrompt2(c, colorDesc);
   const L = c.items || [c], more = L.length > 1;
   return [
     "Modifica la foto di questo interno aggiungendo " + (more ? L.length + " lavori in cartongesso" : "un lavoro in cartongesso") + " realizzati da un professionista.",
@@ -100,4 +156,190 @@ function zocFix(prompt, z) {
     + " ECCEZIONE ZOCCOLO (vale più delle regole sopra): lo zoccolo alto circa 70 cm alla base della facciata, nel colore " + z.hex + ", è RICHIESTO e va fatto; non conta come banda decorativa vietata.";
 }
 
-module.exports = { parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
+
+// ---------- boiserie: cornici e riquadri in rilievo sulle pareti ----------
+const BS_STILE = {
+  classica: "classica a riquadri: cornici rettangolari in rilievo con profilo sagomato (circa 4 cm) che formano pannelli regolari, tutti della stessa larghezza, allineati e con la stessa distanza tra loro",
+  inglese: "all'inglese (wainscoting): pannelli rettangolari bassi delimitati da cornici in rilievo, tutti uguali, con una cornice orizzontale continua più marcata sopra i pannelli",
+  listelli: "moderna a listelli verticali: listelli in rilievo dritti e paralleli, larghi circa 3 cm e distanziati in modo regolare di circa 8-10 cm",
+  geometrica: "geometrica: cornici sottili in rilievo che formano un disegno regolare e simmetrico di rettangoli con diagonali (effetto a rombi)",
+};
+const BS_DOVE = {
+  fondo: "sulla parete di fondo (quella di fronte nella foto)",
+  sinistra: "sulla parete di sinistra",
+  destra: "sulla parete di destra",
+  letto: "sulla parete dietro il letto o il divano, solo nella zona del letto o del divano, centrata",
+  tutta: "su tutte le pareti che si vedono nella foto",
+  scala: "sul muro lungo la scala (il muro accanto ai gradini)",
+};
+const BS_ALT = {
+  tutta: "dal battiscopa fino quasi al soffitto (lascia circa 15 cm sotto il soffitto)",
+  "23": "fino a circa due terzi dell'altezza della parete, chiusa in alto da una cornice orizzontale continua",
+  "1m": "solo nella parte bassa, dal battiscopa fino a circa 1 metro di altezza, chiusa in alto da una cornice orizzontale continua",
+};
+// con le misure scelte dall'artigiano: lo stile senza numeri (i numeri arrivano da bsMisure)
+const BS_STILE2 = {
+  classica: "classica a riquadri: cornici rettangolari in rilievo che formano pannelli regolari, tutti uguali e allineati",
+  inglese: "all'inglese (wainscoting): pannelli rettangolari bassi delimitati da cornici in rilievo, tutti uguali, con una fascia orizzontale continua più marcata sopra i pannelli",
+  listelli: "moderna a listelli verticali in rilievo, dritti e paralleli",
+  geometrica: "geometrica: cornici in rilievo che formano un disegno regolare e simmetrico di rettangoli con diagonali (effetto a rombi)",
+};
+const BS_LARG = { "2": 2.2, "3": 3, "4": 4, "5": 5 };
+const BS_CORN = { sottile: 2, media: 4, importante: 6 };
+const BS_LIST = { fitti: [2, 2], medi: [3, 6], radi: [4, 12] };
+function parseBs(b) {
+  if (!b || typeof b !== "object") return null;
+  const stile = BS_STILE[b.stile] ? b.stile : null; if (!stile) return null;
+  // più pareti insieme: "fondo+sinistra+letto" (tutta e scala vanno sempre da sole)
+  const par = (Array.isArray(b.dove) ? b.dove : String(b.dove || "").split("+")).map(x => String(x).trim()).filter((x, i, a) => BS_DOVE[x] && x !== "tutta" && x !== "scala" && a.indexOf(x) === i).slice(0, 4);
+  const o = { stile, dove: par.length > 1 ? "piu" : BS_DOVE[b.dove] ? b.dove : par[0] || "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
+  if (o.dove === "piu") o.pareti = par;
+  if (BS_LARG[b.larg] && o.dove !== "piu") o.larg = b.larg;
+  if (stile === "listelli" ? BS_LIST[b.corn] : BS_CORN[b.corn]) o.corn = b.corn;
+  return o;
+}
+const BS_ALT_SCALA = {
+  tutta: "dal battiscopa fino a circa 20 cm sotto il soffitto",
+  "23": "fino a circa 150 cm sopra i gradini, chiusa in alto da una fascia continua che sale parallela alla scala",
+  "1m": "solo nella parte bassa, fino a circa 90 cm sopra i gradini, chiusa in alto da una fascia continua che sale parallela alla scala",
+};
+function r5(n) { return Math.round(n / 5) * 5; }
+// misure vere: quanti riquadri, quanto larghi, cornici di che spessore
+function bsMisure(b) {
+  const W = BS_LARG[b.larg], out = [];
+  const h = b.alt === "1m" ? 100 : b.alt === "23" ? 170 : 255;
+  if (b.stile === "listelli") {
+    const L = BS_LIST[b.corn] || [3, 6];
+    out.push("Listelli larghi " + L[0] + " cm e distanziati " + L[1] + " cm uno dall'altro, tutti uguali, dritti e perfettamente verticali" + (W ? ": su questa parete larga circa " + String(W).replace(".", ",") + " m ci stanno circa " + Math.round(W * 100 / (L[0] + L[1])) + " listelli" : "") + ".");
+    return out.join(" ");
+  }
+  const c = BS_CORN[b.corn] || 4;
+  out.push("Cornici in rilievo con profilo sagomato larghe circa " + c + " cm, sporgenti circa " + Math.max(1, Math.round(c / 2)) + " cm.");
+  if (W && b.stile !== "geometrica") {
+    const n = Math.max(2, Math.round(W / 0.7)), gap = 8, pw = r5((W * 100 - gap * (n + 1)) / n);
+    if (b.stile === "classica" && b.alt === "tutta") out.push("Due file di riquadri separate da una cornice orizzontale continua a circa 90 cm da terra: in basso " + n + " riquadri uguali alti circa 60 cm, sopra " + n + " riquadri uguali alti fino a circa 20 cm sotto il soffitto, allineati in colonna con quelli sotto.");
+    else out.push("Esattamente " + n + " riquadri uguali per fila, ognuno largo circa " + pw + " cm.");
+    out.push("Distanza costante di circa " + gap + " cm tra un riquadro e l'altro e dai bordi della zona con la boiserie; il disegno è centrato e simmetrico sulla parete (parete larga circa " + String(W).replace(".", ",") + " m).");
+  } else if (b.stile === "classica" && b.alt === "tutta") {
+    out.push("Due file di riquadri separate da una cornice orizzontale continua a circa 90 cm da terra: in basso riquadri bassi (circa 60 cm), sopra riquadri alti, allineati in colonna; riquadri larghi circa 60–70 cm.");
+  } else if (b.stile !== "geometrica") out.push("Riquadri larghi circa 60–70 cm, tutti uguali, con circa 8 cm tra uno e l'altro.");
+  if (b.alt !== "tutta") out.push("La cornice orizzontale che chiude la boiserie in alto (fascia) è più marcata delle altre, alta circa " + (c + 3) + " cm, a circa " + h + " cm da terra.");
+  return out.join(" ");
+}
+function bsDoveTxt(b) {
+  if (b.dove !== "piu") return BS_DOVE[b.dove];
+  const P = { fondo: "la parete di fondo (di fronte nella foto)", sinistra: "la parete di sinistra", destra: "la parete di destra", letto: "la parete dietro il letto o il divano (solo nella zona del letto o del divano)" };
+  const t = b.pareti.map(x => P[x]);
+  return "su " + t.length + " pareti: " + t.slice(0, -1).join(", ") + " e " + t[t.length - 1];
+}
+function bsPrompt(b, colorDesc) {
+  const colore = b.col === "tono"
+    ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura satinata leggera: la boiserie si riconosce solo grazie al rilievo e alle ombre."
+    : "Le cornici e i pannelli della boiserie sono dipinti nel colore " + colorDesc + ", finitura opaca" + (b.alt === "tutta" ? ", su tutta la parete con la boiserie." : "; la parte di parete sopra la boiserie resta del colore attuale.");
+  const mis = (b.larg || b.corn) ? bsMisure(b) : "";
+  const scala = b.dove === "scala"
+    ? "IMPORTANTE, SCALA: la boiserie SEGUE LA PENDENZA DELLA SCALA. Il battiscopa e la fascia in alto sono INCLINATI, paralleli alla linea dei gradini (come un corrimano), con la fascia sempre a circa " + (b.alt === "1m" ? "90" : b.alt === "23" ? "150" : "200") + " cm misurati in verticale dal gradino sotto. I riquadri sono PARALLELOGRAMMI: lati verticali dritti, lato sopra e lato sotto inclinati come la scala, tutti uguali e alla stessa distanza. Dove il pavimento torna in piano la boiserie torna orizzontale, con un raccordo pulito. Non farla orizzontale lungo la scala."
+    : "";
+  return [
+    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + bsDoveTxt(b) + ", " + (b.dove === "scala" ? BS_ALT_SCALA[b.alt] : BS_ALT[b.alt]) + ".",
+    scala,
+    b.dove === "piu" ? "Su TUTTE queste pareti la boiserie è uguale: stesso disegno, stessa altezza, cornici e fascia alla stessa quota e allineate; negli angoli tra due pareti con la boiserie le cornici girano con un raccordo pulito. Le pareti NON scelte restano esattamente come nella foto." : "",
+    "Stile: " + ((mis ? BS_STILE2[b.stile] : BS_STILE[b.stile]).replace(b.dove === "scala" ? /orizzontale |rettangolari /g : /$^/, "")) + ".",
+    b.dove === "scala" ? mis.replace(/La cornice orizzontale che chiude[^.]*\./, "") : mis,
+    colore,
+    mis ? "In basso un battiscopa coordinato alto circa 10 cm, dello stesso colore della boiserie. Per la scala usa le cose della foto (una porta è alta circa 210 cm, un letto circa 50 cm, un tavolo circa 75 cm)." : "",
+    "Linee perfettamente dritte e parallele che seguono esattamente la prospettiva della parete; disegno simmetrico rispetto al centro della parete; proporzioni realistiche rispetto alla stanza, alle porte e ai mobili.",
+    "Le cornici si interrompono intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti.",
+    "Rilievo realistico con ombre leggere coerenti con la luce della stanza" + (mis ? ": un'ombra sottile sotto ogni cornice orizzontale e di lato a quelle verticali, nella direzione della luce." : "."),
+    "Le PORTE restano esattamente dove sono e come sono, anche se aperte o socchiuse: non spostarle, non chiuderle, non rimpicciolirle; la boiserie si ferma prima della porta e dei suoi stipiti.",
+    b.alt !== "tutta" ? "La parte di muro SOPRA la boiserie resta IDENTICA alla foto: stesso intonaco, stessa texture, stesse macchie e imperfezioni; non pulirla e non ridipingerla." : "",
+    b.col === "tono" ? "Tono su tono significa lo stesso colore reale del muro nella foto (anche se crema, beige o sporco), non grigio e non bianco." : "",
+    "Mantieni identici pavimento, soffitto, scale, gradini, mobili, porte, finestre, oggetti, cavi, luci e inquadratura: aggiungi SOLO la boiserie.",
+    mis ? "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering." : "",
+  ].filter(Boolean).join(" ");
+}
+
+
+// ---------- battiscopa / zoccolino dei pavimenti (in prova) ----------
+function btFam(materialId) {
+  const m = String(materialId || "");
+  if (m.indexOf("monolith") === 0) return "resina";
+  if (m === "microcemento") return "microcemento";
+  if (["parquet", "spc", "laminato", "legno"].includes(m)) return "legno";
+  if (m === "piastrelle") return "piastrelle";
+  if (m === "graniglia_esterni") return "graniglia";
+  return null;
+}
+const BT_OK = { resina: ["vecchio", "tinta", "sguscia", "bianco", "filo"], microcemento: ["vecchio", "tinta", "bianco", "filo"], legno: ["vecchio", "tinta", "bianco", "muro"], piastrelle: ["vecchio", "tinta", "bianco"], graniglia: ["vecchio", "tinta", "nessuno"] };
+function parseBt(b, materialId) {
+  const fam = btFam(materialId); if (!fam || !b || typeof b !== "object") return null;
+  if (!BT_OK[fam].includes(b.tipo)) return null;
+  const H = fam === "graniglia" ? ["8", "10", "15"] : ["6", "8", "10"];
+  return { fam, tipo: b.tipo, h: H.includes(String(b.h)) ? String(b.h) : (fam === "graniglia" ? "10" : "8") };
+}
+function btNote(b) {
+  if (!b) return "";
+  const h = b.h + " cm";
+  const via = " Rimuovi il battiscopa vecchio.";
+  const regole = " È dritto e continuo lungo tutte le pareti visibili che toccano il pavimento, raccordato negli angoli, interrotto alle porte, intorno ai termosifoni e agli stipiti. Non cambiare pareti, porte, mobili e oggetti.";
+  if (b.tipo === "vecchio") return " BATTISCOPA: il battiscopa esistente resta IDENTICO alla foto (stesso materiale, colore e altezza): non toglierlo, non ridipingerlo e non inventarne uno nuovo; il pavimento nuovo arriva fin sotto il battiscopa.";
+  if (b.fam === "graniglia") {
+    if (b.tipo === "nessuno") return " ZOCCOLINO: nessuno zoccolino. Il pavimento in graniglia arriva fino al muro e si ferma con un bordo pulito; il muro sopra resta com'è.";
+    return " ZOCCOLINO IN GRANIGLIA: lungo il muro della casa, dei muretti e alla base dei gradini, la STESSA graniglia del pavimento sale sul muro per " + h + ", senza stacco e senza fuga: è la continuazione del pavimento, stesso colore e stessi sassolini, con il bordo superiore dritto e rifinito. Il muro sopra lo zoccolino resta identico.";
+  }
+  if (b.tipo === "sguscia") return " BATTISCOPA A SGUSCIA: tra pavimento e parete un raccordo CURVO in resina, dello stesso colore e finitura del pavimento, alto circa 8 cm, senza spigolo e senza battiscopa sporgente: il pavimento sembra salire morbido sul muro." + via + regole;
+  if (b.tipo === "filo") return " BATTISCOPA FILO MURO: nessun battiscopa sporgente. Alla base del muro si vede solo una sottile riga d'ombra dritta (battiscopa incassato a filo della parete)." + via + regole;
+  if (b.tipo === "bianco") return " BATTISCOPA: nuovo battiscopa BIANCO laccato alto " + h + ", sottile, con il bordo superiore dritto e leggermente smussato." + via + regole;
+  if (b.tipo === "muro") return " BATTISCOPA: nuovo battiscopa alto " + h + " dello STESSO colore della parete, così si confonde con il muro." + via + regole;
+  const t = { resina: "in RESINA, stesso colore e stessa finitura del pavimento (risvolto a muro, senza stacco)", microcemento: "in MICROCEMENTO, stesso colore e stessa texture del pavimento (risvolto a muro)", legno: "in LEGNO, stessa essenza, stesso colore e stessa finitura del pavimento", piastrelle: "ricavato dalla STESSA PIASTRELLA del pavimento (stesso colore e disegno), con le fughe allineate a quelle del pavimento" }[b.fam];
+  return " BATTISCOPA: nuovo battiscopa " + t + ", alto " + h + "." + via + regole;
+}
+
+
+// ---------- piastrelle per esterni (in prova) ----------
+const PE_EFF = { pietra_g: "gres porcellanato effetto PIETRA naturale grigia, con leggere variazioni di tono tra una piastrella e l'altra", pietra_b: "gres porcellanato effetto PIETRA naturale beige/sabbia, con leggere variazioni di tono", legno_n: "gres porcellanato effetto LEGNO naturale (rovere miele), con venature e nodi realistici diversi da doga a doga", legno_g: "gres porcellanato effetto LEGNO grigio sbiancato, con venature realistiche diverse da doga a doga", cemento_c: "gres porcellanato effetto CEMENTO chiaro, leggermente nuvolato", cemento_s: "gres porcellanato effetto CEMENTO scuro antracite, leggermente nuvolato", cotto: "gres porcellanato effetto COTTO (terracotta), caldo, con variazioni di tono naturali" };
+const PE_FMT = { "60x60": "piastrelle quadrate 60 × 60 cm", "30x60": "piastrelle rettangolari 30 × 60 cm", "20x120": "doghe lunghe 20 × 120 cm", "2cm": "lastre 60 × 60 cm spessore 2 cm, posate a secco con fughe un po' più larghe" };
+const PE_POSA = { dritta: "posa dritta con fughe allineate", correre: "posa a correre (giunti sfalsati in modo casuale)", terzo: "posa sfalsata di un terzo (ogni fila spostata di 1/3 della lunghezza)" };
+function parsePiaEst(b) {
+  if (!b || typeof b !== "object" || !PE_EFF[b.eff]) return null;
+  const fmt = PE_FMT[b.fmt] ? b.fmt : "60x60";
+  return { eff: b.eff, fmt, posa: (fmt === "60x60" || fmt === "2cm") ? "dritta" : (PE_POSA[b.posa] ? b.posa : "dritta"), bordo: ["toro", "zoccolino", "entrambi", "vecchio"].includes(b.bordo) ? b.bordo : "vecchio" };
+}
+function piaEstPrompt(b) {
+  const bordi = {
+    toro: "Dove il pavimento finisce verso il vuoto, un gradino o il giardino, il bordo è fatto con pezzi speciali a GRADINO TORO (spigolo arrotondato) dello stesso gres.",
+    zoccolino: "Lungo il muro della casa uno zoccolino ricavato dalla stessa piastrella, alto circa 8 cm.",
+    entrambi: "Dove il pavimento finisce verso il vuoto o un gradino, pezzi speciali a GRADINO TORO (spigolo arrotondato) dello stesso gres; lungo il muro della casa uno zoccolino dalla stessa piastrella alto circa 8 cm.",
+    vecchio: "Bordi, soglie e zoccolini esistenti restano identici.",
+  }[b.bordo];
+  return [
+    "Modifica la foto di questo spazio ESTERNO (terrazzo, balcone, cortile o portico) rifacendo SOLO il pavimento con un pavimento per esterni posato da un professionista.",
+    "Pavimento: " + PE_EFF[b.eff] + ", " + PE_FMT[b.fmt] + ", " + PE_POSA[b.posa] + ", fughe strette in colore coordinato.",
+    "Superficie OPACA antiscivolo da esterno (non lucida, nessun riflesso a specchio); segue le pendenze e i livelli del pavimento esistente; le piastrelle diventano più piccole in lontananza seguendo esattamente la prospettiva.",
+    bordi,
+    "Ombre, luce del sole e umidità coerenti con la scena. Non cambiare ringhiere, parapetti, vasi, piante, mobili da esterno, facciata, serramenti, cielo e inquadratura.",
+    "Il risultato deve sembrare una fotografia reale dello stesso spazio dopo i lavori, non un rendering.",
+  ].join(" ");
+}
+// ---------- piscine (in prova) ----------
+const PS_COL = { "Bianco": "bianco", "Azzurro chiaro": "azzurro chiaro", "Azzurro": "azzurro", "Blu": "blu intenso", "Verde laguna": "verde laguna (verde-acqua)", "Sabbia": "sabbia chiaro", "Grigio": "grigio medio", "Antracite": "grigio antracite scuro" };
+function parsePiscina(b) {
+  if (!b || typeof b !== "object") return null;
+  const cosa = (Array.isArray(b.cosa) ? b.cosa : []).filter((x, i, a) => ["vasca", "bordo", "solarium"].includes(x) && a.indexOf(x) === i);
+  if (!cosa.length) return null;
+  return { cosa, col: PS_COL[b.col] ? b.col : "Azzurro", bordo: ["graniglia", "piastrella", "pietra"].includes(b.bordo) ? b.bordo : "graniglia", sol: ["graniglia", "piastrelle", "legno"].includes(b.sol) ? b.sol : "graniglia" };
+}
+function piscinaPrompt(b) {
+  const L = [];
+  if (b.cosa.includes("vasca")) L.push("VASCA: il fondo e le pareti interne della piscina sono verniciati di nuovo in colore " + PS_COL[b.col] + " uniforme, finitura satinata, senza macchie. L'acqua è limpida e trasparente e prende il tono del fondo: più chiara dove l'acqua è bassa e più intensa dove è profonda, con riflessi del cielo e leggere increspature naturali. Se nella foto la piscina è vuota o con poca acqua, mostrala PIENA d'acqua pulita fino a pochi centimetri dal bordo.");
+  if (b.cosa.includes("bordo")) L.push("BORDO PISCINA: tutto intorno alla vasca un bordo nuovo largo circa 35–40 cm " + { graniglia: "in GRANIGLIA (piccoli sassolini levigati legati in resina), chiaro, con lo spigolo verso l'acqua arrotondato (bordo toro)" + (b.cosa.includes("solarium") && b.sol === "graniglia" ? ", continuo con il solarium" : ""), piastrella: "in pezzi speciali di GRES antiscivolo chiaro a BORDO TORO (spigolo arrotondato), con fughe allineate", pietra: "in LASTRE DI PIETRA chiara con lo spigolo arrotondato, posate con fughe sottili" }[b.bordo] + ", continuo e dritto, che segue esattamente la forma della vasca.");
+  if (b.cosa.includes("solarium")) L.push("SOLARIUM: il pavimento intorno alla piscina è rifatto " + { graniglia: "in GRANIGLIA drenante (sassolini legati in resina), uniforme, colore chiaro naturale", piastrelle: "in piastrelle di GRES per esterni antiscivolo effetto pietra chiara, formato 60 × 60, posa dritta", legno: "in DOGHE di legno per esterni (decking) color miele, parallele, con fughe sottili" }[b.sol] + ", fino ai bordi del prato o dei muretti, seguendo la prospettiva.");
+  return [
+    "Modifica la foto di questa piscina con i lavori fatti da un professionista. Cambia SOLO quello che è descritto qui sotto.",
+    L.join(" "),
+    "La piscina mantiene esattamente forma, dimensioni, scalette, skimmer e fari. Non cambiare casa, giardino, prato, piante, sdraio, ombrelloni, recinzioni, cielo e inquadratura.",
+    "Luce del sole e ombre coerenti con la scena. Il risultato deve sembrare una fotografia reale della stessa piscina dopo i lavori, non un rendering.",
+  ].join(" ");
+}
+
+module.exports = { parsePiaEst, piaEstPrompt, parsePiscina, piscinaPrompt, parseBt, btNote, parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
