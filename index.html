@@ -11850,7 +11850,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   var BS_STILI = [['classica', 'Classica', 'A riquadri'], ['inglese', 'All’inglese', 'Riquadri bassi con fascia'], ['listelli', 'Moderna', 'A listelli verticali'], ['geometrica', 'Geometrica', 'Rombi e diagonali']];
   // misure vere: larghezza della parete (quanti riquadri) e spessore delle cornici
-  function bsSteps(){ var b = state.bs || {}, L = ['bsStile', 'bsDove']; if(b.dove !== 'tutta' && b.dove !== 'letto' && b.dove !== 'scala') L.push('bsLarg'); L.push('bsAlt', 'bsCorn', 'bsCol'); return L; }
+  function bsUna(b){ return ['fondo','sinistra','destra'].indexOf(b.dove) > -1; }
+  function bsPar(b){ return b.pareti && b.pareti.length ? b.pareti : (b.dove ? [b.dove] : []); }
+  function bsSteps(){ var b = state.bs || {}, L = ['bsStile', 'bsDove']; if(!b.dove || bsUna(b)) L.push('bsLarg'); L.push('bsAlt', 'bsCorn', 'bsCol'); return L; }
   var BS_LARG = [['2','Fino a 2,5 m','Parete piccola'],['3','Da 2,5 a 3,5 m',''],['4','Da 3,5 a 4,5 m',''],['5','Più di 4,5 m','Parete grande'],['nonso','Non lo so','Decide Rendrum dalla foto']];
   function bsLargPic(v){ var w = { '2':44, '3':64, '4':84, '5':104, nonso:70 }[v]; return '<svg viewBox="0 0 120 70" aria-hidden="true"><rect width="120" height="70" fill="#FBFAF7"/><rect x="' + (60 - w / 2) + '" y="14" width="' + w + '" height="34" fill="#EFE9DF" stroke="#9C8C77"/><path d="M' + (60 - w / 2) + ' 58h' + w + '" stroke="#C8692E" stroke-width="2"/><path d="M' + (60 - w / 2) + ' 54v8M' + (60 + w / 2) + ' 54v8" stroke="#C8692E" stroke-width="2"/>' + (v === 'nonso' ? '<text x="60" y="36" text-anchor="middle" font-size="16" font-family="Arial" fill="#9C8C77">?</text>' : '') + '</svg>'; }
   function bsCornO(stile){ return stile === 'listelli' ? [['fitti','Fitti','Listelli da 2 cm, vicini'],['medi','Medi','Listelli da 3 cm, ogni 6 cm'],['radi','Radi','Listelli da 4 cm, ogni 12 cm']] : [['sottile','Sottili','Cornici da circa 2 cm'],['media','Medie','Cornici da circa 4 cm'],['importante','Importanti','Cornici da circa 6 cm']]; }
@@ -11864,7 +11866,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(st === 'bsLarg') return { t:'Quanto è larga la parete?', s:'Serve per fare i riquadri della misura giusta.', opts: BS_LARG.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsLargPic(x[0])), sel: b.larg === x[0] }; }) };
     if(st === 'bsCorn') return { t: b.stile === 'listelli' ? 'Come sono i listelli?' : 'Come sono le cornici?', opts: bsCornO(b.stile).map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsCornPic(b.stile, x[0])), sel: b.corn === x[0] }; }) };
     if(st === 'bsStile') return { t:'Che boiserie?', s:'Tocca lo stile.', opts: BS_STILI.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(x[0], x[0] === 'inglese' ? '1m' : 'tutta')), sel: b.stile === x[0] }; }) };
-    if(st === 'bsDove') return { t:'Su quale parete?', s:'Guardando la foto.', opts: [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra',''],['letto','Dietro il letto o il divano','Solo in quella zona'],['scala','Lungo la scala','Segue la pendenza dei gradini'],['tutta','Tutta la stanza','Tutte le pareti che si vedono']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', x[0] === 'scala' ? bsScalaPic() : cgWall(x[0] === 'letto' ? 'fondo' : x[0] === 'tutta' ? 'giro' : x[0])), sel: b.dove === x[0] }; }) };
+    if(st === 'bsDove') return { t:'Su quali pareti?', s:'Guardando la foto. Puoi sceglierne più di una, poi tocca Avanti.', multi:true, opts: [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra',''],['letto','Dietro il letto o il divano','Solo in quella zona'],['scala','Lungo la scala','Segue la pendenza dei gradini'],['tutta','Tutta la stanza','Tutte le pareti che si vedono']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', x[0] === 'scala' ? bsScalaPic() : cgWall(x[0] === 'letto' ? 'fondo' : x[0] === 'tutta' ? 'giro' : x[0])), sel: bsPar(b).indexOf(x[0]) > -1 }; }) };
     if(st === 'bsAlt') return { t:'Fino a che altezza?', opts: [['tutta','Tutta la parete',''],['23','Due terzi','Con una fascia sopra'],['1m','Fino a 1 metro','Con una fascia sopra']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', bsPic(b.stile || 'classica', x[0])), sel: b.alt === x[0] }; }) };
     if(st === 'bsCol') return { t:'Di che colore?', s:'Tono su tono: stesso colore della parete, si vede solo il rilievo.', cls:'sf-sw', opts: [{ v:'tono', n:'Tono su tono', d:'Come la parete', pic: sfPic('linear-gradient(135deg,#EFE8DC,#D9CFC1)', ''), sel: b.col === 'tono' }].concat(SEMPL_INT.slice(0, 11).map(function(c){ return { v:'c:' + c[0], n:c[0], pic: sfPic(c[1], ''), sel: b.col === c[0] }; })) };
     return null;
@@ -11875,14 +11877,17 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(st === 'bsStile'){ if(b.stile && (b.stile === 'listelli') !== (v === 'listelli')) b.corn = null; b.stile = v; if(v === 'inglese' && !b.alt) b.alt = '1m'; }
     if(st === 'bsLarg') b.larg = v;
     if(st === 'bsCorn') b.corn = v;
-    if(st === 'bsDove') b.dove = v;
+    if(st === 'bsDove'){ var P = bsPar(b).slice(), i = P.indexOf(v);
+      if(i > -1) P.splice(i, 1); else if(v === 'tutta' || v === 'scala') P = [v]; else { P = P.filter(function(x){ return x !== 'tutta' && x !== 'scala'; }); P.push(v); }
+      var ord = ['fondo','sinistra','destra','letto','scala','tutta']; P.sort(function(a, c){ return ord.indexOf(a) - ord.indexOf(c); });
+      b.pareti = P; b.dove = P.length === 1 ? P[0] : P.length ? 'piu' : null; }
     if(st === 'bsAlt') b.alt = v;
     if(st === 'bsCol'){ if(v === 'tono'){ b.col = 'tono'; state.colorA = semplCol('Tono su tono', '#EFE8DC'); } else { var nm = v.slice(2), c = SEMPL_INT.filter(function(x){ return x[0] === nm; })[0]; if(c){ b.col = c[0]; state.colorA = semplCol(c[0], c[1]); } } }
     return true;
   }
   function bsAnswered(st){ var b = state.bs || {}; return st === 'bsStile' ? !!b.stile : st === 'bsDove' ? !!b.dove : st === 'bsLarg' ? !!b.larg : st === 'bsCorn' ? !!b.corn : st === 'bsAlt' ? !!b.alt : st === 'bsCol' ? !!(b.col && state.colorA) : null; }
   function bsDone(){ return !!(SF_ON && SF.mat === 'boiserie' && state.bs && state.bs.col && state.colorA); }
-  function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove || 'fondo', alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore', larg: (b.dove === 'tutta' || b.dove === 'letto' || b.dove === 'scala') ? 'nonso' : (b.larg || 'nonso'), corn: b.corn || '' }; }
+  function bsPayload(){ var b = state.bs; if(!(SF_ON && SF.mat === 'boiserie') || !b || !b.stile) return null; return { stile: b.stile, dove: b.dove === 'piu' ? bsPar(b).join('+') : (b.dove || 'fondo'), alt: b.alt || 'tutta', col: b.col === 'tono' ? 'tono' : 'colore', larg: bsUna(b) ? (b.larg || 'nonso') : 'nonso', corn: b.corn || '' }; }
   // ===== Cartongesso "perfetto" (in prova): misure vere, tagli di luce, scuretto, veletta curva =====
   function cgV2(){ try{ return semplOn(); }catch(e){ return false; } }
   CG_ICO.taglio = '<svg viewBox="0 0 120 62" fill="none" stroke="#C8692E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="10" y="6" width="100" height="50" rx="2" stroke="#B9AD9E"/><path d="M60 14v34M40 31h40" stroke-width="4"/><path d="M60 14v34M40 31h40" stroke="#F6D9A8" stroke-width="1.5"/></svg>';
@@ -12311,7 +12316,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('progressFill').style.width = (st === 'foto' ? 4 : Math.min(30, 8 + i * 4)) + '%';
     syncNextStepEnabled();
   }
-  function sfGo(st){ SF.step = st; sfRender(); window.scrollTo(0,0); }
+  var sfTm = null, sfLock = 0;
+  function sfGo(st){ if(sfTm){ clearTimeout(sfTm); sfTm = null; } SF.step = st; sfLock = Date.now() + 250; sfRender(); window.scrollTo(0,0); }
   function invApplyMat(){
     if(!window.RD_INV_MAT || SF.mat === window.RD_INV_MAT) return false;
     sfApply('mat', window.RD_INV_MAT); if(window.RD_INV_CTX) sfApply('ctx', window.RD_INV_CTX);
@@ -12367,12 +12373,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   document.getElementById('sfBody').addEventListener('click', function(e){
     var b = e.target.closest('[data-sfv]'); if(!b) return;
+    if(sfTm || Date.now() < sfLock) return;
     var st = SF.step;
     var qq = sfQ(st);
     if(qq && qq.multi){ if(!b.dataset.lock) sfApply(st, b.dataset.sfv); sfRender(); return; }
     sfApply(st, b.dataset.sfv);
     sfRender();
-    setTimeout(sfNext, 160);
+    sfTm = setTimeout(function(){ sfTm = null; if(currentPanel === 'panelSimple' && SF.step === st) sfNext(); }, 160);
   });
   document.getElementById('panelSimple').addEventListener('click', function(e){
     var j = e.target.closest('[data-sfjump]'); if(j){ sfGo(j.dataset.sfjump); }
@@ -12391,7 +12398,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // qui restano visibili solo le opzioni delle cose scelte (tipo di soffitto, parete diversa), il resto in "Altre opzioni".
   Array.prototype.forEach.call(document.querySelectorAll('#interniExtras > .section-label, #interniExtras > .niche-toggle'), function(el){ el.classList.add('sf-adv'); });
 
-  window.__rdDbg = function(){ return { panel: currentPanel, SF: SF, state: state }; };
+  window.__rdDbg = function(){ return { panel: currentPanel, SF: SF, state: state, steps: sfSteps() }; };
   ['templateSection','toggleTemplates','photoHint'].forEach(function(id){ var el = document.getElementById(id); if(el) el.classList.add('sf-hide'); });
   var ALL_PANELS = ['panelLanding','panelSimple','panel1','panelResinaArea','panelSub','panelColor','panelFinitura','panelPhoto','panelResult','panel3','panelConfirm'];
   var STEP_LABELS = {
@@ -12799,7 +12806,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   });
   document.getElementById('nextStep').addEventListener('click', function(){
     if(this.dataset.gen === '1') return;
-    if(currentPanel === 'panelSimple'){ if(sfAnswered(SF.step)) sfNext(); return; }
+    if(currentPanel === 'panelSimple'){ if(sfTm || Date.now() < sfLock) return; if(sfAnswered(SF.step)) sfNext(); return; }
     if(currentPanel === 'panelResult'){
       if(!aiResultImage) return;
       if(isProUser()) document.getElementById('qFromPreviewBtn').click(); else rdShareArt();

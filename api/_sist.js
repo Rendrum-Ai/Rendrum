@@ -190,8 +190,11 @@ const BS_LIST = { fitti: [2, 2], medi: [3, 6], radi: [4, 12] };
 function parseBs(b) {
   if (!b || typeof b !== "object") return null;
   const stile = BS_STILE[b.stile] ? b.stile : null; if (!stile) return null;
-  const o = { stile, dove: BS_DOVE[b.dove] ? b.dove : "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
-  if (BS_LARG[b.larg]) o.larg = b.larg;
+  // più pareti insieme: "fondo+sinistra+letto" (tutta e scala vanno sempre da sole)
+  const par = (Array.isArray(b.dove) ? b.dove : String(b.dove || "").split("+")).map(x => String(x).trim()).filter((x, i, a) => BS_DOVE[x] && x !== "tutta" && x !== "scala" && a.indexOf(x) === i).slice(0, 4);
+  const o = { stile, dove: par.length > 1 ? "piu" : BS_DOVE[b.dove] ? b.dove : par[0] || "fondo", alt: BS_ALT[b.alt] ? b.alt : (stile === "inglese" ? "1m" : "tutta"), col: b.col === "tono" ? "tono" : "colore" };
+  if (o.dove === "piu") o.pareti = par;
+  if (BS_LARG[b.larg] && o.dove !== "piu") o.larg = b.larg;
   if (stile === "listelli" ? BS_LIST[b.corn] : BS_CORN[b.corn]) o.corn = b.corn;
   return o;
 }
@@ -223,6 +226,12 @@ function bsMisure(b) {
   if (b.alt !== "tutta") out.push("La cornice orizzontale che chiude la boiserie in alto (fascia) è più marcata delle altre, alta circa " + (c + 3) + " cm, a circa " + h + " cm da terra.");
   return out.join(" ");
 }
+function bsDoveTxt(b) {
+  if (b.dove !== "piu") return BS_DOVE[b.dove];
+  const P = { fondo: "la parete di fondo (di fronte nella foto)", sinistra: "la parete di sinistra", destra: "la parete di destra", letto: "la parete dietro il letto o il divano (solo nella zona del letto o del divano)" };
+  const t = b.pareti.map(x => P[x]);
+  return "su " + t.length + " pareti: " + t.slice(0, -1).join(", ") + " e " + t[t.length - 1];
+}
 function bsPrompt(b, colorDesc) {
   const colore = b.col === "tono"
     ? "Le cornici e i pannelli sono dello STESSO colore della parete esistente (tono su tono), finitura satinata leggera: la boiserie si riconosce solo grazie al rilievo e alle ombre."
@@ -232,8 +241,9 @@ function bsPrompt(b, colorDesc) {
     ? "IMPORTANTE, SCALA: la boiserie SEGUE LA PENDENZA DELLA SCALA. Il battiscopa e la fascia in alto sono INCLINATI, paralleli alla linea dei gradini (come un corrimano), con la fascia sempre a circa " + (b.alt === "1m" ? "90" : b.alt === "23" ? "150" : "200") + " cm misurati in verticale dal gradino sotto. I riquadri sono PARALLELOGRAMMI: lati verticali dritti, lato sopra e lato sotto inclinati come la scala, tutti uguali e alla stessa distanza. Dove il pavimento torna in piano la boiserie torna orizzontale, con un raccordo pulito. Non farla orizzontale lungo la scala."
     : "";
   return [
-    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + BS_DOVE[b.dove] + ", " + (b.dove === "scala" ? BS_ALT_SCALA[b.alt] : BS_ALT[b.alt]) + ".",
+    "Modifica la foto di questo interno aggiungendo una boiserie realizzata da un professionista " + bsDoveTxt(b) + ", " + (b.dove === "scala" ? BS_ALT_SCALA[b.alt] : BS_ALT[b.alt]) + ".",
     scala,
+    b.dove === "piu" ? "Su TUTTE queste pareti la boiserie è uguale: stesso disegno, stessa altezza, cornici e fascia alla stessa quota e allineate; negli angoli tra due pareti con la boiserie le cornici girano con un raccordo pulito. Le pareti NON scelte restano esattamente come nella foto." : "",
     "Stile: " + ((mis ? BS_STILE2[b.stile] : BS_STILE[b.stile]).replace(b.dove === "scala" ? /orizzontale |rettangolari /g : /$^/, "")) + ".",
     b.dove === "scala" ? mis.replace(/La cornice orizzontale che chiude[^.]*\./, "") : mis,
     colore,
