@@ -1030,7 +1030,12 @@ module.exports = async function handler(req, res) {
         }
       }
       if (!r.ok) {
-        return res.status(r.status).json({ error: "Errore dal servizio AI (OpenAI)", details: (data && data.error && data.error.message) || data });
+        const em = String((data && data.error && (data.error.code || "") + " " + (data.error.message || "")) || "");
+        const staff = quotaAcc && ["info@dgmresine.com", "prova@rendrum.com"].includes(String(quotaAcc.email || "").toLowerCase());
+        console.error("openai images", r.status, em.slice(0, 300));
+        if (r.status === 429 && /insufficient_quota|credit|billing/i.test(em))
+          return res.status(503).json({ error: staff ? "Credito OpenAI finito: ricaricalo su platform.openai.com (Settings → Billing). L'anteprima non ti è stata scalata." : "L'anteprima non è disponibile in questo momento. Riprova più tardi: non ti è stata scalata.", code: "credito" });
+        return res.status(r.status).json({ error: staff ? "Errore dal servizio AI (OpenAI)" : "L'anteprima non è riuscita. Riprova tra poco: non ti è stata scalata.", details: staff ? ((data && data.error && data.error.message) || data) : undefined });
       }
       const b64 = data && data.data && data.data[0] && data.data[0].b64_json;
       if (!b64) return res.status(502).json({ error: "Il modello non ha restituito un'immagine", details: data });
