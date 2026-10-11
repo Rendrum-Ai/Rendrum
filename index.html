@@ -17451,14 +17451,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var GB_TIPS = {
     monolith:['La resina non ha fughe: si pulisce con un panno e non trattiene lo sporco.', 'Si può posare sopra il pavimento esistente, senza demolire.'],
     microcemento:['Il microcemento si posa sopra le vecchie piastrelle: pochi millimetri, niente demolizioni.', 'Con la protezione giusta va bene anche in doccia.'],
-    imbiancatura:['Guarda il colore anche con la luce del pomeriggio: cambia molto.', 'Le tinte chiare fanno sembrare la stanza più grande e luminosa.'],
-    pit_int:['Guarda il colore anche con la luce del pomeriggio: cambia molto.', 'Le tinte chiare fanno sembrare la stanza più grande e luminosa.'],
-    pit_est:['Per le facciate la pittura silossanica lascia respirare il muro e respinge l’acqua.', 'Guarda il colore anche con la luce del pomeriggio: cambia molto.'],
-    deco:['Le pareti decorate danno profondità anche a una stanza piccola.', 'Una sola parete decorata basta a cambiare tutta la stanza.'],
-    boiserie:['La boiserie protegge il muro dai colpi e dallo sporco.', 'Una boiserie a metà parete fa sembrare il soffitto più alto.'],
-    cartongesso:['Con il cartongesso crei nicchie e mensole senza opere murarie.', 'Dietro il cartongesso puoi far passare luci e cavi.'],
-    piscina:['Le piastrelle chiare danno all’acqua il classico colore azzurro.', 'Intorno alla piscina conviene un bordo antiscivolo.'],
-    pia_est:['Per l’esterno scegli piastrelle antiscivolo e resistenti al gelo.', 'Le lastre grandi fanno sembrare il terrazzo più ampio.'],
+    imbiancatura:['Per le facciate la pittura silossanica lascia respirare il muro e respinge l’acqua.', 'Guarda il colore anche con la luce del pomeriggio: cambia molto.'],
     parquet:['Il parquet si può levigare e rinnovare più volte negli anni.', 'Le doghe lunghe fanno sembrare la stanza più grande.'],
     spc:['L’SPC è impermeabile: va bene anche in cucina e in bagno.', 'Si posa a incastro, spesso sopra il pavimento esistente.'],
     laminato:['Il laminato resiste ai graffi: ottimo con bambini e animali.', 'Si posa in pochi giorni, senza colle.'],
@@ -17492,10 +17485,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.documentElement.classList.toggle('rd-gb', gbOn());
     if(!on || !gbOn()) return;
     var w = gbEl(); if(!w) return;
-    var m = gbMat(), k = '';
-    try{ k = (typeof SF_ON !== 'undefined' && SF_ON && SF.mat) || ''; }catch(e){}
-    if(k === 'imbiancatura' || (!k && m.cat === 'imbiancatura')){ try{ k = state.context === 'esterno' ? 'pit_est' : 'pit_int'; }catch(e){} }
-    var tips = GB_TIPS[k] || GB_TIPS[m.cat] || GB_TIPS._;   // consigli giusti per il lavoro scelto (niente facciate negli interni)
+    var m = gbMat(), tips = GB_TIPS[m.cat] || GB_TIPS._;
     document.getElementById('gbMn').textContent = m.nome;
     document.getElementById('gbMc').textContent = [m.colore, m.fin].filter(Boolean).join(' · ');
     var sw = document.getElementById('gbSw'); sw.style.background = m.img ? 'url(' + m.img + ') center/cover' : m.hex;
