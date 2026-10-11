@@ -182,10 +182,19 @@ function publicUser(row) {
     usageCount: row.usage_count || 0,
     usageLimit: (PLAN_LIMITS[row.tier] || 0),
     paymentsEnabled: paymentsEnabled(),
+    // generazioni senza limite (account di prova di Rendrum e quelli messi su Vercel in TEST_EMAILS / RD_UNLIMITED_EMAILS)
+    unlimited: unlimitedEmail(row.email),
     // Accesso con Google/Apple (colonne di supabase_accesso_social.sql; assenti = valori di sempre)
     passwordSet: row.password_set !== false,
     needsOnboarding: row.needs_onboarding === true,
     social: { google: !!row.google_sub, apple: !!row.apple_sub },
+    // Crediti comprati e prova gratuita settimanale (colonne di supabase_crediti.sql; assenti = null)
+    credits: row.credits == null ? null : Number(row.credits) || 0,
+    trial: row.trial_used == null ? null : {
+      used: Number(row.trial_used) || 0,
+      limit: row.account_type === "privato" ? 5 : 10,
+      endsAt: row.trial_start ? new Date(Date.parse(row.trial_start) + 7 * 86400000).toISOString() : null,
+    },
   };
 }
 
@@ -201,6 +210,12 @@ const PLAN_LIMITS = { basic: PLANS.basic.images, medium: PLANS.medium.images, pr
 
 // I pagamenti sono attivi solo quando su Vercel c'è STRIPE_SECRET_KEY: finché
 // manca, l'app continua a funzionare come prima (anteprime libere).
+function unlimitedEmail(e) {
+  const list = ["prova@rendrum.com", "provalo@rendrum.com", "info@rendrum.com", "info@dgmresine.com"]
+    .concat(String(process.env.TEST_EMAILS || "").split(","), String(process.env.RD_UNLIMITED_EMAILS || "").split(","))
+    .map(x => String(x).trim().toLowerCase()).filter(Boolean);
+  return list.includes(String(e || "").trim().toLowerCase());
+}
 function paymentsEnabled() { return Boolean((process.env.STRIPE_SECRET_KEY || "").trim()); }
 
 // Chiamata alla REST API di Stripe (form-encoded), senza librerie esterne.

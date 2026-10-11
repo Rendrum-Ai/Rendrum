@@ -13291,6 +13291,17 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       .catch(function(){});
   }
   var proPendingClick = null;
+  // Si può generare senza abbonamento se restano generazioni (comprate o regalate), la prova gratuita
+  // o se l'account è senza limiti. Nel dubbio decide il server, che conta davvero.
+  function rdCanGen(){
+    var a = proAccount; if(!a) return false;
+    if(subActive() || a.unlimited) return true;
+    if(a.credits == null || a.trial == null) return true;
+    if(+a.credits > 0) return true;
+    var t = a.trial; if((+t.used || 0) >= (+t.limit || 0)) return false;
+    if(t.endsAt && Date.now() > Date.parse(t.endsAt)) return false;
+    return true;
+  }
   // Blocco accesso: per usare l'app bisogna avere un account (email confermata) e un abbonamento attivo.
   document.addEventListener('click', function(e){
     var t = e.target.closest && e.target.closest('#landingPrivato, #landingPro, #next1, #nextStep');
@@ -13304,7 +13315,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(er) er.textContent = 'Per usare Rendrum accedi con la tua email, oppure premi "Registrati".';
       return;
     }
-    if(proAccount.paymentsEnabled && !subActive()){
+    if(proAccount.paymentsEnabled && !subActive() && !rdCanGen()){
       e.preventDefault(); e.stopImmediatePropagation();
       proPendingClick = t.id;
       if(IS_APP) alert(APP_NO_SUB);
