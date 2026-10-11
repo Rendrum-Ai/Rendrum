@@ -13241,6 +13241,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function rdSavePdf(doc, fname){
     if(window.rdPvNext && Date.now() - window.rdPvNext < 120000){ window.rdPvNext = null; return rdPvShow(doc, fname); }
+    if(window.rdMailNext){ var mlN = window.rdMailNext; window.rdMailNext = null; if(Date.now() - (mlN.at || 0) < 120000) return mlN.cb(doc, fname); }
     if(window.rdWaNext && window.rxWaPdf){ var waN = window.rdWaNext; window.rdWaNext = null; if(Date.now() - (waN.at || 0) < 120000) return window.rxWaPdf(doc, fname, waN); }
     var P = IS_APP && window.Capacitor && window.Capacitor.Plugins;
     if(!(P && P.Filesystem && P.Share)){ doc.save(fname); return Promise.resolve(true); }
@@ -13587,7 +13588,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     ppShowView('list');
     ppLoadProjects();
   }
-  function ppClose(force){ if(force !== true && qdBlock(function(){ ppClose(true); })) return; document.getElementById('proProjectsModal').classList.remove('open'); try{ hub.ret = null; qfSet(false); var pb = document.getElementById('pfBackBtn'); if(pb) pb.textContent = '← Torna ai progetti'; }catch(e){} }
+  var rdRetHome = false;
+  function ppClose(force){ if(force !== true && qdBlock(function(){ ppClose(true); })) return; rdRetHome = false; document.getElementById('proProjectsModal').classList.remove('open'); try{ hub.ret = null; qfSet(false); var pb = document.getElementById('pfBackBtn'); if(pb) pb.textContent = '← Torna ai progetti'; }catch(e){} }
 
   function ppLoadProjects(){
     var listEl = document.getElementById('ppList');
@@ -14251,7 +14253,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.body.appendChild(o);
     document.getElementById('qdStay').onclick = function(){ o.remove(); };
     document.getElementById('qdNoSave').onclick = function(){ o.remove(); qdClear(); qdClean(); next(); };
-    document.getElementById('qdSaveGo').onclick = function(){ var b = this; b.disabled = true; qSave().then(function(){ o.remove(); next(); }, function(){ b.disabled = false; o.remove(); qScrollTop(); }); };
+    document.getElementById('qdSaveGo').onclick = function(){ var b = this; b.disabled = true; qSave().then(function(){ o.remove(); next(); }, function(){ b.disabled = false; var m = document.getElementById('qEdErr'), t = m ? m.textContent.trim() : ''; document.getElementById('qdErr').textContent = (t || 'Non riesco a salvarlo.') + ' Puoi anche uscire senza salvare.'; }); };
     return true;
   }
   // riprendere una bozza rimasta
@@ -15303,9 +15305,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     function open(item){ so._cliEdit = false; so._cliLock = true; so.cur = item; delete so.cur._local; so.cur.data = soFix(so.cur.data || {}); so.dirty = !!loc; so.tab = 'cli'; so.vsk = null; so.room = undefined; qLoadSettings().catch(function(){}).then(function(){ if(so.cur === item) soRender(); }); soRender(); ppShowView('soprEd'); qScrollTop(); }
     if(loc){ open(loc); return; }
     soApi('sopr-get', 'GET', null, '&id=' + encodeURIComponent(id)).then(function(x){
-      if(!x.ok){ document.getElementById('soErr').textContent = (x.d && x.d.error) || 'Sopralluogo non trovato.'; return; }
+      if(!x.ok || !x.d || !x.d.item){ var em = (x.d && x.d.error) || 'Sopralluogo non trovato.'; soOpen(); setTimeout(function(){ var e = document.getElementById('soErr'); if(e) e.textContent = em; }, 300); return; }
       var it = x.d.item; open({ id:it.id, clientName:it.clientName, address:it.address, phone:it.phone, leadId:it.leadId, status:it.status, data:it.data || {} });
-    }).catch(function(){ document.getElementById('soErr').textContent = 'Connessione non riuscita.'; });
+    }).catch(function(){ soOpen(); setTimeout(function(){ var e = document.getElementById('soErr'); if(e) e.textContent = 'Connessione non riuscita: riprova.'; }, 300); });
   }
 
   // ----- editor -----
@@ -15355,6 +15357,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(i > -1) d.lavori.splice(i, 1); else { d.lavori.push(k); d.lavori.sort(function(a, b){ return SO_ORDER.indexOf(a) - SO_ORDER.indexOf(b); });
         var S = SO_SCHEDE[k]; if(S.mis === 'stanze') d.ambienti.forEach(function(a){ a.sup = a.sup || {}; if(!a.sup[k]) a.sup[k] = Object.assign({ pav:false, par:false, sof:false }, S.sup); }); }
       x.classList.toggle('on', i < 0); soTouch();
+      if(document.getElementById('soMis')) soDrawMis();   // le stanze compaiono subito, senza cambiare scheda
     }); });
     soDrawFoto(); soDrawFirma();
     var del = document.getElementById('soDel'); del.hidden = false; delete del.dataset.arm; del.textContent = 'Elimina sopralluogo';
@@ -16053,6 +16056,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
     return Promise.resolve('download');
   }
+  window.rdShareFile = rxShareFile;
   window.rxWaPdf = function(doc, fname, w){
     var safe = String(fname).replace(/[^A-Za-z0-9._-]+/g, '_'), b64 = String(doc.output('datauristring')).split(',').pop();
     return rxShareFile(b64, safe, 'application/pdf', w.text, 'Manda su WhatsApp').then(function(r){
@@ -16786,7 +16790,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qwOpen(step){
     if(!qs.cur) return;
-    qwClean(); qw.add = false; qw.sub = ''; qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    qwClean(); qw.add = false; qw.sub = ''; qw.mailOk = null; try{ qwMailClose(); }catch(e){} qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
     if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
     qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
   }
@@ -16993,7 +16997,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var q = qs.cur, h = '';
     if(qw.step === 1){
       // B: due bottoni grandi. "Cliente che ho già" apre la ricerca, "Cliente nuovo" il modulo
-      var sub = qw.sub || ((q.cliente.nome || '').trim() ? 'nuovo' : '');
+      // qw.sub '-' = l'artigiano è tornato a "Per chi è?": non riaprire da solo il modulo del cliente
+      var sub = qw.sub === '-' ? '' : (qw.sub || ((q.cliente.nome || '').trim() ? 'nuovo' : ''));
       h = qwTop(sub ? '← Per chi è' : '← Preventivi') + '<div class="pro-projects-title">' + (sub === 'cerca' ? 'Cerca il cliente' : sub === 'nuovo' ? ((q.cliente.nome || '').trim() ? 'Il cliente' : 'Cliente nuovo') : 'Per chi è?') + '</div>';
       if(!sub){
         h += '<button type="button" class="qw-big p" id="qwOld"><i>👤</i><span><b>Cliente che ho già</b><em>Lo cerchi per nome</em></span></button>'
@@ -17018,7 +17023,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
             qw.sub = ''; qwAuto(); qw.step = 2; qwRender(); qScrollTop(); }); }); };
         inp.addEventListener('input', draw); draw(); setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 50);
         document.getElementById('qwNew2').onclick = function(){ var v = inp.value.trim(); qw.sub = 'nuovo'; if(v && !(q.cliente.nome || '').trim()) q.cliente.nome = v.replace(/^./, function(x){ return x.toUpperCase(); }); qwRender(); };
-        document.getElementById('qwBack').onclick = function(){ qw.sub = ''; qwRender(); };
+        document.getElementById('qwBack').onclick = function(){ qw.sub = '-'; qwRender(); };
         return;
       }
       h += '<div class="field"><input type="text" id="qwNome" maxlength="160" placeholder="Nome e cognome" value="' + qEsc(q.cliente.nome || '') + '"></div>'
@@ -17030,7 +17035,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         var n = document.getElementById('qwNome').value.trim(); if(n.length < 2){ document.getElementById('qwErr').textContent = 'Scrivi il nome del cliente.'; return; }
         q.cliente.nome = n; q.cliente.telefono = document.getElementById('qwTel').value.trim(); var ind = document.getElementById('qwInd').value.trim(); if(ind){ q.cantiere.indirizzo = ind; if(!q.cliente.indirizzo) q.cliente.indirizzo = ind; }
         qw.sub = ''; qwAuto(); qw.step = 2; qwRender(); qScrollTop(); };
-      document.getElementById('qwBack').onclick = function(){ qw.sub = ''; if(!(q.cliente.nome || '').trim() || !q.voci.length){ q.cliente.nome = ''; } qwRender(); };
+      document.getElementById('qwBack').onclick = function(){ qw.sub = '-'; if(!(q.cliente.nome || '').trim() || !q.voci.length){ q.cliente.nome = ''; } qwRender(); };
       if(!(q.cliente.nome || '').trim()) setTimeout(function(){ var n = document.getElementById('qwNome'); try{ n.focus(); }catch(e){} }, 50);
       return;
     }
@@ -17086,8 +17091,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<button type="button" class="qw-opt" id="qwOpt">⚙︎ Altre opzioni <em>IVA, sconto, condizioni, note</em></button>'
       + '<div class="pp-error" id="qwErr"></div><div class="pf-hint" id="qwMsg" style="color:var(--ink)"></div>'
       + '<button type="button" class="qw-write qw-pv" id="qwPv">👁 Guarda l\u2019anteprima</button>'
-      + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : '')
-      + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
+      + (qw.mailOk ? '<div class="qm-ok"><b>✓ Email inviata' + (qw.mailOk.nome ? ' a ' + qEsc(qw.mailOk.nome) : '') + '</b>' + qEsc(qw.mailOk.to) + ' · il preventivo è segnato come Inviato</div>' : '')
+      + (qwMailOn() ? '<div class="qm-row">' + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 WhatsApp</button>' : '') + '<button type="button" class="pro-auth-submit" id="qwMail">✉️ Email</button></div>'
+        : (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : ''))
+      + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono || qwMailOn() ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
       + '<button type="button" class="q-link qw-save" id="qwSave">Salva e chiudi</button>';
     box.innerHTML = h;
     box.querySelectorAll('[data-qwr]').forEach(function(b){ b.addEventListener('click', function(){ q.rate = qClone(Q_RATE_PRESETS[b.dataset.qwr]); qwRender(); }); });
@@ -17098,9 +17105,98 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qRenderEditor(); qwMirror(); fn(); };
     var wa = document.getElementById('qwWa'); if(wa) wa.onclick = function(){ if(q.status === 'bozza') q.status = 'inviato'; go(function(){ var b = document.getElementById('rxWaQuote'); if(b) b.click(); else document.getElementById('qPdfBtn').click(); }); };
     document.getElementById('qwPdf').onclick = function(){ go(function(){ document.getElementById('qPdfBtn').click(); }); };
+    var ml = document.getElementById('qwMail'); if(ml){ qwMailCss(); ml.onclick = function(){ qwMail(q, go); }; }
     document.getElementById('qwPv').onclick = function(){ go(function(){ if(!qPvGo()){ var e = document.getElementById('qEdErr'), we = document.getElementById('qwErr'); if(e && we){ we.innerHTML = e.innerHTML; qwLinks(we); } } }); };
     document.getElementById('qwSave').onclick = function(){ var e = document.getElementById('qwErr'); e.textContent = ''; qRenderEditor();
       qSave().then(function(){ qOpenList(); }, function(){ e.innerHTML = document.getElementById('qEdErr').innerHTML || 'Salvataggio non riuscito.'; qwLinks(e); }); };
+  }
+  // ---------- Preventivo per email (in prova): Rendrum la manda con il nome dell'impresa, le risposte arrivano all'impresa ----------
+  function qwMailOn(){ try{ return typeof semplOn === 'function' && semplOn(); }catch(e){ return false; } }
+  function qwMailCss(){
+    if(document.getElementById('qmCss')) return;
+    var st = document.createElement('style'); st.id = 'qmCss';
+    st.textContent = '.qm-row{display:flex;gap:10px;margin-bottom:10px}.qm-row>button{flex:1;margin:0!important;white-space:nowrap}'
+      + '.qm-dim{position:fixed;inset:0;background:rgba(20,12,6,.45);z-index:10050}'
+      + '.qm-sh{position:fixed;left:0;right:0;bottom:0;z-index:10051;background:#FBF9F5;border-radius:24px 24px 0 0;padding:12px 20px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.25);max-height:92vh;overflow:auto;color:var(--ink,#1D1B18)}'
+      + '@media(min-width:700px){.qm-sh{left:50%;right:auto;width:560px;transform:translateX(-50%);bottom:24px;border-radius:24px}}'
+      + '.qm-gr{width:44px;height:5px;border-radius:3px;background:#ddd5ca;margin:0 auto 12px}'
+      + '.qm-sh h3{font-family:Lora,Georgia,serif;font-size:22px;margin:0 0 2px;font-weight:600}.qm-sub{color:#7a6f64;font-size:13.5px;margin-bottom:12px}'
+      + '.qm-f{display:block;border:1px solid #e4dbcf;border-radius:12px;background:#fff;padding:7px 12px;margin-bottom:8px}.qm-f span{display:block;font-size:11px;color:#8a7f73;font-weight:600}'
+      + '.qm-f input,.qm-f textarea{width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:15px;padding:2px 0;color:inherit;resize:vertical}.qm-f.bad{border-color:#C8692E}'
+      + '.qm-note{font-size:12px;color:#8a7f73;margin:-4px 0 8px 4px}'
+      + '.qm-att{display:flex;align-items:center;gap:10px;background:#F3EDE5;border-radius:12px;padding:9px 12px;font-size:13.5px;margin:4px 0 10px}.qm-att i{font-style:normal;background:#C8692E;color:#fff;font-weight:800;font-size:10px;border-radius:5px;padding:5px}'
+      + '.qm-info{font-size:12.5px;color:#5b5047;background:#fff;border:1px dashed #d9b89f;border-radius:12px;padding:9px 12px;margin-bottom:12px;line-height:1.4}'
+      + '.qm-err{color:#b5452a;font-size:13.5px;margin:0 0 8px;min-height:0}.qm-go{width:100%}'
+      + '.qm-lk{display:block;width:100%;background:none;border:0;text-align:center;margin-top:12px;color:var(--accent,#C8692E);font-weight:700;text-decoration:underline;font-size:14.5px;font-family:inherit;cursor:pointer}'
+      + '.qm-ok{background:#E7F4EC;border:1px solid #b9dcc6;color:#1f6a3d;border-radius:14px;padding:11px 13px;font-size:14px;margin:0 0 10px;line-height:1.4}.qm-ok b{display:block;font-size:15px}';
+    document.head.appendChild(st);
+  }
+  function qwMailClose(){ ['qmDim', 'qmSh'].forEach(function(id){ var e = document.getElementById(id); if(e) e.remove(); }); }
+  window.qwMailClose = qwMailClose;
+  function qwMailImp(){ var i = (qs.settings && qs.settings.impresa) || {}; return { nome: i.ragioneSociale || (proAccount && proAccount.companyName) || 'la tua impresa', email: i.email || (proAccount && proAccount.email) || '' }; }
+  function qwMailText(q){ var n = String(q.cliente.nome || '').trim(), ogg = String(q.oggetto || '').replace(/^Offerta per:\s*/i, '').trim(), i = qwMailImp(), tel = (qs.settings && qs.settings.impresa && qs.settings.impresa.telefono) || '';
+    return 'Gentile ' + (n || 'cliente') + ',\nle invio il preventivo' + (ogg ? ' per ' + ogg.toLowerCase() : '') + '. Resto a disposizione per qualsiasi domanda.\n' + i.nome + (tel ? ' · ' + tel : ''); }
+  function qwMailSubj(){ return 'Preventivo' + (qs.meta ? ' ' + ('00' + qs.meta.number).slice(-3) + '/' + qs.meta.year : '') + ' · ' + qwMailImp().nome; }
+  // prepara il PDF come il pulsante "Scarica il PDF" e lo passa a fn(base64, nome file)
+  function qwMailPdf(go, fn, fail){
+    go(function(){
+      var done = false; window.rdMailNext = { at: Date.now(), cb: function(doc, fname){ done = true; fn(String(doc.output('datauristring')).split(',').pop(), String(fname || 'Preventivo.pdf').replace(/[^A-Za-z0-9._-]+/g, '_')); return Promise.resolve(true); } };
+      document.getElementById('qPdfBtn').click();
+      var t0 = Date.now(), iv = setInterval(function(){
+        if(done){ clearInterval(iv); return; }
+        var e = document.getElementById('qEdErr'), et = e ? e.textContent.trim() : '';
+        if((et && !document.getElementById('qPdfBtn').disabled) || Date.now() - t0 > 60000){ clearInterval(iv); window.rdMailNext = null; fail(et || 'Il PDF non è pronto. Riprova.'); }
+      }, 400);
+    });
+  }
+  function qwMail(q, go){
+    qwMailCss(); qwMailClose();
+    var imp = qwMailImp(), subj0 = qwMailSubj();
+    var d = document.createElement('div'); d.className = 'qm-dim'; d.id = 'qmDim'; d.onclick = qwMailClose; document.body.appendChild(d);
+    var s = document.createElement('div'); s.className = 'qm-sh'; s.id = 'qmSh'; s.setAttribute('role', 'dialog');
+    s.innerHTML = '<div class="qm-gr"></div><h3>Manda per email</h3><div class="qm-sub">Il PDF parte già allegato. Controlla e tocca Manda.</div>'
+      + '<label class="qm-f" id="qmToF"><span>A</span><input id="qmTo" type="email" inputmode="email" autocomplete="email" placeholder="Email del cliente" value="' + qEsc(q.cliente.email || '') + '"></label>'
+      + (q.cliente.email ? '' : '<div class="qm-note">La scrivi una volta: resta salvata nella scheda del cliente.</div>')
+      + '<label class="qm-f"><span>Oggetto</span><input id="qmSubj" value="' + qEsc(subj0) + '"></label>'
+      + '<label class="qm-f"><span>Messaggio</span><textarea id="qmMsg" rows="5">' + qEsc(qwMailText(q)) + '</textarea></label>'
+      + '<div class="qm-att"><i>PDF</i><div><b>Il tuo preventivo</b><br><span style="color:#7a6f64">allegato, con la tua grafica</span></div></div>'
+      + '<div class="qm-info">Il cliente vede come mittente <b>' + qEsc(imp.nome) + '</b>.' + (imp.email ? ' Se risponde, la risposta arriva a <b>' + qEsc(imp.email) + '</b>.' : '') + '</div>'
+      + '<div class="qm-err" id="qmErr"></div>'
+      + '<button type="button" class="pro-auth-submit qm-go" id="qmGo">✉️ Manda email</button>'
+      + '<button type="button" class="qm-lk" id="qmApp">Preferisci la tua app email?</button>';
+    document.body.appendChild(s);
+    var to = document.getElementById('qmTo'), err = document.getElementById('qmErr'), go2 = document.getElementById('qmGo');
+    if(!q.cliente.email) setTimeout(function(){ try{ to.focus(); }catch(e){} }, 250);
+    var read = function(){ var v = to.value.trim(); q.cliente.email = v; return v; };
+    var EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;
+    go2.onclick = function(){
+      var v = read(); err.textContent = ''; document.getElementById('qmToF').classList.toggle('bad', !EM.test(v));
+      if(!EM.test(v)){ err.textContent = 'Scrivi l’email del cliente (es. nome@gmail.com).'; to.focus(); return; }
+      var subj = document.getElementById('qmSubj').value.trim(), msg = document.getElementById('qmMsg').value.trim(), was = q.status;
+      if(q.status === 'bozza') q.status = 'inviato';
+      go2.disabled = true; go2.textContent = 'Preparo il PDF…';
+      qwMailPdf(go, function(b64, fname){
+        go2.textContent = 'Invio…';
+        if(subj === subj0) subj = qwMailSubj();
+        qApi('mail', 'POST', { id: qs.curId, to: v, subject: subj, message: msg, pdf: b64, filename: fname }).then(function(x){
+          if(!x.ok) throw x;
+          qwMailClose(); qw.mailOk = { to: v, nome: q.cliente.nome || '' }; qwRender();
+        }).catch(function(x){ q.status = was === 'bozza' && !qs.curId ? was : q.status; go2.disabled = false; go2.textContent = '✉️ Manda email'; err.textContent = (x && x.d && x.d.error) || 'L’email non è partita. Controlla la connessione e riprova.'; });
+      }, function(t){ q.status = was; go2.disabled = false; go2.textContent = '✉️ Manda email'; err.textContent = t; });
+    };
+    document.getElementById('qmApp').onclick = function(){
+      var v = read(), subj = document.getElementById('qmSubj').value.trim(), msg = document.getElementById('qmMsg').value.trim(), b = this;
+      if(q.status === 'bozza') q.status = 'inviato';
+      b.disabled = true; b.textContent = 'Preparo il PDF…';
+      qwMailPdf(go, function(b64, fname){
+        if(subj === subj0) subj = qwMailSubj();
+        var share = window.rdShareFile ? window.rdShareFile(b64, fname, 'application/pdf', msg, subj) : Promise.resolve('download');
+        share.then(function(r){
+          if(r === 'download'){ var u = 'mailto:' + encodeURIComponent(v) + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(msg + '\n\n(Le allego il PDF del preventivo.)'); try{ location.href = u; }catch(e){} }
+          qwMailClose();
+        }).catch(function(){ b.disabled = false; b.textContent = 'Preferisci la tua app email?'; err.textContent = 'Non riesco ad aprire l’app email. Prova con “Manda email”.'; });
+      }, function(t){ b.disabled = false; b.textContent = 'Preferisci la tua app email?'; err.textContent = t; });
+    };
   }
   // i messaggi dell'editor (PDF pronto, dati impresa mancanti…) compaiono anche qui
   function qwLinks(el){ el.querySelectorAll('button[id^="qGoSettings"]').forEach(function(b){ b.addEventListener('click', function(){ hub.next = /IBAN/.test(el.textContent) ? 'banca' : 'impresa'; qOpenSettings(); }); }); }
@@ -17448,7 +17544,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var GB_TIPS = {
     monolith:['La resina non ha fughe: si pulisce con un panno e non trattiene lo sporco.', 'Si può posare sopra il pavimento esistente, senza demolire.'],
     microcemento:['Il microcemento si posa sopra le vecchie piastrelle: pochi millimetri, niente demolizioni.', 'Con la protezione giusta va bene anche in doccia.'],
-    imbiancatura:['Per le facciate la pittura silossanica lascia respirare il muro e respinge l’acqua.', 'Guarda il colore anche con la luce del pomeriggio: cambia molto.'],
+    imbiancatura:['Guarda il colore anche con la luce del pomeriggio: cambia molto.', 'Le tinte chiare fanno sembrare la stanza più grande e luminosa.'],
+    pit_int:['Guarda il colore anche con la luce del pomeriggio: cambia molto.', 'Le tinte chiare fanno sembrare la stanza più grande e luminosa.'],
+    pit_est:['Per le facciate la pittura silossanica lascia respirare il muro e respinge l’acqua.', 'Guarda il colore anche con la luce del pomeriggio: cambia molto.'],
+    deco:['Le pareti decorate danno profondità anche a una stanza piccola.', 'Una sola parete decorata basta a cambiare tutta la stanza.'],
+    boiserie:['La boiserie protegge il muro dai colpi e dallo sporco.', 'Una boiserie a metà parete fa sembrare il soffitto più alto.'],
+    cartongesso:['Con il cartongesso crei nicchie e mensole senza opere murarie.', 'Dietro il cartongesso puoi far passare luci e cavi.'],
+    piscina:['Le piastrelle chiare danno all’acqua il classico colore azzurro.', 'Intorno alla piscina conviene un bordo antiscivolo.'],
+    pia_est:['Per l’esterno scegli piastrelle antiscivolo e resistenti al gelo.', 'Le lastre grandi fanno sembrare il terrazzo più ampio.'],
     parquet:['Il parquet si può levigare e rinnovare più volte negli anni.', 'Le doghe lunghe fanno sembrare la stanza più grande.'],
     spc:['L’SPC è impermeabile: va bene anche in cucina e in bagno.', 'Si posa a incastro, spesso sopra il pavimento esistente.'],
     laminato:['Il laminato resiste ai graffi: ottimo con bambini e animali.', 'Si posa in pochi giorni, senza colle.'],
@@ -17482,7 +17585,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.documentElement.classList.toggle('rd-gb', gbOn());
     if(!on || !gbOn()) return;
     var w = gbEl(); if(!w) return;
-    var m = gbMat(), tips = GB_TIPS[m.cat] || GB_TIPS._;
+    var m = gbMat(), k = '';
+    try{ k = (typeof SF_ON !== 'undefined' && SF_ON && SF.mat) || ''; }catch(e){}
+    if(k === 'imbiancatura' || (!k && m.cat === 'imbiancatura')){ try{ k = state.context === 'esterno' ? 'pit_est' : 'pit_int'; }catch(e){} }
+    var tips = GB_TIPS[k] || GB_TIPS[m.cat] || GB_TIPS._;   // consigli giusti per il lavoro scelto (niente facciate negli interni)
     document.getElementById('gbMn').textContent = m.nome;
     document.getElementById('gbMc').textContent = [m.colore, m.fin].filter(Boolean).join(' · ');
     var sw = document.getElementById('gbSw'); sw.style.background = m.img ? 'url(' + m.img + ') center/cover' : m.hex;
@@ -19806,9 +19912,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(qdBlock(function(){ b.click(); })) return;
     var k = b.dataset.rdalt; rdTabOn('altro');
     if(k === 'sopr') soOpen();
-    if(k === 'listino'){ pbModal(); qOpenListino('quotes'); }
-    if(k === 'profilo'){ pbModal(); pfOpen(); }
-    if(k === 'impresa'){ pbModal(); qOpenSettings(); }
+    if(k === 'listino'){ pbModal(); qOpenListino('altro'); }
+    if(k === 'profilo'){ pbModal(); rdRetHome = true; pfOpen(); var pfb = document.getElementById('pfBackBtn'); if(pfb) pfb.textContent = '← Chiudi'; }
+    if(k === 'impresa'){ pbModal(); rdRetHome = true; qOpenSettings(); }
     if(k === 'account') hubOpen();
     if(k === 'esci') document.getElementById('proLogoutBtn').click();
   });
@@ -19944,6 +20050,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   document.getElementById('qlBack').addEventListener('click', function(){
     if(ql.from === 'quote' && qs.cur){ qRenderListinoSel(); qCard(true); ppShowView('quote'); }
     else if(ql.from === 'settings') qOpenSettings();
+    else if(ql.from === 'altro') ppClose();
     else qOpenList();
   });
   document.getElementById('qlFilter').addEventListener('change', function(){ ql.filter = this.value; ql.open = -1; qlRender(); });
@@ -19961,6 +20068,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   document.getElementById('qlSave').addEventListener('click', qlSave);
 
   document.getElementById('qBackQuotes').addEventListener('click', function(){ if(rdS1() && qs.cur){ qwOpen(3); } else qOpenList(); });
+  ['qSetBack', 'pfBackBtn'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('click', function(e){
+    if(!rdRetHome || (id === 'qSetBack' && (qs._fromWiz || qs._fromQuote)) || (hub.ret && hub.ret === (id === 'qSetBack' ? 'qsettings' : 'profile'))) return;
+    e.stopImmediatePropagation(); ppClose(); }, true); });
   document.getElementById('qSetBack').addEventListener('click', function(){ if(qs._fromWiz && qs.cur){ qwOpen(3); } else if(qs._fromQuote && qs.cur){ qCard(true); ppShowView('quote'); } else qOpenList(); });
   document.getElementById('qSetSave').addEventListener('click', qSaveSettings);
   document.getElementById('qSetCondReset').addEventListener('click', function(){ qSetCond = qDefaultCond(''); qRenderCond('qSetCondBox', qSetCond); });
@@ -20258,6 +20368,17 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     function appVisible(el){ return !!(el && el.offsetParent !== null && !el.disabled); }
     function appBack(){
       if(document.body.classList.contains('ai-busy-on')) return;
+      var bv = function(el){ if(!el || el.hidden || el.closest('[hidden]')) return false; var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).display !== 'none'; };
+      if(document.getElementById('qmSh')){ try{ window.qwMailClose(); }catch(e){} return; }
+      var qa = document.getElementById('qdAsk'); if(qa){ var qst = document.getElementById('qdStay'); if(qst) qst.click(); else qa.remove(); return; }
+      var rpv = document.getElementById('rdPv'); if(bv(rpv)){ var rpx = document.getElementById('rdPvX'); if(rpx) rpx.click(); return; }
+      var plo = [].slice.call(document.querySelectorAll('.pl-ov')).filter(bv)[0]; if(plo){ var plb = document.getElementById('plBack'); if(plb) plb.click(); return; }
+      var rvw = [].slice.call(document.querySelectorAll('.rv-wrap,.iv-sheet')).filter(bv).pop(); if(rvw){ var rvb = rvw.querySelector('#ivNo,.rv-skip'); if(rvb) rvb.click(); else rvw.remove(); return; }
+      var cam = document.getElementById('v3C'); if(bv(cam)){ cam.hidden = true; return; }
+      var stv = document.getElementById('v3S'); if(bv(stv)){ var stx = document.getElementById('v3X'); if(stx) stx.click(); return; }
+      var alt = document.getElementById('rdAltro'); if(alt && alt.classList.contains('open')){ alt.classList.remove('open'); return; }
+      var rxx = document.getElementById('rdX'); if(bv(rxx)){ var rxb = document.getElementById('rdXBack'); if(rxb) rxb.click(); return; }
+      var tma = document.getElementById('rdTm'); if(bv(tma)){ var tmb = document.getElementById('tmBk'); if(bv(tmb)){ tmb.click(); return; } }
       var fs = document.getElementById('fsViewer');
       if(fs && fs.classList.contains('open')){ document.getElementById('fsClose').click(); return; }
       var cpmEl = document.getElementById('colorPreviewModal');
@@ -20269,8 +20390,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var pm = document.getElementById('proProjectsModal');
       if(pm && pm.classList.contains('open')){
         var active = pm.querySelector('.pro-projects-view.active');
-        var bk = active && active.querySelector('.pp-back-link');
-        if(bk && appVisible(bk)) bk.click(); else ppClose();
+        var bks = active ? [].slice.call(active.querySelectorAll('.pp-back-link,#hbBack,#accBack,#soBack2,#soBack,#ldBack2,#ldBack,#qlBack,#qSetBack,#pfBackBtn,#qwBack,#plBack')).filter(appVisible) : [];
+        if(bks.length) bks[0].click(); else ppClose();
         return;
       }
       var bs = document.getElementById('backStep'), b3 = document.getElementById('back3');

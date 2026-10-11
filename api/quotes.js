@@ -170,6 +170,45 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ ok: true, listino });
     }
 
+    // Preventivo per email: parte da Rendrum con il nome dell'impresa, le risposte arrivano all'impresa (per ora solo account di prova)
+    if (action === "mail") {
+      if (req.method !== "POST") return res.status(405).json({ error: "Usa POST" });
+      const em = String(acc.email || "").toLowerCase();
+      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
+      const key = (process.env.RESEND_API_KEY || "").trim();
+      if (!key) return res.status(503).json({ error: "Invio email non attivo.", code: "noemail" });
+      const b = req.body || {}, EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;
+      const to = str(b.to, 160).toLowerCase();
+      if (!EM.test(to)) return res.status(400).json({ error: "L'email del cliente non è valida." });
+      const id = String(b.id || "").replace(/[^0-9a-f-]/gi, "");
+      if (!id) return res.status(400).json({ error: "Salva il preventivo prima di mandarlo." });
+      const r0 = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id + "&select=id,number,year,client_name", { method: "GET" });
+      const row = r0.ok && Array.isArray(r0.data) && r0.data[0];
+      if (!row) return res.status(404).json({ error: "Preventivo non trovato." });
+      if (!(typeof b.pdf === "string" && /^[A-Za-z0-9+/=]+$/.test(b.pdf) && b.pdf.length > 100 && b.pdf.length < 4000000)) return res.status(400).json({ error: "Il PDF è troppo grande o non è pronto. Riprova." });
+      const imp = (acc.quote_settings || {}).impresa || {};
+      const nome = (str(imp.ragioneSociale, 80) || str(acc.company_name, 80) || "Rendrum").replace(/[^\p{L}\p{N} .&'’()-]+/gu, " ").replace(/\s+/g, " ").trim() || "Rendrum";
+      const raw = (process.env.EMAIL_FROM || "Rendrum <onboarding@resend.dev>").trim(), m = raw.match(/<([^>]+)>/), addr = (m ? m[1] : raw).trim();
+      const reply = EM.test(str(imp.email, 120)) ? str(imp.email, 120) : (EM.test(em) ? em : "");
+      const num = ("00" + row.number).slice(-3) + "/" + row.year;
+      const subject = str(b.subject, 160) || ("Preventivo " + num + " · " + nome);
+      const msg = str(b.message, 3000) || "Buongiorno, le invio il preventivo. Resto a disposizione per qualsiasi domanda.";
+      const esc = t => String(t || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const info = [imp.indirizzo, imp.piva ? "P.IVA " + imp.piva : "", imp.telefono].filter(Boolean).map(esc).join(" · ");
+      const html = "<div style='font-family:Arial,Helvetica,sans-serif;max-width:600px;color:#1D1B18;font-size:15px;line-height:1.55'>"
+        + "<p style='margin:0 0 18px'>" + esc(msg).replace(/\n/g, "<br>") + "</p>"
+        + "<div style='border:1px solid #eee3d6;background:#FBF9F5;border-radius:14px;padding:16px 18px'><div style='font-weight:bold;font-size:16px'>" + esc(nome) + "</div>"
+        + (info ? "<div style='color:#8a7f73;font-size:13px'>" + info + "</div>" : "")
+        + "<div style='margin-top:10px'><b>Preventivo " + esc(num) + "</b> · in allegato in PDF</div></div>"
+        + "<p style='color:#a39889;font-size:12px;margin-top:18px'>Per rispondere basta usare “Rispondi”: il messaggio arriva a " + esc(nome) + ".</p></div>";
+      const fname = (str(b.filename, 80) || ("Preventivo_" + num.replace("/", "_") + ".pdf")).replace(/[^A-Za-z0-9._-]+/g, "_");
+      const body = { from: nome + " <" + addr + ">", to: [to], subject, html, text: msg, attachments: [{ filename: /\.pdf$/i.test(fname) ? fname : fname + ".pdf", content: b.pdf }] };
+      if (reply) body.reply_to = reply;
+      const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
+      if (!r || !r.ok) { console.error("quotes mail", r && r.status, r && await r.text().catch(() => "")); return res.status(502).json({ error: "L'email non è partita. Riprova o mandalo su WhatsApp." }); }
+      return res.status(200).json({ ok: true, to, replyTo: reply });
+    }
+
     if (action === "list") {
       const r = await supabaseRequest("/pro_quotes?" + mine + "&select=id,number,year,status,client_name,total_cents,updated_at,data->oggetto,data->data,data->anteprima&order=year.desc,number.desc&limit=300", { method: "GET" });
       if (!r.ok) return res.status(502).json({ error: "Non riesco a caricare i preventivi." });
