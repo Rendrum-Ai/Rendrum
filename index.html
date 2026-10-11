@@ -13241,7 +13241,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function rdSavePdf(doc, fname){
     if(window.rdPvNext && Date.now() - window.rdPvNext < 120000){ window.rdPvNext = null; return rdPvShow(doc, fname); }
-    if(window.rdMailNext){ var mlN = window.rdMailNext; window.rdMailNext = null; if(Date.now() - (mlN.at || 0) < 120000) return mlN.cb(doc, fname); }
     if(window.rdWaNext && window.rxWaPdf){ var waN = window.rdWaNext; window.rdWaNext = null; if(Date.now() - (waN.at || 0) < 120000) return window.rxWaPdf(doc, fname, waN); }
     var P = IS_APP && window.Capacitor && window.Capacitor.Plugins;
     if(!(P && P.Filesystem && P.Share)){ doc.save(fname); return Promise.resolve(true); }
@@ -16056,7 +16055,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
     return Promise.resolve('download');
   }
-  window.rdShareFile = rxShareFile;
   window.rxWaPdf = function(doc, fname, w){
     var safe = String(fname).replace(/[^A-Za-z0-9._-]+/g, '_'), b64 = String(doc.output('datauristring')).split(',').pop();
     return rxShareFile(b64, safe, 'application/pdf', w.text, 'Manda su WhatsApp').then(function(r){
@@ -16790,7 +16788,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function qwOpen(step){
     if(!qs.cur) return;
-    qwClean(); qw.add = false; qw.sub = ''; qw.mailOk = null; try{ qwMailClose(); }catch(e){} qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    qwClean(); qw.add = false; qw.sub = ''; qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
     if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
     qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
   }
@@ -17091,10 +17089,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<button type="button" class="qw-opt" id="qwOpt">⚙︎ Altre opzioni <em>IVA, sconto, condizioni, note</em></button>'
       + '<div class="pp-error" id="qwErr"></div><div class="pf-hint" id="qwMsg" style="color:var(--ink)"></div>'
       + '<button type="button" class="qw-write qw-pv" id="qwPv">👁 Guarda l\u2019anteprima</button>'
-      + (qw.mailOk ? '<div class="qm-ok"><b>✓ Email inviata' + (qw.mailOk.nome ? ' a ' + qEsc(qw.mailOk.nome) : '') + '</b>' + qEsc(qw.mailOk.to) + ' · il preventivo è segnato come Inviato</div>' : '')
-      + (qwMailOn() ? '<div class="qm-row">' + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 WhatsApp</button>' : '') + '<button type="button" class="pro-auth-submit" id="qwMail">✉️ Email</button></div>'
-        : (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : ''))
-      + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono || qwMailOn() ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
+      + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : '')
+      + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
       + '<button type="button" class="q-link qw-save" id="qwSave">Salva e chiudi</button>';
     box.innerHTML = h;
     box.querySelectorAll('[data-qwr]').forEach(function(b){ b.addEventListener('click', function(){ q.rate = qClone(Q_RATE_PRESETS[b.dataset.qwr]); qwRender(); }); });
@@ -17105,98 +17101,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       qRenderEditor(); qwMirror(); fn(); };
     var wa = document.getElementById('qwWa'); if(wa) wa.onclick = function(){ if(q.status === 'bozza') q.status = 'inviato'; go(function(){ var b = document.getElementById('rxWaQuote'); if(b) b.click(); else document.getElementById('qPdfBtn').click(); }); };
     document.getElementById('qwPdf').onclick = function(){ go(function(){ document.getElementById('qPdfBtn').click(); }); };
-    var ml = document.getElementById('qwMail'); if(ml){ qwMailCss(); ml.onclick = function(){ qwMail(q, go); }; }
     document.getElementById('qwPv').onclick = function(){ go(function(){ if(!qPvGo()){ var e = document.getElementById('qEdErr'), we = document.getElementById('qwErr'); if(e && we){ we.innerHTML = e.innerHTML; qwLinks(we); } } }); };
     document.getElementById('qwSave').onclick = function(){ var e = document.getElementById('qwErr'); e.textContent = ''; qRenderEditor();
       qSave().then(function(){ qOpenList(); }, function(){ e.innerHTML = document.getElementById('qEdErr').innerHTML || 'Salvataggio non riuscito.'; qwLinks(e); }); };
-  }
-  // ---------- Preventivo per email (in prova): Rendrum la manda con il nome dell'impresa, le risposte arrivano all'impresa ----------
-  function qwMailOn(){ try{ return typeof semplOn === 'function' && semplOn(); }catch(e){ return false; } }
-  function qwMailCss(){
-    if(document.getElementById('qmCss')) return;
-    var st = document.createElement('style'); st.id = 'qmCss';
-    st.textContent = '.qm-row{display:flex;gap:10px;margin-bottom:10px}.qm-row>button{flex:1;margin:0!important;white-space:nowrap}'
-      + '.qm-dim{position:fixed;inset:0;background:rgba(20,12,6,.45);z-index:10050}'
-      + '.qm-sh{position:fixed;left:0;right:0;bottom:0;z-index:10051;background:#FBF9F5;border-radius:24px 24px 0 0;padding:12px 20px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.25);max-height:92vh;overflow:auto;color:var(--ink,#1D1B18)}'
-      + '@media(min-width:700px){.qm-sh{left:50%;right:auto;width:560px;transform:translateX(-50%);bottom:24px;border-radius:24px}}'
-      + '.qm-gr{width:44px;height:5px;border-radius:3px;background:#ddd5ca;margin:0 auto 12px}'
-      + '.qm-sh h3{font-family:Lora,Georgia,serif;font-size:22px;margin:0 0 2px;font-weight:600}.qm-sub{color:#7a6f64;font-size:13.5px;margin-bottom:12px}'
-      + '.qm-f{display:block;border:1px solid #e4dbcf;border-radius:12px;background:#fff;padding:7px 12px;margin-bottom:8px}.qm-f span{display:block;font-size:11px;color:#8a7f73;font-weight:600}'
-      + '.qm-f input,.qm-f textarea{width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:15px;padding:2px 0;color:inherit;resize:vertical}.qm-f.bad{border-color:#C8692E}'
-      + '.qm-note{font-size:12px;color:#8a7f73;margin:-4px 0 8px 4px}'
-      + '.qm-att{display:flex;align-items:center;gap:10px;background:#F3EDE5;border-radius:12px;padding:9px 12px;font-size:13.5px;margin:4px 0 10px}.qm-att i{font-style:normal;background:#C8692E;color:#fff;font-weight:800;font-size:10px;border-radius:5px;padding:5px}'
-      + '.qm-info{font-size:12.5px;color:#5b5047;background:#fff;border:1px dashed #d9b89f;border-radius:12px;padding:9px 12px;margin-bottom:12px;line-height:1.4}'
-      + '.qm-err{color:#b5452a;font-size:13.5px;margin:0 0 8px;min-height:0}.qm-go{width:100%}'
-      + '.qm-lk{display:block;width:100%;background:none;border:0;text-align:center;margin-top:12px;color:var(--accent,#C8692E);font-weight:700;text-decoration:underline;font-size:14.5px;font-family:inherit;cursor:pointer}'
-      + '.qm-ok{background:#E7F4EC;border:1px solid #b9dcc6;color:#1f6a3d;border-radius:14px;padding:11px 13px;font-size:14px;margin:0 0 10px;line-height:1.4}.qm-ok b{display:block;font-size:15px}';
-    document.head.appendChild(st);
-  }
-  function qwMailClose(){ ['qmDim', 'qmSh'].forEach(function(id){ var e = document.getElementById(id); if(e) e.remove(); }); }
-  window.qwMailClose = qwMailClose;
-  function qwMailImp(){ var i = (qs.settings && qs.settings.impresa) || {}; return { nome: i.ragioneSociale || (proAccount && proAccount.companyName) || 'la tua impresa', email: i.email || (proAccount && proAccount.email) || '' }; }
-  function qwMailText(q){ var n = String(q.cliente.nome || '').trim(), ogg = String(q.oggetto || '').replace(/^Offerta per:\s*/i, '').trim(), i = qwMailImp(), tel = (qs.settings && qs.settings.impresa && qs.settings.impresa.telefono) || '';
-    return 'Gentile ' + (n || 'cliente') + ',\nle invio il preventivo' + (ogg ? ' per ' + ogg.toLowerCase() : '') + '. Resto a disposizione per qualsiasi domanda.\n' + i.nome + (tel ? ' · ' + tel : ''); }
-  function qwMailSubj(){ return 'Preventivo' + (qs.meta ? ' ' + ('00' + qs.meta.number).slice(-3) + '/' + qs.meta.year : '') + ' · ' + qwMailImp().nome; }
-  // prepara il PDF come il pulsante "Scarica il PDF" e lo passa a fn(base64, nome file)
-  function qwMailPdf(go, fn, fail){
-    go(function(){
-      var done = false; window.rdMailNext = { at: Date.now(), cb: function(doc, fname){ done = true; fn(String(doc.output('datauristring')).split(',').pop(), String(fname || 'Preventivo.pdf').replace(/[^A-Za-z0-9._-]+/g, '_')); return Promise.resolve(true); } };
-      document.getElementById('qPdfBtn').click();
-      var t0 = Date.now(), iv = setInterval(function(){
-        if(done){ clearInterval(iv); return; }
-        var e = document.getElementById('qEdErr'), et = e ? e.textContent.trim() : '';
-        if((et && !document.getElementById('qPdfBtn').disabled) || Date.now() - t0 > 60000){ clearInterval(iv); window.rdMailNext = null; fail(et || 'Il PDF non è pronto. Riprova.'); }
-      }, 400);
-    });
-  }
-  function qwMail(q, go){
-    qwMailCss(); qwMailClose();
-    var imp = qwMailImp(), subj0 = qwMailSubj();
-    var d = document.createElement('div'); d.className = 'qm-dim'; d.id = 'qmDim'; d.onclick = qwMailClose; document.body.appendChild(d);
-    var s = document.createElement('div'); s.className = 'qm-sh'; s.id = 'qmSh'; s.setAttribute('role', 'dialog');
-    s.innerHTML = '<div class="qm-gr"></div><h3>Manda per email</h3><div class="qm-sub">Il PDF parte già allegato. Controlla e tocca Manda.</div>'
-      + '<label class="qm-f" id="qmToF"><span>A</span><input id="qmTo" type="email" inputmode="email" autocomplete="email" placeholder="Email del cliente" value="' + qEsc(q.cliente.email || '') + '"></label>'
-      + (q.cliente.email ? '' : '<div class="qm-note">La scrivi una volta: resta salvata nella scheda del cliente.</div>')
-      + '<label class="qm-f"><span>Oggetto</span><input id="qmSubj" value="' + qEsc(subj0) + '"></label>'
-      + '<label class="qm-f"><span>Messaggio</span><textarea id="qmMsg" rows="5">' + qEsc(qwMailText(q)) + '</textarea></label>'
-      + '<div class="qm-att"><i>PDF</i><div><b>Il tuo preventivo</b><br><span style="color:#7a6f64">allegato, con la tua grafica</span></div></div>'
-      + '<div class="qm-info">Il cliente vede come mittente <b>' + qEsc(imp.nome) + '</b>.' + (imp.email ? ' Se risponde, la risposta arriva a <b>' + qEsc(imp.email) + '</b>.' : '') + '</div>'
-      + '<div class="qm-err" id="qmErr"></div>'
-      + '<button type="button" class="pro-auth-submit qm-go" id="qmGo">✉️ Manda email</button>'
-      + '<button type="button" class="qm-lk" id="qmApp">Preferisci la tua app email?</button>';
-    document.body.appendChild(s);
-    var to = document.getElementById('qmTo'), err = document.getElementById('qmErr'), go2 = document.getElementById('qmGo');
-    if(!q.cliente.email) setTimeout(function(){ try{ to.focus(); }catch(e){} }, 250);
-    var read = function(){ var v = to.value.trim(); q.cliente.email = v; return v; };
-    var EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;
-    go2.onclick = function(){
-      var v = read(); err.textContent = ''; document.getElementById('qmToF').classList.toggle('bad', !EM.test(v));
-      if(!EM.test(v)){ err.textContent = 'Scrivi l’email del cliente (es. nome@gmail.com).'; to.focus(); return; }
-      var subj = document.getElementById('qmSubj').value.trim(), msg = document.getElementById('qmMsg').value.trim(), was = q.status;
-      if(q.status === 'bozza') q.status = 'inviato';
-      go2.disabled = true; go2.textContent = 'Preparo il PDF…';
-      qwMailPdf(go, function(b64, fname){
-        go2.textContent = 'Invio…';
-        if(subj === subj0) subj = qwMailSubj();
-        qApi('mail', 'POST', { id: qs.curId, to: v, subject: subj, message: msg, pdf: b64, filename: fname }).then(function(x){
-          if(!x.ok) throw x;
-          qwMailClose(); qw.mailOk = { to: v, nome: q.cliente.nome || '' }; qwRender();
-        }).catch(function(x){ q.status = was === 'bozza' && !qs.curId ? was : q.status; go2.disabled = false; go2.textContent = '✉️ Manda email'; err.textContent = (x && x.d && x.d.error) || 'L’email non è partita. Controlla la connessione e riprova.'; });
-      }, function(t){ q.status = was; go2.disabled = false; go2.textContent = '✉️ Manda email'; err.textContent = t; });
-    };
-    document.getElementById('qmApp').onclick = function(){
-      var v = read(), subj = document.getElementById('qmSubj').value.trim(), msg = document.getElementById('qmMsg').value.trim(), b = this;
-      if(q.status === 'bozza') q.status = 'inviato';
-      b.disabled = true; b.textContent = 'Preparo il PDF…';
-      qwMailPdf(go, function(b64, fname){
-        if(subj === subj0) subj = qwMailSubj();
-        var share = window.rdShareFile ? window.rdShareFile(b64, fname, 'application/pdf', msg, subj) : Promise.resolve('download');
-        share.then(function(r){
-          if(r === 'download'){ var u = 'mailto:' + encodeURIComponent(v) + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(msg + '\n\n(Le allego il PDF del preventivo.)'); try{ location.href = u; }catch(e){} }
-          qwMailClose();
-        }).catch(function(){ b.disabled = false; b.textContent = 'Preferisci la tua app email?'; err.textContent = 'Non riesco ad aprire l’app email. Prova con “Manda email”.'; });
-      }, function(t){ b.disabled = false; b.textContent = 'Preferisci la tua app email?'; err.textContent = t; });
-    };
   }
   // i messaggi dell'editor (PDF pronto, dati impresa mancanti…) compaiono anche qui
   function qwLinks(el){ el.querySelectorAll('button[id^="qGoSettings"]').forEach(function(b){ b.addEventListener('click', function(){ hub.next = /IBAN/.test(el.textContent) ? 'banca' : 'impresa'; qOpenSettings(); }); }); }
@@ -20369,7 +20276,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     function appBack(){
       if(document.body.classList.contains('ai-busy-on')) return;
       var bv = function(el){ if(!el || el.hidden || el.closest('[hidden]')) return false; var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).display !== 'none'; };
-      if(document.getElementById('qmSh')){ try{ window.qwMailClose(); }catch(e){} return; }
       var qa = document.getElementById('qdAsk'); if(qa){ var qst = document.getElementById('qdStay'); if(qst) qst.click(); else qa.remove(); return; }
       var rpv = document.getElementById('rdPv'); if(bv(rpv)){ var rpx = document.getElementById('rdPvX'); if(rpx) rpx.click(); return; }
       var plo = [].slice.call(document.querySelectorAll('.pl-ov')).filter(bv)[0]; if(plo){ var plb = document.getElementById('plBack'); if(plb) plb.click(); return; }
