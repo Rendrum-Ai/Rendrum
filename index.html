@@ -2180,17 +2180,6 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   .pn-4k input{ width:20px; height:20px; margin:1px 0 0; flex:none; accent-color:#C8692E; }
   .pn-4k b{ display:block; font-size:14.5px; color:var(--ink, #1D1B18); } .pn-4k em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft, #6b5f55); }
 </style>
-<style>
-/* Finestre a vetro smerigliato (livello «Leggera») — solo account di prova (html.rd-vetro) — approvato 12/10 */
-@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-html.rd-vetro body .pro-projects-card,html.rd-vetro body .pro-auth-card,html.rd-vetro body .rd-sheet-in,html.rd-vetro body .v3ci2{background:rgba(255,253,249,.86)!important;background-image:none!important;-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,.65)!important;box-shadow:0 24px 60px -18px rgba(43,20,8,.45),inset 0 1px 0 rgba(255,255,255,.8)!important}
-html.rd-vetro body .rd-sheet-in > div{background:transparent!important}
-html.rd-vetro body .pro-projects-modal.open,html.rd-vetro body #rdAltro.rd-sheet.open,html.rd-vetro body #v3C.v3cam{background:rgba(29,20,12,.30)!important}
-html.rd-vetro body .pro-projects-card .ct-card,html.rd-vetro body .pro-projects-card input,html.rd-vetro body .pro-auth-card input,html.rd-vetro body .pro-projects-card button:not(.pro-auth-submit):not(.pro-projects-close),html.rd-vetro body .rd-sheet-in button{background-color:rgba(255,255,255,.55)!important}
-html.rd-vetro body .rd-sheet-in button.rx-co,html.rd-vetro body .rd-sheet-in .rx-co{background:#2B1408!important;background-color:#2B1408!important}
-html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
-}
-</style>
 </head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -13278,7 +13267,6 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
       pbar.querySelectorAll('[data-tester]').forEach(function(b){ b.hidden = !(isProAcc && rdIsTester()); });
       if(window.__rdV2Ready) rdV2Sync();
       try{ if(window.pnSync) window.pnSync(); }catch(e){}
-      try{ document.documentElement.classList.toggle('rd-vetro', rdIsStaff()); }catch(e){}
       if(isProAcc && typeof ldRefreshBadge === 'function') ldRefreshBadge();
       if(proAccount && typeof tfPending !== 'undefined' && tfPending){ tfPending = false; setTimeout(function(){ tfOpen(); }, 300); }
     }
@@ -16476,9 +16464,9 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
         + '<button type="button" class="pro-auth-submit" id="rxSiOk">Salva</button>'
         + (it && d.attivo ? '<div class="rx-row2"><a class="q-add" href="' + qEsc(link) + '" target="_blank" rel="noopener">👁 Apri il sito</a><button type="button" class="q-add" id="rxSiSh">🔗 Condividi il link</button></div>' : '')
         + '<div class="pf-sec">Cosa c\'è nel sito</div><div class="rx-list">'
-        + '<button type="button" data-rxgo="profilo">🧰 Presentazione, lavorazioni e foto <i>dal Profilo artigiano</i></button>'
-        + '<button type="button" data-rxgo="lavori">🖼️ Lavori prima e dopo <i>da Lavori finiti</i></button>'
-        + '<button type="button" data-rxgo="recensioni">⭐ Recensioni <i>da Recensioni</i></button></div>'
+        + '<button type="button" data-rxgo="profilo"><em class="ce">🧰 </em><em class="cl"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="24" height="16" rx="3"/><path d="M12 10V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M4 17h24"/></svg></em>Presentazione, lavorazioni e foto <i>dal Profilo artigiano</i></button>'
+        + '<button type="button" data-rxgo="lavori"><em class="ce">🖼️ </em><em class="cl"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5h14a4 4 0 0 1 4 4v12"/><rect x="4" y="9" width="20" height="17" rx="3"/><circle cx="10" cy="14.5" r="2"/><path d="M4 23l6-5 4.5 3.5L18 18l6 5"/></svg></em>Lavori prima e dopo <i>da Lavori finiti</i></button>'
+        + '<button type="button" data-rxgo="recensioni"><em class="ce">⭐ </em><em class="cl"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4.5l3.4 7 7.6 1.1-5.5 5.4 1.3 7.6L16 22l-6.8 3.6 1.3-7.6L5 12.6l7.6-1.1z"/></svg></em>Recensioni <i>da Recensioni</i></button></div>'
         + '<div class="pf-sec">Dominio tuo (es. edilrossi.it)</div>'
         + (rxHas('dominio') ? '<div class="field"><input id="rxSiD" value="' + qEsc(d.dominio) + '" placeholder="edilrossi.it"></div><div class="pf-hint">Scrivi il dominio e salva: ti contattiamo noi per collegarlo (serve una modifica dal tuo fornitore del dominio, ti guidiamo passo passo).</div>'
           : '<div class="pf-hint">Con il piano Max il sito può avere il tuo dominio. Lo colleghiamo noi.</div>');
@@ -17505,7 +17493,7 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
         return '<div class="ct-col"><div class="ct-colh"><b>' + col[0] + '</b><u>' + cc.length + '</u></div>' + cc.map(function(c){ return '<button type="button" class="ct-bk" data-ct="' + qEsc(c.id) + '"><b>' + qEsc(c.nome) + '</b><span>' + qEsc(c.lavoro || c.luogo || '') + '</span>' + (c.stato ? '<em>' + qEsc(c.stato) + '</em>' : '') + '</button>'; }).join('') + '</div>'; }).join('') + '</div>'
         + '<div class="pf-hint" style="text-align:center">Scorri di lato per vedere tutte le colonne. Un cantiere passa da solo alla colonna dopo quando fai il passo successivo.</div>';
     }
-    h += '<button type="button" class="ct-link" id="ctAnte">🖼️ Anteprime salvate</button>';
+    h += '<button type="button" class="ct-link" id="ctAnte"><b class="v3ge" style="font-weight:normal">🖼️</b><span class="ct-ai"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5h14a4 4 0 0 1 4 4v12"/><rect x="4" y="9" width="20" height="17" rx="3"/><circle cx="10" cy="14.5" r="2"/><path d="M4 23l6-5 4.5 3.5L18 18l6 5"/></svg></span><span>Anteprime salvate</span></button>';
     box.innerHTML = h;
     box.querySelectorAll('[data-ctv]').forEach(function(b){ b.addEventListener('click', function(){ ct.vista = b.dataset.ctv; ctDraw(); }); });
     box.querySelectorAll('[data-ctf]').forEach(function(b){ b.addEventListener('click', function(){ ct.filtro = b.dataset.ctf; ctDraw(); }); });
@@ -17682,7 +17670,8 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
   // "Cosa vuoi fare?"
   var CT_COSA = [['ant', '🖼️', 'Fare un’anteprima', 'foto del cliente con il materiale'], ['app', '🗓️', 'Fissare un appuntamento', 'sopralluogo, lavori o altro'], ['sopr', '📐', 'Fare un sopralluogo', 'misure, foto e firma'],
     ['prev', '📄', 'Fare un preventivo', 'dal listino o dal sopralluogo'], ['fine', '✅', 'Chiudere un lavoro', 'foto finali e recensione'], ['rev', '⭐', 'Chiedere una recensione', 'al cliente su WhatsApp']];
-  function ctCosaHtml(){ return '<div class="ct-cosa">' + CT_COSA.map(function(x){ return '<button type="button" data-cosa="' + x[0] + '"><span>' + x[1] + '</span><b>' + x[2] + '</b><i>' + x[3] + '</i></button>'; }).join('') + '</div>'; }
+  var CT_COSA_LN = {"ant": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 5h14a4 4 0 0 1 4 4v12\"/><rect x=\"4\" y=\"9\" width=\"20\" height=\"17\" rx=\"3\"/><circle cx=\"10\" cy=\"14.5\" r=\"2\"/><path d=\"M4 23l6-5 4.5 3.5L18 18l6 5\"/></svg>", "app": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"7\" width=\"22\" height=\"20\" rx=\"3\"/><path d=\"M5 13h22M11 4v6M21 4v6\"/></svg>", "sopr": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 26V6l20 20z\"/><path d=\"M11 21v-5l5 5zM6 11h3M6 16h3M6 21h2\"/></svg>", "prev": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 4h10l6 6v17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z\"/><path d=\"M19 4v6h6M12 17h9M12 22h6\"/></svg>", "fine": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"16\" cy=\"16\" r=\"11\"/><path d=\"M11 16.5l3.5 3.5 7-8\"/></svg>", "rev": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4.5l3.4 7 7.6 1.1-5.5 5.4 1.3 7.6L16 22l-6.8 3.6 1.3-7.6L5 12.6l7.6-1.1z\"/></svg>"};
+  function ctCosaHtml(){ return '<div class="ct-cosa">' + CT_COSA.map(function(x){ return '<button type="button" data-cosa="' + x[0] + '"><span><em class="ce">' + x[1] + '</em><em class="cl">' + (CT_COSA_LN[x[0]] || '') + '</em></span><b>' + x[2] + '</b><i>' + x[3] + '</i></button>'; }).join('') + '</div>'; }
   function ctCosaGo(k){
     if(k === 'voto'){ rxClose(); rxVoti(); return; }
     if(k === 'ant'){ rxClose(); ppClose(); var lp = document.getElementById('landingPro'); if(lp) lp.click(); return; }
@@ -17911,7 +17900,7 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
       ov.addEventListener('click', function(e){ if(e.target === ov) ov.hidden = true; }); }
     ov.innerHTML = '<div class="v3ci2"><div class="grab"></div><h3>Nuova anteprima</h3><p>Scatta la foto della stanza o della facciata. Il lavoro puoi sceglierlo qui o subito dopo.</p>'
       + '<div class="v3lens">' + V3_LENS.map(function(l){ return '<button type="button" data-v3l="' + l[0] + '"' + (v3.cat === l[0] ? ' class="on"' : '') + '><span>' + ((typeof MAT_LINE_ICON !== 'undefined' && MAT_LINE_ICON[l[0]]) || l[2]) + '</span><i>' + l[1] + '</i></button>'; }).join('') + '</div>'
-      + '<div class="v3shut"><label class="v3gal">🖼️<i>Galleria</i><input type="file" accept="image/*" hidden id="v3G"></label><label class="v3sb" aria-label="Scatta"><u></u><input type="file" accept="image/*" capture="environment" hidden id="v3F"></label><span class="v3sp"></span></div></div>';
+      + '<div class="v3shut"><label class="v3gal"><b class="v3ge">🖼️</b><span class="v3gi"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5h14a4 4 0 0 1 4 4v12"/><rect x="4" y="9" width="20" height="17" rx="3"/><circle cx="10" cy="14.5" r="2"/><path d="M4 23l6-5 4.5 3.5L18 18l6 5"/></svg></span><i>Galleria</i><input type="file" accept="image/*" hidden id="v3G"></label><label class="v3sb" aria-label="Scatta"><u></u><input type="file" accept="image/*" capture="environment" hidden id="v3F"></label><span class="v3sp"></span></div></div>';
     ov.hidden = false;
     ov.querySelectorAll('[data-v3l]').forEach(function(b){ b.addEventListener('click', function(){ v3.cat = v3.cat === b.dataset.v3l ? null : b.dataset.v3l; ov.querySelectorAll('[data-v3l]').forEach(function(x){ x.classList.toggle('on', x.dataset.v3l === v3.cat); }); }); });
     ['v3F', 'v3G'].forEach(function(id){ document.getElementById(id).addEventListener('change', function(){ var f = this.files && this.files[0]; this.value = ''; if(!f) return; ov.hidden = true; v3Start(f, v3.cat); }); });
@@ -20322,7 +20311,7 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
   function rdTabOn(k){ document.querySelectorAll('#rdTab [data-rdtab]').forEach(function(b){ b.classList.toggle('on', b.dataset.rdtab === k); }); }
   function rdV2Sync(){
     rdV2.on = rdV2Active();
-    document.body.classList.toggle('rd-v2', rdV2.on);
+    document.body.classList.toggle('rd-v2', rdV2.on); try{ document.documentElement.classList.toggle('rd-vetro', rdIsStaff()); }catch(e){}
     try{ rdS1Sync(); }catch(e){}
     try{ rxSync(); }catch(e){}
     if(!rdV2.on){
@@ -21161,6 +21150,251 @@ html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
     }
   }
   if(document.body) start(); else document.addEventListener('DOMContentLoaded', start);
+})();
+</script>
+<style id="rd-vetro-css">/* Finestre a vetro smerigliato (livello «Leggera») — solo account di prova (html.rd-vetro) — approvato 12/10 */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+html.rd-vetro body .pro-projects-card,html.rd-vetro body .pro-auth-card,html.rd-vetro body .rd-sheet-in,html.rd-vetro body .v3ci2{background:rgba(255,253,249,.86)!important;background-image:none!important;-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,.65)!important;box-shadow:0 24px 60px -18px rgba(43,20,8,.45),inset 0 1px 0 rgba(255,255,255,.8)!important}
+html.rd-vetro body .rd-sheet-in > div{background:transparent!important}
+html.rd-vetro body .pro-projects-modal.open,html.rd-vetro body #rdAltro.rd-sheet.open,html.rd-vetro body #v3C.v3cam{background:rgba(29,20,12,.30)!important}
+html.rd-vetro body .pro-projects-card .ct-card,html.rd-vetro body .pro-projects-card input,html.rd-vetro body .pro-auth-card input,html.rd-vetro body .pro-projects-card button:not(.pro-auth-submit):not(.pro-projects-close),html.rd-vetro body .rd-sheet-in button{background-color:rgba(255,255,255,.55)!important}
+html.rd-vetro body .rd-sheet-in button.rx-co,html.rd-vetro body .rd-sheet-in .rx-co{background:#2B1408!important;background-color:#2B1408!important}
+html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
+}
+</style>
+<style id="rd-tendina-css">/* Tendina «Nuova anteprima»: icona Galleria a linee (solo account di prova, html.rd-vetro) — 12/10 */
+.v3gal .v3ge{ font-weight:normal; }
+.v3gal .v3gi{ display:none; }
+html.rd-vetro .v3gal .v3ge{ display:none; }
+html.rd-vetro .v3gal .v3gi{ display:flex; align-items:center; justify-content:center; width:48px; height:44px; color:var(--accent); margin-bottom:3px; }
+html.rd-vetro .v3gal .v3gi svg{ width:32px; height:32px; }
+html.rd-vetro .v3gal:active .v3gi{ opacity:.6; }
+html.rd-vetro .v3ci2 .grab{ width:44px; height:5px; background:#D9D0C3; margin-bottom:14px; }
+html.rd-vetro .v3ci2{ touch-action:pan-x; will-change:transform; }
+/* Cantieri: «Anteprime salvate» con icona a linee */
+#ctAnte .ct-ai{ display:none; }
+html.rd-vetro #ctAnte{ display:inline-flex; align-items:center; gap:7px; }
+html.rd-vetro #ctAnte .v3ge{ display:none; }
+html.rd-vetro #ctAnte .ct-ai{ display:inline-flex; color:var(--accent); }
+html.rd-vetro #ctAnte .ct-ai svg{ width:20px; height:20px; }
+</style>
+<script id="rd-tendina-js">/* Tendina «Nuova anteprima»: si chiude strisciando verso il basso (solo account di prova, html.rd-vetro) — 12/10 */
+(function(){
+  var st = null;
+  function on(){ return document.documentElement.classList.contains('rd-vetro'); }
+  function end(close){
+    if(!st) return; var s = st.s, ov = document.getElementById('v3C'); st = null;
+    s.style.transition = 'transform .22s ease';
+    if(ov) ov.style.transition = 'background-color .22s ease';
+    if(close){
+      s.style.transform = 'translateY(105%)'; if(ov) ov.style.backgroundColor = 'rgba(29,20,12,0)';
+      setTimeout(function(){ if(ov){ ov.hidden = true; ov.style.backgroundColor = ''; ov.style.transition = ''; } s.style.transition = ''; s.style.transform = ''; }, 230);
+    } else {
+      s.style.transform = ''; if(ov) ov.style.backgroundColor = '';
+      setTimeout(function(){ s.style.transition = ''; if(ov) ov.style.transition = ''; }, 240);
+    }
+  }
+  document.addEventListener('touchstart', function(e){
+    if(!on() || e.touches.length !== 1) return;
+    var s = e.target.closest && e.target.closest('#v3C .v3ci2'); if(!s) return;
+    var t = e.touches[0]; st = { s: s, x: t.clientX, y: t.clientY, t: Date.now(), dy: 0, go: false };
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e){
+    if(!st) return; var t = e.touches[0], dy = t.clientY - st.y, dx = t.clientX - st.x;
+    if(!st.go){
+      if(Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)){ st = null; return; }   // scorre i lavori di lato
+      if(dy < -10){ st = null; return; }
+      if(dy < 10) return;
+      st.go = true; st.s.style.transition = 'none';
+    }
+    st.dy = Math.max(0, dy);
+    st.s.style.transform = 'translateY(' + st.dy + 'px)';
+    var ov = document.getElementById('v3C'), k = Math.max(0, 1 - st.dy / (st.s.offsetHeight || 400));
+    if(ov) ov.style.backgroundColor = 'rgba(29,20,12,' + (0.30 * k).toFixed(3) + ')';
+    if(e.cancelable) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('touchend', function(){
+    if(!st) return; if(!st.go){ st = null; return; }
+    var v = st.dy / Math.max(1, Date.now() - st.t);
+    end(st.dy > (st.s.offsetHeight || 400) * 0.25 || (v > 0.5 && st.dy > 40));
+  }, { passive: true });
+  document.addEventListener('touchcancel', function(){ end(false); }, { passive: true });
+})();
+</script>
+<style id="rd-prova-1210-css">/* Icone a linee al posto delle faccine (solo account di prova, html.rd-vetro) — 12/10 */
+.ce{font-style:normal}.cl{display:none}
+html.rd-vetro .ce{display:none}
+html.rd-vetro .cl{display:inline-flex;align-items:center;justify-content:center;color:var(--accent)}
+.ct-cosa span > .ce,.ct-cosa span > .cl{grid-row:auto;width:auto;height:auto;background:none;border-radius:0}
+html.rd-vetro .ct-cosa span > .cl svg{width:26px;height:26px}
+html.rd-vetro .ct-cosa button:first-child span > .cl{color:#3A2210}
+html.rd-vetro .rx-list .cl{vertical-align:-4px;margin-right:6px}
+html.rd-vetro .rx-list .cl svg{width:20px;height:20px}
+
+/* Schermate adattate al computer (solo account di prova, html.rd-web.rd-vetro) — 12/10 */
+@media (min-width:1000px){
+html.rd-web.rd-vetro .rd-x-h{position:static!important;flex-direction:column!important;align-items:flex-start!important;gap:0!important;padding:26px 44px 14px!important;background:transparent!important;border-bottom:none!important}
+html.rd-web.rd-vetro .rd-x-h button{font-size:12.5px!important;font-weight:600!important;color:#8A7F72!important;padding:0 0 4px!important}
+html.rd-web.rd-vetro .rd-x-h b{font-family:"Playfair Display",Georgia,serif!important;font-size:34px!important;font-weight:600!important;color:#1D1B18!important;line-height:1.1}
+html.rd-web.rd-vetro .rd-x-b{max-width:1180px!important;margin:0!important;padding:6px 44px 70px!important}
+html.rd-web.rd-vetro #rdXB > .cc-sub,html.rd-web.rd-vetro #rdXB > .pf-hint,html.rd-web.rd-vetro #rdXB > .cc-hint{max-width:72ch}
+html.rd-web.rd-vetro #rdXB > .pro-auth-submit,html.rd-web.rd-vetro #rdXB > .qb-sec,html.rd-web.rd-vetro #rdXB > a.rx-full{width:auto!important;min-width:240px;display:inline-flex!important;justify-content:center;align-items:center;padding:13px 26px!important;margin-right:10px!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-card){display:grid!important;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;align-items:stretch}
+html.rd-web.rd-vetro #rdXB:has(> .ct-card) > :not(.ct-card){grid-column:1/-1}
+html.rd-web.rd-vetro #rdXB:has(> .ct-card) > .ct-head{display:flex;justify-content:space-between}
+html.rd-web.rd-vetro #rdXB:has(> .ct-card) > .ct-head .ct-seg{max-width:340px;flex:none;width:340px}
+html.rd-web.rd-vetro #rdXB > .ct-card{flex-direction:column!important;align-items:stretch!important;gap:16px!important;padding:20px!important;margin:0!important;border-radius:18px!important;min-height:200px}
+html.rd-web.rd-vetro #rdXB > .ct-card .ct-im{width:56px!important;height:56px!important;font-size:20px!important}
+html.rd-web.rd-vetro #rdXB > .ct-card .ct-tx b{font-size:18px!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-card) > .ct-link{justify-self:start}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh){columns:2;column-gap:36px}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > *{break-inside:avoid}
+html.rd-web.rd-vetro #rdXB > .ct-sh,html.rd-web.rd-vetro #rdXB > .ct-qa{column-span:all}
+html.rd-web.rd-vetro #rdXB > .ct-qa{max-width:640px;margin-bottom:22px!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > .ct-tl{background:#FFFDF9;border:1px solid #E8E3DB;border-radius:18px;padding:12px 18px;margin-top:0!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > #ctGo{width:100%!important;margin:12px 0 18px!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > .cc-wrap{background:#FFFDF9;border:1px solid #E8E3DB;border-radius:18px;padding:16px 20px 18px;margin:0 0 18px!important;display:block}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > .cc-wrap:has(.cc-meter){break-before:column}
+html.rd-web.rd-vetro #rdXB:has(> .ct-sh) > .cc-wrap .cc-sec:first-child{margin-top:0!important}
+html.rd-web.rd-vetro #rdXB:has(> .ct-stop){max-width:900px!important}
+html.rd-web.rd-vetro #rdXB:has(> .hb-row){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+html.rd-web.rd-vetro #rdXB:has(> .hb-row) > :not(.hb-row){grid-column:1/-1}
+html.rd-web.rd-vetro #rdXB > .hb-row{flex-direction:column!important;align-items:flex-start!important;gap:14px!important;padding:22px!important;min-height:170px;margin:0!important;border-radius:18px!important;position:relative}
+html.rd-web.rd-vetro #rdXB > .hb-row .hb-ic{width:46px!important;height:46px!important}
+html.rd-web.rd-vetro #rdXB > .hb-row .hb-go{position:absolute;top:22px;right:22px}
+html.rd-web.rd-vetro #rdXB > .ft-srch{max-width:520px}
+html.rd-web.rd-vetro #rdXB .cc-list:has(> .ft-cl){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;padding:8px 20px!important}
+html.rd-web.rd-vetro #rdXB:has(> .tm-code),html.rd-web.rd-vetro #rdXB:has(#rxSiOn){columns:2;column-gap:44px}
+html.rd-web.rd-vetro #rdXB:has(> .tm-code) > *,html.rd-web.rd-vetro #rdXB:has(#rxSiOn) > *{break-inside:avoid}
+html.rd-web.rd-vetro #rdXB:has(> .tm-code) > .cc-sub,html.rd-web.rd-vetro #rdXB:has(#rxSiOn) > .pf-hint:first-child{column-span:all;margin-bottom:14px}
+html.rd-web.rd-vetro #rdXB:has(> .tm-code) > .qr-box{break-before:column;margin-top:0!important}
+html.rd-web.rd-vetro #rdXB:has(> .tm-code) > .pro-auth-submit,html.rd-web.rd-vetro #rdXB:has(> .tm-code) > .qb-sec{width:100%!important;margin:10px 0 0!important}
+html.rd-web.rd-vetro #rdXB:has(#rxSiOn) > .pf-sec:has(+ .rx-list){break-before:column;margin-top:0!important}
+html.rd-web.rd-vetro #rdXB:has(#rxSiOn) > #rxSiOk{min-width:160px}
+html.rd-web.rd-vetro #rdXB:has(> .mt-lav),html.rd-web.rd-vetro #rdXB:has(> #rxVoNew),html.rd-web.rd-vetro #rdXB:has(> .rx-full){max-width:900px!important}
+}
+
+/* Assistente Rendrum (solo account di prova, html.rd-vetro) — 12/10 */
+#aiFab,#aiBox{display:none}
+html.rd-vetro #aiFab{display:flex;position:fixed;z-index:999;align-items:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600;background:#2B1408;color:#FBF3EA;border-radius:999px;box-shadow:0 12px 28px -10px rgba(43,20,8,.55)}
+html.rd-vetro #aiFab .d{width:28px;height:28px;border-radius:50%;background:#C8692E;display:grid;place-items:center;flex:none}
+html.rd-vetro #aiFab svg{width:15px;height:15px}
+html.rd-vetro:not(.rd-web) #aiFab{right:14px;top:calc(env(safe-area-inset-top,0px) + 14px);padding:6px 13px 6px 6px;font-size:13px}
+html.rd-vetro:not(.rd-web) #aiFab .d{width:24px;height:24px}
+html.rd-web.rd-vetro #aiFab{right:26px;bottom:26px;padding:12px 20px 12px 12px;font-size:15px}
+html.rd-vetro #aiFab:focus-visible{outline:3px solid #C8692E;outline-offset:3px}
+html.rd-vetro.ai-open #aiFab{display:none}
+html.rd-vetro.ai-open #aiBox{display:flex}
+#aiBox{position:fixed;z-index:1006;flex-direction:column;background:var(--surface,#FFFDF9);color:var(--ink,#1D1B18);overflow:hidden;font-family:Inter,system-ui,sans-serif}
+html.rd-web #aiBox{right:24px;bottom:24px;width:400px;height:min(640px,calc(100vh - 48px));border-radius:22px;border:1px solid var(--line,#E8E3DB);box-shadow:0 30px 70px -20px rgba(43,20,8,.55)}
+html:not(.rd-web) #aiBox{left:0;right:0;bottom:0;top:calc(env(safe-area-inset-top,0px) + 34px);border-radius:22px 22px 0 0;box-shadow:0 -10px 40px -10px rgba(43,20,8,.4)}
+#aiBox .h{display:flex;align-items:center;gap:12px;padding:15px 16px;background:#2B1408;color:#FBF3EA}
+#aiBox .av{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#E9A472,#B35A26);display:grid;place-items:center;font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:19px;color:#fff;flex:none}
+#aiBox .t{display:flex;flex-direction:column;line-height:1.25;flex:1;min-width:0}
+#aiBox .t b{font-size:15px}#aiBox .t span{font-size:12px;color:#D9C7B4}
+#aiBox .x{border:none;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);color:#FBF3EA;font-size:15px;flex:none}
+#aiBox .b{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg,#F7F5F1);-webkit-overflow-scrolling:touch}
+#aiBox .m{max-width:88%;padding:11px 14px;border-radius:16px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
+#aiBox .m.bot{align-self:flex-start;background:var(--surface,#FFFDF9);border:1px solid var(--line,#E8E3DB);border-bottom-left-radius:6px}
+#aiBox .m.me{align-self:flex-end;background:#2B1408;color:#FBF3EA;border-bottom-right-radius:6px}
+#aiBox .m.w{color:var(--ink-soft,#6F685F);font-style:italic}
+#aiBox .m p{margin:0}#aiBox .m p+p{margin-top:6px}
+#aiBox .m ol{margin:6px 0 2px;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+#aiBox .go{align-self:flex-start;margin-top:-4px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#B35A26;background:#F6E6DA;padding:7px 12px;border-radius:999px}
+#aiBox .ch{display:flex;flex-wrap:wrap;gap:8px}
+#aiBox .ch button{cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 12px;border-radius:999px;border:1px solid var(--line,#E8E3DB);background:var(--surface,#FFFDF9);color:var(--ink,#1D1B18)}
+#aiBox .f{display:flex;gap:8px;padding:10px 12px calc(env(safe-area-inset-bottom,0px) + 10px);border-top:1px solid var(--line,#E8E3DB);background:var(--surface,#FFFDF9)}
+#aiBox .f input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 14px;border-radius:999px;border:1px solid var(--line,#E8E3DB);background:#fff;color:#1D1B18}
+#aiBox .f button{border:none;cursor:pointer;width:42px;height:42px;border-radius:50%;background:#B35A26;color:#fff;display:grid;place-items:center;flex:none}
+#aiBox .f button[disabled]{opacity:.45;cursor:default}
+</style>
+<script id="rd-assist-js">/* Assistente Rendrum (solo account di prova, html.rd-vetro) — 12/10 */
+(function(){
+  var H = document.documentElement, fab = null, box = null, msgs = [], turns = [], busy = false;
+  var READY = {
+    'Come segno le ore di oggi?': ['La sera te lo chiede da sola la pagina «Oggi».\n1. Apri «Oggi»: in alto trovi «Com’è andata da … oggi?».\n2. Tocca quanti eravate: «Solo io», «Io + 1» o «Io + 2».\n3. Tocca «Mezza giornata» o «Giornata».\n4. Tocca «Segna»: il costo finisce nella scheda del cantiere, in «Quanto ci guadagni».\nPuoi segnarle anche dopo: apri il cantiere e tocca «+ Aggiungi un costo» → Ore.', 'Oggi'],
+    'Come faccio un preventivo?': ['1. Tocca «Preventivi» e poi «+ Nuovo preventivo» (oppure parti da un sopralluogo: le misure diventano voci in arancione).\n2. Scegli il cliente o scrivine uno nuovo.\n3. Aggiungi le voci: le descrizioni sono già scritte, tu metti i prezzi. Le voci a zero non vanno nel preventivo.\n4. Controlla il totale e mandalo al cliente.\nQuando il cliente conferma, vede subito i dati per l’acconto.', 'Preventivi'],
+    'Come invito un collaboratore?': ['1. Apri «Altro» e poi «Squadra».\n2. Fagli inquadrare il QR, oppure tocca «Manda l’invito su WhatsApp».\n3. Quando chiede di entrare, lo approvi tu.\n4. Poi dalla scheda del cantiere puoi affidargli il lavoro.\nChi lavora con te vede solo i cantieri che gli affidi: cliente, indirizzo, cosa fare e foto. Niente prezzi.', 'Altro'],
+    'Come preparo i dati per il commercialista?': ['1. Apri il cantiere da «Cantieri».\n2. Tocca «Prepara per il commercialista»: cliente, voci e IVA li prende dal preventivo.\n3. Scegli cosa va in fattura e manda il proforma.\nIl proforma non è una fattura: serve al commercialista per fare quella elettronica. Quando l’ha fatta, in «Soldi» → «Fatture» tocca «da fatturare».\nPer dubbi su IVA e fatture chiedi al tuo commercialista.', 'Cantieri']
+  };
+  var RW = { 'Oggi':'home', 'Cantieri':'proj', 'Foto e anteprima':'cam', 'Preventivi':'prev', 'Agenda':'agenda', 'Soldi':'soldi', 'Clienti':'clienti', 'Altro':'altro' };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function fmt(t){
+    var out = '', ol = false;
+    String(t).replace(/\*\*/g, '').split('\n').map(function(l){ return l.trim(); }).filter(Boolean).forEach(function(l){
+      var m = l.match(/^(\d+)[.)]\s+(.*)$/);
+      if(m){ if(!ol){ out += '<ol>'; ol = true; } out += '<li>' + esc(m[2]) + '</li>'; }
+      else { if(ol){ out += '</ol>'; ol = false; } out += '<p>' + esc(l.replace(/^[-•]\s*/, '')) + '</p>'; }
+    });
+    return (ol ? out + '</ol>' : out) || '<p></p>';
+  }
+  function go(sec){
+    close();
+    var k = RW[sec]; if(!k) return;
+    var b = H.classList.contains('rd-web') ? document.querySelector('[data-rw="' + k + '"]') : null;
+    if(b){ b.click(); return; }
+    if(['agenda', 'soldi', 'clienti'].indexOf(k) >= 0){
+      var a = document.querySelector('[data-rdtab="altro"]'); if(a) a.click();
+      setTimeout(function(){ var x = document.querySelector('[data-rxgo2="' + k + '"]'); if(x) x.click(); }, 350); return;
+    }
+    var t = document.querySelector('[data-rdtab="' + k + '"]'); if(t) t.click();
+  }
+  function render(){
+    if(!box) return; var b = box.querySelector('.b'); b.innerHTML = '';
+    msgs.forEach(function(m){
+      var d = document.createElement('div'); d.className = 'm ' + (m.me ? 'me' : 'bot') + (m.w ? ' w' : '');
+      if(m.me || m.w) d.textContent = m.t; else d.innerHTML = fmt(m.t);
+      b.appendChild(d);
+      if(m.go){ var g = document.createElement('button'); g.type = 'button'; g.className = 'go'; g.textContent = 'Portami lì → ' + m.go; g.onclick = function(){ go(m.go); }; b.appendChild(g); }
+    });
+    if(!busy){
+      var c = document.createElement('div'); c.className = 'ch';
+      Object.keys(READY).filter(function(q){ return !msgs.some(function(m){ return m.me && m.t === q; }); }).forEach(function(q){
+        var x = document.createElement('button'); x.type = 'button'; x.textContent = q; x.onclick = function(){ ask(q); }; c.appendChild(x);
+      });
+      if(c.children.length) b.appendChild(c);
+    }
+    box.querySelector('.f button').disabled = busy;
+    b.scrollTop = b.scrollHeight;
+  }
+  function ask(q){
+    if(busy) return; var inp = box.querySelector('.f input'); inp.value = '';
+    msgs.push({ me:true, t:q });
+    if(READY[q]){ msgs.push({ t:READY[q][0], go:READY[q][1] }); turns.push({ role:'user', content:q }, { role:'assistant', content:READY[q][0] }); render(); return; }
+    busy = true; msgs.push({ w:true, t:'Sto pensando…' }); render();
+    turns.push({ role:'user', content:q }); turns = turns.slice(-12);
+    fetch('/api/quotes?action=ai-chat', { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ messages:turns }) })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(x){
+        msgs.pop();
+        if(x.ok && x.d.text){ msgs.push({ t:x.d.text, go:x.d.vai || null }); turns.push({ role:'assistant', content:x.d.text }); }
+        else { turns.pop(); msgs.push({ t:(x.d && x.d.error) || 'Non riesco a rispondere adesso. Riprova tra poco.' }); }
+      })
+      .catch(function(){ msgs.pop(); turns.pop(); msgs.push({ t:'Sei senza connessione? Riprova tra poco.' }); })
+      .then(function(){ busy = false; render(); });
+  }
+  function open(){ H.classList.add('ai-open'); render(); setTimeout(function(){ if(H.classList.contains('rd-web')) box.querySelector('.f input').focus(); }, 60); }
+  function close(){ if(H.classList.contains('ai-open')) H.classList.remove('ai-open'); }
+  function mount(){
+    if(fab) return;
+    fab = document.createElement('button'); fab.type = 'button'; fab.id = 'aiFab'; fab.setAttribute('aria-label', 'Chiedi all’assistente');
+    fab.innerHTML = '<span class="d"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="l"></span>';
+    fab.onclick = open; document.body.appendChild(fab);
+    box = document.createElement('section'); box.id = 'aiBox'; box.setAttribute('aria-label', 'Assistente Rendrum');
+    box.innerHTML = '<div class="h"><div class="av">R</div><div class="t"><b>Assistente Rendrum</b><span>Ti spiego come si usa l’app</span></div><button type="button" class="x" aria-label="Chiudi">✕</button></div><div class="b"></div>'
+      + '<form class="f"><input autocomplete="off" enterkeyhint="send" placeholder="Scrivi la tua domanda…" aria-label="La tua domanda"><button type="submit" aria-label="Invia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>';
+    box.querySelector('.x').onclick = close;
+    box.querySelector('.f').onsubmit = function(e){ e.preventDefault(); var v = box.querySelector('.f input').value.trim(); if(v) ask(v); };
+    document.body.appendChild(box);
+    msgs = [{ t:'Ciao! Sono l’assistente di Rendrum. Chiedimi come si fa una cosa nell’app e ti spiego i passi.' }];
+    label();
+  }
+  function label(){ if(fab) fab.querySelector('.l').textContent = H.classList.contains('rd-web') ? 'Chiedi all’assistente' : 'Aiuto'; }
+  var lastSt = '';
+  function sync(){ var st = (H.classList.contains('rd-vetro') ? 'v' : '') + (H.classList.contains('rd-web') ? 'w' : ''); if(st === lastSt) return; lastSt = st; if(st.indexOf('v') >= 0) mount(); else if(H.classList.contains('ai-open')) close(); label(); }
+  new MutationObserver(sync).observe(H, { attributes:true, attributeFilter:['class'] });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && H.classList.contains('ai-open')) close(); });
+  sync();
 })();
 </script>
 <script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/bb9f00704090.jpg", "/img/6aa351ec523e.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>

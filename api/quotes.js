@@ -146,6 +146,7 @@ module.exports = async function handler(req, res) {
     if (action.indexOf("pl-") === 0) return require("./_plan").handle(req, res, action, acc);
     if (action.indexOf("px-") === 0) return require("./_extra").handle(req, res, action, acc);
     if (action.indexOf("pk-") === 0) return require("./_plink").handle(req, res, action, acc);
+    if (action.indexOf("ai-") === 0) return require("./_aiuto").handle(req, res, action, acc);
 
     if (action === "settings") {
       if (req.method === "GET") return res.status(200).json({ settings: acc.quote_settings || {}, account: { companyName: acc.company_name || "", piva: acc.piva || "", phone: acc.phone || "", email: acc.email || "", logoUrl: acc.logo_url || null } });
