@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<script>try{if(/[?&]i=[a-f0-9]{20}/.test(location.search))document.documentElement.classList.add("rd-inv");if(/[?&](recensione|vota|impresa|variante)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
+<script>try{if(/[?&]i=[a-f0-9]{20}/.test(location.search))document.documentElement.classList.add("rd-inv");if(/[?&](recensione|vota|impresa|variante|prev)=/.test(location.search))document.documentElement.classList.add("rd-pub");else if(localStorage.getItem("rdV2")==="1")document.documentElement.classList.add("rd-v2-pre")}catch(e){}</script>
 <script>try{if(window.Capacitor&&typeof Capacitor.isNativePlatform==="function"&&Capacitor.isNativePlatform()){document.documentElement.classList.add("is-app");var vm=document.querySelector('meta[name="viewport"]');if(vm)vm.setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");document.documentElement.classList.add("is-app-"+Capacitor.getPlatform());}else{var ap=new URLSearchParams(location.search).get("app");if(ap==="1")localStorage.setItem("rdAppPreview","1");if(ap==="0")localStorage.removeItem("rdAppPreview");if(localStorage.getItem("rdAppPreview")==="1"){document.documentElement.classList.add("is-app","is-app-ios","is-app-preview");}}}catch(e){}</script>
 <link rel="preload" as="image" href="/img/bb9f00704090.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="/img/6aa351ec523e.jpg" fetchpriority="high">
@@ -1650,6 +1650,16 @@ html.rd-s1 .v3lens{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
 html.rd-s1 .v3lens button{ width:auto; min-width:0; }
 html.rd-s1 .v3lens span{ width:54px; height:54px; }
 html.rd-s1 .v3lens i{ font-size:11.5px; line-height:1.2; white-space:normal; }
+/* planimetria: "Cosa vuoi misurare?" prima della lettura */
+.pl-th.pl-th-s{ max-height:150px; margin:6px 0 12px; }
+.pl-cosa{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.pl-co{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:1.5px solid var(--line,#eadfd4); border-radius:14px; padding:10px 12px; font-family:inherit; color:var(--ink,#1D1B18); cursor:pointer; }
+.pl-co.on{ border-color:#C8692E; background:#FBF1EA; }
+.pl-co .pl-ic{ width:34px; height:34px; } .pl-co .pl-ic svg{ width:21px; height:21px; }
+.pl-cot{ flex:1; min-width:0; } .pl-cot b{ display:block; font-size:15px; } .pl-cot em{ font-style:normal; font-size:12.5px; color:#8a7f73; }
+.pl-co u{ text-decoration:none; width:24px; height:24px; border-radius:7px; border:1.5px solid #cfc4b6; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; flex:none; }
+.pl-co.on u{ background:#C8692E; border-color:#C8692E; }
+.qw-next:disabled{ opacity:.5; }
 
   /* Nuovo ingresso (account di prova): home Oggi + barra in basso */
   .rd-oggi{ display:none; }
@@ -2102,6 +2112,52 @@ html:not([data-theme="dark"]) .hwA b{font-family:"Playfair Display","Liberation 
 html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:1.45; margin:0;}
 @media (min-width:720px){ html:not([data-theme="dark"]) .hwA{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; } html:not([data-theme="dark"]) .hwA .s{ padding:0; } html:not([data-theme="dark"]) .hwA .s::before{ display:none; } }
 </style>
+<style>
+  /* Link del preventivo per il cliente (in prova) */
+  .pk-only{ display:none; } html.rd-pk .pk-only{ display:block; }
+  .pk-n{ background:#2B1408; color:#fff; border-radius:16px; padding:13px 14px; margin:0 0 10px; }
+  .pk-n.pk-mod{ background:#5a3a26; }
+  .pk-n small{ display:block; color:#E3A06B; font-weight:800; font-size:11px; letter-spacing:.07em; }
+  .pk-n b{ display:block; font-size:15px; margin:4px 0 2px; line-height:1.3; } .pk-n span{ font-size:13px; opacity:.85; }
+  .pk-b2{ display:flex; gap:6px; margin-top:10px; } .pk-b2 button, .pk-b2 a{ flex:1; border:none; border-radius:10px; background:rgba(255,255,255,.14); color:#fff; font-family:inherit; font-weight:800; font-size:13.5px; padding:10px 4px; text-align:center; text-decoration:none; cursor:pointer; }
+  .pk-b2 button:first-of-type{ background:#2E7D4F; } .pk-b2 a + button{ background:#2E7D4F; }
+  .pk-ok{ background:#EAF5EE; color:#1D6B3E; border-radius:12px; padding:10px 12px; font-weight:700; font-size:14px; margin-bottom:10px; } .pk-ok.big{ font-size:18px; text-align:center; padding:16px; }
+  .pk-warn{ background:#FFF1E4; color:#8A3F12; border-radius:12px; padding:10px 12px; font-size:14px; margin:10px 0; }
+  .pk-firma{ display:block; max-width:220px; max-height:80px; background:#fff; border:1px solid var(--line); border-radius:10px; margin:0 0 10px; }
+  .pk-sec{ display:block; width:100%; margin-top:8px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:12px; padding:12px; font-family:inherit; font-weight:800; font-size:14.5px; cursor:pointer; }
+  .pk-cl{ display:flex; flex-direction:column; gap:4px; margin-top:6px; } .pk-cl a{ font-size:13px; font-weight:700; color:var(--accent); text-decoration:none; }
+  .pk-chk{ display:flex; flex-wrap:wrap; gap:4px 10px; margin:6px 0 2px; font-size:12.5px; font-weight:700; } .pk-chk .ok{ color:#1D6B3E; } .pk-chk .no{ color:#B4541A; }
+  .pk-up{ display:block; border:1.5px dashed var(--accent); background:var(--accent-soft, #FFF8F2); border-radius:12px; padding:11px; text-align:center; font-weight:800; font-size:14px; color:var(--accent); cursor:pointer; margin-bottom:6px; }
+  .pk-up em{ display:block; font-style:normal; font-weight:500; font-size:12px; color:var(--ink-soft); }
+  .pk-upm{ font-size:13px; color:var(--ink); margin-bottom:4px; }
+  .qw-pk{ display:block; margin:10px auto 0; }
+  /* pagina del cliente */
+  .rq-q h1{ font-size:22px; }
+  .rq-ba{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; } .rq-ba figure{ margin:0; position:relative; } .rq-ba img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; display:block; }
+  .rq-ba figcaption{ position:absolute; left:6px; top:6px; background:rgba(20,20,20,.7); color:#fff; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; }
+  .rq-ba figure:only-child{ grid-column:1 / -1; }
+  .rq-voci > div, .rq-tot > div, .rq-kv > div, .rq-acc{ display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid var(--line, #eee); font-size:14.5px; }
+  .rq-voci span i{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft, #666); } .rq-voci > div > b{ white-space:nowrap; }
+  .rq-tot{ margin-top:6px; } .rq-tot span{ color:var(--ink-soft, #666); } .rq-tot .t{ border-bottom:none; font-size:17px; } .rq-tot .t span{ color:inherit; font-weight:800; }
+  .rq-sec{ font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft, #666); margin-bottom:4px; }
+  .rq-acc span em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft, #666); } .rq-acc:last-child{ border-bottom:none; }
+  .rq-acc.cur b, .rq-acc.cur em{ color:#B4541A; } .rq-acc em.ok{ color:#1D6B3E; font-weight:800; } .rq-acc em.wait{ color:#8A5A12; font-weight:700; }
+  .rq-ok{ background:#EAF5EE; color:#1D6B3E; border-radius:14px; padding:12px 14px; font-weight:800; margin-bottom:12px; } .rq-ok span{ font-weight:600; color:#2b4d38; }
+  .rq-okb{ border-color:#BFE0CB; background:#F3FAF5; } .rq-okb b{ color:#1D6B3E; }
+  .rq-mb{ border-color:#EBCBA9; background:#FFF8F0; }
+  .rq-imp{ font-size:34px; font-weight:800; text-align:center; margin:6px 0 2px; }
+  .rq-kv{ margin:10px 0 2px; } .rq-kv span{ color:var(--ink-soft, #666); flex:none; } .rq-kv b{ text-align:right; word-break:break-word; } .rq-iban{ letter-spacing:.02em; }
+  .rq-go{ background:#2E7D4F !important; }
+  .rq-acc > b, .rq-voci > div > b{ white-space:nowrap; flex:none; }
+  .rq-wait{ background:#FFF6E6; color:#8A5A12; border-radius:12px; padding:10px 12px; font-weight:700; font-size:14px; margin-top:14px; text-align:center; }
+  .rq-up.alt{ border-style:solid; border-width:1.5px; background:transparent; font-size:14.5px; padding:12px; }
+  .rq-carta{ background:#2B1408 !important; }
+  .rq-up{ display:block; margin-top:14px; border:2px dashed var(--accent, #C27A45); background:#FFF8F2; border-radius:14px; padding:16px 12px; text-align:center; font-weight:800; font-size:16px; color:#A4521F; cursor:pointer; }
+  .rq-up em{ display:block; font-style:normal; font-weight:500; font-size:13px; color:var(--ink-soft, #666); margin-top:2px; } .rq-up.busy{ opacity:.5; pointer-events:none; }
+  .rq-ck{ display:flex !important; gap:8px; align-items:flex-start; font-weight:600 !important; font-size:14px !important; line-height:1.4; } .rq-ck input{ width:20px !important; height:20px; flex:none; margin:1px 0 0; accent-color:#2E7D4F; }
+  .rq-sign{ display:block; width:100%; height:150px; background:#fff; border:1.5px dashed var(--line, #ccc); border-radius:12px; touch-action:none; }
+  .rq-clr{ border:none; background:none; color:var(--ink-soft, #666); font-family:inherit; font-size:13px; text-decoration:underline; padding:6px 0; cursor:pointer; }
+</style>
 </head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -2321,7 +2377,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <div class="pf-sec">Condizioni di pagamento *</div>
       <div class="q-seg" id="qRatePresets"><button type="button" data-p="50/50">50 / 50</button><button type="button" data-p="30/40/30">30 / 40 / 30</button><button type="button" data-p="100% fine lavori">100% a fine lavori</button></div>
       <div id="qRate"></div>
-      <button type="button" class="q-add" id="qRataAdd" style="padding:6px 10px;font-size:12.5px">＋ Rata</button>
+      <button type="button" class="q-add" id="qRataAdd" style="padding:6px 10px;font-size:12.5px">＋ Acconto</button>
       <div class="pf-hint" id="qRateSum" style="margin-top:6px"></div>
       <div class="row2" style="margin-top:6px">
         <div class="field"><label>Modalità</label><select data-q="pagamento.metodo"><option value="bonifico">Bonifico bancario</option><option value="altro">Altro</option></select></div>
@@ -2516,6 +2572,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <div class="field"><label>Intestatario del conto</label><input type="text" maxlength="120" data-s="banca.intestatario"></div>
       <div class="field"><label>Banca e filiale</label><input type="text" maxlength="120" data-s="banca.banca"></div>
       <div class="field"><label>IBAN</label><input type="text" maxlength="40" data-s="banca.iban" placeholder="IT00 X000 0000 0000 0000 0000 000" style="text-transform:uppercase"></div>
+      <div class="field pk-only"><label>Link per pagare con carta (facoltativo)</label><input type="url" maxlength="300" data-s="banca.linkCarta" placeholder="https://buy.stripe.com/… o SumUp, PayPal"><div class="pf-hint">Il tuo link Stripe, SumUp o PayPal: il cliente lo trova sul suo link per pagare l’acconto con la carta. I soldi vanno a te.</div></div>
       <div class="pf-hint" data-qsec-hint="banca">Puoi lasciarla vuota: te la chiediamo solo quando un cliente conferma un preventivo e devi mandargli i dati per il bonifico.</div>
       </div>
       <div data-qsec="cond">
@@ -2525,7 +2582,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         <div class="field"><label>Validità offerta (giorni)</label><input type="text" inputmode="numeric" data-s="validitaGiorni" data-num="1"></div>
       </div>
       <div class="pf-hint" style="margin-top:-8px">Se usi già una numerazione, scrivi da quale numero ripartire: Rendrum continuerà da lì.</div>
-      <div class="field"><label>Rate standard</label><select id="qSetRatePreset"><option value="50/50">50% acconto / 50% saldo</option><option value="30/40/30">30% / 40% / 30%</option><option value="100% fine lavori">100% a fine lavori</option></select></div>
+      <div class="field"><label>Acconti standard</label><select id="qSetRatePreset"><option value="50/50">50% acconto / 50% saldo</option><option value="30/40/30">30% / 40% / 30%</option><option value="100% fine lavori">100% a fine lavori</option></select></div>
       <div class="field"><label>Specifiche e tempistiche standard</label><textarea rows="3" maxlength="2000" data-s="specifiche"></textarea></div>
 
       <details>
@@ -13264,7 +13321,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function rdSavePdf(doc, fname){
     if(window.rdPvNext && Date.now() - window.rdPvNext < 120000){ window.rdPvNext = null; return rdPvShow(doc, fname); }
     if(window.rdMailNext){ var mlN = window.rdMailNext; window.rdMailNext = null; if(Date.now() - (mlN.at || 0) < 120000) return mlN.cb(doc, fname); }
-    if(window.rdWaNext && window.rxWaPdf){ var waN = window.rdWaNext; window.rdWaNext = null; if(Date.now() - (waN.at || 0) < 120000) return window.rxWaPdf(doc, fname, waN); }
+    if(window.rdWaNext && window.rxWaPdf){ var waN = window.rdWaNext; window.rdWaNext = null; if(Date.now() - (waN.at || 0) < 120000) return (window.pkWaText ? window.pkWaText(waN) : Promise.resolve(waN)).then(function(w){ return window.rxWaPdf(doc, fname, w); }); }
     var P = IS_APP && window.Capacitor && window.Capacitor.Plugins;
     if(!(P && P.Filesystem && P.Share)){ doc.save(fname); return Promise.resolve(true); }
     var data = String(doc.output('datauristring')).split(',').pop();
@@ -14574,7 +14631,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<div class="q-tot-big"><span>TOTALE</span><span>' + qEsc(qpEur(t.totale)) + '</span></div>';
     var sum = q.rate.reduce(function(s, r){ return s + (Number(r.pct) || 0); }, 0);
     var rs = document.getElementById('qRateSum');
-    rs.textContent = q.rate.length ? 'Totale rate: ' + qpNum(sum) + '%' + (Math.abs(sum - 100) > 0.01 ? ' — deve fare 100%' : ' ✓') : 'Aggiungi almeno una rata.';
+    rs.textContent = q.rate.length ? 'Totale acconti: ' + qpNum(sum) + '%' + (Math.abs(sum - 100) > 0.01 ? ' — deve fare 100%' : ' ✓') : 'Aggiungi almeno un acconto.';
     rs.style.color = q.rate.length && Math.abs(sum - 100) <= 0.01 ? '' : '#C0392B';
   }
   function qCheck(){
@@ -14585,7 +14642,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(!voci.length) m.push('almeno una voce');
     q.voci.forEach(function(v, i){ if((v.descrizione || v.prezzo) && !v.titolo) m.push('titolo della voce ' + (i+1)); if(v.titolo && !v.qta) m.push('quantità della voce ' + (i+1)); if(v.titolo && !v.prezzo) m.push('prezzo della voce ' + (i+1)); });
     var sum = q.rate.reduce(function(s, r){ return s + (Number(r.pct) || 0); }, 0);
-    if(!q.rate.length || Math.abs(sum - 100) > 0.01) m.push('rate di pagamento (100%)');
+    if(!q.rate.length || Math.abs(sum - 100) > 0.01) m.push('acconti (la somma deve fare 100%)');
     if(Number(q.iva.aliquota) === 0 && !(q.iva.nota || '').trim()) m.push("motivo dell'IVA a 0%");
     if(q.pagamento.metodo === 'altro' && !(q.pagamento.testo || '').trim()) m.push('modalità di pagamento');
     return m;
@@ -16839,16 +16896,23 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // ===== Planimetria -> misure (in prova): 3 numeri (pavimenti, pareti, plafoni), poi scegli tu =====
   // Vive dentro il passo 2 del preventivo (qw). Niente va nel preventivo senza "Metti nel preventivo".
   var PL_S = [
-    { k:'pav', n:'Pavimenti', f:'pavimento', ic:'<path d="M4 22 16 15l12 7-12 7z"/><path d="M10 18.5 22 25.5M16 15v14"/>',
+    { k:'pav', n:'Pavimenti', d:'m² calpestabili', u:'m²', um:'mq', f:'pavimento', ic:'<path d="M4 22 16 15l12 7-12 7z"/><path d="M10 18.5 22 25.5M16 15v14"/>',
       re:/pavim|resin|microcem|parquet|spc|piastrel|gres|granigl|laminat|monolith|massett|cemento|terrazz/i,
       gen:['Pavimento in resina', 'Microcemento', 'Parquet', 'Pavimento SPC', 'Piastrelle'] },
-    { k:'par', n:'Pareti', f:'pareti', ic:'<rect x="5" y="7" width="22" height="18" rx="1"/><path d="M5 13h22M5 19h22M11 7v6M21 7v6M16 13v6M11 19v6M21 19v6"/>',
+    { k:'par', n:'Pareti', d:'m² da pitturare o rivestire', u:'m²', um:'mq', f:'pareti', ic:'<rect x="5" y="7" width="22" height="18" rx="1"/><path d="M5 13h22M5 19h22M11 7v6M21 7v6M16 13v6M11 19v6M21 19v6"/>',
       re:/paret|pittur|imbianc|tinteg|decorat|cartong|rasat|stucc|boiserie|smalt|velatur|spatolat/i,
       gen:['Pittura pareti', 'Pittura decorativa', 'Rasatura pareti', 'Cartongesso'] },
-    { k:'pla', n:'Plafoni', f:'plafone', ic:'<path d="M4 9h24M7 9v4M25 9v4M4 13h24"/><path d="M12 13v3M20 13v3" stroke-dasharray="1 2"/><circle cx="16" cy="22" r="3"/><path d="M16 16v3"/>',
+    { k:'pla', n:'Soffitti', d:'m² dei plafoni', u:'m²', um:'mq', f:'plafone', ic:'<path d="M4 9h24M7 9v4M25 9v4M4 13h24"/><path d="M12 13v3M20 13v3" stroke-dasharray="1 2"/><circle cx="16" cy="22" r="3"/><path d="M16 16v3"/>',
       re:/soffitt|plafon|pittur|imbianc|tinteg|cartong|controsoff/i,
-      gen:['Pittura soffitti', 'Controsoffitto in cartongesso'] }
+      gen:['Pittura soffitti', 'Controsoffitto in cartongesso'] },
+    { k:'bat', n:'Battiscopa', d:'metri lineari, senza le porte', u:'ml', um:'ml', f:'battiscopa', ic:'<path d="M6 6v20h20"/><path d="M6 22h20" stroke-width="3"/>',
+      re:/battiscop|zoccol/i, gen:['Battiscopa', 'Battiscopa in resina'] },
+    { k:'riv', n:'Rivestimenti', d:'bagno e cucina', u:'m²', um:'mq', f:'rivestimenti', ic:'<rect x="6" y="6" width="20" height="20" rx="1"/><path d="M6 13h20M6 20h20M13 6v20M20 6v20"/>',
+      re:/rivest|piastrel|mosaic|gres|microcem/i, gen:['Rivestimento in piastrelle', 'Rivestimento in microcemento'] }
   ];
+  // misure da leggere: quelle scelte prima della lettura (le ultime usate restano scelte)
+  function plSS(){ return pl && pl.cosa ? PL_S.filter(function(s){ return pl.cosa.indexOf(s.k) >= 0; }) : PL_S.slice(0, 3); }
+  function plCosa0(){ try{ var a = JSON.parse(localStorage.getItem('rdPlCosa') || 'null'); if(Array.isArray(a) && a.length) return a.filter(function(k){ return PL_S.some(function(s){ return s.k === k; }); }); }catch(e){} return ['pav']; }
   var pl = null;
   function plNum(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
   function plSvg(d){ return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
@@ -16886,14 +16950,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function plTot(s){ return plRows(s).reduce(function(a, r){ return a + (plOn(s, r.i) && r.v.mq ? +r.v.mq : 0); }, 0); }
   function plOpts(s){
     var LI = (qs.settings && qs.settings.listino) || [], out = [], seen = {};
-    LI.forEach(function(v){ if((v.um === 'mq' || !v.um) && s.re.test((v.titolo || '') + ' ' + (v.lavorazione || '')) && !seen[v.titolo]){ seen[v.titolo] = 1; out.push({ t:v.titolo, p:+v.prezzo || 0, d:v.descrizione || '', lav:v.lavorazione || '', li:1 }); } });
+    LI.forEach(function(v){ if((v.um === s.um || !v.um) && s.re.test((v.titolo || '') + ' ' + (v.lavorazione || '')) && !seen[v.titolo]){ seen[v.titolo] = 1; out.push({ t:v.titolo, p:+v.prezzo || 0, d:v.descrizione || '', lav:v.lavorazione || '', li:1 }); } });
     s.gen.forEach(function(g){ if(!out.some(function(o){ return o.t.toLowerCase() === g.toLowerCase(); })) out.push({ t:g, p:0, d:'', lav:'', li:0 }); });
     return out;
   }
   function plRender(box){
-    var h = '<div class="qw-top"><button type="button" class="pp-back-link" id="plBack">' + (pl.st === 'scegli' ? '← La tua casa' : pl.ctx === 'so' ? '← Torna al sopralluogo' : '← Torna al preventivo') + '</button></div>';
+    var h = '<div class="qw-top"><button type="button" class="pp-back-link" id="plBack">' + (pl.st === 'scegli' ? '← La tua casa' : pl.st === 'cosa' ? '← Cambia disegno' : pl.ctx === 'so' ? '← Torna al sopralluogo' : '← Torna al preventivo') + '</button></div>';
     if(pl.st === 'carica' || pl.st === 'err'){
-      h += '<div class="pro-projects-title">📐 Misure dal disegno</div><div class="qw-who">Carica la planimetria: Rendrum calcola pavimenti, pareti e plafoni. Poi scegli tu cosa fai.</div>'
+      h += '<div class="pro-projects-title">📐 Misure dal disegno</div><div class="qw-who">Carica la planimetria, poi scegli cosa misurare: Rendrum legge solo quello.</div>'
         + '<label class="pl-up"><input type="file" id="plFile" accept="image/*,application/pdf" hidden><span class="pl-upi">' + plSvg('<path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M16 15v8M12.5 18.5 16 15l3.5 3.5"/>') + '</span><b>Carica il disegno</b><em>Foto o PDF della planimetria</em></label>'
         + (pl.st === 'err' ? '<div class="pp-error">' + qEsc(pl.err || 'Non riesco a leggere il disegno.') + '</div>' : '')
         + '<div class="pl-hint">Va bene la foto fatta col telefono, anche storta. Meglio se si leggono i numeri scritti (m², quote, altezze).</div>';
@@ -16901,17 +16965,29 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       document.getElementById('plFile').addEventListener('change', function(){ var f = this.files && this.files[0]; if(f) plLoad(f); });
       return;
     }
+    if(pl.st === 'cosa'){
+      var C = pl.cosa || [];
+      h += '<div class="pro-projects-title">Cosa vuoi misurare?</div><div class="qw-who">Spunta solo quello che ti serve: leggo solo quello.</div>'
+        + (pl.thumb ? '<img class="pl-th pl-th-s" src="' + pl.thumb + '" alt="">' : '')
+        + '<div class="pl-cosa">' + PL_S.map(function(s){ var on = C.indexOf(s.k) >= 0; return '<button type="button" class="pl-co' + (on ? ' on' : '') + '" data-plk="' + s.k + '"><span class="pl-ic">' + plSvg(s.ic) + '</span><span class="pl-cot"><b>' + s.n + '</b><em>' + s.d + '</em></span><u>' + (on ? '✓' : '') + '</u></button>'; }).join('') + '</div>'
+        + '<button type="button" class="pro-auth-submit qw-next" id="plRead"' + (C.length ? '' : ' disabled') + '>Leggi il disegno</button>';
+      box.innerHTML = h; plBind(box);
+      box.querySelectorAll('[data-plk]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.plk, a = (pl.cosa || []).slice(), i = a.indexOf(k); if(i >= 0) a.splice(i, 1); else a.push(k);
+        pl.cosa = PL_S.map(function(s){ return s.k; }).filter(function(x){ return a.indexOf(x) >= 0; }); plRender(box); }); });
+      document.getElementById('plRead').onclick = function(){ if(!(pl.cosa && pl.cosa.length)) return; try{ localStorage.setItem('rdPlCosa', JSON.stringify(pl.cosa)); }catch(e){} plRead(box); };
+      return;
+    }
     if(pl.st === 'leggo'){
-      h += '<div class="pro-projects-title">Sto leggendo il disegno…</div><div class="qw-who">Ci vogliono circa 20 secondi.</div>'
+      h += '<div class="pro-projects-title">Sto leggendo il disegno…</div><div class="qw-who">' + (pl.cosa && pl.cosa.length ? 'Cerco solo: ' + plSS().map(function(s){ return s.n.toLowerCase(); }).join(', ') + '.' : 'Ci vogliono circa 20 secondi.') + '</div>'
         + (pl.thumb ? '<img class="pl-th" src="' + pl.thumb + '" alt="">' : '') + '<div class="pl-spin"><i></i>Cerco le misure scritte e rifaccio i conti</div>';
       box.innerHTML = h; plBind(box); return;
     }
     if(pl.st === 'scegli'){
       var s = PL_S.filter(function(x){ return x.k === pl.open; })[0], sel = pl.sel[s.k], rows = plRows(s), opts = plOpts(s);
-      h += '<div class="pro-projects-title">' + qEsc(s.n) + ' · ' + plNum(plTot(s)) + ' m²</div><div class="qw-who">Cosa fai?</div><div class="pl-opts">'
-        + opts.map(function(o, i){ var on = sel && sel.t === o.t; return '<button type="button" class="pl-opt' + (on ? ' on' : '') + '" data-plo="' + i + '"><b>' + qEsc(o.t) + '</b><em>' + (o.li ? qEsc(qwEur(o.p)) + ' / m² · dal tuo listino' : 'prezzo da mettere') + '</em></button>'; }).join('')
+      h += '<div class="pro-projects-title">' + qEsc(s.n) + ' · ' + plNum(plTot(s)) + ' ' + s.u + '</div><div class="qw-who">Cosa fai?</div><div class="pl-opts">'
+        + opts.map(function(o, i){ var on = sel && sel.t === o.t; return '<button type="button" class="pl-opt' + (on ? ' on' : '') + '" data-plo="' + i + '"><b>' + qEsc(o.t) + '</b><em>' + (o.li ? qEsc(qwEur(o.p)) + ' / ' + s.u + ' · dal tuo listino' : 'prezzo da mettere') + '</em></button>'; }).join('')
         + '<button type="button" class="pl-opt no' + (sel === false ? ' on' : '') + '" data-plo="no"><b>Niente su questi</b></button></div>';
-      if(sel && !sel.li) h += '<div class="pl-pr"><span>Prezzo al m²</span><input type="text" inputmode="decimal" id="plPr" placeholder="es. 25" value="' + (sel.p ? qEsc(qpNum(sel.p)) : '') + '"><i>€</i></div><label class="qw-ck"><input type="checkbox" id="plSaveL" ' + (sel.save !== false ? 'checked' : '') + '> Salvalo nel mio listino</label>';
+      if(sel && !sel.li) h += '<div class="pl-pr"><span>Prezzo al ' + (s.u === 'ml' ? 'metro' : 'm²') + '</span><input type="text" inputmode="decimal" id="plPr" placeholder="es. 25" value="' + (sel.p ? qEsc(qpNum(sel.p)) : '') + '"><i>€</i></div><label class="qw-ck"><input type="checkbox" id="plSaveL" ' + (sel.save !== false ? 'checked' : '') + '> Salvalo nel mio listino</label>';
       if(rows.length > 1) h += '<div class="qw-sec">Dove?</div><div class="pl-dove">' + rows.map(function(r){ return '<button type="button" class="' + (plOn(s, r.i) ? 'on' : '') + '" data-pld="' + r.i + '">' + qEsc(r.nome) + (r.v.mq ? ' <em>' + plNum(r.v.mq) + '</em>' : '') + '</button>'; }).join('') + '</div>';
       h += '<button type="button" class="pro-auth-submit qw-next" id="plOk">Fatto</button>';
       box.innerHTML = h; plBind(box);
@@ -16924,18 +17000,18 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       return;
     }
     // la casa: tre riquadri
-    var D = pl.data, ok = PL_S.filter(function(s){ return pl.sel[s.k] && plTot(s) > 0; });
+    var D = pl.data, SS = plSS(), ok = SS.filter(function(s){ return pl.sel[s.k] && plTot(s) > 0; });
     h += '<div class="pro-projects-title">La tua casa</div><div class="qw-who">Letta dal disegno · ' + D.piani.length + (D.piani.length === 1 ? ' zona' : ' zone') + '. Tocca un numero per cambiarlo.</div>';
-    h += PL_S.map(function(s){ var sel = pl.sel[s.k], rows = plRows(s), tot = plTot(s);
-      return '<div class="pl-card' + (sel ? ' on' : '') + '" data-plc="' + s.k + '"><div class="pl-ch"><span class="pl-ic">' + plSvg(s.ic) + '</span><b>' + s.n + '</b><strong>' + (tot ? plNum(tot) + ' m²' : '—') + '</strong></div>'
-        + '<div class="pl-rows">' + (rows.length ? rows.map(function(r){ var v = r.v; return '<label class="pl-r' + (plOn(s, r.i) ? '' : ' off') + '"><span>' + qEsc(r.nome) + (v.fonte === 'come' ? ' <i>come il pavimento</i>' : v.fonte === 'calcolato' ? ' <i class="g">conto rifatto ✓</i>' : v.fonte === 'stimato' ? ' <i class="w">stimato: controlla</i>' : '') + '</span><input type="text" inputmode="decimal" data-ple="' + s.k + r.i + '" value="' + (v.mq != null ? qEsc(plNum(v.mq)) : '') + '" placeholder="scrivi"><em>m²</em></label>'; }).join('') : '<div class="pl-r none">Non trovato sul disegno</div>') + '</div>'
+    h += SS.map(function(s){ var sel = pl.sel[s.k], rows = plRows(s), tot = plTot(s);
+      return '<div class="pl-card' + (sel ? ' on' : '') + '" data-plc="' + s.k + '"><div class="pl-ch"><span class="pl-ic">' + plSvg(s.ic) + '</span><b>' + s.n + '</b><strong>' + (tot ? plNum(tot) + ' ' + s.u : '—') + '</strong></div>'
+        + '<div class="pl-rows">' + (rows.length ? rows.map(function(r){ var v = r.v; return '<label class="pl-r' + (plOn(s, r.i) ? '' : ' off') + '"><span>' + qEsc(r.nome) + (v.fonte === 'come' ? ' <i>come il pavimento</i>' : v.fonte === 'calcolato' ? ' <i class="g">conto rifatto ✓</i>' : v.fonte === 'stimato' ? ' <i class="w">stimato: controlla</i>' : '') + '</span><input type="text" inputmode="decimal" data-ple="' + s.k + r.i + '" value="' + (v.mq != null ? qEsc(plNum(v.mq)) : '') + '" placeholder="scrivi"><em>' + s.u + '</em></label>'; }).join('') : '<div class="pl-r none">Non trovato sul disegno</div>') + '</div>'
         + '<button type="button" class="pl-lav" data-plg="' + s.k + '">' + (sel ? qEsc(sel.t) + ' ✓' : sel === false ? 'Niente' : 'Cosa fai? ›') + '</button></div>'; }).join('');
     if(D.mancanti && D.mancanti.length) h += '<div class="pl-warn"><b>Mancano sul disegno:</b> ' + D.mancanti.map(qEsc).join(' · ') + '. Se ti servono, scrivili qui sopra.</div>';
     if(D.avvisi && D.avvisi.length) h += '<div class="pl-av">' + D.avvisi.map(function(a){ return '• ' + qEsc(a); }).join('<br>') + '</div>';
     if(ok.length){
-      h += '<div class="qw-sec">Va nel preventivo</div><div class="qw-sum">' + ok.map(function(s){ var sel = pl.sel[s.k], t = plTot(s); return '<div><span>' + qEsc(sel.t) + ' · ' + plNum(t) + ' m²' + (sel.p ? ' × ' + qEsc(qwEur(sel.p)) : '') + '</span><span>' + (sel.p ? qEsc(qwEur(t * sel.p)) : 'prezzo da mettere') + '</span></div>'; }).join('') + '</div>'
+      h += '<div class="qw-sec">Va nel preventivo</div><div class="qw-sum">' + ok.map(function(s){ var sel = pl.sel[s.k], t = plTot(s); return '<div><span>' + qEsc(sel.t) + ' · ' + plNum(t) + ' ' + s.u + (sel.p ? ' × ' + qEsc(qwEur(sel.p)) : '') + '</span><span>' + (sel.p ? qEsc(qwEur(t * sel.p)) : 'prezzo da mettere') + '</span></div>'; }).join('') + '</div>'
         + '<button type="button" class="pro-auth-submit qw-next" id="plPut">' + (pl.ctx === 'so' ? 'Salva nel sopralluogo' : 'Metti nel preventivo') + '</button>';
-    } else h += '<div class="pl-hint" style="text-align:center">Tocca <b>Cosa fai?</b> su pavimenti, pareti o plafoni.</div>';
+    } else h += '<div class="pl-hint" style="text-align:center">Tocca <b>Cosa fai?</b> sulle misure qui sopra.</div>';
     h += '<button type="button" class="q-link" id="plAgain" style="display:block;margin:12px auto 0">Carica un altro disegno</button>';
     box.innerHTML = h; plBind(box);
     box.querySelectorAll('[data-ple]').forEach(function(el){
@@ -16946,10 +17022,10 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     document.getElementById('plAgain').onclick = function(){ pl.st = 'carica'; plRender(box); };
     var put = document.getElementById('plPut'); if(put) put.onclick = function(){
       var voci = [], save = [];
-      PL_S.forEach(function(s){ var sel = pl.sel[s.k], t = plTot(s); if(!sel || !(t > 0)) return;
+      plSS().forEach(function(s){ var sel = pl.sel[s.k], t = plTot(s); if(!sel || !(t > 0)) return;
         var rows = plRows(s).filter(function(r){ return plOn(s, r.i) && r.v.mq; });
-        voci.push({ titolo: sel.t, descrizione: (sel.d ? sel.d + '\n' : '') + rows.map(function(r){ return r.nome + ' ' + plNum(r.v.mq) + ' m²'; }).join(' · '), qta: Math.round(t * 100) / 100, um:'mq', prezzo: +sel.p || 0, lavorazione: sel.lav || '' });
-        if(!sel.li && sel.p > 0 && sel.save !== false) save.push({ titolo: sel.t, descrizione:'', qta:1, um:'mq', prezzo: sel.p, lavorazione: sel.lav || '' });
+        voci.push({ titolo: sel.t, descrizione: (sel.d ? sel.d + '\n' : '') + rows.map(function(r){ return r.nome + ' ' + plNum(r.v.mq) + ' ' + s.u; }).join(' · '), qta: Math.round(t * 100) / 100, um: s.um, prezzo: +sel.p || 0, lavorazione: sel.lav || '' });
+        if(!sel.li && sel.p > 0 && sel.save !== false) save.push({ titolo: sel.t, descrizione:'', qta:1, um: s.um, prezzo: sel.p, lavorazione: sel.lav || '' });
       });
       if(save.length){ try{ var st = qs.settings; st.listino = (st.listino || []).filter(function(x){ return !save.some(function(y){ return y.titolo === x.titolo; }); }).concat(save); qApi('listino', 'POST', { listino: st.listino }).catch(function(){}); }catch(e){} }
       if(pl.ctx === 'so'){
@@ -16963,7 +17039,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       pl = null; qw.pl = 0; qwAuto(); qwRender(); qScrollTop();
     };
   }
-  function plBind(box){ var b = document.getElementById('plBack'); if(b) b.onclick = function(){ if(pl && pl.st === 'scegli'){ pl.st = 'casa'; plRender(box); } else plClose(); }; }
+  function plBind(box){ var b = document.getElementById('plBack'); if(b) b.onclick = function(){ if(pl && pl.st === 'scegli'){ pl.st = 'casa'; plRender(box); } else if(pl && pl.st === 'cosa'){ pl.st = 'carica'; plRender(box); } else plClose(); }; }
   // foto o PDF -> immagine JPEG non troppo grande
   function plToImg(file){
     return new Promise(function(ok, ko){
@@ -16993,11 +17069,15 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   function plLoad(file){
     var box = plBox();
-    pl.st = 'leggo'; pl.thumb = null; plRender(box);
+    pl.st = 'leggo'; pl.thumb = null; pl.cosa = null; plRender(box);
     plToImg(file).then(function(img){
-      pl.thumb = img; if(pl.st === 'leggo') plRender(box);
-      return qApi('pl-read', 'POST', { image: img });
-    }).then(function(x){
+      if(!pl) return;
+      pl.thumb = img; pl.img = img; pl.cosa = plCosa0(); pl.st = 'cosa'; plRender(box); plTop();
+    }).catch(function(e){ if(!pl) return; pl.st = 'err'; pl.err = (e && e.message && e.message.length > 12) ? e.message : 'Non riesco ad aprire il disegno. Riprova.'; plRender(box); });
+  }
+  function plRead(box){
+    pl.st = 'leggo'; plRender(box); plTop();
+    qApi('pl-read', 'POST', { image: pl.img, cosa: pl.cosa }).then(function(x){
       if(!pl) return;
       if(!x.ok){ pl.st = 'err'; pl.err = (x.d && x.d.error) || 'Non riesco a leggere il disegno. Riprova.'; plRender(box); return; }
       var d = x.d || {};
@@ -17009,7 +17089,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function soPlanHtml(d){
     var P = d.plan && d.plan.voci && d.plan.voci.length ? d.plan.voci : null;
     if(!P) return '<button type="button" class="qw-write pl-go" id="soPlan">📐 Misure dalla planimetria</button>';
-    return '<div class="so-plan"><div class="so-plan-h"><b>📐 Dal disegno</b><span>vanno nel preventivo</span></div>' + P.map(function(v){ return '<div class="so-plan-r"><span>' + qEsc(v.titolo) + '</span><b>' + plNum(v.qta) + ' m²</b></div>'; }).join('')
+    return '<div class="so-plan"><div class="so-plan-h"><b>📐 Dal disegno</b><span>vanno nel preventivo</span></div>' + P.map(function(v){ return '<div class="so-plan-r"><span>' + qEsc(v.titolo) + '</span><b>' + plNum(v.qta) + (v.um === 'ml' ? ' ml' : ' m²') + '</b></div>'; }).join('')
       + '<div class="so-plan-a"><button type="button" class="q-link" id="soPlanRe">Rifai dal disegno</button><button type="button" class="q-link" id="soPlanDel">Togli</button></div></div>';
   }
   function soPlanBind(){
@@ -17128,6 +17208,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + (qwMailOn() ? '<div class="qm-row">' + (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 WhatsApp</button>' : '') + '<button type="button" class="pro-auth-submit" id="qwMail">✉️ Email</button></div>'
         : (q.cliente.telefono ? '<button type="button" class="pro-auth-submit qw-wa" id="qwWa">💬 Manda su WhatsApp</button>' : ''))
       + '<button type="button" class="pro-auth-submit' + (q.cliente.telefono || qwMailOn() ? ' qw-sec2' : '') + '" id="qwPdf">📄 Scarica il PDF</button>'
+      + (pkOn() ? '<button type="button" class="q-link qw-pk" id="qwPk">🔗 Copia il link per il cliente</button>' : '')
       + '<button type="button" class="q-link qw-save" id="qwSave">Salva e chiudi</button>';
     box.innerHTML = h;
     box.querySelectorAll('[data-qwr]').forEach(function(b){ b.addEventListener('click', function(){ q.rate = qClone(Q_RATE_PRESETS[b.dataset.qwr]); qwRender(); }); });
@@ -17139,6 +17220,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var wa = document.getElementById('qwWa'); if(wa) wa.onclick = function(){ if(q.status === 'bozza') q.status = 'inviato'; go(function(){ var b = document.getElementById('rxWaQuote'); if(b) b.click(); else document.getElementById('qPdfBtn').click(); }); };
     document.getElementById('qwPdf').onclick = function(){ go(function(){ document.getElementById('qPdfBtn').click(); }); };
     var ml = document.getElementById('qwMail'); if(ml){ qwMailCss(); ml.onclick = function(){ qwMail(q, go); }; }
+    var pkb = document.getElementById('qwPk'); if(pkb) pkb.onclick = function(){ go(function(){ pkCopyLink(); }); };
     document.getElementById('qwPv').onclick = function(){ go(function(){ if(!qPvGo()){ var e = document.getElementById('qEdErr'), we = document.getElementById('qwErr'); if(e && we){ we.innerHTML = e.innerHTML; qwLinks(we); } } }); };
     document.getElementById('qwSave').onclick = function(){ var e = document.getElementById('qwErr'); e.textContent = ''; qRenderEditor();
       qSave().then(function(){ qOpenList(); }, function(){ e.innerHTML = document.getElementById('qEdErr').innerHTML || 'Salvataggio non riuscito.'; qwLinks(e); }); };
@@ -18698,7 +18780,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         + '<div class="cc-sec">Cliente da fatturare</div><button type="button" class="ft-cl ft-cl1" id="ftCliB"><span class="tm-av">' + qEsc(ctIni(cd.nome)) + '</span><div><b>' + qEsc(cd.nome) + '</b><em>' + qEsc(cd.tipo === 'azienda' ? 'P.IVA ' + (cd.piva || '—') : 'C.F. ' + (cd.cf || '—')) + (cd.comune ? ' · ' + qEsc(cd.comune) : '') + '</em></div><span class="ft-tg">' + (miss.length || !cli ? '<u class="ko">completa i dati ›</u>' : '<u class="ok">✓ dati fattura ›</u>') + '</span></button>'
         + '<div class="cc-sec">Cosa fatturare</div><div class="ft-seg"><button type="button" data-fts="acconto"' + (st.tipo === 'acconto' ? ' class="on"' : '') + '>Acconto</button><button type="button" data-fts="saldo"' + (st.tipo === 'saldo' ? ' class="on"' : '') + '>Saldo</button><button type="button" data-fts="tutto"' + (st.tipo === 'tutto' ? ' class="on"' : '') + '>Tutto</button></div>';
       if(st.tipo === 'acconto'){
-        h += '<div class="cc-hint" style="margin-top:0">Quanto di acconto?</div><div class="cc-chips">' + rate.map(function(r){ return '<button type="button" data-ftp2="' + r.pct + '" data-ftrd="' + qEsc(r.descrizione) + '"' + (+st.pct === +r.pct && st.rata === r.descrizione ? ' class="on"' : '') + '>' + qEsc(r.descrizione || 'Rata') + ' · ' + String(r.pct).replace('.', ',') + '%</button>'; }).join('')
+        h += '<div class="cc-hint" style="margin-top:0">Quanto di acconto?</div><div class="cc-chips">' + rate.map(function(r){ return '<button type="button" data-ftp2="' + r.pct + '" data-ftrd="' + qEsc(r.descrizione) + '"' + (+st.pct === +r.pct && st.rata === r.descrizione ? ' class="on"' : '') + '>' + qEsc(r.descrizione || 'Acconto') + ' · ' + String(r.pct).replace('.', ',') + '%</button>'; }).join('')
           + '</div><label class="ft-f" style="margin-top:8px"><span>Percentuale dell’acconto</span><input id="ftPct" inputmode="decimal" value="' + String(st.pct).replace('.', ',') + '"></label>';
       } else {
         h += '<div class="cc-card cc-list">' + (Q.voci || []).map(function(v, i){ var imp = ftR((+v.qta || 0) * (+v.prezzo || 0));
@@ -19002,7 +19084,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var Q = x.d.quote, R = (Q.rate || []).filter(function(r){ return +r.pct > 0; });
       if(!R.length) R = [{ descrizione:'Saldo', scadenza:'a fine lavori', pct:100 }];
       return rxSave('incasso', { quoteId:q.id, numero:('00' + q.number).slice(-3) + '/' + q.year, cliente:(Q.cliente && Q.cliente.nome) || c.nome, telefono:(Q.cliente && Q.cliente.telefono) || c.tel || '', oggetto:Q.oggetto || '',
-        rate:R.map(function(r, i){ return { d:r.descrizione || ('Rata ' + (i + 1)), pct:+r.pct, quando:inGuess(r, i, R.length), inc:0, data:'', soll:'' }; }) });
+        rate:R.map(function(r, i){ return { d:r.descrizione || ('Acconto ' + (i + 1)), pct:+r.pct, quando:inGuess(r, i, R.length), inc:0, data:'', soll:'' }; }) });
     }).then(function(it){ IN.rows = (IN.rows || []).filter(function(x){ return x.id !== it.id; }).concat([it]); delete IN.busy[q.id]; return it; }, function(e){ delete IN.busy[q.id]; throw e; });
   }
   function inDay(add){ var d = new Date(); d.setDate(d.getDate() + (add || 0)); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
@@ -19025,8 +19107,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var n = c.nome;
     if(x.why === 'acconto') return 'Acconto non registrato per ' + n;
     if(x.why === 'domani') return 'Domani inizi da ' + n + ': ' + x.r.d.toLowerCase() + ' non incassato';
-    if(x.why === 'inizio') return n + ': rata di inizio lavori non incassata';
-    if(x.why === 'meta') return n + ': rata di metà lavori da chiedere';
+    if(x.why === 'inizio') return n + ': acconto di inizio lavori non incassato';
+    if(x.why === 'meta') return n + ': acconto di metà lavori da chiedere';
     return 'Saldo da incassare da ' + n;
   }
   function inMsg(c, q, x, set){
@@ -19072,7 +19154,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // ----- scheda del cantiere -----
   function ctIncBlock(c, box){
     var q = inAcc(c); if(!q) return;
-    var w = document.createElement('div'); w.className = 'cc-wrap'; w.innerHTML = '<div class="cc-sec">Incassi</div><div class="cc-hint">Carico le rate…</div>'; box.appendChild(w);
+    var w = document.createElement('div'); w.className = 'cc-wrap'; w.innerHTML = '<div class="cc-sec">Incassi</div><div class="cc-hint">Carico gli acconti…</div>'; box.appendChild(w);
     inLoad().then(function(){ return inEnsure(c, q); }).then(function(){ inDraw(c, q, w, null); }).catch(function(){ w.remove(); });
   }
   function inDraw(c, q, w, msg){
@@ -19101,6 +19183,162 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     w.querySelectorAll('[data-inr]').forEach(function(b){ b.addEventListener('click', function(){ inRemind(A(+b.dataset.inr), function(){ inDraw(c, q, w); }); }); });
     var pf = document.getElementById('inPf'); if(pf) pf.addEventListener('click', function(){ ftPrep(c); });
   }
+  // ---------- Link del preventivo per il cliente (in prova): accetta, conferma, acconti, contabile ----------
+  // Il cliente fa tutto dal link (?prev=…): accetta e firma, paga l'acconto, carica la contabile.
+  // Qui: avvisi in home, conferma dell'impresa, contabili sugli acconti, link nel messaggio WhatsApp.
+  var PK = { links:null, avvisi:[], byQ:{} };
+  function pkOn(){ return typeof rdIsStaff === 'function' && rdIsStaff(); }
+  function pkSync(){ try{ document.documentElement.classList.toggle('rd-pk', pkOn()); }catch(e){} }
+  function pkLoad(){
+    if(!pkOn()) return Promise.resolve(null);
+    return qApi('pk-list').then(function(x){ if(!x.ok) throw x; PK.links = x.d.links || []; PK.avvisi = x.d.avvisi || []; PK.byQ = {}; PK.links.forEach(function(l){ PK.byQ[l.quoteId] = l; }); return PK; });
+  }
+  function pkLink(quoteId){
+    if(PK.byQ[quoteId]) return Promise.resolve(PK.byQ[quoteId]);
+    return qApi('pk-link', 'POST', { quoteId: quoteId }).then(function(x){ if(!x.ok) throw x; var l = { id:x.d.id, token:x.d.token, url:x.d.url, quoteId:quoteId, stato:x.d.stato }; PK.byQ[quoteId] = l; return l; });
+  }
+  function pkWhen(iso){ var d = new Date(iso); if(isNaN(d)) return ''; var oggi = new Date().toDateString() === d.toDateString(); return (oggi ? 'oggi' : 'il ' + d.toLocaleDateString('it-IT', { day:'numeric', month:'numeric' })) + ' alle ' + d.toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' }); }
+  function pkFirst(n){ return String(n || '').trim().split(/\s+/)[0] || ''; }
+  // il messaggio WhatsApp del preventivo porta anche il link (solo account di prova)
+  window.pkWaText = function(w){
+    if(!pkOn() || !qs.curId) return Promise.resolve(w);
+    return pkLink(qs.curId).then(function(l){
+      var t = String(w.text || ''), k = t.lastIndexOf('\n'), riga = '\nPuò vederlo e accettarlo qui: ' + l.url + '\n';
+      return Object.assign({}, w, { text: k > 0 ? t.slice(0, k) + riga + t.slice(k + 1) : t + riga });
+    }).catch(function(){ return w; });
+  };
+  function pkCopyLink(){
+    var e = document.getElementById('qwErr'), m = document.getElementById('qwMsg');
+    qSave().then(function(){ return pkLink(qs.curId); }).then(function(l){
+      return rxCopy(l.url).then(function(ok){ if(m) m.innerHTML = ok ? '✓ Link copiato: incollalo nel messaggio al cliente.' : 'Il link del cliente: <b>' + qEsc(l.url) + '</b>'; });
+    }).catch(function(x){ if(x && e) e.textContent = rxErr(x); });
+  }
+  // ----- home: avvisi -----
+  function pkCards(){
+    var h = '';
+    (PK.links || []).forEach(function(l, i){
+      if(l.stato === 'accettato' && l.acc && !l.viste.acc) h += '<div class="pk-n"><small>PREVENTIVO ACCETTATO</small><b>' + qEsc(l.acc.nome || l.cliente) + ' ha accettato e firmato il preventivo ' + qEsc(l.numero) + '</b><span>' + ftE(l.acc.totale) + ' · ' + qEsc(pkWhen(l.acc.at)) + '</span><div class="pk-b2"><button type="button" data-pkc="' + i + '">✓ Conferma</button><button type="button" data-pkv="' + i + '">Vedi</button></div></div>';
+      if(l.modifica && l.viste.mod === false && l.stato !== 'confermato') h += '<div class="pk-n pk-mod"><small>RICHIESTA DI MODIFICA</small><b>' + qEsc(l.cliente) + ' vorrebbe una modifica</b><span>“' + qEsc(l.modifica.testo) + '”</span><div class="pk-b2"><button type="button" data-pko="' + i + '">✏️ Apri il preventivo</button><button type="button" data-pkr="' + i + '">💬 Rispondi</button></div></div>';
+    });
+    PK.avvisi.forEach(function(a, i){
+      var l = a.l || {};
+      h += '<div class="pk-n"><small>CONTABILE ARRIVATA</small><b>' + qEsc(a.cliente) + ' ha caricato la contabile: ' + qEsc(String(a.d || 'acconto').toLowerCase()) + '</b><span>' + (l.importo ? ftE(l.importo) + ' · ' : '') + (l.tipo === 'istantaneo' ? 'bonifico istantaneo' : l.tipo === 'ordinario' ? 'bonifico normale' : l.tipo === 'carta' ? 'carta' : 'contabile') + (l.data ? ' del ' + qEsc(ftData(l.data)) : '') + '</span>'
+        + '<div class="pk-b2"><a href="' + qEsc(a.u) + '" target="_blank" rel="noopener">📄 Vedi</a><button type="button" data-pka="' + i + '">✓ Arrivati</button><button type="button" data-pkn="' + i + '">Non ancora</button></div></div>';
+    });
+    return h;
+  }
+  function pkHomeLoad(box, L, again){
+    pkSync();
+    var el = box.querySelector('#pkHome'); if(!el || !pkOn()) return;
+    pkLoad().then(function(){
+      el.innerHTML = pkCards();
+      el.querySelectorAll('[data-pkc],[data-pkv]').forEach(function(b){ b.addEventListener('click', function(){ pkConfirm(PK.links[+(b.dataset.pkc || b.dataset.pkv)], again); }); });
+      el.querySelectorAll('[data-pko]').forEach(function(b){ b.addEventListener('click', function(){ var l = PK.links[+b.dataset.pko]; qApi('pk-seen', 'POST', { id:l.id }); rxClose(); pbModal(); rdTabOn('prev'); qEdit(l.quoteId); }); });
+      el.querySelectorAll('[data-pkr]').forEach(function(b){ b.addEventListener('click', function(){ var l = PK.links[+b.dataset.pkr]; qApi('pk-seen', 'POST', { id:l.id }).then(function(){ again(); }); rxWa(l.telefono, 'Buongiorno ' + pkFirst(l.cliente) + ', ho visto la sua richiesta. '); }); });
+      el.querySelectorAll('[data-pka]').forEach(function(b){ b.addEventListener('click', function(){ var a = PK.avvisi[+b.dataset.pka]; b.disabled = true; pkArrivati(a, L).then(function(){ again(); }).catch(function(e){ b.disabled = false; alert(rxErr(e)); }); }); });
+      el.querySelectorAll('[data-pkn]').forEach(function(b){ b.addEventListener('click', function(){ var a = PK.avvisi[+b.dataset.pkn]; b.disabled = true; qApi('pk-cont-seen', 'POST', { quoteId:a.quoteId, idx:a.idx, rem:true }).then(function(){ again(); }); }); });
+    }).catch(function(){ el.innerHTML = ''; });
+  }
+  // "Arrivati": segno l'acconto incassato (tutto quello che manca) e spengo l'avviso
+  function pkArrivati(a, L){
+    return inLoad(true).then(function(){
+      var c = (L || []).filter(function(c){ var q = inAcc(c); return q && q.id === a.quoteId; })[0], q = c && inAcc(c), row = q && inOf(q);
+      if(!row) throw { d:{ error:'Apri il cantiere di ' + a.cliente + ' e segnalo da Incassi.' } };
+      var x = inCalc(c, q, row)[a.idx]; if(!x) throw { d:{ error:'Acconto non trovato.' } };
+      var imp = a.l && a.l.importo > 0 ? Math.min(a.l.importo, x.resta) : x.resta;
+      return (x.resta > 0.009 ? inPay({ c:c, q:q, row:row, x:x }, imp) : Promise.resolve()).then(function(){ return qApi('pk-cont-seen', 'POST', { quoteId:a.quoteId, idx:a.idx }); });
+    });
+  }
+  // ----- conferma dell'impresa -----
+  function pkConfirm(l, after){
+    var box = rxOpen('Conferma il preventivo', null), done = false;
+    var fine = function(){ if(done && after) after(); };
+    box.innerHTML = '<div class="pk-ok">✓ Accettato da <b>' + qEsc(l.acc.nome) + '</b> ' + qEsc(pkWhen(l.acc.at)) + ' · firmato</div>'
+      + (l.acc.firma ? '<img class="pk-firma" src="' + qEsc(l.acc.firma) + '" alt="Firma del cliente">' : '')
+      + '<div class="cc-card"><div class="cc-r"><span>Preventivo</span><b>' + qEsc(l.numero) + '</b></div><div class="cc-r"><span>Totale</span><b>' + ftE(l.acc.totale) + '</b></div></div>'
+      + (l.modifica ? '<div class="pk-warn">Ha chiesto anche: “' + qEsc(l.modifica.testo) + '”</div>' : '')
+      + '<label class="ft-f"><span>Quando pensi di iniziare? (facoltativo)</span><input type="date" id="pkIn"></label>'
+      + '<div class="pf-hint">Se la scrivi, va in Agenda e il cliente la vede sul suo link.</div>'
+      + '<button type="button" class="pro-auth-submit" id="pkGo">✓ Confermo il preventivo</button>'
+      + '<button type="button" class="pk-sec" id="pkNo">Non posso così, avviso il cliente</button>'
+      + '<button type="button" class="q-link" id="pkOpenQ">Apri il preventivo</button>'
+      + '<div class="pf-hint">Quando confermi, il cliente vede subito i dati per l’acconto. Il totale del preventivo non si potrà più cambiare: le aggiunte vanno in “Lavori in più”.</div>';
+    document.getElementById('pkOpenQ').onclick = function(){ rxClose(); pbModal(); rdTabOn('prev'); qEdit(l.quoteId); };
+    document.getElementById('pkNo').onclick = function(){
+      var b = this; b.disabled = true;
+      qApi('pk-undo', 'POST', { id:l.id }).then(function(x){ if(!x.ok) throw x; done = true;
+        rxWa(l.telefono, 'Buongiorno ' + pkFirst(l.cliente) + ', grazie per aver accettato il preventivo ' + l.numero + '. Prima di confermarlo devo sentirla per un dettaglio: la chiamo appena posso.\n' + rxImpresa());
+        rxClose(); fine(); }).catch(function(e){ b.disabled = false; rxFail(e); });
+    };
+    document.getElementById('pkGo').onclick = function(){
+      var b = this, ini = document.getElementById('pkIn').value; b.disabled = true;
+      qApi('pk-confirm', 'POST', { id:l.id, inizio:ini }).then(function(x){
+        if(!x.ok) throw x; done = true; IN.rows = null; try{ ctLoad.cache = null; }catch(e){}
+        return Promise.all([ftSettings(), qApi('get', 'GET', null, '&id=' + encodeURIComponent(l.quoteId)).catch(function(){ return null; })]).then(function(r){
+          var set = r[0] || {}, Q = r[1] && r[1].ok ? r[1].d : null, ac = '';
+          if(Q && Q.quote && (Q.quote.rate || []).length){ var r0 = Q.quote.rate[0]; ac = ftE(Math.round(Q.total * r0.pct) / 100); }
+          var msg = 'Buongiorno ' + pkFirst(l.cliente) + ', confermo il preventivo n. ' + l.numero + (ini ? ': inizio i lavori il ' + ftData(ini) : '') + '.\n' + (ac ? 'Per l’acconto di ' + ac + ' trova IBAN e causale qui: ' : 'Trova i dati per il pagamento qui: ') + (PK.byQ[l.quoteId] || l).url + '\nQuando ha fatto il bonifico può caricare la contabile dallo stesso link.\nGrazie, ' + rxImpresa();
+          box.innerHTML = '<div class="pk-ok big">✓ Preventivo confermato</div><div class="pf-hint" style="color:var(--ink)">' + qEsc(l.cliente) + ' vede già i dati per l’acconto sul suo link' + (ini ? ' e la data di inizio' : '') + '.</div>'
+            + '<button type="button" class="pro-auth-submit" id="pkWa">💬 Avvisa ' + qEsc(pkFirst(l.cliente)) + ' su WhatsApp</button><button type="button" class="pk-sec" id="pkEnd">Chiudi</button>';
+          document.getElementById('pkWa').onclick = function(){ rxWa(l.telefono, msg); };
+          document.getElementById('pkEnd').onclick = function(){ rxClose(); fine(); };
+        });
+      }).catch(function(e){ b.disabled = false; rxFail(e); });
+    };
+    rx.back = function(){ rxClose(); fine(); };
+  }
+  // ----- contabili sugli acconti (cantiere → Incassi) -----
+  function pkFile(input){
+    var f = input.files && input.files[0]; if(!f) return Promise.reject({ d:{ error:'Scegli un file.' } });
+    if(f.type === 'application/pdf'){
+      if(f.size > 3000000) return Promise.reject({ d:{ error:'Il PDF è troppo grande (massimo 3 MB).' } });
+      return new Promise(function(ok, ko){ var r = new FileReader(); r.onload = function(){ ok(r.result); }; r.onerror = ko; r.readAsDataURL(f); });
+    }
+    if(!/^image\//.test(f.type)) return Promise.reject({ d:{ error:'Carica una foto, uno screenshot o un PDF.' } });
+    return new Promise(function(ok, ko){ var u = URL.createObjectURL(f), im = new Image(); im.onload = function(){ var k = Math.min(1, 1800 / Math.max(im.width, im.height)), cv = document.createElement('canvas'); cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); var g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(u); ok(cv.toDataURL('image/jpeg', 0.85)); }; im.onerror = function(){ ko({ d:{ error:'Non riesco ad aprire la foto.' } }); }; im.src = u; });
+  }
+  window.rdPkFile = pkFile;
+  function pkChecks(l, x, num){
+    if(!l) return '';
+    var out = [];
+    if(l.importo){ var d = ftR(l.importo - x.resta); out.push(Math.abs(d) < 0.01 ? ['ok', 'importo giusto'] : d < 0 ? ['no', 'importo ' + ftE(l.importo) + ': mancano ' + ftE(-d)] : ['ok', 'importo ' + ftE(l.importo)]); }
+    var n = String(num || '').replace(/^0+/, ''), cs = String(l.causale || '');
+    if(cs) out.push(n && cs.replace(/\b0+(\d)/g, '$1').indexOf(n) > -1 ? ['ok', 'causale giusta'] : ['no', 'causale: “' + cs + '”']);
+    if(l.tipo === 'ordinario') out.push(['no', 'bonifico normale: può metterci 1–2 giorni']);
+    if(l.tipo === 'istantaneo') out.push(['ok', 'bonifico istantaneo']);
+    return out.length ? '<div class="pk-chk">' + out.map(function(o){ return '<span class="' + o[0] + '">' + (o[0] === 'ok' ? '✓ ' : '⚠︎ ') + qEsc(o[1]) + '</span>'; }).join('') + '</div>' : '';
+  }
+  function pkInDraw(c, q, w){
+    if(!pkOn()) return;
+    var row = inOf(q); if(!row) return;
+    var X = inCalc(c, q, row), num = row.data.numero;
+    w.querySelectorAll('.in-rt').forEach(function(el, i){
+      var x = X[i]; if(!x) return;
+      var cont = x.r.cont || [], nuove = cont.filter(function(k){ return k.da === 'c' && !k.v; });
+      if(cont.length) el.insertAdjacentHTML('beforeend', '<div class="pk-cl">' + cont.map(function(k){ return '<a href="' + qEsc(k.u) + '" target="_blank" rel="noopener">📄 Contabile ' + (k.da === 'c' ? 'del cliente' : '') + ' · ' + qEsc(ftData(String(k.at).slice(0, 10))) + '</a>'; }).join('') + '</div>');
+      if(!x.pagata && nuove.length){
+        var st = el.querySelector('.in-st'); if(st){ st.className = 'in-st'; st.innerHTML = 'Contabile ricevuta ' + qEsc(pkWhen(nuove[nuove.length - 1].at)) + ': controlla in banca e tocca “Arrivati”.'; }
+        var bt = el.querySelector('.in-bt'); if(bt) bt.insertAdjacentHTML('beforebegin', pkChecks(nuove[nuove.length - 1].l, x, num) + '<div class="in-bt"><button type="button" class="in-ok" data-pka2="' + i + '">✓ Arrivati</button><button type="button" class="in-wa2" data-pkn2="' + i + '">Non ancora</button></div>');
+        if(bt) bt.hidden = true;
+      }
+      var pay = el.querySelector('.in-pay');
+      if(pay) pay.insertAdjacentHTML('afterbegin', '<label class="pk-up">📎 Allega la contabile<em>foto, screenshot o PDF · facoltativa</em><input type="file" accept="image/*,application/pdf" data-pku="' + i + '" hidden></label><div class="pk-upm" id="pkUpm' + i + '"></div>');
+    });
+    var redo = function(){ return inLoad(true).then(function(){ inDraw(c, q, w); }); };
+    w.querySelectorAll('[data-pka2]').forEach(function(b){ b.addEventListener('click', function(){ var x = inCalc(c, q, inOf(q))[+b.dataset.pka2], nv = (x.r.cont || []).filter(function(k){ return k.da === 'c' && !k.v; }).pop(), imp = nv && nv.l && nv.l.importo > 0 ? Math.min(nv.l.importo, x.resta) : x.resta; b.disabled = true;
+      inPay({ c:c, q:q, row:inOf(q), x:x }, imp).then(function(){ return qApi('pk-cont-seen', 'POST', { quoteId:q.id, idx:x.i }); }).then(function(){ return inLoad(true); }).then(function(){ inDraw(c, q, w, '✓ Segnato: ' + ftE(imp) + ' da ' + c.nome); }).catch(function(e){ b.disabled = false; rxFail(e); }); }); });
+    w.querySelectorAll('[data-pkn2]').forEach(function(b){ b.addEventListener('click', function(){ b.disabled = true; qApi('pk-cont-seen', 'POST', { quoteId:q.id, idx:+b.dataset.pkn2, rem:true }).then(redo).catch(function(e){ b.disabled = false; rxFail(e); }); }); });
+    w.querySelectorAll('[data-pku]').forEach(function(inp){ inp.addEventListener('change', function(){ var i = +inp.dataset.pku, m = document.getElementById('pkUpm' + i); m.textContent = 'Carico la contabile…';
+      pkFile(inp).then(function(file){ return qApi('pk-cont', 'POST', { quoteId:q.id, idx:i, file:file }); }).then(function(x){ if(!x.ok) throw x; var l = x.d.cont.l;
+        m.innerHTML = '✓ Contabile allegata' + (l && l.importo ? ': ' + ftE(l.importo) : '') + '.';
+        var a = document.getElementById('inAmt' + i); if(a && l && l.importo) a.value = String(l.importo.toFixed(2)).replace('.', ',');
+        inLoad(true); }).catch(function(e){ m.textContent = rxErr(e); }); }); });
+  }
+  // ----- aggancio alle funzioni degli incassi -----
+  var pkInDraw0 = inDraw; inDraw = function(c, q, w, msg){ pkInDraw0(c, q, w, msg); try{ pkInDraw(c, q, w); }catch(e){ console.error(e); } };
+  var pkHomeHtml0 = inHomeHtml; inHomeHtml = function(L){ return (pkOn() ? '<div id="pkHome"></div>' : '') + pkHomeHtml0(L); };
+  var pkHomeBind0 = inHomeBind; inHomeBind = function(box, L, again){ pkHomeBind0(box, L, again); try{ pkHomeLoad(box, L, again); }catch(e){ console.error(e); } };
+  var pkMsg0 = inMsg; inMsg = function(c, q, x, set){ var t = pkMsg0(c, q, x, set), l = pkOn() && q && PK.byQ[q.id]; return l && l.stato === 'confermato' ? t.replace(/\nGrazie, /, '\nIBAN e causale li trova anche qui, dove può caricare la contabile: ' + l.url + '\nGrazie, ') : t; };
   // incassato finora (per "Quanto ci guadagni")
   function inGot(c){ var q = inAcc(c), row = inOf(q); if(!row) return null; return ftR(inCalc(c, q, row).reduce(function(s, x){ return s + Math.min(x.imp, +x.r.inc || 0); }, 0)); }
   // ----- scadenzario: Altro → Incassi -----
@@ -19121,9 +19359,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         + (kind === 'o' ? '<button type="button" class="in-wa" data-inwa2="' + k + '" aria-label="Promemoria WhatsApp">💬</button>' : '') + '</span></div>'; };
     var h = '<div class="cc-fin" style="margin-top:0"><div><span>Da chiedere ora</span><b style="color:' + (sOra ? '#B4541A' : 'inherit') + '">' + ftE0(sOra) + '</b></div><div><span>Incassato a ' + FT_MESI[new Date().getMonth()] + '</span><b style="color:#2E7D4F">' + ftE0(sPag) + '</b></div></div>';
     h += '<div class="cc-sec">Da chiedere ora</div>' + (ora.length ? '<div class="cc-card cc-list">' + ora.map(function(a, k){ return row(a, k, 'o'); }).join('') + '</div>' : '<div class="cc-hint" style="margin-top:0">Niente da chiedere: tutto in regola.</div>');
-    h += '<div class="cc-sec">In arrivo · ' + ftE0(sDopo) + '</div>' + (dopo.length ? '<div class="cc-card cc-list">' + dopo.map(function(a, k){ return row(a, k, 'd'); }).join('') + '</div>' : '<div class="cc-hint" style="margin-top:0">Nessuna rata in arrivo.</div>');
+    h += '<div class="cc-sec">In arrivo · ' + ftE0(sDopo) + '</div>' + (dopo.length ? '<div class="cc-card cc-list">' + dopo.map(function(a, k){ return row(a, k, 'd'); }).join('') + '</div>' : '<div class="cc-hint" style="margin-top:0">Nessun acconto in arrivo.</div>');
     h += '<div class="cc-sec">Incassati a ' + FT_MESI[new Date().getMonth()] + '</div>' + (pag.length ? '<div class="cc-card cc-list">' + pag.map(function(a, k){ return row(a, k, 'p'); }).join('') + '</div>' : '<div class="cc-hint" style="margin-top:0">Ancora niente questo mese.</div>');
-    h += '<div class="cc-hint">Le rate arrivano dai preventivi accettati. Tocca un cliente per segnare cosa è arrivato.</div>';
+    h += '<div class="cc-hint">Gli acconti arrivano dai preventivi accettati. Tocca un cliente per segnare cosa è arrivato.</div>';
     box.innerHTML = h;
     var G = { o:ora, d:dopo, p:pag };
     box.querySelectorAll('[data-ins]').forEach(function(b){ b.addEventListener('click', function(){ var a = G[b.dataset.ins[0]][+b.dataset.ins.slice(1)]; if(a) ctScheda(a.c.id); }); });
@@ -20306,7 +20544,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       var lB = b.iban ? '✓ IBAN ' + qEsc(String(b.iban).replace(/\s+/g, '').slice(0, 4) + ' … ' + String(b.iban).replace(/\s+/g, '').slice(-4)) : 'Manca l’IBAN (te lo chiediamo quando serve)';
       var rk = Object.keys(Q_RATE_PRESETS).filter(function(k){ return JSON.stringify(Q_RATE_PRESETS[k]) === JSON.stringify(s.rate || []); })[0];
       var nc = (s.condizioni || []).length;
-      var lC = [rk ? rk.replace('100% fine lavori', '100% a fine lavori').replace(/\//g, ' / ') : 'Rate su misura', 'valido ' + (s.validitaGiorni || 30) + ' gg', nc + (nc === 1 ? ' clausola' : ' clausole')].join(' · ');
+      var lC = [rk ? rk.replace('100% fine lavori', '100% a fine lavori').replace(/\//g, ' / ') : 'Acconti su misura', 'valido ' + (s.validitaGiorni || 30) + ' gg', nc + (nc === 1 ? ' clausola' : ' clausole')].join(' · ');
       h += hbRow('impresa', HB_IC.impresa, 'Dati impresa', lI, miss.length ? 'ko' : 'ok', true)
         + hbRow('banca', HB_IC.banca, 'Banca per il bonifico', lB, b.iban ? 'ok' : 'ko')
         + hbRow('cond', HB_IC.cond, 'Condizioni dei preventivi', qEsc(lC), '');
@@ -20454,7 +20692,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 (function(){
   // Pagine pubbliche dei professionisti: recensione del cliente, voto dei condòmini, sito vetrina.
   // Si aprono da un link (?recensione=, ?vota=, ?impresa=) e coprono il resto dell'app.
-  var Q = new URLSearchParams(location.search), mode = Q.get('recensione') ? 'rec' : Q.get('vota') ? 'vota' : Q.get('impresa') ? 'sito' : Q.get('variante') ? 'var' : '';
+  var Q = new URLSearchParams(location.search), mode = Q.get('recensione') ? 'rec' : Q.get('vota') ? 'vota' : Q.get('impresa') ? 'sito' : Q.get('variante') ? 'var' : /^[a-f0-9]{20}$/.test(Q.get('prev') || '') ? 'prev' : '';
   if(!mode) return;
   document.documentElement.classList.add('rd-pub');
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
@@ -20560,6 +20798,107 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         }
         var si = document.getElementById('rpSi'); if(si){ si.addEventListener('click', function(){ send('si'); }); document.getElementById('rpNo').addEventListener('click', function(){ send('no'); }); }
       }).catch(function(){ fail('Connessione non riuscita.'); });
+    }
+
+    if(mode === 'prev'){
+      // Link del preventivo per il cliente: accetta e firma, poi acconti, IBAN e contabile
+      var tp = Q.get('prev');
+      var eu = function(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €'; };
+      var dIt = function(iso, long){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || '')); if(!m) return ''; var d = new Date(+m[1], +m[2] - 1, +m[3]); return long ? d.toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' }) : d.toLocaleDateString('it-IT'); };
+      var tIt = function(iso){ var d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('it-IT') + ' alle ' + d.toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' }); };
+      var UMS = { mq:'m²', ml:'m', pz:'pz', h:'ore', gg:'giorni', mc:'m³' };
+      var load = function(msg){
+        api('pub-prev', '&t=' + encodeURIComponent(tp)).then(function(x){ if(!x.ok) return fail(x.d.error); show(x.d, msg); }).catch(function(){ fail('Connessione non riuscita.'); });
+      };
+      var prevHtml = function(d){
+        var h = '<div class="rp-card rq-q"><div class="rp-sub">Preventivo n. ' + esc(d.numero) + (d.data ? ' del ' + esc(dIt(d.data)) : '') + '</div><h1>' + esc(String(d.oggetto || 'Preventivo').replace(/^Offerta per:\s*/i, '')) + '</h1>'
+          + '<p class="rp-sub">Per: ' + esc(d.cliente) + (d.cantiere ? ' · ' + esc(d.cantiere) : '') + '</p>';
+        if(d.anteprima && d.anteprima.dopo) h += '<div class="rq-ba">' + (d.anteprima.prima ? '<figure><img src="' + esc(d.anteprima.prima) + '" alt=""><figcaption>Oggi</figcaption></figure>' : '') + '<figure><img src="' + esc(d.anteprima.dopo) + '" alt=""><figcaption>Come sarà</figcaption></figure></div>';
+        h += '<div class="rq-voci">' + d.voci.map(function(v){ return '<div><span><b>' + esc(v.titolo) + '</b>' + (v.um && v.um !== 'a corpo' && v.um !== 'forfait' ? '<i>' + esc(String(v.qta).replace('.', ',')) + ' ' + esc(UMS[v.um] || v.um) + '</i>' : '') + '</span><b>' + eu(v.importo) + '</b></div>'; }).join('') + '</div>'
+          + '<div class="rq-tot">' + (d.totali.sconto ? '<div><span>Sconto</span><b>− ' + eu(d.totali.sconto) + '</b></div>' : '') + '<div><span>Imponibile</span><b>' + eu(d.totali.imponibile) + '</b></div><div><span>IVA ' + esc(d.aliquota) + '%</span><b>' + eu(d.totali.iva) + '</b></div><div class="t"><span>Totale</span><b>' + eu(d.totali.totale) + '</b></div></div>'
+          + (d.ivaNota ? '<p class="rp-sub">' + esc(d.ivaNota) + '</p>' : '') + '</div>';
+        return h;
+      };
+      var payList = function(d, conf){
+        return '<div class="rp-card"><div class="rq-sec">Pagamenti</div>' + d.acconti.map(function(a, i){
+          var st = '';
+          if(conf){
+            if(a.pagato) st = '<em class="ok">✓ Pagato' + (a.dataPag ? ' il ' + esc(dIt(a.dataPag)) : '') + '</em>';
+            else if(a.contabili.length) st = '<em class="wait">Contabile inviata il ' + esc(dIt(String(a.contabili[a.contabili.length - 1].at).slice(0, 10))) + ': in attesa di conferma</em>';
+            else st = '<em>' + (i === d._cur ? (a.quando === 'alla firma' ? 'Da versare ora' : 'Prossimo: ' + esc(a.quando)) : esc(a.quando)) + '</em>';
+          } else st = '<em>' + esc(a.quando) + '</em>';
+          return '<div class="rq-acc' + (conf && i === d._cur ? ' cur' : '') + (conf && a.pagato ? ' paid' : '') + '"><span><b>' + esc(a.d) + '</b>' + st + '</span><b>' + eu(a.importo) + '</b></div>'; }).join('') + '</div>';
+      };
+      var show = function(d, msg){
+        d._cur = -1; d.acconti.some(function(a, i){ if(!a.pagato){ d._cur = i; return true; } return false; });
+        var h = head(d.impresa.nome, d.impresa.logo) + (msg ? '<div class="rp-card rq-okb">' + msg + '</div>' : '');
+        if(d.stato === 'confermato'){
+          h += '<div class="rq-ok">✓ Preventivo confermato da ' + esc(d.impresa.nome) + (d.conf && d.conf.inizio ? '<br><span>Inizio lavori: ' + esc(dIt(d.conf.inizio, true)) + '</span>' : '') + '</div>';
+          var a = d.acconti[d._cur];
+          if(!a) h += '<div class="rp-card rq-okb"><b>✓ Tutto pagato.</b> Grazie!</div>';
+          else {
+            var caus = a.d + ' preventivo n. ' + d.numero + ' - ' + d.cliente;
+            h += '<div class="rp-card rq-pay"><div class="rq-sec">' + (a.quando === 'alla firma' ? 'Acconto da versare ora' : 'Prossimo pagamento · ' + esc(a.quando)) + '</div><div class="rq-imp">' + eu(a.importo - a.arrivati) + '</div><div class="rp-sub" style="text-align:center">' + esc(a.d) + ' (' + esc(String(a.pct).replace('.', ',')) + '%)' + (a.arrivati ? ' · già arrivati ' + eu(a.arrivati) : '') + '</div>';
+            if(d.banca) h += '<div class="rq-kv"><div><span>Intestato a</span><b>' + esc(d.banca.intestatario) + '</b></div>' + (d.banca.banca ? '<div><span>Banca</span><b>' + esc(d.banca.banca) + '</b></div>' : '') + '<div><span>IBAN</span><b class="rq-iban">' + esc(d.banca.iban) + '</b></div><div><span>Causale</span><b>' + esc(caus) + '</b></div></div>'
+              + '<button type="button" class="rp-btn alt" id="rqCp">📋 Copia IBAN e causale</button><div class="rp-sub" id="rqCpM" style="text-align:center"></div>';
+            else h += '<p class="rp-sub">' + esc(d.impresa.nome) + ' ti manderà i dati per il bonifico.</p>';
+            if(d.carta) h += '<a class="rp-btn rq-carta" href="' + esc(d.carta) + '" target="_blank" rel="noopener">💳 Paga con carta</a><div class="rp-sub" style="text-align:center">Paghi direttamente a ' + esc(d.impresa.nome) + '.</div>';
+            var inv = a.contabili.length ? a.contabili[a.contabili.length - 1] : null;
+            if(inv) h += '<div class="rq-wait">✓ Contabile inviata il ' + esc(tIt(inv.at)) + '. ' + esc(d.impresa.nome) + ' controlla in banca e la conferma.</div>';
+            h += '<label class="rq-up' + (inv ? ' alt' : '') + '" id="rqUpL">' + (inv ? '📎 Carica un’altra contabile' : '📎 Ho fatto il bonifico: carica la contabile') + '<em>foto, screenshot o PDF</em><input type="file" id="rqUp" accept="image/*,application/pdf" hidden></label><div class="rp-err" id="rqUpE"></div><div class="rp-sub" id="rqUpM" style="text-align:center">La contabile la vede solo ' + esc(d.impresa.nome) + '.</div></div>';
+          }
+          h += payList(d, true) + '<button type="button" class="rp-btn alt" id="rqSee">Vedi il preventivo</button><div id="rqPrev" hidden>' + prevHtml(d) + '</div>';
+        } else {
+          h += prevHtml(d) + payList(d, false);
+          if(d.stato === 'accettato') h += '<div class="rp-card rq-okb"><b>✓ Hai accettato il preventivo' + (d.acc ? ' il ' + esc(tIt(d.acc.at)) : '') + '.</b><p>Ora ' + esc(d.impresa.nome) + ' lo controlla e lo conferma. Poi qui trovi i dati per l’acconto.</p></div><button type="button" class="rp-btn alt" id="rqMod">✏️ Vorrei una modifica</button>';
+          else if(d.scaduto) h += '<div class="rp-card"><b>Il preventivo è scaduto il ' + esc(dIt(d.scade)) + '.</b><p>Chiedi a ' + esc(d.impresa.nome) + ' un preventivo aggiornato.</p>' + (d.impresa.telefono ? '<a class="rp-btn" href="tel:' + esc(String(d.impresa.telefono).replace(/[^\d+]/g, '')) + '">📞 Chiama</a>' : '') + '</div>';
+          else h += (d.stato === 'modifica' && d.modifica ? '<div class="rp-card rq-mb"><b>Hai chiesto una modifica il ' + esc(tIt(d.modifica.at)) + ':</b><p>“' + esc(d.modifica.testo) + '”</p><p class="rp-sub">Se ' + esc(d.impresa.nome) + ' aggiorna il preventivo, lo trovi qui.</p></div>' : '')
+            + '<div id="rqAct"><button type="button" class="rp-btn rq-go" id="rqAcc">✓ Accetto il preventivo</button><button type="button" class="rp-btn alt" id="rqMod">✏️ Vorrei una modifica</button><p class="rp-sub" style="text-align:center">Valido fino al ' + esc(dIt(d.scade)) + '</p></div>';
+        }
+        box.innerHTML = h; window.scrollTo(0, 0);
+        var g = function(id){ return document.getElementById(id); };
+        if(g('rqSee')) g('rqSee').onclick = function(){ g('rqPrev').hidden = !g('rqPrev').hidden; this.textContent = g('rqPrev').hidden ? 'Vedi il preventivo' : 'Nascondi il preventivo'; };
+        if(g('rqCp')) g('rqCp').onclick = function(){ var a = d.acconti[d._cur], t = 'IBAN: ' + d.banca.iban.replace(/\s+/g, '') + '\nIntestato a: ' + d.banca.intestatario + '\nImporto: ' + eu(a.importo - a.arrivati) + '\nCausale: ' + a.d + ' preventivo n. ' + d.numero + ' - ' + d.cliente;
+          try{ navigator.clipboard.writeText(t).then(function(){ g('rqCpM').textContent = '✓ Copiato: incollalo nell’app della tua banca.'; }, function(){ g('rqCpM').textContent = 'Tieni premuto sull’IBAN per copiarlo.'; }); }catch(e){ g('rqCpM').textContent = 'Tieni premuto sull’IBAN per copiarlo.'; } };
+        if(g('rqUp')) g('rqUp').onchange = function(){ var inp = this, e = g('rqUpE'), m = g('rqUpM'), L = g('rqUpL'); e.textContent = ''; m.textContent = 'Invio la contabile…'; L.classList.add('busy');
+          rqFile(inp).then(function(file){ return api('pub-prev', '', { t: tp, op: 'contabile', idx: d._cur, file: file }); }).then(function(r){
+            L.classList.remove('busy'); if(!r.ok){ m.textContent = ''; e.textContent = r.d.error || 'Non riuscito, riprova.'; return; }
+            load('<b>✓ Contabile inviata a ' + esc(d.impresa.nome) + '.</b><p>Quando l’impresa vede l’acconto arrivato in banca, qui comparirà “✓ Pagato”. Contabile sbagliata? Puoi caricarne un’altra.</p>');
+          }).catch(function(x){ L.classList.remove('busy'); m.textContent = ''; e.textContent = (x && x.msg) || 'Connessione non riuscita, riprova.'; inp.value = ''; }); };
+        if(g('rqMod')) g('rqMod').onclick = function(){ var A = g('rqAct') || this.parentNode, wrap = document.createElement('div');
+          wrap.className = 'rp-card'; wrap.innerHTML = '<label>Cosa vorresti cambiare?</label><textarea id="rqMt" rows="3" maxlength="800" placeholder="Per esempio: si può fare anche il bagno piccolo?"></textarea><div class="rp-err" id="rqME"></div><button type="button" class="rp-btn" id="rqMs">Invia la richiesta</button>';
+          this.replaceWith(wrap); g('rqMt').focus();
+          g('rqMs').onclick = function(){ var b = this, t = g('rqMt').value.trim(); if(t.length < 3){ g('rqME').textContent = 'Scrivi cosa vorresti cambiare.'; return; } b.disabled = true;
+            api('pub-prev', '', { t: tp, op: 'modifica', testo: t }).then(function(r){ if(!r.ok){ b.disabled = false; g('rqME').textContent = r.d.error || 'Non riuscito, riprova.'; return; } load('<b>✓ Richiesta inviata a ' + esc(d.impresa.nome) + '.</b><p>Ti risponderà presto.</p>'); }).catch(function(){ b.disabled = false; g('rqME').textContent = 'Connessione non riuscita, riprova.'; }); }; };
+        if(g('rqAcc')) g('rqAcc').onclick = function(){
+          g('rqAct').innerHTML = '<div class="rp-card"><label>Nome e cognome</label><input id="rqN" maxlength="80" autocomplete="name" value="' + esc(d.cliente) + '">'
+            + '<label class="rq-ck"><input type="checkbox" id="rqOk"> Ho letto il preventivo e le condizioni, e lo accetto.</label>'
+            + '<label>Firma qui col dito</label><canvas class="rq-sign" id="rqSg"></canvas><button type="button" class="rq-clr" id="rqClr">Cancella la firma</button>'
+            + '<div class="rp-err" id="rqE"></div><button type="button" class="rp-btn rq-go" id="rqGo">✓ Accetto e firmo</button><p class="rp-sub" style="text-align:center">Salviamo nome, data, ora e firma insieme al preventivo.</p></div>';
+          var cv = g('rqSg'), ctx, drawn = false, last = null, r0 = cv.getBoundingClientRect(), k = window.devicePixelRatio || 1;
+          cv.width = Math.round(r0.width * k); cv.height = Math.round(r0.height * k); ctx = cv.getContext('2d'); ctx.scale(k, k); ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#1D1B18';
+          var pt = function(e){ var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+          cv.addEventListener('pointerdown', function(e){ e.preventDefault(); g('rqE').textContent = ''; try{ cv.setPointerCapture(e.pointerId); }catch(er){} last = pt(e); ctx.beginPath(); ctx.arc(last.x, last.y, 1, 0, 7); ctx.fill(); });
+          cv.addEventListener('pointermove', function(e){ if(!last) return; e.preventDefault(); var p = pt(e); ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke(); last = p; drawn = true; });
+          ['pointerup', 'pointercancel', 'pointerleave'].forEach(function(n){ cv.addEventListener(n, function(){ last = null; }); });
+          g('rqClr').onclick = function(){ ctx.clearRect(0, 0, cv.width, cv.height); drawn = false; };
+          g('rqAct').scrollIntoView({ block:'start', behavior:'smooth' });
+          g('rqGo').onclick = function(){ var b = this, e = g('rqE'), n = g('rqN').value.trim();
+            if(n.length < 3){ e.textContent = 'Scrivi nome e cognome.'; return; } if(!g('rqOk').checked){ e.textContent = 'Spunta la casella per accettare.'; return; } if(!drawn){ e.textContent = 'Firma nel riquadro col dito.'; return; }
+            var out = document.createElement('canvas'); out.width = 600; out.height = Math.round(600 * cv.height / cv.width); var o = out.getContext('2d'); o.fillStyle = '#fff'; o.fillRect(0, 0, out.width, out.height); o.drawImage(cv, 0, 0, out.width, out.height);
+            b.disabled = true; e.textContent = '';
+            api('pub-prev', '', { t: tp, op: 'accetta', nome: n, ok: true, firma: out.toDataURL('image/png') }).then(function(r){ if(!r.ok){ b.disabled = false; e.textContent = r.d.error || 'Non riuscito, riprova.'; return; }
+              load('<b>✓ Grazie! Hai accettato il preventivo.</b><p>' + esc(d.impresa.nome) + ' lo controlla e lo conferma: poi qui trovi i dati per l’acconto.</p>'); }).catch(function(){ b.disabled = false; e.textContent = 'Connessione non riuscita, riprova.'; }); };
+        };
+      };
+      var rqFile = function(input){
+        var f = input.files && input.files[0]; if(!f) return Promise.reject({ msg:'Scegli un file.' });
+        if(f.type === 'application/pdf'){ if(f.size > 3000000) return Promise.reject({ msg:'Il PDF è troppo grande (massimo 3 MB): prova con uno screenshot.' }); return new Promise(function(ok, ko){ var r = new FileReader(); r.onload = function(){ ok(r.result); }; r.onerror = function(){ ko({ msg:'Non riesco a leggere il file.' }); }; r.readAsDataURL(f); }); }
+        if(!/^image\//.test(f.type)) return Promise.reject({ msg:'Carica una foto, uno screenshot o un PDF.' });
+        return new Promise(function(ok, ko){ var u = URL.createObjectURL(f), im = new Image(); im.onload = function(){ var k = Math.min(1, 1800 / Math.max(im.width, im.height)), cv = document.createElement('canvas'); cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); var g2 = cv.getContext('2d'); g2.fillStyle = '#fff'; g2.fillRect(0, 0, cv.width, cv.height); g2.drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(u); ok(cv.toDataURL('image/jpeg', 0.85)); }; im.onerror = function(){ ko({ msg:'Non riesco ad aprire la foto.' }); }; im.src = u; });
+      };
+      document.title = 'Preventivo';
+      load();
     }
 
     if(mode === 'sito'){

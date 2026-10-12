@@ -111,7 +111,7 @@ function clean(kind, d, old) {
   if (kind === "incasso") return {
     // rate del preventivo accettato: quando vanno chieste e quanto è già arrivato
     quoteId: UUID.test(String(d.quoteId || "")) ? d.quoteId : (old.quoteId || null), numero: str(d.numero, 20), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), oggetto: str(d.oggetto, 200),
-    rate: (Array.isArray(d.rate) ? d.rate : []).slice(0, 8).map(r => ({ d: str(r && r.d, 60), pct: num(r && r.pct, 100), quando: ["firma", "inizio", "meta", "fine"].includes(r && r.quando) ? r.quando : "fine", inc: num(r && r.inc, 1e8), data: date(r && r.data), soll: date(r && r.soll) })).filter(r => r.pct > 0),
+    rate: (Array.isArray(d.rate) ? d.rate : []).slice(0, 8).map((r, i) => ({ d: str(r && r.d, 60), pct: num(r && r.pct, 100), quando: ["firma", "inizio", "meta", "fine"].includes(r && r.quando) ? r.quando : "fine", inc: num(r && r.inc, 1e8), data: date(r && r.data), soll: date(r && r.soll), cont: cleanCont(r && r.cont, ((old.rate || [])[i] || {}).cont) })).filter(r => r.pct > 0),
   };
   if (kind === "commerc") return { nome: str(d.nome, 120), email: str(d.email, 120), telefono: str(d.telefono, 40) };
   if (kind === "proforma") {
@@ -136,6 +136,12 @@ function clean(kind, d, old) {
     attrezzi: (Array.isArray(d.attrezzi) ? d.attrezzi : []).slice(0, 20).map(v => ({ nome: str(v && v.nome, 60), euro: num(v && v.euro, 100000) })).filter(v => v.nome),
   };
   return {};
+}
+// contabili di un acconto: le carica solo il server (link del cliente o pk-cont); qui l'app può solo segnarle come viste
+function cleanCont(nw, old) {
+  old = Array.isArray(old) ? old : [];
+  const byU = {}; (Array.isArray(nw) ? nw : []).forEach(c => { if (c && c.u) byU[c.u] = c; });
+  return old.slice(0, 6).map(c => { const n = byU[c.u]; return n ? Object.assign({}, c, { v: !!n.v || !!c.v, rem: date(n.rem) }) : c; });
 }
 function cleanCliente(d) {
   d = obj(d);
