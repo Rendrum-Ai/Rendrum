@@ -26,7 +26,7 @@
 //        company_name text,
 //        piva text,
 //        phone text,
-//        tier text not null default 'basic' check (tier in ('basic','medium','pro')),
+//        tier text not null default 'basic' check (tier in ('basic','medium','pro','promax')),
 //        logo_url text,
 //        created_at timestamptz not null default now()
 //      );
@@ -179,8 +179,12 @@ function publicUser(row) {
     logoUrl: row.logo_url,
     subscriptionStatus: row.subscription_status || "none",
     usageMonth: row.usage_month || null,
-    usageCount: row.usage_count || 0,
-    usageLimit: (PLAN_LIMITS[row.tier] || 0),
+    usageCount: row.usage_month === monthKey() ? (row.usage_count || 0) : 0,
+    usageLimit: (PLAN_LIMITS[row.tier] || 0) + carryOver(row),
+    carry: carryOver(row),
+    yearly: row.billing_interval === "year",
+    // piani nuovi e pacchetti per tutti (su Vercel PIANI_TUTTI=1); senza, solo gli account di prova
+    pianiAll: String(process.env.PIANI_TUTTI || "").trim() === "1",
     paymentsEnabled: paymentsEnabled(),
     // generazioni senza limite (account di prova di Rendrum e quelli messi su Vercel in TEST_EMAILS / RD_UNLIMITED_EMAILS)
     unlimited: unlimitedEmail(row.email),
@@ -192,8 +196,8 @@ function publicUser(row) {
     credits: row.credits == null ? null : Number(row.credits) || 0,
     trial: row.trial_used == null ? null : {
       used: Number(row.trial_used) || 0,
-      limit: row.account_type === "privato" ? 5 : 10,
-      endsAt: row.trial_start ? new Date(Date.parse(row.trial_start) + 7 * 86400000).toISOString() : null,
+      limit: trialOf(row).n,
+      endsAt: row.trial_start ? new Date(Date.parse(row.trial_start) + trialOf(row).days * 86400000).toISOString() : null,
     },
   };
 }
@@ -201,12 +205,35 @@ function publicUser(row) {
 // Piani a pagamento (prezzi in centesimi di euro al mese, IVA esclusa) e
 // anteprime AI incluse ogni mese. Valgono sia per i privati sia per i
 // professionisti. Per cambiare un prezzo basta modificarlo qui.
+// Annuale = 11 mesi (1 mese gratis). Pro Max: anteprime anche in 4K (una in 4K conta 2).
 const PLANS = {
-  basic:  { name: "Rendrum Basic",  priceCents: 1900, images: 30 },
-  medium: { name: "Rendrum Medium", priceCents: 4900, images: 150 },
-  pro:    { name: "Rendrum Pro",    priceCents: 9900, images: 400 },
+  basic:  { name: "Rendrum Basic",   priceCents: 1390,  yearCents: 15290,  images: 10 },
+  medium: { name: "Rendrum Medium",  priceCents: 4890,  yearCents: 53790,  images: 35 },
+  pro:    { name: "Rendrum Pro",     priceCents: 8290,  yearCents: 91190,  images: 60 },
+  promax: { name: "Rendrum Pro Max", priceCents: 16490, yearCents: 181390, images: 120, k4: true },
 };
-const PLAN_LIMITS = { basic: PLANS.basic.images, medium: PLANS.medium.images, pro: PLANS.pro.images };
+const PLAN_LIMITS = {};
+Object.keys(PLANS).forEach(function (k) { PLAN_LIMITS[k] = PLANS[k].images; });
+// Pacchetti di anteprime in più: pagamento singolo, non scadono mai.
+// Professionisti: prezzi IVA esclusa. Privati: prezzi IVA inclusa.
+const PACKS = {
+  professionista: [{ n: 20, cents: 2790 }, { n: 50, cents: 6990 }, { n: 100, cents: 13990 }],
+  privato:        [{ n: 5, cents: 890 },   { n: 10, cents: 1690 }, { n: 25, cents: 4190 }],
+};
+// Prova gratuita (senza carta): professionisti 14 giorni / 10 anteprime, privati 7 giorni / 5.
+const TRIAL = { professionista: { days: 14, n: 10 }, privato: { days: 7, n: 5 } };
+function trialOf(row) { return (row && row.account_type === "privato") ? TRIAL.privato : TRIAL.professionista; }
+function monthKey(d) { return (d || new Date()).toISOString().slice(0, 7); }
+function prevMonthKey() { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - 1); return monthKey(d); }
+// Anteprime del mese scorso non usate: passano a questo mese (solo per un mese).
+// Servono le colonne bonus_month / bonus_n (supabase_piani.sql): senza, niente riporto.
+function carryOver(row) {
+  if (!row || !Object.prototype.hasOwnProperty.call(row, "bonus_n")) return 0;
+  const cur = monthKey();
+  if (row.bonus_month === cur) return Math.max(0, Number(row.bonus_n) || 0);
+  if (row.usage_month === prevMonthKey()) return Math.max(0, (PLAN_LIMITS[row.tier] || 0) - (Number(row.usage_count) || 0));
+  return 0;
+}
 
 // I pagamenti sono attivi solo quando su Vercel c'è STRIPE_SECRET_KEY: finché
 // manca, l'app continua a funzionare come prima (anteprime libere).
@@ -299,6 +326,12 @@ module.exports = {
   publicUser,
   PLANS,
   PLAN_LIMITS,
+  PACKS,
+  TRIAL,
+  trialOf,
+  monthKey,
+  prevMonthKey,
+  carryOver,
   paymentsEnabled,
   stripeRequest,
   currentAccount,

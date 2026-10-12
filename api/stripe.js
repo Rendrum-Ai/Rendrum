@@ -1,7 +1,10 @@
 // api/stripe.js
 // Tutte le funzioni dei pagamenti in un unico file (così su Vercel conta come
 // una sola funzione): /api/stripe?action=checkout | portal | webhook
-const { PLANS, paymentsEnabled, stripeRequest, currentAccount, supabaseRequest } = require("./_auth-lib");
+const { PLANS, PACKS, paymentsEnabled, stripeRequest, currentAccount, supabaseRequest } = require("./_auth-lib");
+// Prezzo del piano: mensile oppure annuale (11 mesi).
+function planCents(plan, yearly) { return yearly ? plan.yearCents : plan.priceCents; }
+function packsFor(acc) { return PACKS[(acc && acc.account_type) === "privato" ? "privato" : "professionista"]; }
 
 // ---------- codici sconto ----------
 // I codici si creano nel pannello di Stripe (Prodotti → Coupon → Codici promozionali).
@@ -19,7 +22,7 @@ function discounted(cents, c) {
   return cents;
 }
 // Restituisce { promo } se il codice è valido per questo piano, altrimenti { error }.
-async function findPromo(code, tier, acc) {
+async function findPromo(code, tier, acc, yearly) {
   code = String(code || "").trim();
   if (!code) return { error: "Scrivi il codice." };
   if (!/^[A-Za-z0-9_-]{2,40}$/.test(code)) return { error: "Codice non valido." };
@@ -31,17 +34,20 @@ async function findPromo(code, tier, acc) {
   if (pc.max_redemptions && pc.times_redeemed >= pc.max_redemptions) return { error: "Questo codice è già stato usato da tutti quelli previsti." };
   if (pc.restrictions && pc.restrictions.first_time_transaction && acc && acc.stripe_customer_id) return { error: "Questo codice vale solo per il primo abbonamento." };
   const plan = PLANS[tier], c = pc.coupon;
-  if (pc.restrictions && pc.restrictions.minimum_amount && plan.priceCents < pc.restrictions.minimum_amount) return { error: "Questo codice non vale per questo piano." };
-  return { promo: { id: pc.id, code: pc.code, label: promoLabel(c), finalCents: discounted(plan.priceCents, c), duration: c.duration, months: c.duration_in_months || 0 } };
+  if (pc.restrictions && pc.restrictions.minimum_amount && planCents(plan, yearly) < pc.restrictions.minimum_amount) return { error: "Questo codice non vale per questo piano." };
+  return { promo: { id: pc.id, code: pc.code, label: promoLabel(c), finalCents: discounted(planCents(plan, yearly), c), duration: c.duration, months: c.duration_in_months || 0 } };
 }
 async function offer(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Usa una richiesta POST" });
   const body = req.body || {}, acc = await currentAccount(req).catch(() => null);
   const tier = PLANS[body.tier] ? body.tier : (acc && PLANS[acc.tier] ? acc.tier : "basic"), plan = PLANS[tier];
-  const out = { tier, plan: { name: plan.name, priceCents: plan.priceCents, images: plan.images }, promoOk: !NO_PROMO_TIERS.includes(tier) && paymentsEnabled() };
+  const yearly = !!body.yearly;
+  const out = { tier, yearly, plan: { name: plan.name, priceCents: plan.priceCents, yearCents: plan.yearCents, images: plan.images, k4: !!plan.k4 }, promoOk: !NO_PROMO_TIERS.includes(tier) && paymentsEnabled(),
+    plans: Object.keys(PLANS).map(function (k) { return { tier: k, name: PLANS[k].name, priceCents: PLANS[k].priceCents, yearCents: PLANS[k].yearCents, images: PLANS[k].images, k4: !!PLANS[k].k4 }; }),
+    packs: packsFor(acc), packsVat: (acc && acc.account_type) === "privato" ? "inclusa" : "esclusa" };
   if (body.code) {
     if (!paymentsEnabled()) return res.status(503).json(Object.assign(out, { error: "I pagamenti non sono ancora attivi: i codici si potranno usare appena partono." }));
-    const f = await findPromo(body.code, tier, acc);
+    const f = await findPromo(body.code, tier, acc, yearly);
     if (f.error) return res.status(400).json(Object.assign(out, { error: f.error }));
     out.promo = f.promo;
   }
@@ -68,6 +74,7 @@ async function checkout(req, res) {
     const body = req.body || {};
     const tier = PLANS[body.tier] ? body.tier : (PLANS[acc.tier] ? acc.tier : "basic");
     const plan = PLANS[tier];
+    const yearly = !!body.yearly, interval = yearly ? "year" : "month";
     const origin = (req.headers["x-forwarded-proto"] || "https") + "://" + (req.headers["x-forwarded-host"] || req.headers.host);
 
     const params = {
@@ -79,16 +86,16 @@ async function checkout(req, res) {
       tax_id_collection: { enabled: "true" },
       locale: "it",
       line_items: { 0: { quantity: 1, price_data: {
-        currency: "eur", unit_amount: plan.priceCents, tax_behavior: "exclusive",
-        recurring: { interval: "month" },
-        product_data: { name: plan.name + " – " + plan.images + " anteprime AI al mese" },
+        currency: "eur", unit_amount: planCents(plan, yearly), tax_behavior: "exclusive",
+        recurring: { interval: interval },
+        product_data: { name: plan.name + (yearly ? " annuale" : "") + " – " + plan.images + " anteprime AI al mese" + (plan.k4 ? ", anche in 4K" : "") },
       } } },
-      metadata: { account_id: acc.id, tier: tier },
-      subscription_data: { metadata: { account_id: acc.id, tier: tier } },
+      metadata: { account_id: acc.id, tier: tier, interval: interval },
+      subscription_data: { metadata: { account_id: acc.id, tier: tier, interval: interval } },
     };
     // codice sconto: verificato da noi; senza codice, si può scrivere anche sulla pagina Stripe (non per i piani senza sconti)
     if (body.code) {
-      const f = await findPromo(body.code, tier, acc);
+      const f = await findPromo(body.code, tier, acc, yearly);
       if (f.error) return res.status(400).json({ error: f.error });
       params.discounts = { 0: { promotion_code: f.promo.id } };
       params.metadata.promo = f.promo.code; params.subscription_data.metadata.promo = f.promo.code;
@@ -137,6 +144,92 @@ async function invitoCheckout(req, res) {
   const r = await stripeRequest("POST", "/checkout/sessions", params);
   if (!r.ok || !r.data || !r.data.url) { console.error("stripe invito", r.data); return res.status(502).json({ error: "Il pagamento non è partito. Riprova tra poco." }); }
   return res.status(200).json({ url: r.data.url });
+}
+
+// ---------- cambio piano con abbonamento già attivo ----------
+// Verso l'alto (o cambio mensile/annuale): subito, Stripe fa pagare solo la differenza.
+// Verso il basso: il prezzo nuovo parte dal prossimo rinnovo, fino ad allora resta il piano di adesso.
+const RANK = { basic: 1, medium: 2, pro: 3, promax: 4 };
+async function changePlan(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ error: "Usa una richiesta POST" });
+  if (!paymentsEnabled()) return res.status(503).json({ error: "Pagamenti non ancora attivi." });
+  const acc = await currentAccount(req).catch(() => null);
+  if (!acc) return res.status(401).json({ error: "Accedi prima." });
+  if (!acc.stripe_subscription_id || !["active", "trialing"].includes(acc.subscription_status)) return res.status(400).json({ error: "Non hai un abbonamento attivo: scegli il piano e paga." });
+  const body = req.body || {}, tier = body.tier, yearly = !!body.yearly;
+  if (!PLANS[tier]) return res.status(400).json({ error: "Piano non valido." });
+  const sr = await stripeRequest("GET", "/subscriptions/" + encodeURIComponent(acc.stripe_subscription_id));
+  if (!sr.ok || !sr.data) return res.status(502).json({ error: "Non riesco a leggere l’abbonamento. Riprova tra poco." });
+  const sub = sr.data, item = sub.items && sub.items.data && sub.items.data[0];
+  if (!item) return res.status(502).json({ error: "Abbonamento senza piano: scrivi a info@rendrum.com." });
+  const curTier = (sub.metadata && sub.metadata.tier) || acc.tier, curYear = item.price && item.price.recurring && item.price.recurring.interval === "year";
+  if (curTier === tier && curYear === yearly) return res.status(400).json({ error: "È già il tuo piano." });
+  const plan = PLANS[tier];
+  const pr = await stripeRequest("POST", "/prices", { currency: "eur", unit_amount: planCents(plan, yearly), tax_behavior: "exclusive", recurring: { interval: yearly ? "year" : "month" },
+    product_data: { name: plan.name + (yearly ? " annuale" : "") + " – " + plan.images + " anteprime AI al mese" + (plan.k4 ? ", anche in 4K" : "") } });
+  if (!pr.ok || !pr.data || !pr.data.id) { console.error("stripe price", pr.data); return res.status(502).json({ error: "Stripe non ha accettato il cambio. Riprova tra poco." }); }
+  const down = curYear === yearly && (RANK[tier] || 0) < (RANK[curTier] || 0);
+  const params = { items: { 0: { id: item.id, price: pr.data.id } }, proration_behavior: down ? "none" : "always_invoice",
+    metadata: down ? { tier: curTier, next_tier: tier, interval: yearly ? "year" : "month" } : { tier: tier, next_tier: "", interval: yearly ? "year" : "month" } };
+  const up = await stripeRequest("POST", "/subscriptions/" + encodeURIComponent(sub.id), params);
+  if (!up.ok) { console.error("stripe cambio", up.data); return res.status(402).json({ error: (up.data && up.data.error && up.data.error.code === "card_declined") ? "La carta non ha accettato il pagamento della differenza." : "Il cambio non è andato a buon fine. Riprova tra poco." }); }
+  if (!down) await updateAccount("id=eq." + encodeURIComponent(acc.id), { tier: tier });
+  return res.status(200).json({ ok: true, tier: down ? curTier : tier, nextTier: down ? tier : null, when: down ? "rinnovo" : "subito" });
+}
+
+// ---------- pacchetti di anteprime (professionisti e privati) ----------
+// Pagamento singolo. Le anteprime le aggiunge SOLO il webhook, quando Stripe conferma il pagamento.
+async function packCheckout(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ error: "Usa una richiesta POST" });
+  if (!paymentsEnabled()) return res.status(503).json({ error: "I pagamenti non sono ancora attivi: riprova più tardi." });
+  const acc = await currentAccount(req).catch(() => null);
+  if (!acc) return res.status(401).json({ error: "Accedi prima di comprare le anteprime." });
+  const n = Number((req.body || {}).n), pk = packsFor(acc).find(function (p) { return p.n === n; });
+  if (!pk) return res.status(400).json({ error: "Pacchetto non valido." });
+  const privato = acc.account_type === "privato";
+  const origin = (req.headers["x-forwarded-proto"] || "https") + "://" + (req.headers["x-forwarded-host"] || req.headers.host);
+  const params = {
+    mode: "payment",
+    client_reference_id: acc.id,
+    success_url: origin + "/?pacchetto=ok",
+    cancel_url: origin + "/?pacchetto=annullato",
+    locale: "it",
+    line_items: { 0: { quantity: 1, price_data: { currency: "eur", unit_amount: pk.cents, tax_behavior: privato ? "inclusive" : "exclusive", product_data: { name: pk.n + " anteprime Rendrum (non scadono)" } } } },
+    metadata: { account_id: acc.id, pacchetto: String(pk.n) },
+    payment_intent_data: { metadata: { account_id: acc.id, pacchetto: String(pk.n) } },
+  };
+  if (!privato) { params.billing_address_collection = "required"; params.tax_id_collection = { enabled: "true" }; }
+  if ((process.env.STRIPE_AUTOMATIC_TAX || "").trim() === "1") params.automatic_tax = { enabled: "true" };
+  if (acc.stripe_customer_id) { params.customer = acc.stripe_customer_id; if (!privato) params.customer_update = { address: "auto", name: "auto" }; }
+  else { params.customer_email = acc.email; params.customer_creation = "always"; }
+  const r = await stripeRequest("POST", "/checkout/sessions", params);
+  if (!r.ok || !r.data || !r.data.url) { console.error("stripe pacchetto", r.data); return res.status(502).json({ error: "Il pagamento non è partito. Riprova tra poco." }); }
+  return res.status(200).json({ url: r.data.url });
+}
+// Aggiunge le anteprime una sola volta per pagamento: la ricevuta sta in pro_extra (kind "pacchetto", token = id del pagamento).
+async function addPackCredits(accountId, sessionId, n) {
+  const tok = String(sessionId).replace(/[^A-Za-z0-9_]/g, "").slice(0, 120);
+  const g = await supabaseRequest("/pro_extra?kind=eq.pacchetto&token=eq." + tok + "&select=id,data&limit=1", { method: "GET" }).catch(() => ({ ok: false }));
+  if (!g.ok) return false;
+  let rec = Array.isArray(g.data) && g.data[0];
+  if (rec && rec.data && rec.data.fatto) return "dup";
+  if (!rec) {
+    const id = require("crypto").randomUUID();
+    const ins = await supabaseRequest("/pro_extra", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify({ id: id, account_id: accountId, kind: "pacchetto", token: tok, data: { n: n, fatto: false, at: new Date().toISOString() } }) }).catch(() => ({ ok: false }));
+    if (!ins.ok) return ins.status === 409 ? "dup" : false;   // già in lavorazione da un'altra chiamata
+    rec = { id: id };
+  }
+  for (let i = 0; i < 5; i++) {
+    const r = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(accountId) + "&select=credits", { method: "GET" }).catch(() => ({ ok: false }));
+    const row = r.ok && Array.isArray(r.data) && r.data[0]; if (!row) return false;
+    const c = Number(row.credits) || 0;
+    const p = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(accountId) + "&credits=eq." + c, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ credits: c + n }) }).catch(() => ({ ok: false }));
+    if (p.ok && Array.isArray(p.data) && p.data.length) {
+      await supabaseRequest("/pro_extra?id=eq." + rec.id, { method: "PATCH", body: JSON.stringify({ data: { n: n, fatto: true, at: new Date().toISOString() } }) }).catch(() => {});
+      return "ok";
+    }
+  }
+  return false;
 }
 
 // api/stripe-portal.js
@@ -188,6 +281,16 @@ async function webhook(req, res) {
       if (!ok) return res.status(500).json({ error: "invito non aggiornato" });   // Stripe riproverà
       return res.status(200).json({ received: true, added: ok });
     }
+    // Pacchetto di anteprime comprato dall'artigiano o dal privato
+    if (type === "checkout.session.completed" && obj.mode === "payment" && obj.metadata && obj.metadata.pacchetto) {
+      if (obj.payment_status !== "paid") return res.status(200).json({ ignored: "non pagato" });
+      const accId = obj.metadata.account_id || obj.client_reference_id, n = Number(obj.metadata.pacchetto);
+      const valid = Object.keys(PACKS).some(function (k) { return PACKS[k].some(function (p) { return p.n === n; }); });
+      if (!accId || !valid) return res.status(200).json({ ignored: "pacchetto non valido" });
+      const ok = await addPackCredits(accId, obj.id, n);
+      if (!ok) return res.status(500).json({ error: "anteprime non aggiunte" });   // Stripe riproverà
+      return res.status(200).json({ received: true, added: ok });
+    }
     // Da quale abbonamento arriva l'evento?
     let subId = null, fallbackAccount = null;
     if (type === "checkout.session.completed" && obj.mode === "subscription") {
@@ -227,6 +330,11 @@ async function webhook(req, res) {
       return res.status(200).json({ ignored: "altro abbonamento attivo" });
     }
     const item = sub.items && sub.items.data && sub.items.data[0];
+    // Piano più piccolo scelto prima: parte al rinnovo pagato.
+    if (type === "invoice.paid" && obj.billing_reason === "subscription_cycle" && PLANS[meta.next_tier]) {
+      await stripeRequest("POST", "/subscriptions/" + encodeURIComponent(sub.id), { metadata: { tier: meta.next_tier, next_tier: "" } }).catch(function () {});
+      meta.tier = meta.next_tier;
+    }
     const periodEnd = sub.current_period_end || (item && item.current_period_end);
     const fields = {
       stripe_customer_id: sub.customer,
@@ -236,6 +344,9 @@ async function webhook(req, res) {
     };
     if (PLANS[meta.tier] && liveStatuses.includes(sub.status)) fields.tier = meta.tier;
     await updateAccount("id=eq." + encodeURIComponent(acc.id), fields);
+    // mensile o annuale (colonna billing_interval di supabase_piani.sql: se manca, si ignora)
+    const iv = item && item.price && item.price.recurring && item.price.recurring.interval;
+    if (iv) await updateAccount("id=eq." + encodeURIComponent(acc.id), { billing_interval: iv }).catch(function () {});
     return res.status(200).json({ received: true });
   } catch (err) {
     console.error("webhook", err);
@@ -249,7 +360,9 @@ module.exports = async function handler(req, res) {
   if (action === "offer") return offer(req, res);
   if (action === "portal") return portal(req, res);
   if (action === "invito-checkout") return invitoCheckout(req, res);
+  if (action === "pack-checkout") return packCheckout(req, res);
+  if (action === "change-plan") return changePlan(req, res);
   if (action === "webhook") return webhook(req, res);
   return res.status(404).json({ error: "Azione sconosciuta" });
 };
-module.exports._test = { findPromo, promoLabel, discounted };
+module.exports._test = { findPromo, promoLabel, discounted, addPackCredits, packsFor };

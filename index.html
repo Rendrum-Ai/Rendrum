@@ -2158,6 +2158,39 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   .rq-sign{ display:block; width:100%; height:150px; background:#fff; border:1.5px dashed var(--line, #ccc); border-radius:12px; touch-action:none; }
   .rq-clr{ border:none; background:none; color:var(--ink-soft, #666); font-family:inherit; font-size:13px; text-decoration:underline; padding:6px 0; cursor:pointer; }
 </style>
+<style>
+  /* Piani e pacchetti */
+  #proTierRow{ display:grid; grid-template-columns:1fr 1fr; }
+  .pn-me{ background:var(--accent-soft, #F3E2D5); border-radius:14px; padding:11px 13px; margin:0 0 10px; font-size:13.5px; line-height:1.35; color:#5a3a26; }
+  .pn-me b{ display:block; color:#1D1B18; font-size:14.5px; }
+  .pn-seg{ display:grid; grid-template-columns:1fr 1fr; background:#EDE7DF; border-radius:12px; padding:3px; margin:0 0 10px; }
+  .pn-seg button{ border:none; background:none; border-radius:10px; padding:9px 6px; font-family:inherit; font-weight:800; font-size:14px; color:#6b5f55; cursor:pointer; }
+  .pn-seg button.on{ background:#fff; color:#1D1B18; box-shadow:0 1px 4px rgba(0,0,0,.12); }
+  .pn-mini{ display:flex; width:100%; align-items:center; justify-content:space-between; gap:10px; text-align:left; border:1.5px solid var(--line, #E2DBD2); background:var(--surface, #fff); border-radius:14px; padding:11px 13px; margin:0 0 8px; font-family:inherit; color:#1D1B18; cursor:pointer; }
+  .pn-mini.on{ border-color:#C8692E; background:#FBF1EA; box-shadow:0 0 0 1px #C8692E inset; }
+  .pn-mini b{ display:block; font-size:15.5px; } .pn-mini b u{ text-decoration:none; font-size:11px; font-weight:800; color:#2E7D4F; background:#E3F3E9; border-radius:8px; padding:1px 6px; margin-left:4px; vertical-align:2px; }
+  .pn-mini em{ display:block; font-style:normal; font-size:12.5px; color:#6b5f55; line-height:1.3; margin-top:2px; }
+  .pn-mini strong{ flex:none; font-size:16px; text-align:right; } .pn-mini strong small{ display:block; font-size:11px; font-weight:600; color:#6b5f55; }
+  .pn-al{ background:#C8692E; color:#fff; border-radius:16px; padding:13px 14px; margin:0 0 10px; }
+  .pn-al.dk{ background:#5a3a26; }
+  .pn-al small{ display:block; font-size:10.5px; font-weight:800; letter-spacing:.08em; opacity:.85; }
+  .pn-al b{ display:block; font-size:16px; margin:2px 0; } .pn-al span{ font-size:13px; opacity:.92; line-height:1.35; }
+  .pn-4k{ display:flex; gap:10px; align-items:flex-start; border:1.5px solid var(--line, #E2DBD2); border-radius:12px; padding:10px 12px; margin:0 0 10px; cursor:pointer; background:var(--surface, #fff); }
+  .pn-4k[hidden]{ display:none; }
+  .pn-4k input{ width:20px; height:20px; margin:1px 0 0; flex:none; accent-color:#C8692E; }
+  .pn-4k b{ display:block; font-size:14.5px; color:var(--ink, #1D1B18); } .pn-4k em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft, #6b5f55); }
+</style>
+<style>
+/* Finestre a vetro smerigliato (livello «Leggera») — solo account di prova (html.rd-vetro) — approvato 12/10 */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+html.rd-vetro body .pro-projects-card,html.rd-vetro body .pro-auth-card,html.rd-vetro body .rd-sheet-in,html.rd-vetro body .v3ci2{background:rgba(255,253,249,.86)!important;background-image:none!important;-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,.65)!important;box-shadow:0 24px 60px -18px rgba(43,20,8,.45),inset 0 1px 0 rgba(255,255,255,.8)!important}
+html.rd-vetro body .rd-sheet-in > div{background:transparent!important}
+html.rd-vetro body .pro-projects-modal.open,html.rd-vetro body #rdAltro.rd-sheet.open,html.rd-vetro body #v3C.v3cam{background:rgba(29,20,12,.30)!important}
+html.rd-vetro body .pro-projects-card .ct-card,html.rd-vetro body .pro-projects-card input,html.rd-vetro body .pro-auth-card input,html.rd-vetro body .pro-projects-card button:not(.pro-auth-submit):not(.pro-projects-close),html.rd-vetro body .rd-sheet-in button{background-color:rgba(255,255,255,.55)!important}
+html.rd-vetro body .rd-sheet-in button.rx-co,html.rd-vetro body .rd-sheet-in .rx-co{background:#2B1408!important;background-color:#2B1408!important}
+html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
+}
+</style>
 </head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -2275,12 +2308,13 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       <div class="field"><label for="paRegPassword" data-i18n="proPasswordLabel">Password</label><input id="paRegPassword" type="password" autocomplete="new-password"></div>
       <div class="pro-auth-tier-label" data-i18n="proTierLabel">Scegli il piano</div>
       <div class="pro-auth-tier-row" id="proTierRow">
-        <button type="button" class="pro-auth-tier active" data-tier="basic"><span class="t-name">Basic</span><span class="t-desc">19 €/mese · 30 foto</span></button>
-        <button type="button" class="pro-auth-tier" data-tier="medium"><span class="t-name">Medium</span><span class="t-desc">49 €/mese · 150 foto</span></button>
-        <button type="button" class="pro-auth-tier" data-tier="pro"><span class="t-name">Pro</span><span class="t-desc">99 €/mese · 400 foto</span></button>
+        <button type="button" class="pro-auth-tier active" data-tier="basic"><span class="t-name">Basic</span><span class="t-desc">13,90 €/mese · 10 anteprime</span></button>
+        <button type="button" class="pro-auth-tier" data-tier="medium"><span class="t-name">Medium</span><span class="t-desc">48,90 €/mese · 35 anteprime</span></button>
+        <button type="button" class="pro-auth-tier" data-tier="pro"><span class="t-name">Pro</span><span class="t-desc">82,90 €/mese · 60 anteprime</span></button>
+        <button type="button" class="pro-auth-tier" data-tier="promax"><span class="t-name">Pro Max</span><span class="t-desc">164,90 €/mese · 120 anche 4K</span></button>
       </div>
       <div class="reg-free" id="regFreeNote"></div>
-      <div class="pro-auth-tier-label" id="proPriceNote" style="font-size:11.5px;font-weight:500;margin-top:-4px">Prezzi IVA esclusa · rinnovo mensile · disdici quando vuoi</div>
+      <div class="pro-auth-tier-label" id="proPriceNote" style="font-size:11.5px;font-weight:500;margin-top:-4px">Prezzi IVA esclusa · rinnovo mensile o annuale (1 mese gratis) · disdici quando vuoi</div>
       <div class="pro-auth-error" id="paRegError"></div>
       <label class="consent-row"><input type="checkbox" id="paRegConsent"><span><span data-i18n="consentRegText">Ho letto l'informativa privacy e acconsento al trattamento dei miei dati per la gestione dell'account.</span> <button type="button" class="privacy-link" data-open-privacy data-i18n="privacyLinkText">Leggi l'informativa</button></span></label>
       <button type="button" class="pro-auth-submit" id="paRegSubmit" data-i18n="proRegSubmit">Crea account</button>
@@ -11160,7 +11194,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         posaRefImage: posaRefImage,
         materialSampleImage: buildMaterialSample(),
         qualita: RD_TEST_Q || null,
-        risoluzione: (RD_TEST_Q && RD_TEST_RES) || null,
+        risoluzione: (RD_TEST_Q && RD_TEST_RES) || (window.rdPm4k && window.rdPm4k()) || null,
         motore: (RD_TEST_Q && RD_TEST_MOTORE) || null,
         stile: (RD_TEST_Q && RD_TEST_STILE) || null,
         lavoriPrecedenti: layers.map(function(l){ return l.title; }),
@@ -11289,6 +11323,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         if(err && err.code === 'invito_pay' && window.invBuy){ setTimeout(window.invBuy, 50); }
         else if(err && err.code === 'login_required' && !window.RD_INV_T){ proAuthOpen(); proSwitchTab('register'); }
         else if(err && err.code === 'subscription_required' && !IS_APP){ startCheckout(); }
+        else if(err && /^(quota_exceeded|quota_4k|trial_over|trial_expired)$/.test(err.code || '') && !IS_APP && window.rdPianiOn && window.rdPianiOn()){ setTimeout(function(){ window.rdPackSheet(err.code); }, 50); }
         statusEl.classList.add('error');
         var errMsg = err && err.message;
         if(IS_APP && err && err.code === 'subscription_required') errMsg = APP_NO_SUB;
@@ -13242,6 +13277,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       pbar.querySelectorAll('[data-priv]').forEach(function(b){ b.hidden = isProAcc; });
       pbar.querySelectorAll('[data-tester]').forEach(function(b){ b.hidden = !(isProAcc && rdIsTester()); });
       if(window.__rdV2Ready) rdV2Sync();
+      try{ if(window.pnSync) window.pnSync(); }catch(e){}
+      try{ document.documentElement.classList.toggle('rd-vetro', rdIsStaff()); }catch(e){}
       if(isProAcc && typeof ldRefreshBadge === 'function') ldRefreshBadge();
       if(proAccount && typeof tfPending !== 'undefined' && tfPending){ tfPending = false; setTimeout(function(){ tfOpen(); }, 300); }
     }
@@ -13251,7 +13288,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       badge.style.display = 'flex';
       document.getElementById('proBadgeName').textContent = proAccount.companyName || proAccount.email;
       try{ document.getElementById('rdAvatar').textContent = String(proAccount.companyName || proAccount.email || '?').trim().charAt(0).toUpperCase(); document.getElementById('rdMenuProfile').style.display = (proAccount.accountType && proAccount.accountType !== 'privato') ? '' : 'none'; }catch(e){}
-      var tierLabel = proAccount.tier ? (proAccount.tier.charAt(0).toUpperCase()+proAccount.tier.slice(1)) : '';
+      var tierLabel = proAccount.tier ? (window.rdTierName ? window.rdTierName(proAccount.tier) : proAccount.tier) : '';
       var typeLabel = proAccount.accountType === 'privato' ? tr({it:'Privato',en:'Homeowner'}) : tr({it:'Professionista',en:'Professional'});
       var subTxt = !proAccount.paymentsEnabled ? '' : (subActive() ? ' · ' + (proAccount.usageCount||0) + '/' + (proAccount.usageLimit||0) + ' foto' : ' · non attivo');
       document.getElementById('proBadgeTier').textContent = typeLabel + ' · ' + (LANG==='en' ? 'Plan ' : 'Piano ') + tierLabel + subTxt;
@@ -13376,6 +13413,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       e.preventDefault(); e.stopImmediatePropagation();
       proPendingClick = t.id;
       if(IS_APP) alert(APP_NO_SUB);
+      else if(window.rdPianiOn && window.rdPianiOn()) window.rdPackSheet('fine');
       else if(confirm('Per usare Rendrum serve un abbonamento attivo. Vuoi attivarlo adesso?')) startCheckout();
     }
   }, true);
@@ -16116,7 +16154,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var RX_PLAN = ['', 'Base', 'Medio', 'Pro', 'Max'];
   var RX_NEED = { agenda:2, lavori:2, recensioni:2, sito:3, stat:3, voto:3, dominio:4, assist:3 };
   function rxOn(){ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsTester()); }
-  function rxHas(f){ if(rdIsTester()) return true; var r = RX_RANK[(proAccount && proAccount.tier) || 'basic'] || 1; return r >= (RX_NEED[f] || 1); }
+  function rxHas(f){ var _ph = window.rdPianiHas ? window.rdPianiHas(f) : null; if(_ph !== null) return _ph; if(rdIsTester()) return true; var r = RX_RANK[(proAccount && proAccount.tier) || 'basic'] || 1; return r >= (RX_NEED[f] || 1); }
   function rxList(kind){ return qApi('px-list', 'GET', null, '&kind=' + kind).then(function(x){ if(!x.ok) throw x; rx.cache[kind] = x.d.items || []; return rx.cache[kind]; }); }
   function rxSave(kind, data, id){ return qApi('px-save', 'POST', { id: id || null, kind: kind, data: data }).then(function(x){ if(!x.ok) throw x; return x.d.item; }); }
   function rxDel(id){ return qApi('px-delete', 'POST', { id: id }).then(function(x){ if(!x.ok) throw x; return true; }); }
@@ -16916,7 +16954,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var pl = null;
   function plNum(n){ return (Math.round((+n || 0) * 100) / 100).toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
   function plSvg(d){ return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
-  function plOpen(ctx){ pl = { st:'carica', data:null, ed:{}, sel:{}, on:{}, open:'', ctx: ctx === 'so' ? 'so' : 'qw' };
+  function plOpen(ctx){ if(window.rdNeed && !window.rdNeed('planimetria')) return; pl = { st:'carica', data:null, ed:{}, sel:{}, on:{}, open:'', ctx: ctx === 'so' ? 'so' : 'qw' };
     if(pl.ctx === 'so'){ plRender(plBox()); plTop(); return; }
     qw.pl = 1; qwRender(); qScrollTop(); }
   function plClose(){ var so1 = pl && pl.ctx === 'so'; pl = null;
@@ -17265,6 +17303,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     });
   }
   function qwMail(q, go){
+    if(window.rdNeed && !window.rdNeed('mail')) return;
     qwMailCss(); qwMailClose();
     var imp = qwMailImp(), subj0 = qwMailSubj();
     var d = document.createElement('div'); d.className = 'qm-dim'; d.id = 'qmDim'; d.onclick = qwMailClose; document.body.appendChild(d);
@@ -17922,6 +17961,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function ccChipsBind(box, fn){ box.querySelectorAll('[data-ccg]').forEach(function(g){ g.addEventListener('click', function(e){ var b = e.target.closest('[data-v]'); if(!b) return; g.querySelectorAll('[data-v]').forEach(function(x){ x.classList.toggle('on', x === b); }); fn(g.dataset.ccg, b.dataset.v); }); }); }
   // ----- riquadro nella scheda del cantiere -----
   function ctCostiBlock(c, box){
+    if(window.rdHasF && !window.rdHasF('costi')) return;
     var cs = (c.g.costo || []).slice().sort(function(a, b){ return String(b.data.data || b.createdAt).localeCompare(String(a.data.data || a.createdAt)); });
     if(c.fase < 2 && !cs.length) return;
     if(typeof tmOwnerOn === 'function' && tmOwnerOn() && !TM.ok && !c._tmw){ c._tmw = 1; tmLoad().then(function(){ var s = document.getElementById('ccAdd'); if(s && document.body.contains(s)) ctScheda(c.id); }).catch(function(){}); }
@@ -19418,6 +19458,181 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }
   }
   window.rdPlanSheet = rdPlanSheet;
+  // ---------- Piani nuovi (Basic, Medium, Pro, Pro Max), annuale, pacchetti e funzioni per piano ----------
+  // Per ora solo account di prova; per tutti: su Vercel PIANI_TUTTI=1.
+  // Prova del blocco funzioni (solo account di prova): rendrum.com/?piano=basic|medium|pro|promax, ?piano=off per uscire.
+  var PN_RANK = { basic:1, medium:2, pro:3, promax:4 }, PN_KEYS = ['', 'basic', 'medium', 'pro', 'promax'];
+  var PN_NAME = { basic:'Basic', medium:'Medium', pro:'Pro', promax:'Pro Max' };
+  var PN_EM = { basic:'preventivi · link al cliente · sopralluogo', medium:'cantieri · agenda · incassi', pro:'costi cantiere · squadra fino a 3 · planimetria', promax:'anche in 4K · squadra senza limiti' };
+  var PN_NEED = { agenda:2, lavori:2, clienti:2, cantieri:2, cosa:2, incassi:2, fatture:2, soldi:2, mail:2, invito:2,
+    recensioni:3, sito:3, dominio:3, stat:3, materiali:3, squadra:3, planimetria:3, costi:3, voto:4, assist:4 };
+  var PN_WHAT = {
+    agenda:['L’agenda', 'Appuntamenti, sopralluoghi e lavori del giorno, in un posto solo.'],
+    lavori:['I lavori in più', 'Il cliente conferma dal telefono i lavori aggiunti in cantiere.'],
+    clienti:['La rubrica clienti', 'Tutti i tuoi clienti con preventivi, cantieri e pagamenti.'],
+    cantieri:['I cantieri', 'Ogni lavoro con foto, diario, date e acconti.'],
+    cosa:['I cantieri', 'Ogni lavoro con foto, diario, date e acconti.'],
+    incassi:['Gli incassi', 'Sai sempre quali acconti chiedere e quali sono arrivati.'],
+    fatture:['Le proforma', 'Proforma di acconti e saldi in un tocco.'],
+    soldi:['Incassi e proforma', 'Sai sempre quali acconti chiedere e quali sono arrivati.'],
+    mail:['Il preventivo per email', 'Il PDF parte già allegato, con il tuo nome.'],
+    invito:['Fai provare l’anteprima al cliente', 'Mandi un link: il cliente fa la foto e vede il lavoro finito.'],
+    recensioni:['Le recensioni', 'I clienti lasciano la recensione e finisce sul tuo sito.'],
+    sito:['Il sito vetrina', 'La pagina della tua impresa con lavori e recensioni.'],
+    dominio:['Il tuo dominio', 'Il sito vetrina con il nome della tua impresa.'],
+    stat:['L’andamento', 'Quanto hai lavorato e incassato, mese per mese.'],
+    materiali:['Materiali e ordini', 'Listino con le rese, calcolo del cantiere e ordini ai fornitori.'],
+    squadra:['La squadra', 'Affida i cantieri ai tuoi collaboratori: diario, foto e ore dalla loro app.'],
+    planimetria:['Le misure dal disegno', 'Carichi la planimetria e Rendrum legge le misure.'],
+    costi:['Costi e guadagno del cantiere', 'Quanto spendi e quanto ti resta, cantiere per cantiere.'],
+    voto:['Il voto in condominio', 'I condòmini scelgono il colore della facciata dal telefono.'],
+    assist:['L’assistenza prioritaria', 'Ti rispondiamo per primi.']
+  };
+  function rdPianiOn(){ try{ return !!(proAccount && proAccount.accountType !== 'privato' && (rdIsStaff() || proAccount.pianiAll)); }catch(e){ return false; } }
+  var PN_SIM = (function(){ try{ var r = new URLSearchParams(location.search).get('piano'); if(r){ if(PN_RANK[r]) sessionStorage.setItem('rdPianoSim', r); else sessionStorage.removeItem('rdPianoSim'); } else r = sessionStorage.getItem('rdPianoSim'); return PN_RANK[r] ? r : ''; }catch(e){ return ''; } })();
+  function pnSub(){ return !!(proAccount && (proAccount.subscriptionStatus === 'active' || proAccount.subscriptionStatus === 'trialing')); }
+  function pnRank(){
+    if(PN_SIM && rdIsStaff()) return PN_RANK[PN_SIM];
+    if(rdIsStaff() || (proAccount && proAccount.unlimited)) return 4;
+    if(pnSub()) return PN_RANK[proAccount.tier] || 1;
+    return 2;   // prova gratuita: le funzioni del Medium
+  }
+  // true / false se i piani nuovi sono attivi, null = regole di prima
+  function rdPianiHas(f){ if(!rdPianiOn()) return null; return pnRank() >= (PN_NEED[f] || 1); }
+  function rdHasF(f){ var h = rdPianiHas(f); return h === null ? true : h; }
+  function rdNeed(f){ if(rdHasF(f)) return true; pnLock(f); return false; }
+  window.rdPianiOn = rdPianiOn; window.rdPianiHas = rdPianiHas; window.rdNeed = rdNeed; window.rdHasF = rdHasF;
+  window.rdTierName = function(t){ return PN_NAME[t] || (t ? t.charAt(0).toUpperCase() + t.slice(1) : ''); };
+  RX_PLAN = ['', 'Basic', 'Medium', 'Pro', 'Pro Max']; RX_RANK.promax = 4;
+  Object.keys(PN_NEED).forEach(function(k){ RX_NEED[k] = PN_NEED[k]; });
+  var PN_OFFER = null;
+  function pnOffer(tier, yearly){ return prPost('offer', { tier:tier || 'medium', yearly:!!yearly }).then(function(x){ if(x.d && x.d.plans) PN_OFFER = x.d; return x; }); }
+  function pnEur(c){ var v = (+c || 0) / 100; return v.toLocaleString('it-IT', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits:2 }) + ' €'; }
+  function pnMese(o){ var d = new Date(); d.setMonth(d.getMonth() + (o || 0)); return d.toLocaleDateString('it-IT', { month:'long' }); }
+  // ----- scelta del piano -----
+  function pnSheet(tier){
+    var a = proAccount || {}, sub = pnSub(), cur = sub ? a.tier : '';
+    var st = { tier: PN_RANK[tier] ? tier : (PN_RANK[cur] && cur !== 'promax' && !tier ? PN_KEYS[PN_RANK[cur] + 1] : 'medium'), yearly: !!a.yearly, code:'', promo:null, open:false, plans:null };
+    var box = rxOpen('Piani', null); rxLoading(box);
+    pnOffer(st.tier, st.yearly).then(function(x){ st.plans = (x.d && x.d.plans) || null; st.promoOk = x.d && x.d.promoOk !== false; draw(); }).catch(function(){ draw(); });
+    function draw(){
+      if(!st.plans){ box.innerHTML = '<div class="pp-empty">Non riesco a caricare i piani. Riprova tra poco.</div>'; return; }
+      var h = '';
+      if(sub) h += '<div class="pn-me"><b>Il tuo piano: ' + PN_NAME[cur] + (a.yearly ? ' annuale' : '') + '</b><span>Questo mese: ' + Math.max(0, (+a.usageLimit || 0) - (+a.usageCount || 0)) + ' anteprime rimaste' + (+a.carry ? ' (' + a.carry + ' dal mese scorso)' : '') + (+a.credits ? ' + ' + a.credits + ' comprate' : '') + '</span></div>';
+      else if(a.trial) h += '<div class="pn-me"><b>Sei in prova gratuita</b><span>' + Math.max(0, (+a.trial.limit || 0) - (+a.trial.used || 0)) + ' anteprime rimaste' + (a.trial.endsAt ? ' fino al ' + new Date(a.trial.endsAt).toLocaleDateString('it-IT', { day:'numeric', month:'long' }) : '') + ' · funzioni del Medium</span></div>';
+      h += '<div class="pn-seg"><button type="button" data-pny="0" class="' + (st.yearly ? '' : 'on') + '">Mensile</button><button type="button" data-pny="1" class="' + (st.yearly ? 'on' : '') + '">Annuale −1 mese</button></div>';
+      st.plans.forEach(function(p){
+        var on = p.tier === st.tier, mine = sub && p.tier === cur && !!a.yearly === st.yearly;
+        h += '<button type="button" class="pn-mini' + (on ? ' on' : '') + '" data-pnt="' + p.tier + '"><span><b>' + PN_NAME[p.tier] + (mine ? ' <u>il tuo piano</u>' : '') + '</b><em>' + p.images + ' anteprime al mese · ' + PN_EM[p.tier] + '</em></span>'
+          + '<strong>' + pnEur(st.yearly ? p.yearCents : p.priceCents) + '<small>' + (st.yearly ? '/anno' : '/mese') + '</small></strong></button>';
+      });
+      var pr = st.promo;
+      if(!sub && pr) h += '<div class="pr-ok"><b>✓ Codice ' + qEsc(pr.code) + ': ' + qEsc(pr.label) + '</b><button type="button" class="ct-link" id="prRm">Togli il codice</button></div>';
+      else if(!sub && st.promoOk) h += st.open ? '<label class="ft-f" style="margin-top:12px"><span>Codice sconto</span><input id="prCode" maxlength="40" autocapitalize="characters" autocomplete="off" placeholder="es. LANCIO" value="' + qEsc(st.code) + '"></label><button type="button" class="qb-sec vr-cp" id="prApply">Applica il codice</button>'
+        : '<button type="button" class="pr-ask" id="prAsk">🏷️ Hai un codice sconto?</button>';
+      var same = sub && st.tier === cur && !!a.yearly === st.yearly;
+      h += '<button type="button" class="pro-auth-submit cc-add" id="pnGo"' + (same ? ' disabled' : '') + '>' + (same ? 'È già il tuo piano' : (sub ? 'Passa a ' : 'Continua con ') + PN_NAME[st.tier] + (st.yearly ? ' annuale' : '')) + '</button>';
+      h += '<div class="cc-hint" style="text-align:center">Prezzi IVA esclusa · ' + (st.yearly ? 'paghi 11 mesi e ne usi 12' : 'disdici quando vuoi') + '<br>Le anteprime non usate passano al mese dopo (per un mese).'
+        + (sub ? '<br>Piano più grande: subito, paghi solo la differenza. Più piccolo: dal prossimo rinnovo.' : '') + '</div>';
+      if(sub) h += '<button type="button" class="q-link" id="pnPortal" style="display:block;margin:10px auto 0">Carta, fatture o disdetta</button>';
+      box.innerHTML = h;
+      box.querySelectorAll('[data-pny]').forEach(function(b){ b.addEventListener('click', function(){ st.yearly = b.dataset.pny === '1'; st.promo = null; draw(); }); });
+      box.querySelectorAll('[data-pnt]').forEach(function(b){ b.addEventListener('click', function(){ st.tier = b.dataset.pnt; st.promo = null; draw(); }); });
+      var e1 = document.getElementById('prAsk'); if(e1) e1.addEventListener('click', function(){ st.open = true; draw(); var i = document.getElementById('prCode'); if(i) i.focus(); });
+      var e2 = document.getElementById('prApply'); if(e2) e2.addEventListener('click', apply);
+      var e3 = document.getElementById('prRm'); if(e3) e3.addEventListener('click', function(){ st.promo = null; st.code = ''; st.open = false; draw(); });
+      var e4 = document.getElementById('pnPortal'); if(e4) e4.addEventListener('click', function(){ openBillingPortal(); });
+      document.getElementById('pnGo').addEventListener('click', go);
+    }
+    function apply(){
+      var i = document.getElementById('prCode'), b = document.getElementById('prApply'), err = document.getElementById('rdXErr'); st.code = i.value.trim().toUpperCase();
+      if(!st.code){ err.textContent = 'Scrivi il codice.'; return; }
+      err.textContent = ''; b.disabled = true; b.textContent = 'Controllo il codice…';
+      prPost('offer', { tier:st.tier, yearly:st.yearly, code:st.code }).then(function(x){ if(x.ok && x.d.promo){ st.promo = x.d.promo; draw(); } else { err.textContent = (x.d && x.d.error) || 'Codice non valido.'; b.disabled = false; b.textContent = 'Applica il codice'; } })
+        .catch(function(){ err.textContent = 'Connessione non riuscita. Riprova.'; b.disabled = false; b.textContent = 'Applica il codice'; });
+    }
+    function go(){
+      var b = document.getElementById('pnGo'), err = document.getElementById('rdXErr'), lb = b.textContent; b.disabled = true; err.textContent = '';
+      if(sub){
+        var down = !!a.yearly === st.yearly && PN_RANK[st.tier] < PN_RANK[cur];
+        if(!confirm(down ? 'Passi a ' + PN_NAME[st.tier] + ' dal prossimo rinnovo. Fino ad allora resta il piano ' + PN_NAME[cur] + '. Confermi?' : 'Passi subito a ' + PN_NAME[st.tier] + (st.yearly ? ' annuale' : '') + ': paghi ora solo la differenza con la carta dell’abbonamento. Confermi?')){ b.disabled = false; return; }
+        b.textContent = 'Cambio il piano…';
+        prPost('change-plan', { tier:st.tier, yearly:st.yearly }).then(function(x){
+          if(!x.ok){ err.textContent = (x.d && x.d.error) || 'Il cambio non è andato a buon fine.'; b.disabled = false; b.textContent = lb; return; }
+          box.innerHTML = '<div class="pr-ok"><b>✓ ' + (x.d.when === 'subito' ? 'Fatto: ora hai il piano ' + PN_NAME[st.tier] : 'Fatto: dal prossimo rinnovo passi a ' + PN_NAME[st.tier]) + '</b></div>';
+          if(typeof proCheckSession === 'function') proCheckSession();
+        }).catch(function(){ err.textContent = 'Connessione non riuscita. Riprova.'; b.disabled = false; b.textContent = lb; });
+        return;
+      }
+      b.textContent = 'Apro il pagamento…';
+      prPost('checkout', { tier:st.tier, yearly:st.yearly, code:st.promo ? st.promo.code : '' }).then(function(x){ if(x.d && x.d.url){ window.location.href = x.d.url; return; } err.textContent = (x.d && x.d.error) || 'Impossibile aprire il pagamento, riprova.'; b.disabled = false; b.textContent = lb; })
+        .catch(function(){ err.textContent = 'Impossibile aprire il pagamento, riprova.'; b.disabled = false; b.textContent = lb; });
+    }
+  }
+  // ----- pacchetti di anteprime -----
+  function pnPacks(reason){
+    var a = proAccount || {}, sub = pnSub(), priv = a.accountType === 'privato', st = { n:0, packs:null };
+    var box = rxOpen('Anteprime in più', null); rxLoading(box);
+    pnOffer(sub ? a.tier : 'medium').then(function(x){ st.packs = (x.d && x.d.packs) || null; st.vat = x.d && x.d.packsVat; if(st.packs) st.n = st.packs[1].n; draw(); }).catch(function(){ draw(); });
+    function draw(){
+      if(!st.packs){ box.innerHTML = '<div class="pp-empty">Non riesco a caricare i pacchetti. Riprova tra poco.</div>'; return; }
+      var h = '';
+      if(reason === 'quota_exceeded') h += '<div class="pn-al"><small>ANTEPRIME FINITE</small><b>Hai usato le ' + (+a.usageLimit || '') + ' anteprime di ' + pnMese(0) + '</b><span>Si ricaricano il 1° ' + pnMese(1) + '</span></div>';
+      else if(reason === 'quota_4k') h += '<div class="pn-al"><small>IL 4K CONTA 2</small><b>Ti resta 1 sola anteprima</b><span>Falla in 2K oppure prendi un pacchetto.</span></div>';
+      else if(reason === 'trial_over' || reason === 'trial_expired' || reason === 'fine') h += '<div class="pn-al"><small>PROVA FINITA</small><b>' + (priv ? 'Continua con un pacchetto' : 'Scegli un piano o un pacchetto') + '</b><span>Grazie per aver provato Rendrum.</span></div>';
+      st.packs.forEach(function(p, i){
+        h += '<button type="button" class="pn-mini pn-pk' + (p.n === st.n ? ' on' : '') + '" data-pnn="' + p.n + '"><span><b>' + p.n + ' anteprime</b><em>' + pnEur(Math.round(p.cents / p.n)) + ' l’una' + (i === 1 ? ' · conviene' : '') + '</em></span><strong>' + pnEur(p.cents) + '</strong></button>';
+      });
+      h += '<button type="button" class="pro-auth-submit cc-add" id="pnBuy">Compra ' + st.n + ' anteprime</button>';
+      if(!priv){
+        var nx = sub ? PN_KEYS[(PN_RANK[a.tier] || 1) + 1] : '';
+        if(!sub) h += '<button type="button" class="qb-sec vr-cp" id="pnUp">Scegli un piano</button>';
+        else if(nx) h += '<button type="button" class="qb-sec vr-cp" id="pnUp" data-t="' + nx + '">Passa al ' + PN_NAME[nx] + '</button>';
+      }
+      h += '<div class="cc-hint" style="text-align:center">Le anteprime comprate non scadono · si usano quando finiscono quelle del mese<br>Prezzi IVA ' + (st.vat === 'inclusa' ? 'inclusa' : 'esclusa') + ' · pagamento unico, niente abbonamento</div>';
+      box.innerHTML = h;
+      box.querySelectorAll('[data-pnn]').forEach(function(b){ b.addEventListener('click', function(){ st.n = +b.dataset.pnn; draw(); }); });
+      var up = document.getElementById('pnUp'); if(up) up.addEventListener('click', function(){ pnSheet(up.dataset.t || ''); });
+      document.getElementById('pnBuy').addEventListener('click', function(){
+        var b = this, err = document.getElementById('rdXErr'); b.disabled = true; b.textContent = 'Apro il pagamento…'; err.textContent = '';
+        prPost('pack-checkout', { n:st.n }).then(function(x){ if(x.d && x.d.url){ window.location.href = x.d.url; return; } err.textContent = (x.d && x.d.error) || 'Il pagamento non è partito.'; b.disabled = false; b.textContent = 'Compra ' + st.n + ' anteprime'; })
+          .catch(function(){ err.textContent = 'Connessione non riuscita. Riprova.'; b.disabled = false; b.textContent = 'Compra ' + st.n + ' anteprime'; });
+      });
+    }
+  }
+  // ----- funzione di un piano più alto: si mostra, non si nasconde -----
+  function pnLock(f){
+    var need = PN_KEYS[PN_NEED[f] || 2], w = PN_WHAT[f] || ['Questa funzione', ''];
+    var box = rxOpen(w[0], null); rxLoading(box);
+    pnOffer(need).then(function(x){
+      var p = ((x.d && x.d.plans) || []).filter(function(y){ return y.tier === need; })[0];
+      box.innerHTML = '<div class="pn-al dk"><small>FUNZIONE DEL PIANO ' + PN_NAME[need].toUpperCase() + '</small><b>' + w[0] + ' ' + (/^(Le|I|Gli) /.test(w[0]) ? 'sono' : 'è') + ' nel piano ' + PN_NAME[need] + '</b><span>' + w[1] + '</span></div>'
+        + (p ? '<div class="pn-mini on"><span><b>' + PN_NAME[need] + '</b><em>' + p.images + ' anteprime al mese · ' + PN_EM[need] + '</em></span><strong>' + pnEur(p.priceCents) + '<small>/mese</small></strong></div>' : '')
+        + '<button type="button" class="pro-auth-submit cc-add" id="pnLk">Passa al ' + PN_NAME[need] + '</button><div class="cc-hint" style="text-align:center">Prezzi IVA esclusa · disdici quando vuoi</div>';
+      document.getElementById('pnLk').addEventListener('click', function(){ pnSheet(need); });
+    }).catch(function(){ box.innerHTML = '<div class="pp-empty">' + w[0] + ': funzione del piano ' + PN_NAME[need] + '.</div>'; });
+  }
+  window.rdPackSheet = pnPacks;
+  window.rdPlanSheet = function(tier){ if(rdPianiOn()) return pnSheet(PN_RANK[tier] && !pnSub() && tier !== 'basic' ? tier : ''); return rdPlanSheet(tier); };
+  // ----- Pro Max: anteprima in 4K (conta 2) -----
+  function pnSync(){
+    var gb = document.getElementById('aiGenerateBtn'), w = document.getElementById('pn4k');
+    var on = rdPianiOn() && pnSub() && proAccount.tier === 'promax';
+    if(!gb) return;
+    if(on && !w){ w = document.createElement('label'); w.id = 'pn4k'; w.className = 'pn-4k'; w.innerHTML = '<input type="checkbox" id="pn4kC"><span><b>Anteprima in 4K</b><em>più nitida, anche da stampare · conta 2 anteprime</em></span>'; gb.parentNode.insertBefore(w, gb); }
+    if(w) w.hidden = !on;
+  }
+  window.pnSync = pnSync;
+  window.rdPm4k = function(){ var c = document.getElementById('pn4kC'), w = document.getElementById('pn4k'); return (c && c.checked && w && !w.hidden) ? '4k' : null; };
+  try{ pnSync(); }catch(e){}
+  (function(){
+    var q = new URLSearchParams(location.search), p = q.get('pacchetto'); if(!p) return;
+    history.replaceState(null, '', location.pathname);
+    setTimeout(function(){
+      alert(p === 'ok' ? 'Grazie! Le anteprime arrivano tra pochi secondi e non scadono.' : 'Pagamento annullato: nessun addebito.');
+      if(typeof proCheckSession === 'function') setTimeout(proCheckSession, 2500);
+    }, 800);
+  })();
   // ---------- Materiali: listino con resa, calcolo del cantiere, ordini al fornitore ----------
   // pro_extra: materiale (prodotto del listino), fornitore, ordine. Le rese le mette l'artigiano dalla scheda tecnica.
   var MT = { mat:null, forn:null, ord:null, lav:'monolith', tab:'prod' };
@@ -19765,6 +19980,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   // pagina "Fai provare l'anteprima al cliente"
   function invSheet(o, back){
+    if(window.rdNeed && !window.rdNeed('invito')) return;
     o = o || {};
     var box = rxOpen('Anteprima al cliente', back || null), st = { lav: o.lavoro || 'facciata' };
     function draw(){
@@ -19808,6 +20024,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   }
   // elenco di tutti i link
   function invPage(){
+    if(window.rdNeed && !window.rdNeed('invito')) return;
     var box = rxOpen('Anteprime dei clienti', null); rxLoading(box);
     invLoad(true).then(function(L){
       box.innerHTML = '<button type="button" class="pro-auth-submit iv-wa" id="ivNew">📲 Manda il link a un cliente</button>'
@@ -20105,7 +20322,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function rdTabOn(k){ document.querySelectorAll('#rdTab [data-rdtab]').forEach(function(b){ b.classList.toggle('on', b.dataset.rdtab === k); }); }
   function rdV2Sync(){
     rdV2.on = rdV2Active();
-    document.body.classList.toggle('rd-v2', rdV2.on); try{ document.documentElement.classList.toggle('rd-vetro', rdIsStaff()); }catch(e){}
+    document.body.classList.toggle('rd-v2', rdV2.on);
     try{ rdS1Sync(); }catch(e){}
     try{ rxSync(); }catch(e){}
     if(!rdV2.on){
@@ -20470,7 +20687,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       [a.accountType === 'privato' ? 'Nome' : 'Attività', a.companyName || '—'],
       ['Email', a.email || '—'],
       ['Tipo di account', a.accountType === 'privato' ? 'Privato' : 'Professionista'],
-      ['Piano', (a.tier ? a.tier.charAt(0).toUpperCase() + a.tier.slice(1) : '—') + (a.paymentsEnabled ? (subActive() ? ' · attivo' : ' · non attivo') : '')]
+      ['Piano', (a.tier ? (window.rdTierName ? window.rdTierName(a.tier) : a.tier) : '—') + (a.paymentsEnabled ? (subActive() ? ' · attivo' : ' · non attivo') : '')]
     ];
     document.getElementById('accInfo').innerHTML = rows.map(function(r){ return '<div class="acc-row"><span>' + ppEscapeHtml(r[0]) + '</span><span>' + ppEscapeHtml(r[1]) + '</span></div>'; }).join('');
     document.getElementById('accPassword').value = '';
@@ -20551,7 +20768,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     }
     var tr = a.subscriptionStatus === 'trialing';
     h += '<div class="hb-sec" style="margin-top:18px">Account</div>'
-      + hbRow('acc', HB_IC.acc, 'Account e piano', qEsc((a.email || '') + (a.tier ? ' · ' + (tr ? 'in prova' : 'piano ' + a.tier.charAt(0).toUpperCase() + a.tier.slice(1)) : '')), '');
+      + hbRow('acc', HB_IC.acc, 'Account e piano', qEsc((a.email || '') + (a.tier ? ' · ' + (tr ? 'in prova' : 'piano ' + (window.rdTierName ? window.rdTierName(a.tier) : a.tier)) : '')), '');
     var sb = document.getElementById('proSubBtn');
     if(sb && sb.style.display !== 'none' && !document.documentElement.classList.contains('is-app')) h += hbRow('sub', '<rect x="4" y="8" width="24" height="16" rx="3"/><path d="M4 13h24M9 19h5"/>', 'Abbonamento', qEsc(sb.textContent.trim() === 'Abbonamento' ? 'Gestisci il tuo piano e i pagamenti' : sb.textContent.trim()), '');
     if(document.documentElement.classList.contains('rd-s1')){ var lt = document.getElementById('langToggle'), en = lt && /IT/i.test(lt.textContent);
@@ -20947,15 +21164,5 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 })();
 </script>
 <script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/bb9f00704090.jpg", "/img/6aa351ec523e.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
-<style id="rd-vetro-css">/* Finestre a vetro smerigliato (livello «Leggera») — solo account di prova (html.rd-vetro) — approvato 12/10 */
-@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-html.rd-vetro body .pro-projects-card,html.rd-vetro body .pro-auth-card,html.rd-vetro body .rd-sheet-in,html.rd-vetro body .v3ci2{background:rgba(255,253,249,.86)!important;background-image:none!important;-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,.65)!important;box-shadow:0 24px 60px -18px rgba(43,20,8,.45),inset 0 1px 0 rgba(255,255,255,.8)!important}
-html.rd-vetro body .rd-sheet-in > div{background:transparent!important}
-html.rd-vetro body .pro-projects-modal.open,html.rd-vetro body #rdAltro.rd-sheet.open,html.rd-vetro body #v3C.v3cam{background:rgba(29,20,12,.30)!important}
-html.rd-vetro body .pro-projects-card .ct-card,html.rd-vetro body .pro-projects-card input,html.rd-vetro body .pro-auth-card input,html.rd-vetro body .pro-projects-card button:not(.pro-auth-submit):not(.pro-projects-close),html.rd-vetro body .rd-sheet-in button{background-color:rgba(255,255,255,.55)!important}
-html.rd-vetro body .rd-sheet-in button.rx-co,html.rd-vetro body .rd-sheet-in .rx-co{background:#2B1408!important;background-color:#2B1408!important}
-html.rd-vetro body .rd-sheet-in .rx-ic{background-color:#2B1408}
-}
-</style>
 </body>
 </html>

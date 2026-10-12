@@ -23,7 +23,7 @@ const {
   sendVerifyEmail,
 } = require("./_auth-lib");
 
-const VALID_TIERS = ["basic", "medium", "pro"];
+const VALID_TIERS = ["basic", "medium", "pro", "promax"];   // promax: serve supabase_piani.sql
 const VALID_ACCOUNT_TYPES = ["professionista", "privato"];
 
 module.exports = async function handler(req, res) {

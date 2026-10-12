@@ -30,7 +30,7 @@
 // 5. Nell'app, il bottone "Genera anteprima AI" andrà a chiamare quell'indirizzo
 //    (questa parte la collego io appena il backend è online: mandami l'URL).
 
-const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS } = require("./_auth-lib");
+const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS, PLANS, trialOf, monthKey, carryOver } = require("./_auth-lib");
 const jobs = require("./_jobs");
 const DECO = require("./_deco");
 const SIST = require("./_sist");
@@ -40,14 +40,14 @@ const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 // ---- Crediti e prova gratuita (vedi supabase_crediti.sql) ----
 // Senza abbonamento attivo: prima si usano i crediti comprati (pacchetti), poi la prova gratuita:
 // TRIAL_PRIVATO / TRIAL_PRO anteprime entro TRIAL_DAYS giorni dalla prima anteprima.
-const TRIAL_DAYS = 7, TRIAL_PRIVATO = 5, TRIAL_PRO = 10;
+// Giorni e anteprime della prova: TRIAL in _auth-lib.js (professionisti 14 giorni / 10, privati 7 / 5).
 // Account senza limite: quelli di prova di Rendrum, quelli di TEST_EMAILS e RD_UNLIMITED_EMAILS su Vercel (separati da virgola).
 const UNLIMITED_EMAILS = () => ["prova@rendrum.com", "provalo@rendrum.com", "info@rendrum.com", "info@dgmresine.com"]
   .concat(String(process.env.TEST_EMAILS || "").split(","), String(process.env.RD_UNLIMITED_EMAILS || "").split(","))
   .map(x => String(x).trim().toLowerCase()).filter(Boolean);
-const trialLimit = (acc) => (acc.account_type === "privato" ? TRIAL_PRIVATO : TRIAL_PRO);
+const trialLimit = (acc) => trialOf(acc).n;
 // Prenota un'anteprima. Ritorna { kind:"credit"|"trial", undo } oppure "missing" / "over" / "expired".
-async function useCredit(acc) {
+async function useCredit(acc, onlyCredits) {
   const id = encodeURIComponent(acc.id);
   for (let i = 0; i < 3; i++) {
     const r = await supabaseRequest("/pro_accounts?id=eq." + id + "&select=trial_used,trial_start,credits", { method: "GET" }).catch(function () { return { ok: false }; });
@@ -59,8 +59,9 @@ async function useCredit(acc) {
       if (p.ok && Array.isArray(p.data) && p.data.length) return { kind: "credit", undo: { filter: "&credits=eq." + (credits - 1), body: { credits: credits } } };
       continue;
     }
+    if (onlyCredits) return "over";
     const start = row.trial_start ? Date.parse(row.trial_start) : null;
-    if (start && Date.now() - start > TRIAL_DAYS * 86400000) return "expired";
+    if (start && Date.now() - start > trialOf(acc).days * 86400000) return "expired";
     if (used >= trialLimit(acc)) return "over";
     const patch = { trial_used: used + 1 }; if (!start) patch.trial_start = new Date().toISOString();
     const p = await supabaseRequest("/pro_accounts?id=eq." + id + "&trial_used=eq." + used, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify(patch) }).catch(function () { return { ok: false }; });
@@ -153,7 +154,7 @@ module.exports = async function handler(req, res) {
     const t = await useCredit(quotaAcc);
     if (t === "missing") return res.status(503).json({ error: "Le anteprime non sono disponibili in questo momento. Riprova tra poco.", code: "trial_unavailable" });
     if (t === "over" || t === "expired") {
-      const msg = t === "expired" ? "La tua settimana di prova gratuita è finita." : "Hai usato le " + trialLimit(quotaAcc) + " anteprime della prova gratuita.";
+      const msg = t === "expired" ? "La tua prova gratuita è finita." : "Hai usato le " + trialLimit(quotaAcc) + " anteprime della prova gratuita.";
       return res.status(429).json({ error: msg + " Grazie per aver provato Rendrum! Per continuare scrivi a info@rendrum.com.", code: t === "expired" ? "trial_expired" : "trial_over" });
     }
     const origJsonT = res.json.bind(res); let backT = false;
@@ -166,31 +167,56 @@ module.exports = async function handler(req, res) {
       return origJsonT(payload);
     };
   }
+  // Pro Max: anteprima in 4K a richiesta (conta 2 anteprime del mese).
+  const want4k = !!(PLANS[quotaAcc.tier] && PLANS[quotaAcc.tier].k4 && subActive && risoluzione === "4k");
   if (!skipQuota && !unlimited && subActive) {
-    quotaMonth = new Date().toISOString().slice(0, 7);
-    const limit = PLANS_LIMIT(quotaAcc.tier);
-    // Prenotazione atomica dell'anteprima nel database (funzione use_preview):
-    // anche 50 richieste in parallelo non possono superare il limite.
-    const rpc = await supabaseRequest("/rpc/use_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth, p_limit: limit }) }).catch(function () { return { ok: false }; });
-    if (rpc.ok) {
-      if (rpc.data === null || rpc.data === undefined) {
-        return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Passa a un piano superiore o attendi il mese prossimo.", code: "quota_exceeded" });
-      }
-      reserved = true;
-    } else {
-      // Funzione SQL non ancora creata: controllo semplice come prima.
-      const used = quotaAcc.usage_month === quotaMonth ? (quotaAcc.usage_count || 0) : 0;
-      if (used >= limit) return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Passa a un piano superiore o attendi il mese prossimo.", code: "quota_exceeded" });
-      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ usage_month: quotaMonth, usage_count: used + 1 }) }).catch(function () {});
-      reserved = true;
+    quotaMonth = monthKey();
+    // anteprime del mese scorso non usate: si fissano al primo uso del mese nuovo
+    const carry = carryOver(quotaAcc);
+    if (carry > 0 && quotaAcc.bonus_month !== quotaMonth) {
+      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&or=(bonus_month.is.null,bonus_month.neq." + quotaMonth + ")", { method: "PATCH", body: JSON.stringify({ bonus_month: quotaMonth, bonus_n: carry }) }).catch(function () {});
     }
-    // Se la generazione poi fallisce, l'anteprima viene restituita.
+    const limit = PLANS_LIMIT(quotaAcc.tier) + carry;
+    const need = want4k ? 2 : 1;
+    // Prenotazione atomica nel database (funzione use_preview): anche 50 richieste
+    // in parallelo non superano il limite. Senza la funzione: controllo semplice.
+    async function takeOne() {
+      const rpc = await supabaseRequest("/rpc/use_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth, p_limit: limit }) }).catch(function () { return { ok: false }; });
+      if (rpc.ok) return rpc.data !== null && rpc.data !== undefined;
+      const g = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&select=usage_month,usage_count", { method: "GET" }).catch(function () { return { ok: false }; });
+      const row = (g.ok && Array.isArray(g.data) && g.data[0]) || quotaAcc;
+      const used = row.usage_month === quotaMonth ? (row.usage_count || 0) : 0;
+      if (used >= limit) return false;
+      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ usage_month: quotaMonth, usage_count: used + 1 }) }).catch(function () {});
+      return true;
+    }
+    async function giveBack(n) {
+      for (let i = 0; i < n; i++) await supabaseRequest("/rpc/release_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth }) }).catch(function () {});
+    }
+    let fromPlan = 0;
+    for (let i = 0; i < need; i++) { if (await takeOne()) fromPlan++; else break; }
+    // Piano finito: si usano le anteprime dei pacchetti comprati (non scadono).
+    const credits = [];
+    while (fromPlan + credits.length < need) {
+      const c = await useCredit(quotaAcc, true);
+      if (!c || typeof c !== "object") break;
+      credits.push(c);
+    }
+    if (fromPlan + credits.length < need) {
+      await giveBack(fromPlan);
+      for (const c of credits) await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + c.undo.filter, { method: "PATCH", body: JSON.stringify(c.undo.body) }).catch(function () {});
+      if (want4k && fromPlan + credits.length === 1) return res.status(429).json({ error: "Un’anteprima in 4K conta 2 e te ne resta solo 1. Falla in 2K oppure compra un pacchetto.", code: "quota_4k" });
+      return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Puoi comprare un pacchetto di anteprime oppure passare a un piano più grande.", code: "quota_exceeded" });
+    }
+    reserved = true;
+    // Se la generazione poi fallisce, le anteprime vengono restituite.
     const origJson = res.json.bind(res);
     res.json = function (payload) {
       if (reserved && !refunded && res.statusCode >= 400) {
         refunded = true;
-        return supabaseRequest("/rpc/release_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth }) })
-          .catch(function () {}).then(function () { return origJson(payload); });
+        let p = giveBack(fromPlan);
+        credits.forEach(function (c) { p = p.then(function () { return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&select=credits", { method: "GET" }).then(function (g) { const n = (g.ok && g.data && g.data[0] && Number(g.data[0].credits)) || 0; return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ credits: n + 1 }) }); }); }); });
+        return p.catch(function () {}).then(function () { return origJson(payload); });
       }
       return origJson(payload);
     };
@@ -231,7 +257,7 @@ module.exports = async function handler(req, res) {
   // Risoluzione in uscita (vale per entrambi i motori): 2K per tutti, modificabile da
   // Vercel con IMAGE_RES = "std" | "2k" | "4k"; i tester possono provarne un'altra.
   const resDefaultAll = String(process.env.IMAGE_RES || process.env.OPENAI_IMAGE_RES || "2k").trim().toLowerCase();
-  const resSel = (isTesterAll && (risoluzione === "2k" || risoluzione === "4k" || risoluzione === "std")) ? risoluzione : ((resDefaultAll === "4k" || resDefaultAll === "std") ? resDefaultAll : "2k");
+  const resSel = want4k ? "4k" : (isTesterAll && (risoluzione === "2k" || risoluzione === "4k" || risoluzione === "std")) ? risoluzione : ((resDefaultAll === "4k" || resDefaultAll === "std") ? resDefaultAll : "2k");
   const ratioIn = Number(rapporto) || 1.5;
   const orientIn = ratioIn >= 1.3 ? "h" : ratioIn <= 0.77 ? "v" : "q";
   // Le risposte di Vercel non possono superare ~4,5 MB: le immagini grandi (PNG di Gemini,
