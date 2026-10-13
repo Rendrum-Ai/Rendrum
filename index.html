@@ -2282,6 +2282,25 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   .ag2-b3 button.p{background:#C8692E;color:#fff}.ag2-b3 button.r{color:#A33A16}
   .cc-eok.ag2-fin{background:rgba(255,255,255,.12);color:#fff;margin-top:8px}
 </style>
+<style>
+  /* Oggi: fila a scorrimento */
+  .ag2-car{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 2px 6px;margin:0 0 2px}
+  .ag2-car::-webkit-scrollbar{display:none}
+  .ag2-sl{flex:none;width:86%;max-width:420px;box-sizing:border-box;scroll-snap-align:start;border-radius:22px;background:linear-gradient(155deg,#4a2a16,#2B1408 70%);color:#F7F5F1;padding:16px;display:flex;flex-direction:column;min-height:196px;box-shadow:0 4px 14px rgba(43,20,8,.22);cursor:pointer}
+  .ag2-st{display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .ag2-st small{font-size:11px;font-weight:800;letter-spacing:.07em;color:#E9A774;line-height:1.3}.ag2-st em{font-style:normal;font-size:12px;font-weight:800;color:#E9A774;white-space:nowrap}
+  .ag2-sl>b{display:block;font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:23px;line-height:1.15;margin:8px 0 3px;color:#fff}
+  .ag2-sl>span{display:block;font-size:13.5px;color:#d8c9bb;line-height:1.4}
+  .ag2-sb{margin-top:auto;padding-top:12px}
+  .ag2-3{display:flex;gap:7px}.ag2-3 button{flex:1;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-weight:800;font-size:14px;padding:11px 4px;cursor:pointer}.ag2-3 button.p{background:#D0844F}
+  .ag2-go{width:100%;border:0;border-radius:13px;background:#D0844F;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:12px;cursor:pointer;text-align:left}
+  .ag2-sl.ag2-sera{padding:0}.ag2-sl .cc-eve{background:none;margin:0;box-shadow:none;display:flex;flex-direction:column;flex:1}
+  .ag2-sl .cc-eve .cc-eok,.ag2-sl .cc-eve .cc-eno{margin-top:8px}
+  .ag2-sl .ag2-b3{margin-top:auto;padding-top:10px}
+  .ag2-sl .ag2-b3 button{background:rgba(255,255,255,.12);color:#fff}.ag2-sl .ag2-b3 button.p{background:#D0844F}.ag2-sl .ag2-b3 button.r{color:#F2B8A0}
+  .ag2-sl>small{display:block;font-size:11px;font-weight:800;letter-spacing:.07em;color:#E9A774}
+  .ag2-dots{display:flex;justify-content:center;gap:6px;margin:4px 0 14px}.ag2-dots i{width:6px;height:6px;border-radius:3px;background:#D9CFC4;transition:width .2s}.ag2-dots i.on{width:18px;background:#2B1408}
+</style>
 </head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -16963,9 +16982,11 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var todo = L.filter(function(c){ return c.aperto !== false && c.next; });
     var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">Da fare oggi</h1>'
       + '<span class="s2-sub">' + (todo.length ? (todo.length === 1 ? '1 cliente aspetta te' : todo.length + ' clienti aspettano te') : 'Nessun cliente in attesa') + '</span></div></div>';
-    if(window.agEsitoHtml) h += window.agEsitoHtml(L);
-    if(sera) h += ccSeraHtml(sera, tar);
-    if(todo.length){
+    var _car = (window.agCarHtml && window.ag2On && window.ag2On()) ? window.agCarHtml(L, todo, sera, tar) : null;
+    if(_car === null && window.agEsitoHtml) h += window.agEsitoHtml(L);
+    if(_car === null && sera) h += ccSeraHtml(sera, tar);
+    if(_car !== null) h += _car;
+    else if(todo.length){
       var c0 = todo[0], i0 = L.indexOf(c0);
       h += '<div class="v3cards s2-one"><div class="v3c" data-v3c="' + i0 + '" style="' + v3Bg(c0) + '">' + (!c0.img && c0.cover ? '<img class="v3cblur" src="' + qEsc(c0.cover) + '" alt="">' : '') + '<div class="v3cs"></div>' + (c0.img || c0.cover ? '' : '<span class="v3ci">' + qEsc(ctIni(c0.nome)) + '</span>')
         + '<div class="v3ct"><span class="v3ph">' + qEsc(c0.next.s || CT_FASI[c0.fase]) + (c0._td ? ' · oggi ' + qEsc(c0._td.data.ora || '') : '') + '</span><b>' + qEsc(s2Nome(c0)) + '</b><i>' + qEsc([c0.lavoro, c0.luogo].filter(Boolean).join(' · ')) + '</i>'
@@ -16998,6 +17019,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     tmFeedBind(box);
     inHomeBind(box, L, function(){ v3Home(box); });
     try{ invHomeBind(box); }catch(e){}
+    try{ if(window.agCarBind) window.agCarBind(box); }catch(e){}
     try{ rwHome(box, L, [box, L, sera, tar]); }catch(e){ console.error(e); }
   }
   // riga della settimana: dalla home a "Soldi"
@@ -18069,18 +18091,11 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       + '<label class="nb-t nb-on"><span class="nb-i">' + nbSvg('cam') + '</span><b>Scatta</b><em>fotocamera</em><input type="file" accept="image/*" capture="environment" hidden id="v3F"></label>'
       + '<label class="nb-t"><span class="nb-i">' + nbSvg('gal') + '</span><b>Galleria</b><em>del telefono</em><input type="file" accept="image/*" hidden id="v3G"></label>'
       + '<button type="button" class="nb-t" id="nbCt"><span class="nb-i">' + nbSvg('ct') + '</span><b>Cantiere</b><em>foto salvate</em></button>'
-      + '</div><div class="nb-sec">Ultime foto dei cantieri</div><div class="nb-row" id="nbRow"><span class="nb-sk"></span><span class="nb-sk"></span><span class="nb-sk"></span><span class="nb-sk"></span></div><div class="nb-err"></div>'
+      + '</div><div class="nb-err"></div>'
       + '<div class="nb-hint">Il lavoro lo scegli subito dopo la foto.</div></div>';
     ov.hidden = false;
     nbBind(ov);
     document.getElementById('nbCt').addEventListener('click', function(){ nbCantieri(ov); });
-    var L0 = (typeof ct !== 'undefined' && ct.list && ct.list.length) ? ct.list : null;
-    (L0 ? Promise.resolve(L0) : ctLoad()).then(function(L){
-      var row = document.getElementById('nbRow'); if(!row) return;
-      var out = []; (L || []).forEach(function(c){ var f = nbFoto(c)[0]; if(f && out.length < 10) out.push(nbThumb(f, nbNome(c.nome))); });
-      row.innerHTML = out.length ? out.join('') : '<div class="nb-none">Qui compariranno le foto dei tuoi sopralluoghi e cantieri.</div>';
-      nbBind(ov);
-    }).catch(function(){ var row = document.getElementById('nbRow'); if(row) row.innerHTML = '<div class="nb-none">Foto dei cantieri non disponibili adesso.</div>'; });
   }
   // «Cantiere»: le foto salvate, divise per cliente
   function nbCantieri(ov){
@@ -20136,14 +20151,14 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   window.agEsitoHtml = function(L){
     if(!ag2On()) return ''; var E = agEsitoList(L); AG2.es = E; if(!E.length) return '';
     var d = E[0].a.data, ic = RX_AGT[d.tipo] || RX_AGT.altro, q = d.data === ctDayIso(0) ? 'oggi' : d.data === ctDayIso(-1) ? 'ieri' : rxDay(d.data);
-    return '<div class="ag2-es" id="ag2Es"><small>COM’È ANDATA?</small><b>' + qEsc(ic[1]) + (d.cliente ? ' da ' + qEsc(d.cliente) : d.titolo ? ' · ' + qEsc(d.titolo) : '') + '</b><span>' + qEsc(q) + (d.ora ? ' alle ' + qEsc(d.ora) : '') + (d.indirizzo ? ' · ' + qEsc(d.indirizzo) : '') + '</span>'
+    return '<div class="ag2-es ag2-esc" id="ag2Es" data-ai="0"><small>COM’È ANDATA?</small><b>' + qEsc(ic[1]) + (d.cliente ? ' da ' + qEsc(d.cliente) : d.titolo ? ' · ' + qEsc(d.titolo) : '') + '</b><span>' + qEsc(q) + (d.ora ? ' alle ' + qEsc(d.ora) : '') + (d.indirizzo ? ' · ' + qEsc(d.indirizzo) : '') + '</span>'
       + '<div class="ag2-b3"><button type="button" class="p" data-age="ok">✓ Fatto</button><button type="button" data-age="sp">↻ Da spostare</button><button type="button" class="r" data-age="no">✕ Annullato</button></div>'
       + (E.length > 1 ? '<em>' + (E.length - 1 === 1 ? 'e un altro appuntamento da segnare' : 'e altri ' + (E.length - 1) + ' appuntamenti da segnare') + '</em>' : '') + '</div>';
   };
   function ag2Esito(it, esito){ var d = Object.assign({}, it.data, { fatto:true, esito:esito }); return rxSave('agenda', d, it.id).then(function(x){ rx.cache.agenda = null; return x; }); }
   document.addEventListener('click', function(e){
-    var b = e.target.closest('#ag2Es [data-age]'); if(!b) return;
-    var el = document.getElementById('ag2Es'), cur = AG2.es[0]; if(!cur) return;
+    var b = e.target.closest('.ag2-esc [data-age]'); if(!b) return;
+    var el = b.closest('.ag2-esc'), cur = AG2.es[+el.dataset.ai || 0]; if(!cur) return;
     var it = cur.a, d = it.data, k = b.dataset.age;
     function err(x){ var s = el.querySelector('span'); if(s) s.textContent = rxErr(x); el.querySelectorAll('button').forEach(function(y){ y.disabled = false; }); }
     function wait(){ el.querySelectorAll('button').forEach(function(y){ y.disabled = true; }); b.textContent = 'Salvo…'; }
@@ -20159,6 +20174,24 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(k === 'no1' || k === 'no2'){ wait(); ag2Esito(it, k === 'no1' ? 'annullato' : 'rinviato').then(function(){ el.innerHTML = '<small>✓ SEGNATO</small><b>' + (k === 'no1' ? 'Annullato' : 'Da risentire più avanti') + '</b>'; setTimeout(ag2Home, 1200); }).catch(err); }
   });
   window.agNew = agNew; window.ag2On = ag2On;
+  // ---------- Pagina Oggi: le schede in alto diventano una fila marrone a scorrimento (solo account di prova) ----------
+  window.agCarHtml = function(L, todo, sera, tar){
+    var E = agEsitoList(L), S = []; AG2.es = E;
+    E.forEach(function(x, i){ var d = x.a.data, ic = RX_AGT[d.tipo] || RX_AGT.altro, q = d.data === ctDayIso(0) ? 'oggi' : d.data === ctDayIso(-1) ? 'ieri' : rxDay(d.data);
+      S.push('<div class="ag2-sl ag2-esc" data-ai="' + i + '"><div class="ag2-st"><small>COM’È ANDATA?</small><em>' + qEsc(q) + (d.ora ? ' ' + qEsc(d.ora) : '') + '</em></div><b>' + qEsc(d.cliente || d.titolo || ic[1]) + '</b><span>' + qEsc(ic[1] + (d.indirizzo ? ' · ' + d.indirizzo : '')) + '</span>'
+        + '<div class="ag2-sb ag2-3"><button type="button" class="p" data-age="ok">✓ Fatto</button><button type="button" data-age="sp">↻ Sposta</button><button type="button" data-age="no">✕ No</button></div></div>'); });
+    if(sera) S.push('<div class="ag2-sl ag2-sera">' + ccSeraHtml(sera, tar) + '</div>');
+    (todo || []).slice(0, 8).forEach(function(c){ var i = L.indexOf(c);
+      S.push('<div class="ag2-sl" data-v3c="' + i + '"><div class="ag2-st"><small>' + qEsc(String(c.next.s || CT_FASI[c.fase] || '').toUpperCase()) + '</small></div><b>' + qEsc(s2Nome(c)) + '</b><span>' + qEsc([c.lavoro, c.luogo].filter(Boolean).join(' · ')) + '</span>'
+        + '<div class="ag2-sb"><button type="button" class="ag2-go" data-v3n="' + i + '">' + qEsc(c.next.t) + ' ›</button></div></div>'); });
+    if(!S.length) S.push('<div class="ag2-sl"><div class="ag2-st"><small>OGGI</small></div><b>Niente da fare per ora 👍</b><span>Quando un cliente aspetta qualcosa da te lo trovi qui.</span></div>');
+    return '<div class="ag2-car" id="ag2Car">' + S.join('') + '</div>' + (S.length > 1 ? '<div class="ag2-dots" id="ag2Dots">' + S.map(function(x, i){ return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' : '');
+  };
+  window.agCarBind = function(box){
+    var c = box.querySelector('#ag2Car'), d = box.querySelector('#ag2Dots'); if(!c || !d) return;
+    c.addEventListener('scroll', function(){ var s = c.querySelectorAll('.ag2-sl'), w = s.length > 1 ? s[1].offsetLeft - s[0].offsetLeft : 1, k = Math.round(c.scrollLeft / w);
+      d.querySelectorAll('i').forEach(function(x, i){ x.classList.toggle('on', i === Math.min(k, s.length - 1)); }); }, { passive:true });
+  };
   // ---------- Materiali: listino con resa, calcolo del cantiere, ordini al fornitore ----------
   // pro_extra: materiale (prodotto del listino), fornitore, ordine. Le rese le mette l'artigiano dalla scheda tecnica.
   var MT = { mat:null, forn:null, ord:null, lav:'monolith', tab:'prod' };
