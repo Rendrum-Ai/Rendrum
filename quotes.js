@@ -101,7 +101,7 @@ function validate(q) {
   if (!q.voci.length) errs.push("almeno una voce");
   q.voci.forEach((v, i) => { if (!v.titolo) errs.push("titolo della voce " + (i + 1)); if (!v.qta) errs.push("quantità della voce " + (i + 1)); });
   if (!q.rate.length) errs.push("condizioni di pagamento");
-  else if (Math.abs(q.rate.reduce((s, r) => s + r.pct, 0) - 100) > 0.01) errs.push("rate di pagamento (la somma deve fare 100%)");
+  else if (Math.abs(q.rate.reduce((s, r) => s + r.pct, 0) - 100) > 0.01) errs.push("acconti (la somma deve fare 100%)");
   if (q.iva.aliquota === 0 && !q.iva.nota) errs.push("motivo dell'IVA a 0% (es. reverse charge, esente art. ...)");
   return errs;
 }
@@ -121,7 +121,7 @@ function cleanSettings(b) {
       ragioneSociale: str(i.ragioneSociale, 120), indirizzo: str(i.indirizzo, 200), paese: str(i.paese, 2).toUpperCase() || "IT", piva: str(i.piva, 30), cf: str(i.cf, 20),
       telefono: str(i.telefono, 40), email: str(i.email, 120), sito: str(i.sito, 120), rea: str(i.rea, 60),
     },
-    banca: { intestatario: str(bk.intestatario, 120), banca: str(bk.banca, 120), iban },
+    banca: { intestatario: str(bk.intestatario, 120), banca: str(bk.banca, 120), iban, linkCarta: /^https:\/\/[^\s"'<>]+$/.test(str(bk.linkCarta, 300)) ? str(bk.linkCarta, 300) : "" },
     condizioni: cleanCondizioni(b.condizioni),
     rate: cleanRate(b.rate),
     specifiche: str(b.specifiche, 2000),
@@ -135,6 +135,7 @@ module.exports = async function handler(req, res) {
   if (!getSupabaseConfig().configured) return res.status(500).json({ error: "Servizio non configurato." });
   const action = (req.query && req.query.action) || "";
   try {
+    if (action === "pub-prev") return require("./_plink").handlePublic(req, res);
     if (action.indexOf("pub-") === 0) return require("./_extra").handlePublic(req, res, action);
     const acc = await currentAccount(req).catch(() => null);
     if (!acc) return res.status(401).json({ error: "Accedi al tuo account." });
@@ -142,7 +143,12 @@ module.exports = async function handler(req, res) {
     if (acc.account_type === "privato") return res.status(403).json({ error: "Il generatore di preventivi è riservato ai professionisti." });
     const mine = "account_id=eq." + encodeURIComponent(acc.id);
     if (action.indexOf("sopr-") === 0) return require("./_sopralluoghi").handle(req, res, action, acc);
+    if (action.indexOf("pl-") === 0) return require("./_plan").handle(req, res, action, acc);
     if (action.indexOf("px-") === 0) return require("./_extra").handle(req, res, action, acc);
+    if (action.indexOf("pk-") === 0) return require("./_plink").handle(req, res, action, acc);
+    if (action.indexOf("ai-") === 0) return require("./_aiuto").handle(req, res, action, acc);
+    if (action.indexOf("cs-") === 0) return require("./_camp").handle(req, res, action, acc);
+    if (action.indexOf("vi-") === 0) return require("./_via").handle(req, res, action, acc);
 
     if (action === "settings") {
       if (req.method === "GET") return res.status(200).json({ settings: acc.quote_settings || {}, account: { companyName: acc.company_name || "", piva: acc.piva || "", phone: acc.phone || "", email: acc.email || "", logoUrl: acc.logo_url || null } });
@@ -167,6 +173,48 @@ module.exports = async function handler(req, res) {
       const u = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(acc.id), { method: "PATCH", body: JSON.stringify({ quote_settings: cur }) });
       if (!u.ok) { console.error("quotes listino", u.data); return res.status(502).json({ error: "Salvataggio non riuscito. Riprova." }); }
       return res.status(200).json({ ok: true, listino });
+    }
+
+    // Preventivo per email: parte da Rendrum con il nome dell'impresa, le risposte arrivano all'impresa (per ora solo account di prova)
+    if (action === "mail") {
+      if (req.method !== "POST") return res.status(405).json({ error: "Usa POST" });
+      const em = String(acc.email || "").toLowerCase();
+      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
+      const key = (process.env.RESEND_API_KEY || "").trim();
+      if (!key) return res.status(503).json({ error: "Invio email non attivo.", code: "noemail" });
+      const b = req.body || {}, EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;
+      const to = str(b.to, 160).toLowerCase();
+      if (!EM.test(to)) return res.status(400).json({ error: "L'email del cliente non è valida." });
+      const id = String(b.id || "").replace(/[^0-9a-f-]/gi, "");
+      if (!id) return res.status(400).json({ error: "Salva il preventivo prima di mandarlo." });
+      const r0 = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id + "&select=id,number,year,client_name", { method: "GET" });
+      const row = r0.ok && Array.isArray(r0.data) && r0.data[0];
+      if (!row) return res.status(404).json({ error: "Preventivo non trovato." });
+      if (!(typeof b.pdf === "string" && /^[A-Za-z0-9+/=]+$/.test(b.pdf) && b.pdf.length > 100 && b.pdf.length < 4000000)) return res.status(400).json({ error: "Il PDF è troppo grande o non è pronto. Riprova." });
+      const imp = (acc.quote_settings || {}).impresa || {};
+      const nome = (str(imp.ragioneSociale, 80) || str(acc.company_name, 80) || "Rendrum").replace(/[^\p{L}\p{N} .&'’()-]+/gu, " ").replace(/\s+/g, " ").trim() || "Rendrum";
+      const raw = (process.env.EMAIL_FROM || "Rendrum <onboarding@resend.dev>").trim(), m = raw.match(/<([^>]+)>/), addr = (m ? m[1] : raw).trim();
+      const reply = EM.test(str(imp.email, 120)) ? str(imp.email, 120) : (EM.test(em) ? em : "");
+      const num = ("00" + row.number).slice(-3) + "/" + row.year;
+      const subject = str(b.subject, 160) || ("Preventivo " + num + " · " + nome);
+      const msg = str(b.message, 3000) || "Buongiorno, le invio il preventivo. Resto a disposizione per qualsiasi domanda.";
+      const esc = t => String(t || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+      const qfull = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id + "&select=*", { method: "GET" });
+      const plUrl = qfull.ok && Array.isArray(qfull.data) && qfull.data[0] ? await require("./_plink").linkForMail(req, acc, qfull.data[0]).catch(() => null) : null;
+      const info = [imp.indirizzo, imp.piva ? "P.IVA " + imp.piva : "", imp.telefono].filter(Boolean).map(esc).join(" · ");
+      const html = "<div style='font-family:Arial,Helvetica,sans-serif;max-width:600px;color:#1D1B18;font-size:15px;line-height:1.55'>"
+        + "<p style='margin:0 0 18px'>" + esc(msg).replace(/\n/g, "<br>") + "</p>"
+        + "<div style='border:1px solid #eee3d6;background:#FBF9F5;border-radius:14px;padding:16px 18px'><div style='font-weight:bold;font-size:16px'>" + esc(nome) + "</div>"
+        + (info ? "<div style='color:#8a7f73;font-size:13px'>" + info + "</div>" : "")
+        + "<div style='margin-top:10px'><b>Preventivo " + esc(num) + "</b> · in allegato in PDF</div>"
+        + (plUrl ? "<a href='" + esc(plUrl) + "' style='display:inline-block;margin-top:14px;background:#2E7D4F;color:#fff;text-decoration:none;font-weight:bold;border-radius:10px;padding:11px 18px'>Vedi e accetta il preventivo</a>" : "") + "</div>"
+        + "<p style='color:#a39889;font-size:12px;margin-top:18px'>Per rispondere basta usare “Rispondi”: il messaggio arriva a " + esc(nome) + ".</p></div>";
+      const fname = (str(b.filename, 80) || ("Preventivo_" + num.replace("/", "_") + ".pdf")).replace(/[^A-Za-z0-9._-]+/g, "_");
+      const body = { from: nome + " <" + addr + ">", to: [to], subject, html, text: msg + (plUrl ? "\n\nVedi e accetta il preventivo: " + plUrl : ""), attachments: [{ filename: /\.pdf$/i.test(fname) ? fname : fname + ".pdf", content: b.pdf }] };
+      if (reply) body.reply_to = reply;
+      const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
+      if (!r || !r.ok) { console.error("quotes mail", r && r.status, r && await r.text().catch(() => "")); return res.status(502).json({ error: "L'email non è partita. Riprova o mandalo su WhatsApp." }); }
+      return res.status(200).json({ ok: true, to, replyTo: reply });
     }
 
     if (action === "list") {
@@ -216,9 +264,14 @@ module.exports = async function handler(req, res) {
       const id = String(b.id || "").replace(/[^0-9a-f-]/gi, "");
 
       if (id) {
-        const cur = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id + "&select=id,year,number", { method: "GET" });
+        const cur = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id + "&select=id,year,number,status,total_cents", { method: "GET" });
         const row = cur.ok && Array.isArray(cur.data) && cur.data[0];
         if (!row) return res.status(404).json({ error: "Preventivo non trovato." });
+        // confermato dal cliente col link: il totale non cambia più e resta "accettato"
+        if (row.status === "accettato" && await require("./_plink").locked(acc.id, id)) {
+          if (Math.round(t.totale * 100) !== row.total_cents) return res.status(409).json({ error: "Questo preventivo l'ha già accettato e firmato il cliente: non si può più cambiare il totale. Per aggiungere lavori usa “Lavori in più”.", code: "locked" });
+          q.status = "accettato";
+        }
         // Il numero resta quello assegnato; l'anno è quello della numerazione originale.
         const u = await supabaseRequest("/pro_quotes?" + mine + "&id=eq." + id, {
           method: "PATCH", headers: { Prefer: "return=representation" },
