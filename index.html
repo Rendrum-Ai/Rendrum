@@ -1239,7 +1239,7 @@ button.ft-pr{ cursor:pointer; }
 .so-amb-g label:focus-within span{ color:#C8692E; }
 .so-amb-g label:focus-within span::after{ content:' · 📏 misura ora'; font-weight:800; }
 .so-amb input.so-got{ background:#E3F3E9 !important; transition:background .2s; }
-.rd-sheet-in .rx-gr button[data-rxgo2="materiali"] .rx-ic{ background:#A86F3C; }
+.rd-sheet-in .rx-gr button[data-rxgo2="materiali"] .rx-ic, .rd-sheet-in .rx-gr button[data-rxgo2="campionario"] .rx-ic{ background:#A86F3C; }
 
 /* ---------- Materiali e ordini ---------- */
 .mt-lav{ margin-top:4px; }
@@ -1573,15 +1573,15 @@ html.rd-s1 #rdAltro .rx-gr button .rx-ic svg{ width:24px; height:24px; }
 html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="agenda"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="soldi"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="clienti"] .rx-lb, html.rd-s1 #rdAltro .rx-gr button[data-rdalt="sopr"] .rx-lb{ font-size:16px; font-weight:800; }
 html.rd-s1 #rdAltro .rx-s1d{ display:block; font-style:normal; font-size:12.5px; font-weight:500; color:#8a7b70; margin-top:3px; }
 /* elenco "ogni tanto" + assistenza */
-html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]{
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="campionario"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"], html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]{
   order:5; width:100%; display:flex; flex-direction:row; align-items:center; gap:12px; text-align:left; background:var(--surface,#fff); border:1px solid var(--line,#eadfd4); border-top:none; border-radius:0; padding:11px 14px; font-size:15px; }
 html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]{ border-top:1px solid var(--line,#eadfd4); border-radius:16px 16px 0 0; }
 html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"]{ border-radius:0 0 16px 16px; }
 html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]{ order:6; border-top:1px solid var(--line,#eadfd4); border-radius:16px; margin-top:12px; }
-html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic{
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="campionario"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic{
   width:34px; height:34px; border-radius:10px; background:#FBEFE5; color:#C8692E; box-shadow:none; flex:none; }
-html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic svg{ width:20px; height:20px; }
-html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]::after{ content:"›"; margin-left:auto; color:#b7a99c; font-size:20px; font-weight:400; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="campionario"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"] .rx-ic svg, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"] .rx-ic svg{ width:20px; height:20px; }
+html.rd-s1 #rdAltro .rx-gr button[data-rdalt="listino"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="materiali"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="campionario"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="squadra"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="sito"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="voto"]::after, html.rd-s1 #rdAltro .rx-gr button[data-rxgo2="assist"]::after{ content:"›"; margin-left:auto; color:#b7a99c; font-size:20px; font-weight:400; }
 html.rd-s1 #rdAltro .rx-gr button .rx-pl{ margin:0 0 0 auto; }
 html.rd-s1 #rdAltro .rd-esci{ order:9; margin-top:12px; }
 html.rd-s1 #rdAltro .rx-menu::after{ order:99; width:100%; }
@@ -2207,6 +2207,80 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   .nb-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
   .nb-grid .nb-th{ width:auto; } .nb-grid .nb-th i{ width:100%; height:auto; aspect-ratio:1; }
   html.rd-vetro body .v3ci2 .nb-t:not(.nb-on){ background-color:rgba(255,255,255,.6) !important; }
+</style>
+<style>
+  /* Campionario */
+  .cp-srch{ width:100%; box-sizing:border-box; border:1.5px solid var(--line,#E2DBD2); border-radius:12px; padding:11px 13px; font:inherit; font-size:15px; margin:4px 0 12px; background:var(--surface,#fff); color:var(--ink,#1D1B18); }
+  .cp-sec{ display:flex; width:100%; align-items:center; gap:12px; text-align:left; border:1px solid var(--line,#E2DBD2); background:var(--surface,#fff); border-radius:14px; padding:9px 12px; margin:0 0 8px; font-family:inherit; color:var(--ink,#1D1B18); cursor:pointer; }
+  .cp-sec > i{ width:52px; height:52px; border-radius:10px; flex:none; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+  .cp-sec > span{ flex:1; min-width:0; } .cp-sec b{ display:block; font-size:15.5px; } .cp-sec em{ display:block; font-style:normal; font-size:12.5px; color:var(--ink-soft,#6b5f55); margin-top:2px; }
+  .cp-sec u{ text-decoration:none; font-size:22px; color:#b7a99c; }
+  .cp-gr{ display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
+  @media (min-width:700px){ .cp-gr{ grid-template-columns:repeat(5, 1fr); } }
+  .cp-sw{ border:none; background:none; padding:0; text-align:left; font-family:inherit; color:var(--ink,#1D1B18); cursor:pointer; min-width:0; }
+  .cp-sw i{ display:block; aspect-ratio:1; border-radius:12px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+  .cp-sw b{ display:block; font-size:12.5px; margin-top:5px; line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cp-sw span, .cp-sw .cp-from{ display:block; font-style:normal; font-size:11px; color:var(--ink-soft,#6b5f55); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cp-big{ display:block; width:100%; aspect-ratio:4/3; border:none; border-radius:16px; margin:4px 0 12px; position:relative; cursor:zoom-in; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+  .cp-big span{ position:absolute; right:10px; bottom:10px; background:rgba(29,27,24,.72); color:#fff; font-size:12.5px; font-weight:700; border-radius:10px; padding:5px 9px; }
+  .cp-a{ display:block; text-align:center; text-decoration:none; box-sizing:border-box; }
+  .cp-up{ display:block; margin:14px 0 0; border:1.5px dashed #C8692E; border-radius:12px; padding:11px 13px; font-size:14px; font-weight:700; color:#C8692E; cursor:pointer; text-align:center; }
+  .cp-up em{ display:block; font-style:normal; font-weight:500; font-size:12px; color:var(--ink-soft,#6b5f55); }
+  .cp-zoom{ position:fixed; inset:0; z-index:100000; background:#1D1B18; display:flex; flex-direction:column; }
+  .cp-zw{ flex:1; overflow:auto; touch-action:pan-x pan-y; -webkit-overflow-scrolling:touch; }
+  .cp-zw img{ display:block; width:100%; height:auto; }
+  .cp-zb{ display:flex; justify-content:center; gap:14px; padding:12px 12px calc(12px + env(safe-area-inset-bottom)); }
+  .cp-zb button{ width:52px; height:52px; border-radius:50%; border:none; background:#F7F5F1; color:#1D1B18; font-size:24px; font-weight:800; cursor:pointer; }
+  .cp-zb button[data-z="x"]{ background:#C8692E; color:#fff; }
+</style>
+<style>
+  /* Appuntamenti nuovi */
+  .ag2{padding-bottom:20px}
+  .ag2-h{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--ink,#1D1B18);margin:2px 0 12px}
+  .ag2-q{display:block;width:100%;box-sizing:border-box;border:1.5px solid transparent;background:#F2EFEB;border-radius:14px;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink,#1D1B18);outline:none}
+  .ag2-q:focus{background:#fff;border-color:#C8692E}
+  .ag2-it{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-bottom:1px solid #F0ECE6;background:none;padding:11px 2px;font:inherit;color:var(--ink,#1D1B18);cursor:pointer}
+  .ag2-it b{display:block;font-size:15.5px}.ag2-it em{display:block;font-style:normal;font-size:13px;color:#8A7F72;margin-top:1px}
+  .ag2-av{width:40px;height:40px;border-radius:50%;flex:none;background:#FBEFE5;color:#C8692E;font-style:normal;font-weight:800;font-size:14px;display:grid;place-items:center}
+  .ag2-av.v{background:#F2EFEB;border-radius:12px;font-size:16px}
+  .ag2-who .ag2-q{padding:9px 12px;font-size:15px}.ag2-alt2 b{color:#6F685F}
+  .ag2-new{margin-top:4px}.ag2-new .ag2-av{background:#C8692E;color:#fff;font-size:20px}.ag2-new b{color:#C8692E}
+  .ag2-hint{text-align:center;color:#9a8f84;font-size:13.5px;line-height:1.5;margin:22px 8px}
+  .ag2-l{display:block;font-size:12.5px;font-weight:700;color:#8A7F72;margin:16px 0 7px}
+  .ag2-who{display:flex;align-items:center;gap:12px;background:#FBF7F2;border-radius:16px;padding:10px 12px}.ag2-who span{flex:1;min-width:0}.ag2-who b{display:block;font-size:15.5px}.ag2-who em{font-style:normal;font-size:13px;color:#8A7F72}
+  .ag2-seg{display:grid;grid-template-columns:1fr 1fr 1fr;background:#F2EFEB;border-radius:13px;padding:3px}
+  .ag2-seg button{border:0;background:none;border-radius:10px;padding:10px 4px;font:inherit;font-size:13.5px;font-weight:700;color:#6F685F;cursor:pointer;white-space:nowrap}
+  .ag2-seg button.on{background:#fff;color:#1D1B18;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+  .ag2-mon{display:flex;justify-content:space-between;align-items:center;margin:18px 0 8px}.ag2-mon b{font-size:16px;text-transform:capitalize}
+  .ag2-mon label,.ag2-alt{position:relative;cursor:pointer}.ag2-mon input,.ag2-alt input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+  .ag2-days{display:flex;gap:7px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ag2-days::-webkit-scrollbar{display:none}
+  .ag2-days button{flex:none;width:48px;border:0;border-radius:14px;background:#F2EFEB;padding:8px 0 7px;font:inherit;font-size:11.5px;font-weight:600;color:#6F685F;cursor:pointer}
+  .ag2-days button b{display:block;font-size:18px;color:#1D1B18;margin-top:1px}
+  .ag2-days button.dot b::after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:#C8692E;margin:2px auto 0}
+  .ag2-days button.on{background:#2B1408;color:#E9A774}.ag2-days button.on b{color:#fff}
+  .ag2-oh{display:flex;justify-content:space-between;align-items:flex-end;margin:16px 0 7px}.ag2-oh .ag2-l{margin:0}
+  .ag2-half{display:inline-flex;background:#F2EFEB;border-radius:10px;padding:2px}.ag2-half button{border:0;background:none;border-radius:8px;padding:5px 10px;font:inherit;font-size:12.5px;font-weight:700;color:#6F685F;cursor:pointer}.ag2-half button.on{background:#fff;color:#1D1B18;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .ag2-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .ag2-slots button{border:0;border-radius:9px;background:#F2EFEB;padding:8px 0;font:inherit;font-size:13.5px;font-weight:700;color:#1D1B18;cursor:pointer}
+  .ag2-slots button.busy{background:#fff;box-shadow:inset 0 0 0 1px #E2DBD2;color:#c2b8ad;text-decoration:line-through}
+  .ag2-slots button.on{background:#2B1408;color:#fff;text-decoration:none}
+  .ag2-alt{display:inline-block;margin-top:10px;font-size:14px;font-weight:700;color:#C8692E}
+  .ag2-warn{font-size:13px;color:#A33A16;margin-top:6px}
+  .ag2-stick{position:sticky;bottom:calc(86px + env(safe-area-inset-bottom, 0px));background:var(--bg,#fff);padding:12px 0 6px;margin-top:16px;z-index:2}
+  .ag2-stick .pro-auth-submit{width:100%}
+  html.rd-web .ag2-stick{bottom:0}
+  .ag2-ok{text-align:center;padding-top:18px}.ag2-ok>i{display:grid;place-items:center;width:64px;height:64px;margin:0 auto;border-radius:50%;background:#E3F3E9;color:#1D6B3E;font-style:normal;font-size:30px}
+  .ag2-ok h3{font-size:21px;margin:14px 0 6px}.ag2-ok p{font-size:15px;color:#6F685F;line-height:1.5;margin:0 0 18px}
+  .ag2-wa{display:block;width:100%;border:0;border-radius:14px;background:#25A35A;color:#fff;font:inherit;font-weight:800;font-size:16px;padding:15px;cursor:pointer;margin-bottom:10px}
+  .ag2-btn2{display:block;width:100%;border:0;border-radius:14px;background:#F2EFEB;color:#2B1408;font:inherit;font-weight:800;font-size:16px;padding:15px;cursor:pointer;margin-bottom:6px}
+  .ag2-es{background:#fff;border-radius:18px;box-shadow:0 2px 14px rgba(43,20,8,.10);padding:15px 16px;margin:0 0 14px}
+  .ag2-es small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#C8692E}
+  .ag2-es b{display:block;font-size:17px;margin:4px 0 2px;color:#1D1B18}.ag2-es span{display:block;font-size:13.5px;color:#8A7F72}
+  .ag2-es em{display:block;font-style:normal;font-size:12.5px;color:#9a8f84;margin-top:8px;text-align:center}
+  .ag2-b3{display:grid;gap:7px;margin-top:12px}
+  .ag2-b3 button{border:0;border-radius:12px;background:#F2EFEB;color:#2B1408;font:inherit;font-weight:800;font-size:15px;padding:12px;cursor:pointer}
+  .ag2-b3 button.p{background:#C8692E;color:#fff}.ag2-b3 button.r{color:#A33A16}
+  .cc-eok.ag2-fin{background:rgba(255,255,255,.12);color:#fff;margin-top:8px}
 </style>
 </head>
 <body>
@@ -11750,7 +11824,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   // Il cliente sceglie stile, decorazione, tinta, effetto, dove e protezione nel percorso
   // semplice. Il server riceve solo i codici (vedi api/_deco.js) e scrive lui il testo per l'AI.
   // Catalogo nuovo per gli account di prova; gli altri vedono quello di prima finché non si accende per tutti.
-  var RD_DECO_OLD = RD_DECO, RD_DECO_NEW = {"fam": [{"id": "micro", "n": "Microcemento", "s": "Superfici continue, senza fughe", "items": [{"k": "microloggia", "n": "Microloggia", "d": "58 colori della cartella", "u": "ie", "l": "Microloggia"}]}, {"id": "mantra", "n": "Metallo a pennello", "s": "Metallo vero steso a pennello", "items": [{"k": "mantra", "n": "Mantra", "d": "Ottone, stagno, bronzo, rame, ossidazioni e stencil", "u": "i", "l": "Mantra"}]}, {"id": "calce", "n": "Calce e stucchi", "s": "Minerali, materici e stucchi a specchio", "items": [{"k": "volare", "n": "Volare", "d": "Minerale super opaco · 4 colori", "u": "ie", "l": "Decor Line"}, {"k": "infinito", "n": "Infinito", "d": "Materico a calce", "u": "ie", "l": "Decor Line"}, {"k": "riflesso", "n": "Riflesso", "d": "Stucco a specchio", "u": "i", "l": "Decor Line"}]}, {"id": "marmi", "n": "Marmo", "s": "Marmo in rilievo", "items": [{"k": "plasma_marmi", "n": "Plasma 3D", "d": "Marmo venato", "u": "i", "l": "Decor Line"}]}, {"id": "metalli", "n": "Metalli e ruggine", "s": "Metallo, ruggine e ossidazioni", "items": [{"k": "kymera", "n": "Kymera", "d": "Ruggine e ossidazioni · 4 finiture", "u": "i", "l": "Decor Line"}, {"k": "bi_plasma_metal", "n": "Bi Plasma 3D Metal", "d": "Metallo in rilievo", "u": "i", "l": "Decor Line"}, {"k": "keytown", "n": "Keytown", "d": "Metalli invecchiati", "u": "ie", "l": "Decor Line"}]}], "sw": {"microloggia": [{"n": "A2910010N", "code": "A2910010N", "hex": "#D1C8BA", "img": "/img/deco_l/micro_A2910010N.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910010N_t.jpg"}, {"n": "A2910020", "code": "A2910020", "hex": "#E8E2D7", "img": "/img/deco_l/micro_A2910020.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910020_t.jpg"}, {"n": "A2910030", "code": "A2910030", "hex": "#5E645F", "img": "/img/deco_l/micro_A2910030.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910030_t.jpg"}, {"n": "A2910040", "code": "A2910040", "hex": "#ECCFAC", "img": "/img/deco_l/micro_A2910040.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910040_t.jpg"}, {"n": "A2910050", "code": "A2910050", "hex": "#DED0A1", "img": "/img/deco_l/micro_A2910050.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910050_t.jpg"}, {"n": "A2910060", "code": "A2910060", "hex": "#DBD6C8", "img": "/img/deco_l/micro_A2910060.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910060_t.jpg"}, {"n": "A2910070", "code": "A2910070", "hex": "#857B7C", "img": "/img/deco_l/micro_A2910070.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910070_t.jpg"}, {"n": "A2910080", "code": "A2910080", "hex": "#B4A79A", "img": "/img/deco_l/micro_A2910080.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910080_t.jpg"}, {"n": "A2910090", "code": "A2910090", "hex": "#D1C9C2", "img": "/img/deco_l/micro_A2910090.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910090_t.jpg"}, {"n": "A2910100", "code": "A2910100", "hex": "#AFA895", "img": "/img/deco_l/micro_A2910100.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910100_t.jpg"}, {"n": "A2910110", "code": "A2910110", "hex": "#6F6363", "img": "/img/deco_l/micro_A2910110.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910110_t.jpg"}, {"n": "A2910120", "code": "A2910120", "hex": "#9A8C85", "img": "/img/deco_l/micro_A2910120.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910120_t.jpg"}, {"n": "A2910130", "code": "A2910130", "hex": "#ADA097", "img": "/img/deco_l/micro_A2910130.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910130_t.jpg"}, {"n": "A2910140", "code": "A2910140", "hex": "#D4C6BB", "img": "/img/deco_l/micro_A2910140.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910140_t.jpg"}, {"n": "A2910150", "code": "A2910150", "hex": "#75777B", "img": "/img/deco_l/micro_A2910150.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910150_t.jpg"}, {"n": "A2910160", "code": "A2910160", "hex": "#816A5D", "img": "/img/deco_l/micro_A2910160.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910160_t.jpg"}, {"n": "A2910170", "code": "A2910170", "hex": "#917E6E", "img": "/img/deco_l/micro_A2910170.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910170_t.jpg"}, {"n": "A2910180", "code": "A2910180", "hex": "#C2B3A2", "img": "/img/deco_l/micro_A2910180.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910180_t.jpg"}, {"n": "A2910190", "code": "A2910190", "hex": "#7F4639", "img": "/img/deco_l/micro_A2910190.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910190_t.jpg"}, {"n": "A2910200", "code": "A2910200", "hex": "#604D42", "img": "/img/deco_l/micro_A2910200.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910200_t.jpg"}, {"n": "A2910210", "code": "A2910210", "hex": "#7D6855", "img": "/img/deco_l/micro_A2910210.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910210_t.jpg"}, {"n": "A2910220", "code": "A2910220", "hex": "#A38C78", "img": "/img/deco_l/micro_A2910220.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910220_t.jpg"}, {"n": "A2910230", "code": "A2910230", "hex": "#7B756E", "img": "/img/deco_l/micro_A2910230.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910230_t.jpg"}, {"n": "A2910240", "code": "A2910240", "hex": "#C6C7BE", "img": "/img/deco_l/micro_A2910240.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910240_t.jpg"}, {"n": "A2910250", "code": "A2910250", "hex": "#D0CEC6", "img": "/img/deco_l/micro_A2910250.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910250_t.jpg"}, {"n": "A2910260", "code": "A2910260", "hex": "#CFD0C7", "img": "/img/deco_l/micro_A2910260.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910260_t.jpg"}, {"n": "A2910270", "code": "A2910270", "hex": "#6B6761", "img": "/img/deco_l/micro_A2910270.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910270_t.jpg"}, {"n": "A2910280", "code": "A2910280", "hex": "#A5A6A4", "img": "/img/deco_l/micro_A2910280.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910280_t.jpg"}, {"n": "A2910290", "code": "A2910290", "hex": "#B9B6AF", "img": "/img/deco_l/micro_A2910290.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910290_t.jpg"}, {"n": "A2910300", "code": "A2910300", "hex": "#BDB9B2", "img": "/img/deco_l/micro_A2910300.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910300_t.jpg"}, {"n": "A2910310", "code": "A2910310", "hex": "#86887D", "img": "/img/deco_l/micro_A2910310.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910310_t.jpg"}, {"n": "A2910320", "code": "A2910320", "hex": "#8F8E8C", "img": "/img/deco_l/micro_A2910320.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910320_t.jpg"}, {"n": "A2910330", "code": "A2910330", "hex": "#BFB4A6", "img": "/img/deco_l/micro_A2910330.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910330_t.jpg"}, {"n": "A2910340", "code": "A2910340", "hex": "#AD8D52", "img": "/img/deco_l/micro_A2910340.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910340_t.jpg"}, {"n": "A2910350", "code": "A2910350", "hex": "#CAB17E", "img": "/img/deco_l/micro_A2910350.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910350_t.jpg"}, {"n": "A2910360", "code": "A2910360", "hex": "#D0C1A2", "img": "/img/deco_l/micro_A2910360.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910360_t.jpg"}, {"n": "A2910370", "code": "A2910370", "hex": "#DEB665", "img": "/img/deco_l/micro_A2910370.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910370_t.jpg"}, {"n": "A2910380", "code": "A2910380", "hex": "#E4C087", "img": "/img/deco_l/micro_A2910380.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910380_t.jpg"}, {"n": "A2910390", "code": "A2910390", "hex": "#9DB4D6", "img": "/img/deco_l/micro_A2910390.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910390_t.jpg"}, {"n": "A2910400", "code": "A2910400", "hex": "#E4C4AF", "img": "/img/deco_l/micro_A2910400.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910400_t.jpg"}, {"n": "A2910410", "code": "A2910410", "hex": "#EBA319", "img": "/img/deco_l/micro_A2910410.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910410_t.jpg"}, {"n": "A2910420", "code": "A2910420", "hex": "#8D9CA8", "img": "/img/deco_l/micro_A2910420.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910420_t.jpg"}, {"n": "A2910430", "code": "A2910430", "hex": "#E3B297", "img": "/img/deco_l/micro_A2910430.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910430_t.jpg"}, {"n": "A2910440", "code": "A2910440", "hex": "#D3D7AE", "img": "/img/deco_l/micro_A2910440.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910440_t.jpg"}, {"n": "A2910450", "code": "A2910450", "hex": "#81A176", "img": "/img/deco_l/micro_A2910450.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910450_t.jpg"}, {"n": "A2910460", "code": "A2910460", "hex": "#BD6A5E", "img": "/img/deco_l/micro_A2910460.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910460_t.jpg"}, {"n": "A2910470", "code": "A2910470", "hex": "#4C4542", "img": "/img/deco_l/micro_A2910470.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910470_t.jpg"}, {"n": "A2910480", "code": "A2910480", "hex": "#767474", "img": "/img/deco_l/micro_A2910480.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910480_t.jpg"}, {"n": "A2910490", "code": "A2910490", "hex": "#89898B", "img": "/img/deco_l/micro_A2910490.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910490_t.jpg"}, {"n": "A2910500", "code": "A2910500", "hex": "#A3A3A0", "img": "/img/deco_l/micro_A2910500.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910500_t.jpg"}, {"n": "A2910510", "code": "A2910510", "hex": "#B7B6AE", "img": "/img/deco_l/micro_A2910510.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910510_t.jpg"}, {"n": "A2910520", "code": "A2910520", "hex": "#C5C6BE", "img": "/img/deco_l/micro_A2910520.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910520_t.jpg"}, {"n": "A2910530", "code": "A2910530", "hex": "#C3C1B8", "img": "/img/deco_l/micro_A2910530.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910530_t.jpg"}, {"n": "A2910540", "code": "A2910540", "hex": "#DCD9C9", "img": "/img/deco_l/micro_A2910540.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910540_t.jpg"}, {"n": "A2910550", "code": "A2910550", "hex": "#E9E6D8", "img": "/img/deco_l/micro_A2910550.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910550_t.jpg"}, {"n": "A2910560", "code": "A2910560", "hex": "#BAAE9B", "img": "/img/deco_l/micro_A2910560.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910560_t.jpg"}, {"n": "A2910570", "code": "A2910570", "hex": "#C2B7A9", "img": "/img/deco_l/micro_A2910570.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910570_t.jpg"}, {"n": "A2910580", "code": "A2910580", "hex": "#CBC8BF", "img": "/img/deco_l/micro_A2910580.jpg", "px": 1080, "th": "/img/deco_l/micro_A2910580_t.jpg"}], "mantra": [{"n": "Ottone", "code": "", "hex": "#AB915D", "img": "/img/deco_l/mantra_2.jpg", "px": 998, "th": "/img/deco_l/mantra_2_t.jpg"}, {"n": "Stagno · stencil Athena", "code": "", "hex": "#98A1A1", "img": "/img/deco_l/mantra_3.jpg", "px": 1080, "th": "/img/deco_l/mantra_3_t.jpg"}, {"n": "Bronzo · stencil Athena", "code": "", "hex": "#836449", "img": "/img/deco_l/mantra_4.jpg", "px": 620, "th": "/img/deco_l/mantra_4_t.jpg"}, {"n": "Rame ossidato · stencil Ibisco", "code": "", "hex": "#958D84", "img": "/img/deco_l/mantra_5.jpg", "px": 1080, "th": "/img/deco_l/mantra_5_t.jpg"}, {"n": "Ottone ossidato · stencil Dragon", "code": "", "hex": "#719A85", "img": "/img/deco_l/mantra_6.jpg", "px": 814, "th": "/img/deco_l/mantra_6_t.jpg"}, {"n": "Ottone · stencil Jasmine", "code": "", "hex": "#A7875B", "img": "/img/deco_l/mantra_7.jpg", "px": 875, "th": "/img/deco_l/mantra_7_t.jpg"}, {"n": "Rame e bronzo ossidati", "code": "", "hex": "#776142", "img": "/img/deco_l/mantra_8.jpg", "px": 662, "th": "/img/deco_l/mantra_8_t.jpg"}], "volare": [{"n": "V540112X", "code": "V540112X", "hex": "#BAB6A6", "img": "/img/deco_l/volare_V540112X.jpg", "px": 1080, "th": "/img/deco_l/volare_V540112X_t.jpg"}, {"n": "V540113X", "code": "V540113X", "hex": "#B3B090", "img": "/img/deco_l/volare_V540113X.jpg", "px": 1080, "th": "/img/deco_l/volare_V540113X_t.jpg"}, {"n": "V540131X", "code": "V540131X", "hex": "#FDEDE6", "img": "/img/deco_l/volare_V540131X.jpg", "px": 1080, "th": "/img/deco_l/volare_V540131X_t.jpg"}, {"n": "V540132X", "code": "V540132X", "hex": "#FDE5DA", "img": "/img/deco_l/volare_V540132X.jpg", "px": 1080, "th": "/img/deco_l/volare_V540132X_t.jpg"}], "infinito": [{"n": "Parete", "code": "", "hex": "#988D7E", "img": "/img/deco_l/infinito_12.jpg", "px": 521, "th": "/img/deco_l/infinito_12_t.jpg"}, {"n": "Finitura con stacchi", "code": "", "hex": "#717377", "img": "/img/deco_l/infinito_13.jpg", "px": 621, "th": "/img/deco_l/infinito_13_t.jpg"}, {"n": "Finitura materica", "code": "", "hex": "#B1A68F", "img": "/img/deco_l/infinito_14.jpg", "px": 614, "th": "/img/deco_l/infinito_14_t.jpg"}], "riflesso": [{"n": "Rosso", "code": "", "hex": "#8B1F16", "img": "/img/deco_l/riflesso_11.jpg", "px": 441, "th": "/img/deco_l/riflesso_11_t.jpg"}], "plasma_marmi": [{"n": "Marmo venato", "code": "", "hex": "#A2626A", "img": "/img/deco_l/plasma_marmi_15.jpg", "px": 1080, "th": "/img/deco_l/plasma_marmi_15_t.jpg"}], "bi_plasma_metal": [{"n": "Velature metalliche", "code": "", "hex": "#706658", "img": "/img/deco_l/bi_plasma_metal_16.jpg", "px": 747, "th": "/img/deco_l/bi_plasma_metal_16_t.jpg"}], "kymera": [{"n": "Verde rame e ruggine", "code": "", "hex": "#564E46", "img": "/img/deco_l/kymera_17.jpg", "px": 871, "th": "/img/deco_l/kymera_17_t.jpg"}, {"n": "Ruggine", "code": "", "hex": "#7B5436", "img": "/img/deco_l/kymera_18.jpg", "px": 1080, "th": "/img/deco_l/kymera_18_t.jpg"}, {"n": "Verde rame", "code": "", "hex": "#5B8366", "img": "/img/deco_l/kymera_19.jpg", "px": 589, "th": "/img/deco_l/kymera_19_t.jpg"}, {"n": "Turchese rame", "code": "", "hex": "#4C727C", "img": "/img/deco_l/kymera_20.jpg", "px": 560, "th": "/img/deco_l/kymera_20_t.jpg"}], "keytown": [{"n": "Ruggine scura", "code": "", "hex": "#5A4D3A", "img": "/img/deco_l/keytown_21.jpg", "px": 622, "th": "/img/deco_l/keytown_21_t.jpg"}]}, "tex": {"microloggia": "/img/deco_l/micro_A2910010N_t.jpg", "mantra": "/img/deco_l/mantra_2_t.jpg", "volare": "/img/deco_l/volare_V540112X_t.jpg", "infinito": "/img/deco_l/infinito_12_t.jpg", "riflesso": "/img/deco_l/riflesso_11_t.jpg", "plasma_marmi": "/img/deco_l/plasma_marmi_15_t.jpg", "bi_plasma_metal": "/img/deco_l/bi_plasma_metal_16_t.jpg", "kymera": "/img/deco_l/kymera_17_t.jpg", "keytown": "/img/deco_l/keytown_21_t.jpg"}};
+  var RD_DECO_OLD = RD_DECO, RD_DECO_NEW = {"fam": [{"id": "micro", "n": "Microcemento", "s": "Superfici continue, senza fughe", "items": [{"k": "microloggia", "n": "Microloggia", "d": "58 colori della cartella", "u": "ie", "l": "Microloggia"}]}, {"id": "mantra", "n": "Metallo a pennello", "s": "Metallo vero steso a pennello", "items": [{"k": "mantra", "n": "Mantra", "d": "Ottone, stagno, bronzo, rame, ossidazioni e stencil", "u": "i", "l": "Mantra"}]}, {"id": "calce", "n": "Calce e stucchi", "s": "Minerali, materici e stucchi a specchio", "items": [{"k": "volare", "n": "Volare", "d": "Minerale super opaco · 4 colori", "u": "ie", "l": "Decor Line"}, {"k": "infinito", "n": "Infinito", "d": "Materico a calce", "u": "ie", "l": "Decor Line"}, {"k": "riflesso", "n": "Riflesso", "d": "Stucco a specchio", "u": "i", "l": "Decor Line"}]}, {"id": "marmi", "n": "Marmo", "s": "Marmo in rilievo", "items": [{"k": "plasma_marmi", "n": "Plasma 3D", "d": "Marmo venato", "u": "i", "l": "Decor Line"}]}, {"id": "metalli", "n": "Metalli e ruggine", "s": "Metallo, ruggine e ossidazioni", "items": [{"k": "kymera", "n": "Kymera", "d": "Ruggine e ossidazioni · 4 finiture", "u": "i", "l": "Decor Line"}, {"k": "bi_plasma_metal", "n": "Bi Plasma 3D Metal", "d": "Metallo in rilievo", "u": "i", "l": "Decor Line"}, {"k": "keytown", "n": "Keytown", "d": "Metalli invecchiati", "u": "ie", "l": "Decor Line"}]}], "sw": {"microloggia": [{"n": "A2910010N", "code": "A2910010N", "hex": "#D1C8BA", "img": "/img/dl_micro_A2910010N.jpg", "px": 1080, "th": "/img/dl_micro_A2910010N_t.jpg"}, {"n": "A2910020", "code": "A2910020", "hex": "#E8E2D7", "img": "/img/dl_micro_A2910020.jpg", "px": 1080, "th": "/img/dl_micro_A2910020_t.jpg"}, {"n": "A2910030", "code": "A2910030", "hex": "#5E645F", "img": "/img/dl_micro_A2910030.jpg", "px": 1080, "th": "/img/dl_micro_A2910030_t.jpg"}, {"n": "A2910040", "code": "A2910040", "hex": "#ECCFAC", "img": "/img/dl_micro_A2910040.jpg", "px": 1080, "th": "/img/dl_micro_A2910040_t.jpg"}, {"n": "A2910050", "code": "A2910050", "hex": "#DED0A1", "img": "/img/dl_micro_A2910050.jpg", "px": 1080, "th": "/img/dl_micro_A2910050_t.jpg"}, {"n": "A2910060", "code": "A2910060", "hex": "#DBD6C8", "img": "/img/dl_micro_A2910060.jpg", "px": 1080, "th": "/img/dl_micro_A2910060_t.jpg"}, {"n": "A2910070", "code": "A2910070", "hex": "#857B7C", "img": "/img/dl_micro_A2910070.jpg", "px": 1080, "th": "/img/dl_micro_A2910070_t.jpg"}, {"n": "A2910080", "code": "A2910080", "hex": "#B4A79A", "img": "/img/dl_micro_A2910080.jpg", "px": 1080, "th": "/img/dl_micro_A2910080_t.jpg"}, {"n": "A2910090", "code": "A2910090", "hex": "#D1C9C2", "img": "/img/dl_micro_A2910090.jpg", "px": 1080, "th": "/img/dl_micro_A2910090_t.jpg"}, {"n": "A2910100", "code": "A2910100", "hex": "#AFA895", "img": "/img/dl_micro_A2910100.jpg", "px": 1080, "th": "/img/dl_micro_A2910100_t.jpg"}, {"n": "A2910110", "code": "A2910110", "hex": "#6F6363", "img": "/img/dl_micro_A2910110.jpg", "px": 1080, "th": "/img/dl_micro_A2910110_t.jpg"}, {"n": "A2910120", "code": "A2910120", "hex": "#9A8C85", "img": "/img/dl_micro_A2910120.jpg", "px": 1080, "th": "/img/dl_micro_A2910120_t.jpg"}, {"n": "A2910130", "code": "A2910130", "hex": "#ADA097", "img": "/img/dl_micro_A2910130.jpg", "px": 1080, "th": "/img/dl_micro_A2910130_t.jpg"}, {"n": "A2910140", "code": "A2910140", "hex": "#D4C6BB", "img": "/img/dl_micro_A2910140.jpg", "px": 1080, "th": "/img/dl_micro_A2910140_t.jpg"}, {"n": "A2910150", "code": "A2910150", "hex": "#75777B", "img": "/img/dl_micro_A2910150.jpg", "px": 1080, "th": "/img/dl_micro_A2910150_t.jpg"}, {"n": "A2910160", "code": "A2910160", "hex": "#816A5D", "img": "/img/dl_micro_A2910160.jpg", "px": 1080, "th": "/img/dl_micro_A2910160_t.jpg"}, {"n": "A2910170", "code": "A2910170", "hex": "#917E6E", "img": "/img/dl_micro_A2910170.jpg", "px": 1080, "th": "/img/dl_micro_A2910170_t.jpg"}, {"n": "A2910180", "code": "A2910180", "hex": "#C2B3A2", "img": "/img/dl_micro_A2910180.jpg", "px": 1080, "th": "/img/dl_micro_A2910180_t.jpg"}, {"n": "A2910190", "code": "A2910190", "hex": "#7F4639", "img": "/img/dl_micro_A2910190.jpg", "px": 1080, "th": "/img/dl_micro_A2910190_t.jpg"}, {"n": "A2910200", "code": "A2910200", "hex": "#604D42", "img": "/img/dl_micro_A2910200.jpg", "px": 1080, "th": "/img/dl_micro_A2910200_t.jpg"}, {"n": "A2910210", "code": "A2910210", "hex": "#7D6855", "img": "/img/dl_micro_A2910210.jpg", "px": 1080, "th": "/img/dl_micro_A2910210_t.jpg"}, {"n": "A2910220", "code": "A2910220", "hex": "#A38C78", "img": "/img/dl_micro_A2910220.jpg", "px": 1080, "th": "/img/dl_micro_A2910220_t.jpg"}, {"n": "A2910230", "code": "A2910230", "hex": "#7B756E", "img": "/img/dl_micro_A2910230.jpg", "px": 1080, "th": "/img/dl_micro_A2910230_t.jpg"}, {"n": "A2910240", "code": "A2910240", "hex": "#C6C7BE", "img": "/img/dl_micro_A2910240.jpg", "px": 1080, "th": "/img/dl_micro_A2910240_t.jpg"}, {"n": "A2910250", "code": "A2910250", "hex": "#D0CEC6", "img": "/img/dl_micro_A2910250.jpg", "px": 1080, "th": "/img/dl_micro_A2910250_t.jpg"}, {"n": "A2910260", "code": "A2910260", "hex": "#CFD0C7", "img": "/img/dl_micro_A2910260.jpg", "px": 1080, "th": "/img/dl_micro_A2910260_t.jpg"}, {"n": "A2910270", "code": "A2910270", "hex": "#6B6761", "img": "/img/dl_micro_A2910270.jpg", "px": 1080, "th": "/img/dl_micro_A2910270_t.jpg"}, {"n": "A2910280", "code": "A2910280", "hex": "#A5A6A4", "img": "/img/dl_micro_A2910280.jpg", "px": 1080, "th": "/img/dl_micro_A2910280_t.jpg"}, {"n": "A2910290", "code": "A2910290", "hex": "#B9B6AF", "img": "/img/dl_micro_A2910290.jpg", "px": 1080, "th": "/img/dl_micro_A2910290_t.jpg"}, {"n": "A2910300", "code": "A2910300", "hex": "#BDB9B2", "img": "/img/dl_micro_A2910300.jpg", "px": 1080, "th": "/img/dl_micro_A2910300_t.jpg"}, {"n": "A2910310", "code": "A2910310", "hex": "#86887D", "img": "/img/dl_micro_A2910310.jpg", "px": 1080, "th": "/img/dl_micro_A2910310_t.jpg"}, {"n": "A2910320", "code": "A2910320", "hex": "#8F8E8C", "img": "/img/dl_micro_A2910320.jpg", "px": 1080, "th": "/img/dl_micro_A2910320_t.jpg"}, {"n": "A2910330", "code": "A2910330", "hex": "#BFB4A6", "img": "/img/dl_micro_A2910330.jpg", "px": 1080, "th": "/img/dl_micro_A2910330_t.jpg"}, {"n": "A2910340", "code": "A2910340", "hex": "#AD8D52", "img": "/img/dl_micro_A2910340.jpg", "px": 1080, "th": "/img/dl_micro_A2910340_t.jpg"}, {"n": "A2910350", "code": "A2910350", "hex": "#CAB17E", "img": "/img/dl_micro_A2910350.jpg", "px": 1080, "th": "/img/dl_micro_A2910350_t.jpg"}, {"n": "A2910360", "code": "A2910360", "hex": "#D0C1A2", "img": "/img/dl_micro_A2910360.jpg", "px": 1080, "th": "/img/dl_micro_A2910360_t.jpg"}, {"n": "A2910370", "code": "A2910370", "hex": "#DEB665", "img": "/img/dl_micro_A2910370.jpg", "px": 1080, "th": "/img/dl_micro_A2910370_t.jpg"}, {"n": "A2910380", "code": "A2910380", "hex": "#E4C087", "img": "/img/dl_micro_A2910380.jpg", "px": 1080, "th": "/img/dl_micro_A2910380_t.jpg"}, {"n": "A2910390", "code": "A2910390", "hex": "#9DB4D6", "img": "/img/dl_micro_A2910390.jpg", "px": 1080, "th": "/img/dl_micro_A2910390_t.jpg"}, {"n": "A2910400", "code": "A2910400", "hex": "#E4C4AF", "img": "/img/dl_micro_A2910400.jpg", "px": 1080, "th": "/img/dl_micro_A2910400_t.jpg"}, {"n": "A2910410", "code": "A2910410", "hex": "#EBA319", "img": "/img/dl_micro_A2910410.jpg", "px": 1080, "th": "/img/dl_micro_A2910410_t.jpg"}, {"n": "A2910420", "code": "A2910420", "hex": "#8D9CA8", "img": "/img/dl_micro_A2910420.jpg", "px": 1080, "th": "/img/dl_micro_A2910420_t.jpg"}, {"n": "A2910430", "code": "A2910430", "hex": "#E3B297", "img": "/img/dl_micro_A2910430.jpg", "px": 1080, "th": "/img/dl_micro_A2910430_t.jpg"}, {"n": "A2910440", "code": "A2910440", "hex": "#D3D7AE", "img": "/img/dl_micro_A2910440.jpg", "px": 1080, "th": "/img/dl_micro_A2910440_t.jpg"}, {"n": "A2910450", "code": "A2910450", "hex": "#81A176", "img": "/img/dl_micro_A2910450.jpg", "px": 1080, "th": "/img/dl_micro_A2910450_t.jpg"}, {"n": "A2910460", "code": "A2910460", "hex": "#BD6A5E", "img": "/img/dl_micro_A2910460.jpg", "px": 1080, "th": "/img/dl_micro_A2910460_t.jpg"}, {"n": "A2910470", "code": "A2910470", "hex": "#4C4542", "img": "/img/dl_micro_A2910470.jpg", "px": 1080, "th": "/img/dl_micro_A2910470_t.jpg"}, {"n": "A2910480", "code": "A2910480", "hex": "#767474", "img": "/img/dl_micro_A2910480.jpg", "px": 1080, "th": "/img/dl_micro_A2910480_t.jpg"}, {"n": "A2910490", "code": "A2910490", "hex": "#89898B", "img": "/img/dl_micro_A2910490.jpg", "px": 1080, "th": "/img/dl_micro_A2910490_t.jpg"}, {"n": "A2910500", "code": "A2910500", "hex": "#A3A3A0", "img": "/img/dl_micro_A2910500.jpg", "px": 1080, "th": "/img/dl_micro_A2910500_t.jpg"}, {"n": "A2910510", "code": "A2910510", "hex": "#B7B6AE", "img": "/img/dl_micro_A2910510.jpg", "px": 1080, "th": "/img/dl_micro_A2910510_t.jpg"}, {"n": "A2910520", "code": "A2910520", "hex": "#C5C6BE", "img": "/img/dl_micro_A2910520.jpg", "px": 1080, "th": "/img/dl_micro_A2910520_t.jpg"}, {"n": "A2910530", "code": "A2910530", "hex": "#C3C1B8", "img": "/img/dl_micro_A2910530.jpg", "px": 1080, "th": "/img/dl_micro_A2910530_t.jpg"}, {"n": "A2910540", "code": "A2910540", "hex": "#DCD9C9", "img": "/img/dl_micro_A2910540.jpg", "px": 1080, "th": "/img/dl_micro_A2910540_t.jpg"}, {"n": "A2910550", "code": "A2910550", "hex": "#E9E6D8", "img": "/img/dl_micro_A2910550.jpg", "px": 1080, "th": "/img/dl_micro_A2910550_t.jpg"}, {"n": "A2910560", "code": "A2910560", "hex": "#BAAE9B", "img": "/img/dl_micro_A2910560.jpg", "px": 1080, "th": "/img/dl_micro_A2910560_t.jpg"}, {"n": "A2910570", "code": "A2910570", "hex": "#C2B7A9", "img": "/img/dl_micro_A2910570.jpg", "px": 1080, "th": "/img/dl_micro_A2910570_t.jpg"}, {"n": "A2910580", "code": "A2910580", "hex": "#CBC8BF", "img": "/img/dl_micro_A2910580.jpg", "px": 1080, "th": "/img/dl_micro_A2910580_t.jpg"}], "mantra": [{"n": "Ottone", "code": "", "hex": "#AB915D", "img": "/img/dl_mantra_2.jpg", "px": 998, "th": "/img/dl_mantra_2_t.jpg"}, {"n": "Stagno · stencil Athena", "code": "", "hex": "#98A1A1", "img": "/img/dl_mantra_3.jpg", "px": 1080, "th": "/img/dl_mantra_3_t.jpg"}, {"n": "Bronzo · stencil Athena", "code": "", "hex": "#836449", "img": "/img/dl_mantra_4.jpg", "px": 620, "th": "/img/dl_mantra_4_t.jpg"}, {"n": "Rame ossidato · stencil Ibisco", "code": "", "hex": "#958D84", "img": "/img/dl_mantra_5.jpg", "px": 1080, "th": "/img/dl_mantra_5_t.jpg"}, {"n": "Ottone ossidato · stencil Dragon", "code": "", "hex": "#719A85", "img": "/img/dl_mantra_6.jpg", "px": 814, "th": "/img/dl_mantra_6_t.jpg"}, {"n": "Ottone · stencil Jasmine", "code": "", "hex": "#A7875B", "img": "/img/dl_mantra_7.jpg", "px": 875, "th": "/img/dl_mantra_7_t.jpg"}, {"n": "Rame e bronzo ossidati", "code": "", "hex": "#776142", "img": "/img/dl_mantra_8.jpg", "px": 662, "th": "/img/dl_mantra_8_t.jpg"}], "volare": [{"n": "V540112X", "code": "V540112X", "hex": "#BAB6A6", "img": "/img/dl_volare_V540112X.jpg", "px": 1080, "th": "/img/dl_volare_V540112X_t.jpg"}, {"n": "V540113X", "code": "V540113X", "hex": "#B3B090", "img": "/img/dl_volare_V540113X.jpg", "px": 1080, "th": "/img/dl_volare_V540113X_t.jpg"}, {"n": "V540131X", "code": "V540131X", "hex": "#FDEDE6", "img": "/img/dl_volare_V540131X.jpg", "px": 1080, "th": "/img/dl_volare_V540131X_t.jpg"}, {"n": "V540132X", "code": "V540132X", "hex": "#FDE5DA", "img": "/img/dl_volare_V540132X.jpg", "px": 1080, "th": "/img/dl_volare_V540132X_t.jpg"}], "infinito": [{"n": "Parete", "code": "", "hex": "#988D7E", "img": "/img/dl_infinito_12.jpg", "px": 521, "th": "/img/dl_infinito_12_t.jpg"}, {"n": "Finitura con stacchi", "code": "", "hex": "#717377", "img": "/img/dl_infinito_13.jpg", "px": 621, "th": "/img/dl_infinito_13_t.jpg"}, {"n": "Finitura materica", "code": "", "hex": "#B1A68F", "img": "/img/dl_infinito_14.jpg", "px": 614, "th": "/img/dl_infinito_14_t.jpg"}], "riflesso": [{"n": "Rosso", "code": "", "hex": "#8B1F16", "img": "/img/dl_riflesso_11.jpg", "px": 441, "th": "/img/dl_riflesso_11_t.jpg"}], "plasma_marmi": [{"n": "Marmo venato", "code": "", "hex": "#A2626A", "img": "/img/dl_plasma_marmi_15.jpg", "px": 1080, "th": "/img/dl_plasma_marmi_15_t.jpg"}], "bi_plasma_metal": [{"n": "Velature metalliche", "code": "", "hex": "#706658", "img": "/img/dl_bi_plasma_metal_16.jpg", "px": 747, "th": "/img/dl_bi_plasma_metal_16_t.jpg"}], "kymera": [{"n": "Verde rame e ruggine", "code": "", "hex": "#564E46", "img": "/img/dl_kymera_17.jpg", "px": 871, "th": "/img/dl_kymera_17_t.jpg"}, {"n": "Ruggine", "code": "", "hex": "#7B5436", "img": "/img/dl_kymera_18.jpg", "px": 1080, "th": "/img/dl_kymera_18_t.jpg"}, {"n": "Verde rame", "code": "", "hex": "#5B8366", "img": "/img/dl_kymera_19.jpg", "px": 589, "th": "/img/dl_kymera_19_t.jpg"}, {"n": "Turchese rame", "code": "", "hex": "#4C727C", "img": "/img/dl_kymera_20.jpg", "px": 560, "th": "/img/dl_kymera_20_t.jpg"}], "keytown": [{"n": "Ruggine scura", "code": "", "hex": "#5A4D3A", "img": "/img/dl_keytown_21.jpg", "px": 622, "th": "/img/dl_keytown_21_t.jpg"}]}, "tex": {"microloggia": "/img/dl_micro_A2910010N_t.jpg", "mantra": "/img/dl_mantra_2_t.jpg", "volare": "/img/dl_volare_V540112X_t.jpg", "infinito": "/img/dl_infinito_12_t.jpg", "riflesso": "/img/dl_riflesso_11_t.jpg", "plasma_marmi": "/img/dl_plasma_marmi_15_t.jpg", "bi_plasma_metal": "/img/dl_bi_plasma_metal_16_t.jpg", "kymera": "/img/dl_kymera_17_t.jpg", "keytown": "/img/dl_keytown_21_t.jpg"}};
   RD_DECO_NEW.tints = RD_DECO_OLD.tints; RD_DECO_NEW.metals = RD_DECO_OLD.metals; RD_DECO_NEW.prot = RD_DECO_OLD.prot;
   function decoSyncCat(){ try{ var want = rdIsStaff() ? RD_DECO_NEW : RD_DECO_OLD; if(RD_DECO !== want){ RD_DECO = want; state.deco = null; } }catch(e){} }
   window.decoSyncCat = decoSyncCat;
@@ -13307,6 +13381,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(window.__rdV2Ready) rdV2Sync();
       try{ if(window.pnSync) window.pnSync(); }catch(e){}
       try{ if(window.decoSyncCat) window.decoSyncCat(); }catch(e){}
+      try{ if(window.cpSync) window.cpSync(); }catch(e){}
       if(isProAcc && typeof ldRefreshBadge === 'function') ldRefreshBadge();
       if(proAccount && typeof tfPending !== 'undefined' && tfPending){ tfPending = false; setTimeout(function(){ tfOpen(); }, 300); }
     }
@@ -16296,7 +16371,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function rxAgCard(e){
     var d = e.data, ic = RX_AGT[d.tipo] || RX_AGT.altro;
     return '<div class="rx-card' + (d.fatto ? ' done' : '') + '" data-rxag="' + e.id + '"><div class="rx-card-t"><span class="rx-time">' + qEsc(d.ora || '—') + '</span><div><b>' + ic[0] + ' ' + qEsc(d.titolo || ic[1]) + '</b><i>' + qEsc([d.cliente, d.indirizzo].filter(Boolean).join(' · ') || (d.data ? rxDay(d.data) : '')) + '</i></div></div>'
-      + (d.fatto ? '' : '<div class="rx-card-a">' + (d.telefono ? '<button type="button" class="q-link" data-rxagwa="' + e.id + '">💬 Avvisa il cliente</button>' : '') + '<button type="button" class="q-link" data-rxagcal="' + e.id + '">📅 Nel calendario del telefono</button></div>') + '</div>';
+      + (d.fatto ? '' : '<div class="rx-card-a">' + (d.telefono ? '<button type="button" class="q-link" data-rxagwa="' + e.id + '">💬 Avvisa il cliente</button>' : '') + (window.ag2On && window.ag2On() ? '' : '<button type="button" class="q-link" data-rxagcal="' + e.id + '">📅 Nel calendario del telefono</button>') + '</div>') + '</div>';
   }
   function rxAgTesto(d){
     return 'Buongiorno' + (d.cliente ? ' ' + d.cliente : '') + ', le confermo ' + (d.tipo === 'sopralluogo' ? 'il sopralluogo' : d.tipo === 'lavoro' ? "l'inizio dei lavori" : "l'appuntamento") + ' per ' + rxDay(d.data) + (d.ora ? ' alle ' + d.ora : '') + (d.indirizzo ? ' in ' + d.indirizzo : '') + '. Se ha bisogno di spostarlo mi scriva pure qui.\n' + rxImpresa();
@@ -16312,6 +16387,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     rxShareFile(btoa(unescape(encodeURIComponent(ics))), 'appuntamento.ics', 'text/calendar', '', 'Aggiungi al calendario').catch(function(){});
   }
   function rxAgendaForm(item, pre){
+    if(!item && window.ag2On && window.ag2On()) return window.agNew(pre || {});
     pre = pre || {}; var d = Object.assign({ tipo:'sopralluogo', titolo:'', cliente:'', telefono:'', indirizzo:'', data: rxToday(), ora:'09:00', note:'', fatto:false }, pre);
     var box = rxOpen(item ? 'Appuntamento' : 'Nuovo appuntamento', rxAgenda);
     box.innerHTML = '<div class="pf-sec" style="margin-top:0">Che cosa?</div><div class="so-opts" id="rxAgT" style="margin-bottom:12px">' + Object.keys(RX_AGT).map(function(k){ return '<button type="button" class="pf-chip' + (d.tipo === k ? ' on' : '') + '" data-v="' + k + '">' + RX_AGT[k][0] + ' ' + RX_AGT[k][1] + '</button>'; }).join('') + '</div>'
@@ -16887,6 +16963,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var todo = L.filter(function(c){ return c.aperto !== false && c.next; });
     var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">Da fare oggi</h1>'
       + '<span class="s2-sub">' + (todo.length ? (todo.length === 1 ? '1 cliente aspetta te' : todo.length + ' clienti aspettano te') : 'Nessun cliente in attesa') + '</span></div></div>';
+    if(window.agEsitoHtml) h += window.agEsitoHtml(L);
     if(sera) h += ccSeraHtml(sera, tar);
     if(todo.length){
       var c0 = todo[0], i0 = L.indexOf(c0);
@@ -17713,6 +17790,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   var CT_COSA_LN = {"ant": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 5h14a4 4 0 0 1 4 4v12\"/><rect x=\"4\" y=\"9\" width=\"20\" height=\"17\" rx=\"3\"/><circle cx=\"10\" cy=\"14.5\" r=\"2\"/><path d=\"M4 23l6-5 4.5 3.5L18 18l6 5\"/></svg>", "app": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"7\" width=\"22\" height=\"20\" rx=\"3\"/><path d=\"M5 13h22M11 4v6M21 4v6\"/></svg>", "sopr": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 26V6l20 20z\"/><path d=\"M11 21v-5l5 5zM6 11h3M6 16h3M6 21h2\"/></svg>", "prev": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 4h10l6 6v17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z\"/><path d=\"M19 4v6h6M12 17h9M12 22h6\"/></svg>", "fine": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"16\" cy=\"16\" r=\"11\"/><path d=\"M11 16.5l3.5 3.5 7-8\"/></svg>", "rev": "<svg viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4.5l3.4 7 7.6 1.1-5.5 5.4 1.3 7.6L16 22l-6.8 3.6 1.3-7.6L5 12.6l7.6-1.1z\"/></svg>"};
   function ctCosaHtml(){ return '<div class="ct-cosa">' + CT_COSA.map(function(x){ return '<button type="button" data-cosa="' + x[0] + '"><span><em class="ce">' + x[1] + '</em><em class="cl">' + (CT_COSA_LN[x[0]] || '') + '</em></span><b>' + x[2] + '</b><i>' + x[3] + '</i></button>'; }).join('') + '</div>'; }
   function ctCosaGo(k){
+    if(k === 'app' && window.ag2On && window.ag2On()){ rxClose(); return window.agNew({}); }
     if(k === 'voto'){ rxClose(); rxVoti(); return; }
     if(k === 'ant'){ rxClose(); ppClose(); var lp = document.getElementById('landingPro'); if(lp) lp.click(); return; }
     if(k === 'sopr'){ rxClose(); soNew(); return; }
@@ -17876,6 +17954,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(rdS1()){ v3HomeS1(box, L, sera, tar); return; }
       var h = '<div class="v3h"><div><span class="v3d">' + qEsc(data) + '</span><h1 class="v3t">I tuoi cantieri</h1></div>' + (L.length ? '<button type="button" class="v3all" id="v3All">Tutti ›</button>' : '') + '</div>';
       if(stories.length) h += '<div class="v3st">' + stories.map(function(c, i){ return '<button type="button" class="v3s" data-v3s="' + i + '"><span class="v3r ' + (c._new || c._td ? 'new' : c.aperto ? 'on' : 'seen') + '"><span class="v3a" style="' + v3Bg(c) + '">' + (c.img ? '' : c.cover ? '<img class="v3blur" src="' + qEsc(c.cover) + '" alt="">' : qEsc(ctIni(c.nome))) + '</span></span><b>' + qEsc(v3First(c.nome)) + '</b><i>' + qEsc(v3Sub(c)) + '</i></button>'; }).join('') + '</div>';
+      if(window.agEsitoHtml) h += window.agEsitoHtml(L);
       if(sera) h += ccSeraHtml(sera, tar);
       h += invHomeHtml();
       h += inHomeHtml(L);
@@ -17973,11 +18052,11 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(b){ b.classList.add('wait'); }
     fetch(u, { mode:'cors' }).then(function(r){ if(!r.ok) throw r; return r.blob(); }).then(function(bl){
       var f = new File([bl], 'foto_cantiere.' + (/png/.test(bl.type) ? 'png' : 'jpg'), { type: bl.type || 'image/jpeg' });
-      ov.hidden = true; v3Start(f, null);
+      ov.hidden = true; v3Start(f, (window.cpTryLens && window.cpTryLens()) || null);
     }).catch(function(){ if(b) b.classList.remove('wait'); var m = ov.querySelector('.nb-err'); if(m) m.textContent = 'Non riesco a prendere questa foto. Riprova o scegline un’altra.'; });
   }
   function nbBind(ov){
-    ['v3F', 'v3G'].forEach(function(id){ var i = document.getElementById(id); if(i) i.addEventListener('change', function(){ var f = this.files && this.files[0]; this.value = ''; if(!f) return; ov.hidden = true; v3Start(f, null); }); });
+    ['v3F', 'v3G'].forEach(function(id){ var i = document.getElementById(id); if(i) i.addEventListener('change', function(){ var f = this.files && this.files[0]; this.value = ''; if(!f) return; ov.hidden = true; v3Start(f, (window.cpTryLens && window.cpTryLens()) || null); }); });
     ov.querySelectorAll('[data-nbu]').forEach(function(b){ b.addEventListener('click', function(){ nbUse(b.dataset.nbu, b, ov); }); });
   }
   function v3CamB(){
@@ -18205,7 +18284,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var ok = t && t.mia, chi = t && t.operai === false ? '1-0' : '1-1';
     return '<div class="cc-eve" id="ccEve"><div class="k">🌙 FINE GIORNATA</div><h3>Com’è andata da ' + qEsc(v3First(c.nome)) + ' oggi?</h3><p>Segna le ore, ci vogliono due secondi.</p>'
       + (ok ? ccChips('chi', ccChi(t).slice(0, 3), chi) + ccChips('ore', [['4', 'Mezza giornata'], ['8', 'Giornata']], '8') : '')
-      + '<button type="button" class="cc-eok" id="ccEveOk">' + (ok ? '' : 'Segna le ore') + '</button><button type="button" class="cc-eno" id="ccEveNo">Oggi non ci sono andato</button></div>';
+      + '<button type="button" class="cc-eok" id="ccEveOk">' + (ok ? '' : 'Segna le ore') + '</button>' + (window.ag2On && window.ag2On() ? '<button type="button" class="cc-eok ag2-fin" id="ccEveFin">🏁 Lavoro finito</button>' : '') + '<button type="button" class="cc-eno" id="ccEveNo">Oggi non ci sono andato</button></div>';
   }
   function ccSeraBind(box, c, t){
     var el = document.getElementById('ccEve'); if(!el) return;
@@ -18221,6 +18300,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         .catch(function(e){ ok.disabled = false; calc(); el.querySelector('p').textContent = rxErr(e); });
     });
     document.getElementById('ccEveNo').addEventListener('click', function(){ try{ localStorage.setItem(ccSeraKey(c), '1'); }catch(e){} el.remove(); });
+    var fin = document.getElementById('ccEveFin'); if(fin) fin.addEventListener('click', function(){ ct.list = v3.list; ctChiudi(c); });
   }
   // ---------- IBAN solo alla conferma (per ora solo account di prova) ----------
   function qbEl(){
@@ -19734,6 +19814,351 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(typeof proCheckSession === 'function') setTimeout(proCheckSession, 2500);
     }, 800);
   })();
+  // ---------- Campionario: tutte le texture e le cartelle colori, con schede tecniche (per ora solo account di prova) ----------
+  var CP = { schede:null, back:[] };
+  function cpOn(){ try{ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsStaff()); }catch(e){ return false; } }
+  function cpPal(k){ try{ return (PALETTES[k] || []).slice(); }catch(e){ return []; } }
+  function cpSections(){
+    var dn = (typeof RD_DECO_NEW !== 'undefined' && RD_DECO_NEW) || null, deco = [];
+    if(dn) dn.fam.forEach(function(f){ f.items.forEach(function(it){ var L = (dn.sw[it.k] || []).map(function(c){ return { name:c.n, code:c.code || '', hex:c.hex, th:c.th, big:c.img }; }); if(L.length) deco.push({ id:'d_' + it.k, n:it.n, d:(/colori/i.test(it.d || '') ? '' : it.d), list:L, sk:it.k, mat:'imbiancatura', lens:'imbiancatura', lav:'imbiancatura', deco:it.n }); }); });
+    var pia = cpPal('piastrelle'); try{ pia = pia.concat((RD_PAL_PROVA && RD_PAL_PROVA.piastrelle) || []); }catch(e){}
+    var S = [
+      { id:'pittura', n:'Pittura e facciate', d:'RAL · NCS · Sikkens · serramenti', groups:[
+        { id:'ral', n:'RAL', d:'Cartella RAL', list:(typeof RAL_CLASSIC !== 'undefined' ? RAL_CLASSIC : []), sk:'ral', mat:'imbiancatura', lens:'imbiancatura', catalog:'ral', lav:'imbiancatura' },
+        { id:'ncs', n:'NCS', d:'Cartella NCS', list:(typeof NCS_PALETTE !== 'undefined' ? NCS_PALETTE : []), sk:'ncs', mat:'imbiancatura', lens:'imbiancatura', catalog:'ncs', lav:'imbiancatura' },
+        { id:'sik', n:'Sikkens 5051', d:'Cartella Sikkens', list:(typeof SIKKENS_5051 !== 'undefined' ? SIKKENS_5051 : []), sk:'sikkens', mat:'imbiancatura', lens:'imbiancatura', catalog:'sikkens', lav:'imbiancatura' },
+        { id:'ser', n:'Serramenti', d:'Colori di infissi e persiane', list:cpPal('serramenti'), sk:'serramenti', mat:'imbiancatura', lens:'imbiancatura', lav:'imbiancatura' } ] },
+      { id:'deco', n:'Pareti decorate', d:'Microloggia, Mantra, Volare, Kymera…', groups:deco },
+      { id:'resine', n:'Resine', d:'Spatolato, marmo, terrazzo, pietra, HACCP', groups:[
+        { id:'spat', n:'Resina spatolata', d:'Monolith', list:cpPal('monolith_spatolato'), key:'resina_reale', sk:'monolith_spatolato', mat:'monolith_spatolato', lens:'monolith', lav:'monolith' },
+        { id:'marmo', n:'Effetto marmo', d:'Monolith', list:cpPal('monolith_marmo'), key:'marmo', sk:'monolith_marmo', mat:'monolith_marmo', lens:'monolith', lav:'monolith' },
+        { id:'terr', n:'Effetto terrazzo', d:'Monolith', list:cpPal('monolith_terrazzo'), key:'terrazzo', sk:'monolith_terrazzo', mat:'monolith_terrazzo', lens:'monolith', lav:'monolith' },
+        { id:'pietra', n:'Effetto pietra', d:'Monolith', list:cpPal('monolith_pietra'), key:'pietra', sk:'monolith_pietra', mat:'monolith_pietra', lens:'monolith', lav:'monolith' },
+        { id:'haccp', n:'Resina HACCP', d:'Industriale', list:cpPal('resina_haccp'), key:'resina', sk:'resina_haccp', mat:'resina_haccp', lens:'monolith', lav:'resina_haccp' },
+        { id:'met', n:'Metallici', d:'Effetti metallo', list:cpPal('metallico'), sk:'metallico', mat:'metallico', lens:'monolith', lav:'monolith' } ] },
+      { id:'micro', n:'Microcemento', d:'La cartella completa', groups:[ { id:'micro', n:'Microcemento', d:'', list:cpPal('microcemento'), key:'micro_reale', sk:'microcemento', mat:'microcemento', lens:'microcemento', lav:'microcemento' } ] },
+      { id:'legno', n:'Pavimenti in legno', d:'Parquet, laminato, SPC', groups:[
+        { id:'parq', n:'Parquet', d:'', list:cpPal('parquet'), key:'parquet', sk:'parquet', mat:'parquet', lens:'legno', lav:'parquet' },
+        { id:'lam', n:'Laminato', d:'', list:cpPal('laminato'), key:'parquet', sk:'laminato', mat:'laminato', lens:'legno', lav:'laminato' },
+        { id:'spc', n:'SPC', d:'', list:cpPal('spc'), key:'parquet', sk:'spc', mat:'spc', lens:'legno', lav:'spc' } ] },
+      { id:'pia', n:'Piastrelle', d:'Piastrelle e lastre', groups:[ { id:'pia', n:'Piastrelle', d:'', list:pia, key:'piastrelle', sk:'piastrelle', mat:'piastrelle', lens:'piastrelle', lav:'piastrelle' } ] },
+      { id:'est', n:'Esterni', d:'Graniglia', groups:[ { id:'gran', n:'Graniglia per esterni', d:'', list:cpPal('graniglia_esterni'), sk:'graniglia_esterni', mat:'graniglia_esterni', lens:'graniglia_esterni', lav:'graniglia_esterni' } ] }
+    ];
+    S.forEach(function(s){ s.groups = s.groups.filter(function(g){ return g.list && g.list.length; }); });
+    return S.filter(function(s){ return s.groups.length; });
+  }
+  function cpBg(c, g, big){
+    if(c.th) return 'background-image:url(' + (big ? c.big : c.th) + ');background-size:cover;background-position:center;';
+    if(c.img) return 'background-image:url(' + c.img + ');background-size:cover;background-position:center;';
+    var k = c.tex || g.key;
+    try{ if(k && MAT_TEX[k]) return texStyle(c.hex, k, null, big); }catch(e){}
+    return 'background:' + (c.hex || '#ccc') + ';';
+  }
+  function cpZoomSrc(c, g){
+    if(c.th) return c.big; if(c.img) return c.img;
+    var k = c.tex || g.key; try{ if(k && MAT_TEX[k]) return tintedTex(c.hex, k, true); }catch(e){}
+    return null;
+  }
+  function cpSchede(){ if(CP.schede) return Promise.resolve(CP.schede); return qApi('cs-list', 'GET').then(function(x){ CP.schede = {}; ((x.ok && x.d.schede) || []).forEach(function(s){ CP.schede[s.key] = s; }); return CP.schede; }).catch(function(){ CP.schede = {}; return CP.schede; }); }
+  function cpSw(c, g, i){ return '<button type="button" class="cp-sw" data-cpi="' + i + '"><i style="' + cpBg(c, g) + '"></i><b>' + qEsc(c.name || c.code || '') + '</b>' + (c.code && c.code !== c.name ? '<span>' + qEsc(c.code) + '</span>' : '') + '</button>'; }
+  function cpHome(){
+    var S = cpSections(), box = rxOpen('Campionario', null);
+    var sample = function(s){ var g = s.groups[0], c = g.list[Math.floor(g.list.length / 3)]; return '<i style="' + cpBg(c, g) + '"></i>'; };
+    box.innerHTML = '<div class="cc-sub" style="margin-top:0">Tutte le texture e le cartelle colori, senza fare foto.</div><input type="search" class="cp-srch" id="cpQ" placeholder="🔎 Cerca un colore o un codice" autocomplete="off"><div id="cpRes"></div>'
+      + '<div id="cpSec">' + S.map(function(s, i){ return '<button type="button" class="cp-sec" data-cps="' + i + '">' + sample(s) + '<span><b>' + qEsc(s.n) + '</b><em>' + qEsc(s.d) + '</em></span><u>›</u></button>'; }).join('') + '</div>';
+    box.querySelectorAll('[data-cps]').forEach(function(b){ b.addEventListener('click', function(){ var s = S[+b.dataset.cps]; if(s.groups.length === 1) cpGroup(s, s.groups[0], cpHome); else cpSec(s); }); });
+    var q = document.getElementById('cpQ'), res = document.getElementById('cpRes'), sec = document.getElementById('cpSec');
+    q.addEventListener('input', function(){
+      var t = q.value.trim().toLowerCase(); if(t.length < 2){ res.innerHTML = ''; sec.hidden = false; return; }
+      sec.hidden = true; var out = [];
+      S.forEach(function(s){ s.groups.forEach(function(g){ g.list.forEach(function(c){ if(out.length < 60 && (String(c.name || '').toLowerCase().indexOf(t) > -1 || String(c.code || '').toLowerCase().indexOf(t) > -1)) out.push({ s:s, g:g, c:c }); }); }); });
+      res.innerHTML = out.length ? '<div class="cp-gr">' + out.map(function(o, i){ return cpSw(o.c, o.g, i).replace('</button>', '<em class="cp-from">' + qEsc(o.g.n) + '</em></button>'); }).join('') + '</div>' : '<div class="pp-empty">Nessun colore trovato.</div>';
+      res.querySelectorAll('[data-cpi]').forEach(function(b){ b.addEventListener('click', function(){ var o = out[+b.dataset.cpi]; cpColor(o.s, o.g, o.c, cpHome); }); });
+    });
+  }
+  function cpSec(s){
+    var box = rxOpen(s.n, cpHome);
+    box.innerHTML = '<div class="cc-sub" style="margin-top:0">' + qEsc(s.d) + '</div>' + s.groups.map(function(g, i){ var c = g.list[Math.min(2, g.list.length - 1)]; return '<button type="button" class="cp-sec" data-cpg="' + i + '"><i style="' + cpBg(c, g) + '"></i><span><b>' + qEsc(g.n) + '</b><em>' + g.list.length + (g.list.length === 1 ? ' finitura' : (g.list[0].th && !g.list[0].code ? ' finiture' : ' colori')) + (g.d ? ' · ' + qEsc(g.d) : '') + '</em></span><u>›</u></button>'; }).join('');
+    box.querySelectorAll('[data-cpg]').forEach(function(b){ b.addEventListener('click', function(){ cpGroup(s, s.groups[+b.dataset.cpg], function(){ cpSec(s); }); }); });
+  }
+  function cpGroup(s, g, back){
+    var box = rxOpen(g.n, back), shown = 60, q = '';
+    function list(){ var t = q.toLowerCase(); return t ? g.list.filter(function(c){ return String(c.name || '').toLowerCase().indexOf(t) > -1 || String(c.code || '').toLowerCase().indexOf(t) > -1; }) : g.list; }
+    function draw(){
+      var L = list(), part = L.slice(0, shown);
+      document.getElementById('cpG').innerHTML = '<div class="cp-gr">' + part.map(function(c, i){ return cpSw(c, g, i); }).join('') + '</div>' + (L.length > shown ? '<button type="button" class="qb-sec vr-cp" id="cpMore">Mostra altri ' + Math.min(60, L.length - shown) + ' (' + (L.length - shown) + ' rimasti)</button>' : '') + (L.length ? '' : '<div class="pp-empty">Nessun colore trovato.</div>');
+      document.querySelectorAll('#cpG [data-cpi]').forEach(function(b){ b.addEventListener('click', function(){ cpColor(s, g, part[+b.dataset.cpi], function(){ cpGroup(s, g, back); }); }); });
+      var m = document.getElementById('cpMore'); if(m) m.addEventListener('click', function(){ shown += 60; draw(); });
+    }
+    box.innerHTML = '<div class="cc-sub" style="margin-top:0">' + g.list.length + (g.list[0].th && !g.list[0].code ? ' finiture' : ' colori') + (g.d ? ' · ' + qEsc(g.d) : '') + '</div>' + (g.list.length > 24 ? '<input type="search" class="cp-srch" id="cpGQ" placeholder="🔎 Cerca in ' + qEsc(g.n) + '" autocomplete="off">' : '') + '<div id="cpG"></div>';
+    var gq = document.getElementById('cpGQ'); if(gq) gq.addEventListener('input', function(){ q = gq.value.trim(); shown = 60; draw(); });
+    draw();
+    // le texture colorate arrivano un attimo dopo: si ridisegna quando sono pronte
+    if(g.key){ var tries = 0, tt = setInterval(function(){ if(++tries > 8 || !document.getElementById('cpG')){ clearInterval(tt); return; } try{ if(TEX_IMG[g.key] && TEX_IMG[g.key].complete){ clearInterval(tt); draw(); } }catch(e){ clearInterval(tt); } }, 400); }
+  }
+  function cpColor(s, g, c, back){
+    var box = rxOpen(c.name || c.code || g.n, back);
+    function draw(sch){
+      var sc = sch && sch[g.sk];
+      box.innerHTML = '<div class="cc-sub" style="margin-top:0">' + qEsc(g.n) + (c.code && c.code !== c.name ? ' · ' + qEsc(c.code) : '') + ' · ' + qEsc(s.n) + '</div>'
+        + '<button type="button" class="cp-big" id="cpBig" style="' + cpBg(c, g, true) + '"><span>⤢ Tocca per ingrandire</span></button>'
+        + '<button type="button" class="pro-auth-submit cc-add" id="cpTry">📷 Provalo su una foto</button>'
+        + (sc ? '<a class="qb-sec vr-cp cp-a" href="' + qEsc(sc.url) + '" target="_blank" rel="noopener">📄 Scheda tecnica' + (sc.nome ? ' · ' + qEsc(sc.nome) : '') + '</a><button type="button" class="qb-sec vr-cp" id="cpWa">💬 Manda la scheda su WhatsApp</button><button type="button" class="qb-sec vr-cp" id="cpMt">🧮 Usa nei Materiali</button>'
+              : '<div class="cc-hint">La scheda tecnica di ' + qEsc(g.n) + ' non è ancora caricata.</div>')
+        + (rdIsStaff() ? '<label class="cp-up"><input type="file" accept="application/pdf" hidden id="cpUp">⬆ ' + (sc ? 'Sostituisci' : 'Carica') + ' la scheda tecnica di ' + qEsc(g.n) + ' <em>(solo account Rendrum · PDF fino a 3 MB)</em></label>' : '');
+      document.getElementById('cpBig').addEventListener('click', function(){ cpZoom(cpZoomSrc(c, g), c.hex); });
+      document.getElementById('cpTry').addEventListener('click', function(){ cpTry(s, g, c); });
+      var wa = document.getElementById('cpWa'); if(wa) wa.addEventListener('click', function(){ window.open('https://wa.me/?text=' + encodeURIComponent('Scheda tecnica ' + g.n + ': ' + sc.url), '_blank'); });
+      var mt = document.getElementById('cpMt'); if(mt) mt.addEventListener('click', function(){ cpMat(g, c, sc, mt); });
+      var up = document.getElementById('cpUp'); if(up) up.addEventListener('change', function(){ var f = (this.files || [])[0]; this.value = ''; if(f) cpUpload(g, f, function(){ cpSchede().then(draw); }); });
+    }
+    box.innerHTML = '<div class="pp-empty">Caricamento…</div>'; cpSchede().then(draw);
+  }
+  function cpUpload(g, f, done){
+    var err = document.getElementById('rdXErr'); err.textContent = '';
+    if(!/pdf$/i.test(f.type || f.name)){ err.textContent = 'Carica un file PDF.'; return; }
+    if(f.size > 3200000){ err.textContent = 'Il PDF è troppo grande: massimo 3 MB. Riducilo o caricane solo le pagine tecniche.'; return; }
+    var r = new FileReader(); r.onload = function(){
+      err.style.color = '#1D6B3E'; err.textContent = '⏳ Carico la scheda…';
+      qApi('cs-upload', 'POST', { key:g.sk, nome:String(f.name || '').replace(/\.pdf$/i, '').slice(0, 120), dataUrl:String(r.result) }).then(function(x){ if(!x.ok) throw x; CP.schede = null; err.textContent = '✓ Scheda caricata.'; setTimeout(function(){ err.style.color = ''; err.textContent = ''; }, 2500); done(); })
+        .catch(function(x){ err.style.color = ''; err.textContent = rxErr(x); });
+    }; r.readAsDataURL(f);
+  }
+  // legge la scheda caricata e apre "Nuovo prodotto" nei Materiali già compilato (l'artigiano controlla e salva)
+  function cpMat(g, c, sc, btn){
+    var err = document.getElementById('rdXErr'); err.textContent = ''; btn.disabled = true; btn.textContent = '⏳ Leggo la scheda…';
+    fetch(sc.url).then(function(r){ if(!r.ok) throw 0; return r.blob(); }).then(function(b){ return new Promise(function(res, rej){ var fr = new FileReader(); fr.onload = function(){ res(String(fr.result).replace(/^data:[^;]*;/, 'data:application/pdf;')); }; fr.onerror = rej; fr.readAsDataURL(b); }); })
+      .then(function(du){ return qApi('px-scheda-ai', 'POST', { dataUrl:du }); })
+      .then(function(x){ if(!x.ok) throw x; var r = x.d.data || {}, d = { lav:g.lav, scheda:sc.url, nome:r.nome || g.n, codice:r.codice || '', colore: !!c.hex };
+        ['um', 'confUm', 'nota'].forEach(function(k){ if(r[k]) d[k] = r[k]; }); if(r.modo && typeof MT_MODI !== 'undefined' && MT_MODI[r.modo]) d.modo = r.modo; else delete r.modo; ['resa', 'mani', 'conf'].forEach(function(k){ if(r[k] > 0) d[k] = r[k]; });
+        if(r.modo && typeof MT_SC !== 'undefined') d.scarto = MT_SC[r.modo];
+        mtForm(null, d, function(){ cpColor({ n:'Campionario' }, g, c, cpHome); }); })
+      .catch(function(x){ btn.disabled = false; btn.textContent = '🧮 Usa nei Materiali'; err.textContent = (x && x.d && x.d.code === 'noai') ? 'La lettura automatica non è attiva.' : (x && x.d ? rxErr(x) : 'Non riesco ad aprire la scheda. Riprova.'); });
+  }
+  // ingrandimento con due dita (o con i tasti + e −)
+  function cpZoom(src, hex){
+    var o = document.createElement('div'); o.className = 'cp-zoom';
+    o.innerHTML = '<div class="cp-zw" id="cpZw">' + (src ? '<img id="cpZi" src="' + src + '" alt="">' : '<div id="cpZi" style="background:' + (hex || '#ccc') + ';width:100%;height:100%"></div>') + '</div><div class="cp-zb"><button type="button" data-z="-">−</button><button type="button" data-z="+">+</button><button type="button" data-z="x">✕</button></div>';
+    document.body.appendChild(o);
+    var z = 1, im = o.querySelector('#cpZi'), w = o.querySelector('#cpZw');
+    function set(nz, cx, cy){ nz = Math.max(1, Math.min(5, nz)); var r = w.getBoundingClientRect(), fx = ((cx == null ? r.width / 2 : cx - r.left) + w.scrollLeft) / (r.width * z), fy = ((cy == null ? r.height / 2 : cy - r.top) + w.scrollTop) / (r.width * z); z = nz; im.style.width = (100 * z) + '%'; w.scrollLeft = fx * r.width * z - (cx == null ? r.width / 2 : cx - r.left); w.scrollTop = fy * r.width * z - (cy == null ? r.height / 2 : cy - r.top); }
+    o.querySelectorAll('[data-z]').forEach(function(b){ b.addEventListener('click', function(){ if(b.dataset.z === 'x') o.remove(); else set(z * (b.dataset.z === '+' ? 1.6 : 1 / 1.6)); }); });
+    var p0 = null;
+    w.addEventListener('touchstart', function(e){ if(e.touches.length === 2){ var a = e.touches[0], b = e.touches[1]; p0 = { d:Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), z:z }; } }, { passive:true });
+    w.addEventListener('touchmove', function(e){ if(p0 && e.touches.length === 2){ e.preventDefault(); var a = e.touches[0], b = e.touches[1]; set(p0.z * Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) / p0.d, (a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2); } }, { passive:false });
+    w.addEventListener('touchend', function(){ p0 = null; });
+    w.addEventListener('dblclick', function(e){ set(z > 1.2 ? 1 : 3, e.clientX, e.clientY); });
+  }
+  // "Provalo su una foto": apre la Nuova anteprima e, scelto il lavoro, mette già il colore
+  function cpTry(s, g, c){
+    window.rdCampPend = { mat:g.mat, lens:g.lens, catalog:g.catalog || null, c:c, deco:g.deco || null, at:Date.now() };
+    try{ rxClose(); }catch(e){}
+    if(typeof v3Cam === 'function') v3Cam();
+    var tries = 0, t = setInterval(function(){
+      var p = window.rdCampPend; if(!p || ++tries > 240 || Date.now() - p.at > 180000){ clearInterval(t); return; }
+      try{
+        // scelta del lavoro: tocca da solo il lavoro del campionario (una volta sola per voce)
+        var stp = window.rdSfStep ? window.rdSfStep() : '', sv = [p.mat, p.lens].filter(Boolean); p.hit = p.hit || {};
+        if(stp && stp !== 'foto') for(var j = 0; j < sv.length; j++){ var sb = document.querySelector('#sfBody [data-sfv="' + sv[j] + '"]'); if(sb && sb.offsetParent && !p.hit[stp]){ p.hit[stp] = 1; setTimeout(function(x){ return function(){ x.click(); }; }(sb), 300); return; } }
+        if(p.deco){ if(state.material && state.material.id === 'imbiancatura'){ clearInterval(t); window.rdCampPend = null; var m = document.getElementById('aiStatus') || document.getElementById('sfBody'); try{ rdToast && rdToast('Ora scegli «Pareti decorate» → ' + p.deco); }catch(e){} } return; }
+        if(!state.material || state.material.id !== p.mat || pickPhase !== 'A' || state.colorA) return;
+        var grid = document.getElementById('colorCluster'); if(!grid || !grid.offsetParent) return;
+        if(p.catalog && state.colorCatalog !== p.catalog){ state.colorCatalog = p.catalog; renderCluster(); }
+        clearInterval(t); window.rdCampPend = null; openColorPreview(p.c); setTimeout(function(){ var b = document.getElementById('cpmSelect'); if(b) b.click(); }, 120);
+      }catch(e){ clearInterval(t); try{ console.warn("cpTry", e && e.message); }catch(_){} }
+    }, 500);
+  }
+  window.cpTryLens = function(){ var p = window.rdCampPend; return p && Date.now() - p.at < 180000 ? p.lens : null; };
+  // voce nel menu Altro (solo account di prova)
+  function cpSync(){
+    try{ RX_GO.campionario = cpHome; }catch(e){}
+    var g = document.querySelector('#rdAltro .rx-gr'); if(!g) return;
+    var b = document.querySelector('#rdAltro [data-rxgo2="campionario"]');
+    if(cpOn() && !b){ b = document.createElement('button'); b.type = 'button'; b.dataset.rxgo2 = 'campionario'; b.innerHTML = '<span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="2"/><rect x="18" y="5" width="9" height="9" rx="2"/><rect x="5" y="18" width="9" height="9" rx="2"/><rect x="18" y="18" width="9" height="9" rx="2"/></svg></span><span class="rx-lb">Campionario</span><span class="rx-pl"></span>'; var mt = document.querySelector('#rdAltro .rx-gr [data-rxgo2="materiali"]'); if(mt) mt.parentNode.insertBefore(b, mt); else g.insertBefore(b, g.firstChild); }
+    if(b) b.hidden = !cpOn();
+  }
+  window.cpSync = cpSync; window.cpHome = cpHome;
+  window.cpDbg = function(){ try{ return { m: state.material && state.material.id, a: state.colorA && (state.colorA.name || state.colorA.code), ph: pickPhase }; }catch(e){ return {}; } };
+  // ---------- Appuntamenti nuovi: una schermata sola + «Com'è andata?» (per ora solo account di prova) ----------
+  var AG2 = { cli:null, es:[] };
+  var AG2_WD = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+  function ag2On(){ try{ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsStaff()); }catch(e){ return false; } }
+  function ag2Iso(d){ return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function ag2Num(t){ return String(t || '').replace(/\D/g, ''); }
+  // clienti: rubrica + cantieri (senza i «Cliente» / «Richiesta» senza nome)
+  function ag2Clienti(){
+    if(AG2.cli) return Promise.resolve(AG2.cli);
+    return Promise.all([ctLoad().catch(function(){ return []; }), rxList('cliente').catch(function(){ return []; })]).then(function(R){
+      var seen = {}, out = [];
+      function add(n, tel, via){ n = String(n || '').trim(); if(!n || /^(cliente|richiesta)(\s|$)/i.test(n)) return; var k = ctNorm(n); if(!k) return;
+        if(seen[k]){ var o = seen[k]; if(!o.tel && tel) o.tel = tel; if(!o.via && via) o.via = via; return; }
+        seen[k] = { nome:n, tel:tel || '', via:via || '' }; out.push(seen[k]); }
+      (R[1] || []).forEach(function(x){ var d = x.data || {}; add(d.nome, d.telefono, [d.indirizzo, [d.cap, d.comune, d.prov].filter(Boolean).join(' ')].filter(Boolean).join(', ')); });
+      (R[0] || ct.list || []).forEach(function(c){ add(c.nome, c.tel, c.luogo); });
+      AG2.cli = out; return out;
+    });
+  }
+  function ag2Fase(nome){ var k = ctNorm(nome), c = (ct.list || []).filter(function(x){ return ctNorm(x.nome) === k; })[0]; return c ? c.fase : 0; }
+  // via: elenco delle vie vere mentre si scrive
+  function ag2ViaBind(inp, list, onPick){
+    var t = null, n = 0;
+    inp.addEventListener('input', function(){
+      clearTimeout(t); var q = inp.value.trim(); if(onPick) onPick(null);
+      if(q.length < 3){ list.innerHTML = ''; return; }
+      t = setTimeout(function(){ var my = ++n;
+        qApi('vi-cerca', 'GET', null, '&q=' + encodeURIComponent(q)).then(function(x){ if(my !== n) return; var V = (x.ok && x.d.vie) || [];
+          list.innerHTML = V.map(function(v, i){ return '<button type="button" class="ag2-it" data-ag2v="' + i + '"><i class="ag2-av v">📍</i><span><b>' + qEsc(v.t) + '</b><em>' + qEsc(v.s) + '</em></span></button>'; }).join('');
+          list.querySelectorAll('[data-ag2v]').forEach(function(b){ b.addEventListener('click', function(){ var v = V[+b.dataset.ag2v]; inp.value = v.full; list.innerHTML = ''; if(onPick) onPick(v); }); });
+        }).catch(function(){}); }, 350);
+    });
+  }
+  // nuovo appuntamento (o spostamento: item = appuntamento da spostare)
+  function agNew(pre, item){
+    pre = pre || {};
+    var d = Object.assign({ tipo:'', titolo:'', cliente:'', telefono:'', indirizzo:'', data:'', ora:'', note:'', fatto:false }, pre);
+    if(item){ d.fatto = false; d.esito = ''; }
+    if(!d.data || d.data < ctDayIso(0)) d.data = ctDayIso(0);
+    if(!item) d.ora = pre.ora && pre.ora !== '09:00' ? pre.ora : '';
+    var half = '', nuovo = null, box = rxOpen(item ? 'Sposta appuntamento' : 'Nuovo appuntamento', null), busy = {};
+    (rx.cache.agenda ? Promise.resolve(rx.cache.agenda) : rxList('agenda').catch(function(){ return []; })).then(function(L){
+      (L || []).forEach(function(e){ if(item && e.id === item.id) return; var x = e.data || {}; if(x.fatto || !x.data) return; busy[x.data] = busy[x.data] || {}; if(x.ora) busy[x.data][x.ora] = 1; busy[x.data]._ = 1; });
+      if(document.getElementById('ag2Ok')) keep();
+    });
+    function msg(t){ var m = document.getElementById('rdXErr'); if(m){ m.style.color = ''; m.textContent = t || ''; } }
+    function chi(){
+      box.innerHTML = '<div class="ag2"><div class="ag2-h">Con chi?</div><input type="search" class="ag2-q" id="ag2Q" placeholder="🔍 Cerca il cliente" autocomplete="off"><div id="ag2R"></div>'
+        + '<button type="button" class="ag2-it ag2-new" id="ag2N"><i class="ag2-av">＋</i><span><b>Nuovo cliente</b><em>nome, telefono e via</em></span></button>'
+        + '<button type="button" class="ag2-it ag2-alt2" id="ag2S"><i class="ag2-av v">📌</i><span><b>Senza cliente</b><em>es. ritiro materiale, fornitore</em></span></button>'
+        + '<div class="ag2-hint" id="ag2Hint">Scrivi il nome, il cognome o il telefono del cliente</div></div>';
+      var q = document.getElementById('ag2Q'), r = document.getElementById('ag2R');
+      q.addEventListener('input', function(){
+        var t = ctNorm(q.value), tn = ag2Num(q.value); document.getElementById('ag2Hint').hidden = !!q.value.trim();
+        if(!t && tn.length < 3){ r.innerHTML = ''; return; }
+        ag2Clienti().then(function(C){
+          var F = C.filter(function(c){ var k = ctNorm(c.nome); return (t && (k.indexOf(t) === 0 || k.indexOf(' ' + t) > -1)) || (tn.length >= 3 && ag2Num(c.tel).indexOf(tn) > -1); }).slice(0, 6);
+          r.innerHTML = F.map(function(c, i){ return '<button type="button" class="ag2-it" data-ag2c="' + i + '"><i class="ag2-av">' + qEsc(ctIni(c.nome)) + '</i><span><b>' + qEsc(c.nome) + '</b><em>' + qEsc(c.via || c.tel || '') + '</em></span></button>'; }).join('');
+          r.querySelectorAll('[data-ag2c]').forEach(function(b){ b.addEventListener('click', function(){ var c = F[+b.dataset.ag2c];
+            d.cliente = c.nome; d.telefono = c.tel; d.indirizzo = c.via; if(!d.tipo) d.tipo = ag2Fase(c.nome) >= 3 ? 'lavoro' : 'sopralluogo'; draw(); }); });
+        });
+      });
+      document.getElementById('ag2N').addEventListener('click', function(){ nuovoCli(q.value.trim()); });
+      document.getElementById('ag2S').addEventListener('click', function(){ d.senza = true; d.tipo = 'altro'; draw(); });
+      setTimeout(function(){ try{ q.focus(); }catch(e){} }, 80);
+    }
+    function nuovoCli(nome){
+      nuovo = { nome: /\d{3}/.test(nome) ? '' : nome, tel: /\d{3}/.test(nome) ? nome : '', via:'', v:null };
+      box.innerHTML = '<div class="ag2"><div class="ag2-h">Nuovo cliente</div><label class="ag2-l">Nome e cognome</label><input class="ag2-q" id="ag2NN" value="' + qEsc(nuovo.nome) + '" autocomplete="off">'
+        + '<label class="ag2-l">Telefono</label><input class="ag2-q" id="ag2NT" type="tel" value="' + qEsc(nuovo.tel) + '" placeholder="per avvisarlo su WhatsApp">'
+        + '<label class="ag2-l">Via</label><input class="ag2-q" id="ag2NV" placeholder="📍 Scrivi la via" autocomplete="off"><div id="ag2NVL"></div>'
+        + '<div class="ag2-hint" style="text-align:left">Il cliente viene salvato anche nei Clienti: la prossima volta lo trovi con la ricerca.</div>'
+        + '<div class="ag2-stick"><button type="button" class="pro-auth-submit" id="ag2NOk">Continua</button><button type="button" class="q-link" id="ag2NBack">‹ Torna alla ricerca</button></div></div>';
+      var vi = document.getElementById('ag2NV');
+      ag2ViaBind(vi, document.getElementById('ag2NVL'), function(v){ nuovo.v = v; });
+      document.getElementById('ag2NBack').addEventListener('click', chi);
+      document.getElementById('ag2NOk').addEventListener('click', function(){
+        var n = document.getElementById('ag2NN').value.trim(); if(!n){ msg('Scrivi il nome del cliente.'); return; } msg('');
+        d.cliente = n; d.telefono = document.getElementById('ag2NT').value.trim(); d.indirizzo = vi.value.trim(); d.tipo = d.tipo || 'sopralluogo';
+        var v = nuovo.v, c = { tipo:'privato', nome:n, telefono:d.telefono, indirizzo: v ? v.t : d.indirizzo, cap: v ? v.cap : '', comune: v ? v.comune : '', prov: v ? v.prov : '' };
+        rxSave('cliente', c).then(function(){ AG2.cli = null; }).catch(function(){});
+        draw();
+      });
+      setTimeout(function(){ try{ document.getElementById(nuovo.nome ? 'ag2NT' : 'ag2NN').focus(); }catch(e){} }, 80);
+    }
+    function days(){
+      var t0 = new Date(ctDayIso(0) + 'T12:00:00'), L = [];
+      for(var i = 0; i < 45; i++){ var x = new Date(t0); x.setDate(t0.getDate() + i); L.push(x); }
+      if(L.map(ag2Iso).indexOf(d.data) < 0) L.unshift(new Date(d.data + 'T12:00:00'));
+      return L;
+    }
+    function draw(){
+      if(!d.cliente && !d.senza && !d.titolo) return chi();
+      if(!d.cliente) d.senza = true;
+      var D = days(), sel = new Date(d.data + 'T12:00:00'), S = [];
+      if(!half) half = d.ora && d.ora >= '13:00' ? 'pm' : 'am';
+      for(var h = (half === 'am' ? 7 : 13); h <= (half === 'am' ? 12 : 18); h++){ S.push(('0' + h).slice(-2) + ':00'); S.push(('0' + h).slice(-2) + ':30'); }
+      var bz = busy[d.data] || {}, altra = d.ora && S.indexOf(d.ora) < 0;
+      box.innerHTML = '<div class="ag2">'
+        + (d.senza ? '<div class="ag2-who"><i class="ag2-av v">📌</i><span><input class="ag2-q" id="ag2T" placeholder="Cosa devi fare? (es. ritiro materiale)" value="' + qEsc(d.titolo) + '"></span>' + (item ? '' : '<button type="button" class="q-link" id="ag2Chg">cambia</button>') + '</div>' : '<div class="ag2-who"><i class="ag2-av">' + qEsc(ctIni(d.cliente)) + '</i><span><b>' + qEsc(d.cliente) + '</b><em>' + qEsc(d.telefono || 'senza telefono') + '</em></span>' + (item ? '' : '<button type="button" class="q-link" id="ag2Chg">cambia</button>') + '</div>')
+        + '<div class="ag2-l">Per</div><div class="ag2-seg">' + [['sopralluogo', '📐 Sopralluogo'], ['lavoro', '🛠️ Lavori'], ['altro', '📌 Altro']].map(function(x){ return '<button type="button" data-ag2t="' + x[0] + '"' + (d.tipo === x[0] ? ' class="on"' : '') + '>' + x[1] + '</button>'; }).join('') + '</div>'
+        + '<div class="ag2-mon"><b>' + qEsc(sel.toLocaleDateString('it-IT', { month:'long', year:'numeric' })) + '</b><label class="q-link">Altra data ›<input type="date" id="ag2D" min="' + ctDayIso(0) + '" value="' + qEsc(d.data) + '"></label></div>'
+        + '<div class="ag2-days" id="ag2Days">' + D.map(function(x){ var k = ag2Iso(x); return '<button type="button" data-ag2d="' + k + '" class="' + (k === d.data ? 'on' : '') + (busy[k] && busy[k]._ ? ' dot' : '') + '">' + AG2_WD[x.getDay()] + '<b>' + x.getDate() + '</b></button>'; }).join('') + '</div>'
+        + '<div class="ag2-oh"><span class="ag2-l">Ora · ' + qEsc(rxDay(d.data)) + '</span><span class="ag2-half"><button type="button" data-ag2h="am"' + (half === 'am' ? ' class="on"' : '') + '>Mattina</button><button type="button" data-ag2h="pm"' + (half === 'pm' ? ' class="on"' : '') + '>Pomeriggio</button></span></div><div class="ag2-slots">' + S.map(function(s){ return '<button type="button" data-ag2o="' + s + '" class="' + (s === d.ora ? 'on' : '') + (bz[s] ? ' busy' : '') + '">' + s.replace(/^0/, '') + '</button>'; }).join('') + '</div>'
+        + '<label class="ag2-alt">🕐 ' + (altra ? 'Ore ' + qEsc(d.ora) + ' · cambia' : 'Altro orario') + '<input type="time" id="ag2O" value="' + qEsc(d.ora || '') + '"></label>'
+        + (d.ora && bz[d.ora] ? '<div class="ag2-warn">Alle ' + qEsc(d.ora) + ' hai già un appuntamento.</div>' : '')
+        + '<div class="ag2-l">Dove</div><input class="ag2-q" id="ag2V" placeholder="📍 Scrivi la via" autocomplete="off" value="' + qEsc(d.indirizzo) + '"><div id="ag2VL"></div>'
+        + '<div class="ag2-stick"><button type="button" class="pro-auth-submit" id="ag2Ok">' + (item ? 'Sposta appuntamento' : 'Salva appuntamento') + '</button></div></div>';
+      var ds = document.getElementById('ag2Days'), on = ds.querySelector('.on'); if(on) ds.scrollLeft = Math.max(0, on.offsetLeft - 60);
+      box.querySelectorAll('[data-ag2t]').forEach(function(b){ b.addEventListener('click', function(){ d.tipo = b.dataset.ag2t; box.querySelectorAll('[data-ag2t]').forEach(function(x){ x.classList.toggle('on', x === b); }); }); });
+      box.querySelectorAll('[data-ag2d]').forEach(function(b){ b.addEventListener('click', function(){ d.indirizzo = document.getElementById('ag2V').value; d.data = b.dataset.ag2d; keep(); }); });
+      box.querySelectorAll('[data-ag2h]').forEach(function(b){ b.addEventListener('click', function(){ half = b.dataset.ag2h; keep(); }); });
+      box.querySelectorAll('[data-ag2o]').forEach(function(b){ b.addEventListener('click', function(){ d.indirizzo = document.getElementById('ag2V').value; d.ora = b.dataset.ag2o; keep(); }); });
+      document.getElementById('ag2D').addEventListener('change', function(){ if(this.value){ d.indirizzo = document.getElementById('ag2V').value; d.data = this.value; keep(); } });
+      document.getElementById('ag2O').addEventListener('change', function(){ if(this.value){ d.indirizzo = document.getElementById('ag2V').value; d.ora = this.value; keep(); } });
+      var chg = document.getElementById('ag2Chg'); if(chg) chg.addEventListener('click', function(){ d.cliente = ''; d.telefono = ''; d.indirizzo = ''; d.titolo = ''; d.senza = false; chi(); });
+      var tt = document.getElementById('ag2T'); if(tt) tt.addEventListener('input', function(){ d.titolo = tt.value; });
+      ag2ViaBind(document.getElementById('ag2V'), document.getElementById('ag2VL'));
+      document.getElementById('ag2Ok').addEventListener('click', save);
+    }
+    function keep(){ var tt = document.getElementById('ag2T'); if(tt) d.titolo = tt.value; var vv = document.getElementById('ag2V'); if(vv) d.indirizzo = vv.value; var y = (document.getElementById('rdX') || {}).scrollTop || 0, sl = (document.getElementById('ag2Days') || {}).scrollLeft || 0; draw(); var x = document.getElementById('rdX'); if(x) x.scrollTop = y; var ds = document.getElementById('ag2Days'); if(ds) ds.scrollLeft = sl; }
+    function save(){
+      d.indirizzo = document.getElementById('ag2V').value.trim();
+      var tt = document.getElementById('ag2T'); if(tt) d.titolo = tt.value.trim();
+      if(d.senza && !d.titolo){ msg('Scrivi cosa devi fare.'); return; }
+      if(!d.tipo){ msg('Scegli se è un sopralluogo, lavori o altro.'); return; }
+      if(!d.ora){ msg('Scegli l’ora.'); return; }
+      msg(''); var b = document.getElementById('ag2Ok'); b.disabled = true; b.textContent = 'Salvo…';
+      if(!d.titolo) d.titolo = '';
+      var dd = Object.assign({}, d); delete dd.senza;
+      rxSave('agenda', dd, item && item.id).then(function(it){ rx.cache.agenda = null; ag2Saved(it, !!item); })
+        .catch(function(e){ b.disabled = false; b.textContent = item ? 'Sposta appuntamento' : 'Salva appuntamento'; msg(rxErr(e)); });
+    }
+    if(d.cliente || d.titolo) draw(); else chi();
+  }
+  function ag2Home(){ try{ var b = document.getElementById('rdOggi'); if(b){ delete b.dataset.ready; rdOggiLoad(); } }catch(e){} }
+  function ag2Saved(it, moved){
+    var d = it.data, ic = RX_AGT[d.tipo] || RX_AGT.altro, box = rxOpen(moved ? 'Appuntamento spostato' : 'Appuntamento salvato', null);
+    var txt = moved ? 'Buongiorno' + (d.cliente ? ' ' + d.cliente : '') + ', le scrivo per spostare ' + (d.tipo === 'sopralluogo' ? 'il sopralluogo' : d.tipo === 'lavoro' ? "l'inizio dei lavori" : "l'appuntamento") + ' a ' + rxDay(d.data) + (d.ora ? ' alle ' + d.ora : '') + '. Mi conferma se le va bene?\n' + rxImpresa() : rxAgTesto(d);
+    box.innerHTML = '<div class="ag2 ag2-ok"><i>✓</i><h3>' + (moved ? 'Appuntamento spostato' : 'Appuntamento salvato') + '</h3><p>' + qEsc(rxDay(d.data).replace(/^./, function(x){ return x.toUpperCase(); })) + (d.ora ? ' · ' + qEsc(d.ora) : '') + '<br>' + qEsc(ic[1] + (d.cliente ? ' · ' + d.cliente : '')) + (d.indirizzo ? '<br>' + qEsc(d.indirizzo) : '') + '</p>'
+      + (d.telefono ? '<button type="button" class="ag2-wa" id="ag2W">💬 Avvisa ' + qEsc(v3First(d.cliente)) + ' su WhatsApp</button>' : '')
+      + '<button type="button" class="ag2-btn2" id="ag2F">Fatto</button><button type="button" class="q-link" id="ag2A">Vai all’agenda</button></div>';
+    var w = document.getElementById('ag2W'); if(w) w.addEventListener('click', function(){ rxWa(d.telefono, txt); });
+    document.getElementById('ag2F').addEventListener('click', function(){ rxClose(); ag2Home(); });
+    document.getElementById('ag2A').addEventListener('click', function(){ ag2Home(); rxAgenda(); });
+    AG2.cli = null;
+  }
+  // «Com'è andata?»: appuntamenti passati da più di un'ora e non ancora segnati
+  function agEsitoList(L){
+    var now = Date.now(), lim = now - 14 * 86400000, out = [];
+    (L || []).forEach(function(c){ (c.g && c.g.agenda || []).forEach(function(a){ var d = a.data || {}; if(d.fatto || d.esito || !d.data) return;
+      var t = Date.parse(d.data + 'T' + (d.ora || '09:00') + ':00'); if(!isFinite(t)) return; t += 3600000; if(t > now || t < lim) return; out.push({ a:a, c:c, t:t }); }); });
+    return out.sort(function(x, y){ return x.t - y.t; });
+  }
+  window.agEsitoHtml = function(L){
+    if(!ag2On()) return ''; var E = agEsitoList(L); AG2.es = E; if(!E.length) return '';
+    var d = E[0].a.data, ic = RX_AGT[d.tipo] || RX_AGT.altro, q = d.data === ctDayIso(0) ? 'oggi' : d.data === ctDayIso(-1) ? 'ieri' : rxDay(d.data);
+    return '<div class="ag2-es" id="ag2Es"><small>COM’È ANDATA?</small><b>' + qEsc(ic[1]) + (d.cliente ? ' da ' + qEsc(d.cliente) : d.titolo ? ' · ' + qEsc(d.titolo) : '') + '</b><span>' + qEsc(q) + (d.ora ? ' alle ' + qEsc(d.ora) : '') + (d.indirizzo ? ' · ' + qEsc(d.indirizzo) : '') + '</span>'
+      + '<div class="ag2-b3"><button type="button" class="p" data-age="ok">✓ Fatto</button><button type="button" data-age="sp">↻ Da spostare</button><button type="button" class="r" data-age="no">✕ Annullato</button></div>'
+      + (E.length > 1 ? '<em>' + (E.length - 1 === 1 ? 'e un altro appuntamento da segnare' : 'e altri ' + (E.length - 1) + ' appuntamenti da segnare') + '</em>' : '') + '</div>';
+  };
+  function ag2Esito(it, esito){ var d = Object.assign({}, it.data, { fatto:true, esito:esito }); return rxSave('agenda', d, it.id).then(function(x){ rx.cache.agenda = null; return x; }); }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('#ag2Es [data-age]'); if(!b) return;
+    var el = document.getElementById('ag2Es'), cur = AG2.es[0]; if(!cur) return;
+    var it = cur.a, d = it.data, k = b.dataset.age;
+    function err(x){ var s = el.querySelector('span'); if(s) s.textContent = rxErr(x); el.querySelectorAll('button').forEach(function(y){ y.disabled = false; }); }
+    function wait(){ el.querySelectorAll('button').forEach(function(y){ y.disabled = true; }); b.textContent = 'Salvo…'; }
+    if(k === 'ok'){ wait(); ag2Esito(it, 'fatto').then(function(){
+        if(d.tipo !== 'sopralluogo'){ el.innerHTML = '<small>✓ SEGNATO</small><b>' + qEsc(d.cliente || d.titolo || 'Appuntamento') + '</b>'; setTimeout(ag2Home, 1200); return; }
+        el.innerHTML = '<small>SOPRALLUOGO FATTO ✓</small><b>' + qEsc(d.cliente) + '</b><span>Cosa fai adesso?</span><div class="ag2-b3"><button type="button" class="p" data-age="so">📐 Segna misure e foto</button><button type="button" data-age="pr">📄 Fai subito il preventivo</button><button type="button" data-age="dopo">Lo faccio dopo</button></div>';
+      }).catch(err); return; }
+    if(k === 'so'){ rxClose(); soNew(function(x){ x.clientName = d.cliente; x.phone = d.telefono; x.address = d.indirizzo; }); ag2Home(); return; }
+    if(k === 'pr'){ rxClose(); pbModal(); rdTabOn('prev'); qNew(function(q){ q.cliente.nome = d.cliente || ''; q.cliente.telefono = d.telefono || ''; q.cliente.indirizzo = d.indirizzo || ''; q.cantiere.indirizzo = d.indirizzo || ''; }); ag2Home(); return; }
+    if(k === 'dopo'){ ag2Home(); return; }
+    if(k === 'sp'){ agNew(d, it); return; }
+    if(k === 'no'){ el.innerHTML = '<small>ANNULLATO</small><b>' + qEsc(d.cliente || d.titolo || 'Appuntamento') + '</b><span>Cosa è successo?</span><div class="ag2-b3"><button type="button" data-age="no1">Non è più interessato</button><button type="button" data-age="no2">Lo risento più avanti</button></div>'; return; }
+    if(k === 'no1' || k === 'no2'){ wait(); ag2Esito(it, k === 'no1' ? 'annullato' : 'rinviato').then(function(){ el.innerHTML = '<small>✓ SEGNATO</small><b>' + (k === 'no1' ? 'Annullato' : 'Da risentire più avanti') + '</b>'; setTimeout(ag2Home, 1200); }).catch(err); }
+  });
+  window.agNew = agNew; window.ag2On = ag2On;
   // ---------- Materiali: listino con resa, calcolo del cantiere, ordini al fornitore ----------
   // pro_extra: materiale (prodotto del listino), fornitore, ordine. Le rese le mette l'artigiano dalla scheda tecnica.
   var MT = { mat:null, forn:null, ord:null, lav:'monolith', tab:'prod' };
