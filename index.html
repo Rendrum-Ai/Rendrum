@@ -11339,6 +11339,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         cartongesso: cgPayload(),
         boiserie: bsPayload(),
         listelli: lsPayload(),
+        rinnovoParquet: rnfPayload(),
         battiscopa: btPayload(),
         piaEst: peEstPayload(),
         piscina: piscinaPayload(),
@@ -12197,7 +12198,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     return true;
   }
   // ===== Battiscopa / zoccolino nei pavimenti (in prova) =====
-  function btMat(){ var c = SF.mat; if(c === 'piastrelle' && state.piaDove === 'riv') return null; return ['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1 ? c : null; }
+  function btMat(){ var c = SF.mat; if(c === 'piastrelle' && state.piaDove === 'riv') return null; if(c === 'legno' && state.rnf && state.rnf.cosa === 'rinnova') return null; return ['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1 ? c : null; }
   function btOn(){ try{ return semplOn() && !!btMat(); }catch(e){ return false; } }
   function btS(){ return state.bt || (state.bt = {}); }
   function btOpts(){
@@ -12339,6 +12340,36 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function lsDone(){ return !!(SF_ON && SF.mat === 'listelli' && state.ls && state.ls.fin && state.colorA); }
   function lsPayload(){ var l = state.ls; if(!(SF_ON && SF.mat === 'listelli') || !l || !l.pan) return null; return { pan: l.pan, posa: l.posa || 'ver', dove: l.dove || 'fondo', fin: l.fin || 'tutta' }; }
   window.__lsQ = lsQ;
+  // ===== Rinnovo parquet nelle generazioni (tester): colore e finitura =====
+  MAT_LINE_ICON.rinnovo = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 26h24M4 21h24M9 21v5M17 21v5M23 21v5"/><path d="M19 4l2 3 3 1-3 1-2 3-2-3-3-1 3-1z"/><path d="M9 10l1 1.6 1.6.6-1.6.6L9 14.4l-1-1.6-1.6-.6 1.6-.6z"/></svg>';
+  var RNF_T = [['naturale','Stesso colore','Pulito e ravvivato','linear-gradient(135deg,#8A5A3B,#6E4630)'],['sbiancato','Sbiancato','Velatura bianca','linear-gradient(135deg,#E9E2D6,#D4C8B6)'],['miele','Miele','Caldo e dorato','linear-gradient(135deg,#C98A45,#A86C33)'],['noce','Noce','Marrone medio','linear-gradient(135deg,#7A5537,#5E3F28)'],['grigio','Grigio','Grigio cenere','linear-gradient(135deg,#A7A49F,#86837E)']];
+  function rnfS(){ return state.rnf || (state.rnf = {}); }
+  function rnfFinPic(v){ return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#9A6B47"/>' + [0,1,2,3,4,5].map(function(i){ return '<rect x="0" y="' + (i * 15) + '" width="120" height="14" fill="' + (i % 2 ? '#8E6140' : '#A3734D') + '"/>'; }).join('') + (v === 'lucido' ? '<path d="M18 90 L52 0 L72 0 L38 90 Z" fill="#fff" opacity=".35"/><path d="M58 90 L80 0 L88 0 L66 90 Z" fill="#fff" opacity=".22"/>' : '') + '</svg>'; }
+  function rnfOn(){ try{ return !!(semplOn() && rdIsBeta()); }catch(e){ return false; } }
+  function rnfRinnova(){ return !!(state.rnf && state.rnf.cosa === 'rinnova'); }
+  function rnfLegnoSteps(s){ if(rnfOn()) s.push('legnoCosa'); if(rnfOn() && rnfRinnova()) s.push('rnfCol', 'rnfFin'); else s.push('legnoTipo'); }
+  function rnfCosaPic(v){ var g = ''; for(var i = 0; i < 6; i++) g += '<rect x="0" y="' + (i * 15) + '" width="120" height="14" fill="' + (v === 'nuovo' ? (i % 2 ? '#D2B48C' : '#DDBF97') : (i % 2 ? '#7E5A40' : '#8E674A')) + '"/>';
+    if(v === 'rinnova') g += '<path d="M60 0 L120 0 L120 90 L40 90 Z" fill="#B98552" opacity=".85"/><path d="M84 18l4 8 8 3-8 3-4 8-4-8-8-3 8-3z" fill="#fff"/><path d="M60 0 L40 90" stroke="#fff" stroke-width="2" opacity=".7"/>';
+    else g += '<rect x="44" y="30" width="32" height="32" rx="16" fill="#fff" opacity=".9"/><path d="M60 38v16M52 46h16" stroke="#C8692E" stroke-width="3" stroke-linecap="round"/>';
+    return '<svg viewBox="0 0 120 90" aria-hidden="true">' + g + '</svg>'; }
+  function rnfQ(st){
+    var r = rnfS();
+    if(st === 'legnoCosa') return { t:'Cosa fai?', s:'Un pavimento nuovo oppure il parquet che c’è, levigato e verniciato.', opts: [['nuovo','Pavimento nuovo','Parquet, SPC o laminato'],['rinnova','Rinnova quello che c’è','Levigatura e verniciatura']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', rnfCosaPic(x[0])), sel: r.cosa === x[0] }; }) };
+    if(st === 'rnfCol') return { t:'Di che colore?', s:'Il parquet che c’è viene levigato e verniciato: stessi listelli, stessa posa.', cls:'sf-sw', opts: RNF_T.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic(x[3], ''), sel: r.t === x[0] }; }) };
+    if(st === 'rnfFin') return { t:'Che finitura?', opts: [['opaco','Opaco','Nessun riflesso'],['lucido','Lucido','Riflette la luce']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', rnfFinPic(x[0])), sel: r.f === x[0] }; }) };
+    return null;
+  }
+  function rnfApply(st, v){
+    if(st !== 'rnfCol' && st !== 'rnfFin' && st !== 'legnoCosa') return false;
+    var r = rnfS();
+    if(st === 'legnoCosa'){ if(r.cosa !== v){ state.rnf = r = { cosa: v }; if(v === 'rinnova'){ sfSelectCat('parquet'); state.parquetPosa = null; state.colorA = null; } } return true; }
+    if(st === 'rnfCol'){ var c = RNF_T.filter(function(x){ return x[0] === v; })[0]; if(c){ r.t = v; state.colorA = semplCol('Rinnovo parquet ' + c[1], '#9A6B47'); } }
+    if(st === 'rnfFin') r.f = v;
+    return true;
+  }
+  function rnfAnswered(st){ var r = state.rnf || {}; return st === 'legnoCosa' ? !!r.cosa : st === 'rnfCol' ? !!r.t : st === 'rnfFin' ? !!r.f : null; }
+  function rnfDone(){ return !!(SF_ON && SF.mat === 'legno' && rnfRinnova() && state.rnf.t && state.rnf.f && state.colorA); }
+  function rnfPayload(){ var r = state.rnf; if(!(SF_ON && SF.mat === 'legno') || !rnfRinnova() || !r.t || !r.f) return null; return { tinta: r.t, fin: r.f }; }
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -12372,7 +12403,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'listelli'){ lsSteps().forEach(function(x){ s.push(x); }); }
     else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(cgV2() && CG_MIS[t]) s.push('cgM_' + t); if(cgV2() && t === 'taglio') s.push('cgW_taglio'); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
-    else if(c === 'legno') s.push('legnoTipo');
+    else if(c === 'legno') rnfLegnoSteps(s);
     else if(c === 'scale') s.push('scaleMat');
     else if(c === 'graniglia_esterni') s.push('granLayout', 'granScale');
     if(['monolith','microcemento','legno','piastrelle','graniglia_esterni'].indexOf(c) > -1) btSteps(s);
@@ -12384,6 +12415,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var sa = semplAnswered(st); if(sa !== null) return sa;
     var ba = bsAnswered(st); if(ba !== null) return ba;
     var la = lsAnswered(st); if(la !== null) return la;
+    var ra = rnfAnswered(st); if(ra !== null) return ra;
     var bta = btAnswered(st); if(bta !== null) return bta;
     var esa = estAnswered(st); if(esa !== null) return esa;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
@@ -12442,6 +12474,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var cq = cgQ(st); if(cq) return cq;
     var bq = bsQ(st); if(bq) return bq;
     var lq = lsQ(st); if(lq) return lq;
+    var rq = rnfQ(st); if(rq) return rq;
     var c3 = cg3Q(st); if(c3) return c3;
     var btq = btQ(st); if(btq) return btq;
     var esq = estQ(st); if(esq) return esq;
@@ -12541,6 +12574,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(cgApply(st, v)) return;
     if(bsApply(st, v)) return;
     if(lsApply(st, v)) return;
+    if(rnfApply(st, v)) return;
     if(st === 'mat'){
       var pre = v === 'pit_int' ? 'interno' : v === 'pit_est' ? 'esterno' : null; if(pre) v = 'imbiancatura';
       if(pre && SF.mat === v && SF.a.ctx !== pre){ SF.a = {}; }
@@ -12549,6 +12583,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie' || v === 'piscina' || v === 'listelli') ? 'imbiancatura' : v === 'pia_est' ? 'piastrelle' : v);
       if(v === 'pia_est' || v === 'piscina'){ var esc = subGrid.children; if(esc[0]) esc[0].click(); SF.a.ctx = 'esterno'; state.colorA = null; if(v === 'pia_est'){ state.pe = state.pe || {}; state.ps = null; } else { state.ps = state.ps || {}; state.pe = null; } } else { state.pe = null; state.ps = null; }
       if(v === 'boiserie'){ var bsc = subGrid.children; if(bsc[0]) bsc[0].click(); SF.a.ctx = 'interno'; state.bs = state.bs || {}; } else { state.bs = null; }
+      if(v !== 'legno') state.rnf = null;
       if(v === 'listelli'){ var lsc = subGrid.children; if(lsc[0]) lsc[0].click(); SF.a.ctx = 'interno'; state.ls = state.ls || {}; } else { state.ls = null; }
       if(v === 'legno'){ state.material = null; }
       if(v === 'deco'){ var dcards = subGrid.children; if(dcards[0]) dcards[0].click(); SF.a.ctx = 'interno'; state.deco = state.deco && state.deco.fam ? state.deco : { eff:'medio', prot:'none' }; } else { state.deco = null; }
@@ -12741,7 +12776,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     // panelLanding non è un "passo" del wizard: è la schermata di ingresso, non entra
     // nel calcolo della barra di avanzamento né nella navigazione avanti/indietro.
     if(SF_ON){
-      var sq = (decoAllOn() || semplDone() || bsDone() || estDone() || lsDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
+      var sq = (decoAllOn() || semplDone() || bsDone() || estDone() || lsDone() || rnfDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
       if(accentoActive() || showerActive()) sq.push('panelPhoto');
       return sq.concat(['panelResult']);
     }
@@ -20544,7 +20579,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var on = (function(){ try{ return !!(proAccount && rdIsBeta()); }catch(e){ return false; } })();
     var b = document.querySelector('#rdAltro [data-rxgo2="rinnovo"]'), ref = document.querySelector('#rdAltro [data-rxgo2="materiali"]');
     if(on && !b && ref){ b = document.createElement('button'); b.type = 'button'; b.dataset.rxgo2 = 'rinnovo'; b.innerHTML = '<span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h24M4 26h24M8 18h16M10 6l4 8M18 6l-2 8"/></svg></span><span class="rx-lb">Prova rinnovo parquet</span><span class="rx-pl"></span>'; ref.parentNode.insertBefore(b, ref); }
-    if(b) b.hidden = !on;
+    if(b) b.hidden = true;
   }
   window.rnSync = rnSync;
   window.__rnMix = rnMix; window.__rnAl = function(){ return RN.al; };
