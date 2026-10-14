@@ -518,7 +518,7 @@ module.exports = async function handler(req, res) {
   };
   const plafoneNote = !isInterniPittura ? ""
     : effettoScatola
-      ? ` EFFETTO SCATOLA: dipingi pareti E soffitto nello stesso identico colore ${colorRef(colorA, colorAHex)}, senza stacchi tra parete e soffitto, compresi eventuali travi, cornici e sporgenze del soffitto: l'ambiente deve risultare avvolgente e continuo, tutto in un unico colore. Porte, finestre, mobili e pavimento restano come sono.`
+      ? ` EFFETTO SCATOLA: dipingi pareti E soffitto nello stesso identico colore ${colorRef(colorA, colorAHex)}, senza stacchi tra parete e soffitto, compresi eventuali travi, cornici e sporgenze del soffitto (ma NON il cassonetto della tapparella sopra la finestra: fa parte del serramento, non della parete): l'ambiente deve risultare avvolgente e continuo, tutto in un unico colore. Porte, finestre, mobili e pavimento restano come sono.`
       : (plafoneTipo === "corten")
         ? ` SOFFITTO (plafone) EFFETTO CORTEN: tutto il soffitto è rifinito con una finitura decorativa effetto Corten, base ocra/ruggine con macchie e chiazze scure irregolari che imitano l'ossidazione naturale dell'acciaio Corten, aspetto materico e opaco, pattern asimmetrico e naturale, travi e cornici del soffitto comprese. Aspetto realistico del Corten: colore ruggine SCURO e OPACO (bruno-ruggine, mai arancione acceso), ossidazione con macchie e sfumature diverse zona per zona (su un controsoffitto a pannelli ogni pannello è diverso dagli altri, mai la stessa texture ripetuta), riceve la luce della stanza: più scuro in ombra, più caldo dove arriva la luce. Riguarda SOLO il soffitto: le pareti restano nel loro colore. Tra soffitto e pareti non disegnare righe, bordi o fasce.`
       : (colorPlafone && PLAFONE_DECOR[plafoneTipo])
@@ -594,7 +594,7 @@ module.exports = async function handler(req, res) {
   // Pittura interni: porte interne e finestre in un colore a scelta.
   const isPorteInt = materialId === "imbiancatura" && context !== "esterno" && !!porteInterne && !!colorSerramenti;
   const porteIntNote = isPorteInt
-    ? ` PORTE E FINESTRE: dipingi OBBLIGATORIAMENTE nel colore ${colorRef(colorSerramenti, colorSerramentiHex)} tutte le porte interne visibili (ante e stipiti/telai, comprese porte di metallo) e i telai delle finestre e portefinestre. Il loro colore originale non deve restare. NON colorare vetri, maniglie, serrature, cerniere e chiavistelli, che restano identici; le pareti restano nel loro colore.`
+    ? ` PORTE E FINESTRE: dipingi OBBLIGATORIAMENTE nel colore ${colorRef(colorSerramenti, colorSerramentiHex)} tutte le porte interne visibili (ante e stipiti/telai, comprese porte di metallo) e i telai delle finestre e portefinestre, compreso il cassonetto della tapparella sopra la finestra (fa parte del serramento). Il loro colore originale non deve restare. NON colorare vetri, maniglie, serrature, cerniere e chiavistelli, che restano identici; le pareti restano nel loro colore.`
     : "";
   const serramentiNote = isSerramentiStyled
     ? ` Inoltre, dipingi OBBLIGATORIAMENTE TUTTI i serramenti visibili nella foto nel colore ${colorRef(colorSerramenti, colorSerramentiHex)}: telai delle finestre, persiane, scuri, ante a battente, tapparelle e porte/portefinestre esterne. Il loro colore originale (es. marrone/legno) NON deve restare da nessuna parte: nel risultato devono essere tutti di questo colore. Non colorare i vetri, i davanzali e il resto della facciata.`
@@ -881,7 +881,10 @@ module.exports = async function handler(req, res) {
       ? " FINITURA DEI MURI (richiesta dal cliente): INTONACO CIVILE. Tutte le pareti da dipingere hanno una superficie uniforme a GRANA FINE, come sabbia fine (granelli di circa 0,5-1 mm), opaca e regolare su tutta la parete: niente zone lisce, niente rilievi grossi, crepe o buccia d'arancia irregolare dell'intonaco originale. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "")
     : " TEXTURE DEI MURI: la pittura cambia SOLO il colore. Se l'intonaco originale è ruvido, grezzo, a buccia d'arancia o irregolare, nel risultato resta ESATTAMENTE così (stessi rilievi, stesse ombre della grana), solo nel nuovo colore: non lisciare e non rasare i muri. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "");
   const colorContainNote = isExteriorFacade ? ""
-    : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera.";
+    : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera."
+    + " CASSONETTO DELLA TAPPARELLA: la scatola sopra la finestra che contiene la tapparella (in legno, PVC o metallo, con il suo pannello frontale), anche se è attaccata al soffitto o alla parete, fa parte del SERRAMENTO: NON è parete e NON è soffitto, quindi non prende il colore delle pareti né del soffitto. " + (isPorteInt ? "Va dipinto nello stesso colore scelto per porte e finestre, come i telai." : "Resta IDENTICO alla foto (stesso colore, stessa forma, stessi bordi e viti), come le finestre.")
+    + (isPorteInt ? "" : " FINESTRE: telai, ante e vetri delle finestre restano IDENTICI alla foto, nello stesso colore originale (se sono bianchi restano bianchi), con la stessa apertura dell'anta.")
+    + " Lampade da lavoro, cavalletti, scale, secchi, rulli, aste e altri attrezzi presenti nella foto restano al loro posto: non toglierli.";
   const cappSel = (materialId === "imbiancatura" && context === "esterno") ? SIST.parseCapp((req.body || {}).cappotto) : null;
   const cgSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseCg((req.body || {}).cartongesso) : null;
   const bsSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseBs((req.body || {}).boiserie) : null;
@@ -890,7 +893,82 @@ module.exports = async function handler(req, res) {
   const btSel = SIST.parseBt((req.body || {}).battiscopa, materialId);
   const peSel = materialId === "piastrelle" ? SIST.parsePiaEst((req.body || {}).piaEst) : null;
   const psSel = SIST.parsePiscina((req.body || {}).piscina);
-  const prompt = psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
+  // Rinnovo del parquet esistente (levigatura + nuova finitura): stesso pavimento, cambia solo la superficie. In prova.
+  // Lavoro: «stesso colore» = levigatura + verniciatura trasparente; gli altri = verniciatura colorata. Finitura: opaco o lucido.
+  const RN_T = {
+    naturale: "levigatura e nuova verniciatura trasparente: il legno resta dello STESSO colore di adesso (non più chiaro e non più scuro), solo pulito, vivo e uniforme",
+    sbiancato: "levigatura e verniciatura SBIANCATA: sopra al legno una velatura bianca leggera, attraverso la quale si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
+    miele: "levigatura e verniciatura colorata MIELE: il legno prende un tono miele caldo, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
+    noce: "levigatura e verniciatura colorata NOCE: il legno prende un tono noce medio, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
+    grigio: "levigatura e verniciatura colorata GRIGIO TORTORA: il legno prende un tono grigio tortora, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
+    chiaro: "levigatura e nuova verniciatura: il legno di poco più chiaro, al massimo un tono"
+  };
+  const RN_F = { opaco: "OPACA: nessun riflesso, aspetto naturale del legno", lucido: "LUCIDA: il pavimento riflette in modo netto la finestra e la luce, come un parquet appena verniciato lucido", satinato: "SATINATA: una luce morbida dove arriva il sole", olio: "a OLIO: opaca e calda" };
+  const rnB = (req.body || {}).rinnovoParquet, rnSel = rnB && typeof rnB === "object" && RN_T[rnB.tinta] && RN_F[rnB.fin] ? { tinta: rnB.tinta, fin: rnB.fin } : null;
+  function rnBuild(desc, hasCrop) {
+    return [
+      "Questa è una fotografia vera di una stanza con un parquet già posato. Il tuo lavoro è SOLO un ritocco della superficie di QUESTO parquet: è lo stesso pavimento, nello stesso punto, dopo un lavoro di rinnovo fatto da un parquettista. Il pavimento non si cambia, non si sostituisce e non si ridisegna: lo prendi esattamente com'è nella foto e lo fai tornare come nuovo.",
+      desc ? "Com'è fatto questo pavimento, e così deve restare: " + desc + "." : "",
+      hasCrop ? "La SECONDA immagine è un ingrandimento della parte bassa di questa stessa foto: mostra da vicino i listelli veri di questo pavimento. Guardala bene: nel risultato i listelli devono essere proprio questi, con la stessa misura, la stessa forma, lo stesso disegno di posa e nella stessa posizione, uno per uno. La seconda immagine serve solo come riferimento: il risultato è la prima foto ritoccata." : "",
+      "Ogni listello resta dove è, con la sua misura e la sua direzione; restano le stesse fughe tra i listelli e le stesse differenze di tono tra un listello e l'altro.",
+      "Lavoro fatto: " + RN_T[rnSel.tinta] + ". Sono spariti polvere, calcinacci, graffi, righe, segni di scarpe, macchie, aloni e le zone grigie o consumate.",
+      "Finitura " + RN_F[rnSel.fin] + ".",
+      "Tutto il resto della foto resta IDENTICO e al suo posto: pareti, battiscopa, porte, finestre, tende, termosifoni, mobili, teli, attrezzi e ogni oggetto appoggiato sul pavimento. Stessa inquadratura, stessa prospettiva, stessa luce.",
+    ].filter(Boolean).join(" ");
+  }
+  // Descrizione del pavimento fatta da un'AI che guarda la foto (così l'AI delle immagini sa com'è il parquet vero)
+  async function rnDescribe(b64, mime) {
+    const key = (process.env.OPENAI_API_KEY || "").trim(); if (!key) return "";
+    const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 30000);
+    try {
+      const r = await fetch("https://api.openai.com/v1/chat/completions", { method: "POST", signal: ctl.signal, headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+        body: JSON.stringify({ model: (process.env.RN_DESC_MODEL || "gpt-4.1").trim(), temperature: 0, response_format: { type: "json_object" },
+          messages: [{ role: "user", content: [{ type: "text", text: "Guarda SOLO il pavimento in legno di questa foto, anche se è sporco o impolverato. Descrivilo in italiano, in massimo 60 parole, per un fotoritoccatore che deve rinnovarlo senza cambiarlo: tipo di posa (per esempio a correre con listelli sfalsati, spina di pesce, spina ungherese, a quadrotti, a cassero), misura dei listelli rispetto alla stanza (piccoli, stretti e corti oppure lunghi e larghi), direzione dei listelli nella foto, colore del legno e differenze di tono tra listelli. Non descrivere la sporcizia. Rispondi solo in JSON: {\"descrizione\": \"...\"}" }, { type: "image_url", image_url: { url: "data:" + (mime || "image/jpeg") + ";base64," + b64, detail: "high" } }] }] }) });
+      if (!r.ok) return "";
+      const j = await r.json(); const d = JSON.parse(((j.choices || [])[0] || {}).message.content || "{}").descrizione;
+      return String(d || "").replace(/[\r\n\t]+/g, " ").replace(/[<>{}]/g, "").trim().slice(0, 500);
+    } catch (e) { return ""; } finally { clearTimeout(tm); }
+  }
+  // Ingrandimento della parte bassa della foto: il pavimento visto da vicino
+  async function rnCrop(b64) {
+    try {
+      const sharp = require("sharp"); const buf = await sharp(Buffer.from(b64, "base64")).rotate().toBuffer(); const m = await sharp(buf).metadata();
+      const top = Math.round(m.height * 0.5), h = m.height - top;
+      const out = await sharp(buf).extract({ left: 0, top: top, width: m.width, height: h }).resize({ width: 1536 }).jpeg({ quality: 90 }).toBuffer();
+      return out.toString("base64");
+    } catch (e) { return null; }
+  }
+  // Frase semplice, come la scriverebbe una persona a ChatGPT
+  function rnChatText() {
+    const col = rnSel.tinta === "naturale" ? "trasparente (stesso colore di adesso)" : ({ sbiancato: "sbiancata (velatura bianca leggera)", miele: "colorata color miele", noce: "colorata color noce", grigio: "colorata grigio tortora", chiaro: "di un tono più chiara" }[rnSel.tinta] || "trasparente");
+    const fin = rnSel.fin === "lucido" ? "lucida" : "opaca";
+    return "Mi puoi rendere il parquet nuovo, come dopo levigatura e verniciatura " + col + ", con finitura " + fin + "? Va solo rinnovato, non cambiato: stessi listelli, stessa posa, stessa misura. Non togliere e non spostare niente nella stanza: teli, pannelli, attrezzi e oggetti restano dove sono. Stessa inquadratura della foto.";
+  }
+  async function rnChatGpt(b64, mime) {
+    const key = (process.env.OPENAI_API_KEY || "").trim(); if (!key) return { why: "no key" };
+    const models = [(process.env.RN_CHAT_MODEL || "gpt-5").trim(), "gpt-4.1"].filter(function (m, i, a) { return m && a.indexOf(m) === i; });
+    const tool = { type: "image_generation", input_fidelity: "high", quality: "high", size: "auto", output_format: "png" };
+    if ((process.env.RN_TOOL_MODEL || "").trim()) tool.model = process.env.RN_TOOL_MODEL.trim();
+    let why = "";
+    for (const model of models) {
+      const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 200000);
+      try {
+        const r = await fetch("https://api.openai.com/v1/responses", { method: "POST", signal: ctl.signal, headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: model, tools: [tool], tool_choice: { type: "image_generation" },
+            input: [{ role: "user", content: [{ type: "input_text", text: rnChatText() }, { type: "input_image", image_url: "data:" + (mime || "image/jpeg") + ";base64," + b64 }] }] }) });
+        const t = await r.text(); let j = null; try { j = JSON.parse(t); } catch (e) {}
+        if (!r.ok) { why = model + " " + r.status + " " + t.slice(0, 200); if (r.status === 404 || r.status === 400) continue; return { why: why }; }
+        const call = (j && j.output || []).find(function (o) { return o && o.type === "image_generation_call" && o.result; });
+        if (call) return { b64: call.result };
+        why = model + " nessuna immagine";
+      } catch (e) { why = model + " " + (e && e.name === "AbortError" ? "timeout" : String(e && e.message || e)); }
+      finally { clearTimeout(tm); }
+    }
+    return { why: why };
+  }
+  let rnCropB64 = null;
+  const rnPrompt = rnSel ? rnBuild("", false) : "";
+  const prompt = rnSel ? rnPrompt : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
@@ -939,7 +1017,7 @@ module.exports = async function handler(req, res) {
     paddedBands ? "NOTA SUL FORMATO: ai bordi della foto ci sono bande sfocate aggiunte solo per adattare il formato: lasciale come sono e NON ingrandire, spostare o ritagliare la foto al centro, che deve restare esattamente nella stessa posizione e dimensione." : ""
   ].join(" ");
   // Cappotto: le regole generali ("non aggiungere bande", "spallette e davanzali identici") lo cancellerebbero.
-  const promptOut = SIST.zocFix(cappSel ? SIST.cappFix(prompt, cappSel) : prompt, zocSel);
+  let promptOut = SIST.zocFix(cappSel ? SIST.cappFix(prompt, cappSel) : prompt, zocSel);
 
   // L'immagine base64 arriva dal frontend già ridimensionata, ma per sicurezza
   // rifiutiamo esplicitamente payload anomali invece di lasciare che falliscano
@@ -952,6 +1030,22 @@ module.exports = async function handler(req, res) {
     return res.status(413).json({ error: "La foto è troppo pesante, prova con una foto più piccola" });
   }
 
+  let rnEngine = null;
+  if (rnSel) {
+    // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
+    const chat = await rnChatGpt(imageBase64, mimeType);
+    if (chat && chat.b64) {
+      const cfit = await fitJpeg(chat.b64, "image/png");
+      if (job) await jobs.done(job, cfit.b64, cfit.mime).catch(function () {});
+      return res.status(200).json({ imageBase64: cfit.b64, mimeType: cfit.mime, rnEngine: "OpenAI (come ChatGPT)", jobId: job ? job.id : null });
+    }
+    console.error("rinnovo chatgpt", chat && chat.why);
+    // 2° motore: Gemini (se c'è la chiave), altrimenti l'AI delle immagini di sempre
+    const both = await Promise.all([rnDescribe(imageBase64, mimeType), rnCrop(imageBase64)]);
+    rnCropB64 = both[1]; promptOut = rnBuild(both[0], !!rnCropB64);
+    if (apiKey) provider = "gemini";
+    rnEngine = provider === "gemini" ? "Gemini" : "OpenAI immagini";
+  }
   if (provider === "openai") {
     const model = (process.env.OPENAI_IMAGE_MODEL || "gpt-image-2.5-sunburst").trim();
     // MODALITÀ TEST (solo account autorizzati, da rendrum.com/?test=max):
@@ -990,6 +1084,7 @@ module.exports = async function handler(req, res) {
     if (boiserieStyleRefImageClean) images.push({ b64: boiserieStyleRefImageClean, mime: "image/jpeg" });
     if (posaRefClean) images.push({ b64: posaRefClean, mime: "image/jpeg" });
     if (sampleClean) images.push({ b64: sampleClean, mime: "image/jpeg" });
+    if (rnCropB64) images.push({ b64: rnCropB64, mime: "image/jpeg" });
     if (accentoRefClean) images.push({ b64: accentoRefClean, mime: "image/jpeg" });
     const send = (extra) => {
       const fd = new FormData();
@@ -1077,7 +1172,7 @@ module.exports = async function handler(req, res) {
       if (isTesterAll) { test = test || {}; test.msAi = msAi; test.msServer = Date.now() - tStart; test.sends = sends; test.engine = "openai " + model; }
       if (test) { test.engine = "openai " + model; test.sizeSent = params.size || "auto"; test.quality = params.quality || quality; if (dropped.length) test.dropped = dropped.join(", "); if (fallbackWhy) test.fallback = fallbackWhy; }
       if (job) await jobs.done(job, fit.b64, fit.mime).catch(function () {});
-      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, jobId: job ? job.id : null });
+      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
     } catch (err) {
       console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
     }
@@ -1116,6 +1211,7 @@ module.exports = async function handler(req, res) {
     if (posaRefClean) {
       contentParts.push({ inline_data: { mime_type: "image/jpeg", data: posaRefClean } });
     }
+    if (rnCropB64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: rnCropB64 } });
     if (sampleClean) {
       contentParts.push({ inline_data: { mime_type: "image/jpeg", data: sampleClean } });
     }
@@ -1188,7 +1284,7 @@ module.exports = async function handler(req, res) {
     const gfit = await fitJpeg(inline.data, inline.mime_type || inline.mimeType || "image/png");
     if (isTesterAll) { gtest = gtest || { engine: "gemini " + geminiModel, size: imageConfig.imageSize }; gtest.msAi = msAi; gtest.msServer = Date.now() - tStart; gtest.sends = sends; }
     if (job) await jobs.done(job, gfit.b64, gfit.mime).catch(function () {});
-    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, jobId: job ? job.id : null });
+    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
   } catch (err) {
     console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
   }

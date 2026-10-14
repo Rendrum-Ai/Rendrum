@@ -7,7 +7,7 @@
 //   GET  /api/quotes?action=settings           -> impostazioni preventivi (dati impresa, banca, condizioni, listino)
 //   POST /api/quotes?action=settings           -> salva impostazioni
 // Tabelle: vedi supabase_preventivi.sql
-const { currentAccount, supabaseRequest, getSupabaseConfig } = require("./_auth-lib");
+const { currentAccount, supabaseRequest, getSupabaseConfig, isBeta } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 const { vatCheck } = require("./_vat");
 
@@ -118,7 +118,7 @@ function cleanSettings(b) {
   const iban = str(bk.iban, 40).replace(/\s+/g, "").toUpperCase();
   return {
     impresa: {
-      ragioneSociale: str(i.ragioneSociale, 120), indirizzo: str(i.indirizzo, 200), paese: str(i.paese, 2).toUpperCase() || "IT", piva: str(i.piva, 30), cf: str(i.cf, 20),
+      ragioneSociale: str(i.ragioneSociale, 120), indirizzo: str(i.indirizzo, 200), via: str(i.via, 120), civico: str(i.civico, 12), cap: str(i.cap, 10), comune: str(i.comune, 80), prov: str(i.prov, 4).toUpperCase(), paese: str(i.paese, 2).toUpperCase() || "IT", piva: str(i.piva, 30), cf: str(i.cf, 20),
       telefono: str(i.telefono, 40), email: str(i.email, 120), sito: str(i.sito, 120), rea: str(i.rea, 60),
     },
     banca: { intestatario: str(bk.intestatario, 120), banca: str(bk.banca, 120), iban, linkCarta: /^https:\/\/[^\s"'<>]+$/.test(str(bk.linkCarta, 300)) ? str(bk.linkCarta, 300) : "" },
@@ -147,6 +147,8 @@ module.exports = async function handler(req, res) {
     if (action.indexOf("px-") === 0) return require("./_extra").handle(req, res, action, acc);
     if (action.indexOf("pk-") === 0) return require("./_plink").handle(req, res, action, acc);
     if (action.indexOf("ai-") === 0) return require("./_aiuto").handle(req, res, action, acc);
+    if (action.indexOf("cs-") === 0) return require("./_camp").handle(req, res, action, acc);
+    if (action.indexOf("vi-") === 0) return require("./_via").handle(req, res, action, acc);
 
     if (action === "settings") {
       if (req.method === "GET") return res.status(200).json({ settings: acc.quote_settings || {}, account: { companyName: acc.company_name || "", piva: acc.piva || "", phone: acc.phone || "", email: acc.email || "", logoUrl: acc.logo_url || null } });
@@ -177,7 +179,7 @@ module.exports = async function handler(req, res) {
     if (action === "mail") {
       if (req.method !== "POST") return res.status(405).json({ error: "Usa POST" });
       const em = String(acc.email || "").toLowerCase();
-      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
+      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || isBeta(acc) || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
       const key = (process.env.RESEND_API_KEY || "").trim();
       if (!key) return res.status(503).json({ error: "Invio email non attivo.", code: "noemail" });
       const b = req.body || {}, EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;

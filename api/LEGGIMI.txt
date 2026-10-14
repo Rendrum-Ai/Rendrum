@@ -1,0 +1,12 @@
+QUESTI 14 FILE VANNO TUTTI DENTRO LA CARTELLA «api» SU GITHUB
+
+1. Su GitHub clicca sulla cartella «api» (si apre, in alto vedi Rendrum / api).
+2. SOLO ORA: Add file > Upload files.
+3. Trascina i 14 file .js (non la cartella, i file).
+4. Commit changes.
+5. Su Vercel aspetta il pallino verde «Ready», poi chiudi e riapri l'app.
+
+LEGGIMI.txt non si carica.
+
+DOPO (per pulizia): i file .js che sono rimasti FUORI dalla cartella api
+(in alto, nella pagina principale) non servono: si possono eliminare.

@@ -41,6 +41,7 @@ function clean(kind, d, old) {
     tipo: ["sopralluogo", "lavoro", "altro"].includes(d.tipo) ? d.tipo : "altro",
     titolo: str(d.titolo, 120), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), indirizzo: str(d.indirizzo, 200),
     data: date(d.data), ora: time(d.ora), note: str(d.note, 1000), fatto: !!d.fatto,
+    esito: ["fatto", "annullato", "rinviato"].includes(d.esito) ? d.esito : "",
   };
   if (kind === "lavoro") return {
     titolo: str(d.titolo, 120), cliente: str(d.cliente, 120), telefono: str(d.telefono, 40), comune: str(d.comune, 80),

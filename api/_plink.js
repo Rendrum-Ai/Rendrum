@@ -15,7 +15,7 @@
 //             GET  pk-list -> { links, avvisi }
 //             POST pk-confirm { id, inizio } | pk-undo { id } | pk-seen { id } | pk-cont { quoteId, idx, file } | pk-cont-seen { quoteId, idx, rem }
 const crypto = require("crypto");
-const { supabaseRequest, getSupabaseConfig } = require("./_auth-lib");
+const { supabaseRequest, getSupabaseConfig, isBeta } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -23,7 +23,7 @@ const TOKEN = /^[a-f0-9]{20}$/;
 const TESTERS = ["prova@rendrum.com", "info@dgmresine.com"];
 const QUANDO = { firma: "alla firma", inizio: "a inizio lavori", meta: "a metà lavori", fine: "a fine lavori" };
 
-function on(acc) { return process.env.PLINK_ALL === "1" || TESTERS.includes(String((acc && acc.email) || "").toLowerCase()); }
+function on(acc) { return process.env.PLINK_ALL === "1" || TESTERS.includes(String((acc && acc.email) || "").toLowerCase()) || isBeta(acc); }
 function str(v, max) { return String(v == null ? "" : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").replace(/[<>]/g, "").trim().slice(0, max); }
 function r2(x) { return Math.round((+x || 0) * 100) / 100; }
 function today() { return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Rome" }); }

@@ -331,13 +331,13 @@ function parsePiscina(b) {
 }
 function piscinaPrompt(b) {
   const L = [];
-  if (b.cosa.includes("vasca")) L.push("VASCA: il fondo e le pareti interne della piscina sono verniciati di nuovo in colore " + PS_COL[b.col] + " uniforme, finitura satinata, senza macchie. L'acqua è limpida e trasparente e prende il tono del fondo: più chiara dove l'acqua è bassa e più intensa dove è profonda, con riflessi del cielo e leggere increspature naturali. Se nella foto la piscina è vuota o con poca acqua, mostrala PIENA d'acqua pulita fino a pochi centimetri dal bordo.");
+  if (b.cosa.includes("vasca")) L.push("VASCA: il fondo e le pareti interne della piscina sono verniciati di nuovo in colore " + PS_COL[b.col] + " uniforme, finitura satinata, senza macchie. ACQUA: NON aggiungere e NON togliere acqua, il livello dell'acqua resta esattamente com'è nella foto. Se nella foto la piscina è vuota resta VUOTA e si vedono bene il fondo e le pareti nuove; se ha un po' d'acqua resta con la stessa poca acqua; se è piena resta piena, con l'acqua limpida che lascia vedere il colore nuovo del fondo.");
   if (b.cosa.includes("bordo")) L.push("BORDO PISCINA: tutto intorno alla vasca un bordo nuovo largo circa 35–40 cm " + { graniglia: "in GRANIGLIA (piccoli sassolini levigati legati in resina), chiaro, con lo spigolo verso l'acqua arrotondato (bordo toro)" + (b.cosa.includes("solarium") && b.sol === "graniglia" ? ", continuo con il solarium" : ""), piastrella: "in pezzi speciali di GRES antiscivolo chiaro a BORDO TORO (spigolo arrotondato), con fughe allineate", pietra: "in LASTRE DI PIETRA chiara con lo spigolo arrotondato, posate con fughe sottili" }[b.bordo] + ", continuo e dritto, che segue esattamente la forma della vasca.");
   if (b.cosa.includes("solarium")) L.push("SOLARIUM: il pavimento intorno alla piscina è rifatto " + { graniglia: "in GRANIGLIA drenante (sassolini legati in resina), uniforme, colore chiaro naturale", piastrelle: "in piastrelle di GRES per esterni antiscivolo effetto pietra chiara, formato 60 × 60, posa dritta", legno: "in DOGHE di legno per esterni (decking) color miele, parallele, con fughe sottili" }[b.sol] + ", fino ai bordi del prato o dei muretti, seguendo la prospettiva.");
   return [
     "Modifica la foto di questa piscina con i lavori fatti da un professionista. Cambia SOLO quello che è descritto qui sotto.",
     L.join(" "),
-    "La piscina mantiene esattamente forma, dimensioni, scalette, skimmer e fari. Non cambiare casa, giardino, prato, piante, sdraio, ombrelloni, recinzioni, cielo e inquadratura.",
+    "La piscina mantiene esattamente forma, dimensioni, scalette, skimmer, fari e livello dell'acqua. Non cambiare casa, giardino, prato, piante, sdraio, ombrelloni, recinzioni, cielo e inquadratura.",
     "Luce del sole e ombre coerenti con la scena. Il risultato deve sembrare una fotografia reale della stessa piscina dopo i lavori, non un rendering.",
   ].join(" ");
 }

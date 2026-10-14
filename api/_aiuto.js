@@ -43,7 +43,7 @@ async function ask(key, model, messages) {
 async function handle(req, res, action, acc) {
   if (action !== "ai-chat") return res.status(400).json({ error: "Azione non valida" });
   if (req.method !== "POST") return res.status(405).json({ error: "Usa POST" });
-  if (!acc || !STAFF.includes(String(acc.email || "").toLowerCase())) return res.status(403).json({ error: "L'assistente non è ancora attivo per questo account." });
+  if (!acc || !(STAFF.includes(String(acc.email || "").toLowerCase()) || require("./_auth-lib").isBeta(acc))) return res.status(403).json({ error: "L'assistente non è ancora attivo per questo account." });
   const key = (process.env.OPENAI_API_KEY || "").trim();
   if (!key) return res.status(500).json({ error: "Assistente non attivo sul server." });
   const messages = clean((req.body || {}).messages);

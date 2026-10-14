@@ -28,6 +28,17 @@ Regole importanti:
 Rispondi SOLO con un JSON così:
 {"piani":[{"nome":"Piano terra","pavimento":{"mq":58.27,"fonte":"scritto","calcolo":""},"pareti":{"mq":113.06,"fonte":"calcolato","calcolo":"37.80*2.70+5.00*1.10*2"},"plafone":{"mq":null,"fonte":"","calcolo":""},"altezze":[2.7,7.6]}],"mancanti":["..."],"avvisi":["..."]}`;
 
+// Solo le misure chieste dall'artigiano (pav, par, pla, bat, riv). Senza scelta: le tre di sempre.
+const COSA = { pav: "m² di PAVIMENTO", par: "m² di PARETI (interne, da imbiancare)", pla: "m² di PLAFONE (soffitto)", bat: "metri lineari di BATTISCOPA (perimetro delle stanze meno la larghezza delle porte)", riv: "m² di RIVESTIMENTI di bagni e cucina (pareti di quei locali fino a 2,20 m nei bagni e 1,60 m in cucina, salvo altezze scritte)" };
+function cosaList(c) { const a = (Array.isArray(c) ? c : []).filter(k => COSA[k]); return a.length ? Array.from(new Set(a)) : null; }
+function promptFor(cosa) {
+  if (!cosa) return PROMPT;
+  const want = cosa.map(k => "- " + COSA[k]).join("\n");
+  const ex = { pav: '"pavimento":{"mq":58.27,"fonte":"scritto","calcolo":""}', par: '"pareti":{"mq":113.06,"fonte":"calcolato","calcolo":"37.80*2.70+5.00*1.10*2"}', pla: '"plafone":{"mq":null,"fonte":"","calcolo":""}', bat: '"battiscopa":{"ml":41.6,"fonte":"calcolato","calcolo":"(7.40+4.20)*2-0.80*3"}', riv: '"rivestimenti":{"mq":18.9,"fonte":"calcolato","calcolo":"(2.40+1.90)*2*2.20"}' };
+  return PROMPT.replace("Devi ricavare SOLO tre misure per ogni piano o zona: m² di PAVIMENTO, m² di PARETI (da imbiancare, interne), m² di PLAFONE (soffitto).",
+    "L'artigiano ti chiede SOLO queste misure, per ogni piano o zona (le altre NON leggerle e NON metterle):\n" + want)
+    .replace(/Rispondi SOLO con un JSON così:[\s\S]*$/, "Per il battiscopa usa i perimetri o i lati scritti delle stanze e togli 0,80 m per ogni porta che vedi; scrivi il calcolo. Per i rivestimenti calcola solo bagni e cucina.\n\nRispondi SOLO con un JSON così (solo le chiavi chieste):\n{\"piani\":[{\"nome\":\"Piano terra\"," + cosa.map(k => ex[k]).join(",") + ",\"altezze\":[2.7]}],\"mancanti\":[\"...\"],\"avvisi\":[\"...\"]}");
+}
 function str(v, max) { return String(v == null ? "" : v).replace(/[\u0000-\u001F]/g, " ").trim().slice(0, max); }
 function round2(n) { return Math.round(n * 100 + 1e-6) / 100; }
 
@@ -38,14 +49,15 @@ function evalCalc(c) {
   try { const v = Function('"use strict";return (' + s + ")")(); return (typeof v === "number" && isFinite(v) && v > 0) ? round2(v) : null; } catch (e) { return null; }
 }
 
-function cleanMis(m, avvisi, label) {
+function cleanMis(m, avvisi, label, u) {
+  u = u || "m²";
   m = (m && typeof m === "object") ? m : {};
-  let mq = Number(m.mq);
+  let mq = Number(m.mq != null ? m.mq : m.ml);
   mq = (isFinite(mq) && mq > 0 && mq < 100000) ? round2(mq) : null;
   const calcolo = str(m.calcolo, 300);
   const ev = calcolo ? evalCalc(calcolo) : null;
   if (ev != null) {
-    if (mq != null && Math.abs(ev - mq) > Math.max(0.05, mq * 0.01)) avvisi.push(label + ": rifatto il conto, " + String(ev).replace(".", ",") + " m² invece di " + String(mq).replace(".", ",") + ".");
+    if (mq != null && Math.abs(ev - mq) > Math.max(0.05, mq * 0.01)) avvisi.push(label + ": rifatto il conto, " + String(ev).replace(".", ",") + " " + u + " invece di " + String(mq).replace(".", ",") + ".");
     mq = ev;
   }
   let fonte = FONTI.indexOf(m.fonte) >= 0 ? m.fonte : (mq != null ? "stimato" : "");
@@ -53,7 +65,7 @@ function cleanMis(m, avvisi, label) {
   return { mq, fonte: mq != null ? fonte : "", calcolo: ev != null ? calcolo : "", verificato: ev != null };
 }
 
-function clean(d) {
+function clean(d, cosa) {
   d = (d && typeof d === "object") ? d : {};
   const avvisi = (Array.isArray(d.avvisi) ? d.avvisi : []).map(x => str(x, 200)).filter(Boolean).slice(0, 8);
   const piani = (Array.isArray(d.piani) ? d.piani : []).slice(0, 8).map((p, i) => {
@@ -63,11 +75,15 @@ function clean(d) {
       pavimento: cleanMis(p && p.pavimento, avvisi, nome + " pavimento"),
       pareti: cleanMis(p && p.pareti, avvisi, nome + " pareti"),
       plafone: cleanMis(p && p.plafone, avvisi, nome + " plafone"),
+      battiscopa: cosa && cosa.includes("bat") ? cleanMis(p && p.battiscopa, avvisi, nome + " battiscopa", "ml") : undefined,
+      rivestimenti: cosa && cosa.includes("riv") ? cleanMis(p && p.rivestimenti, avvisi, nome + " rivestimenti") : undefined,
       altezze: (Array.isArray(p && p.altezze) ? p.altezze : []).map(Number).filter(h => isFinite(h) && h > 0 && h < 30).slice(0, 6),
     };
   });
   const mancanti = (Array.isArray(d.mancanti) ? d.mancanti : []).map(x => str(x, 120)).filter(Boolean).slice(0, 8);
-  return { piani, mancanti, avvisi };
+  // le misure non chieste non si mostrano
+  if (cosa) piani.forEach(p => { [["pav", "pavimento"], ["par", "pareti"], ["pla", "plafone"]].forEach(([k, f]) => { if (!cosa.includes(k)) p[f] = { mq: null, fonte: "", calcolo: "", verificato: false }; }); });
+  return cosa ? { piani, mancanti, avvisi, cosa } : { piani, mancanti, avvisi };
 }
 
 function aiErr(status, body) {
@@ -79,7 +95,7 @@ function aiErr(status, body) {
   if (status === 400 && /image/i.test(t)) return { code: "immagine", msg: "Il disegno non si riesce ad aprire: prova con una foto più nitida." };
   return { code: "ai", msg: "Non riesco a leggere il disegno adesso. Riprova tra poco." };
 }
-async function ask(key, model, image) {
+async function ask(key, model, image, prompt) {
   const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 55000);
   try {
     const r = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -87,7 +103,7 @@ async function ask(key, model, image) {
       headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
       body: JSON.stringify({
         model, temperature: 0, response_format: { type: "json_object" },
-        messages: [{ role: "user", content: [{ type: "text", text: PROMPT }, { type: "image_url", image_url: { url: image, detail: "high" } }] }],
+        messages: [{ role: "user", content: [{ type: "text", text: prompt || PROMPT }, { type: "image_url", image_url: { url: image, detail: "high" } }] }],
       }),
     });
     return { status: r.status, ok: r.ok, text: await r.text() };
@@ -95,12 +111,12 @@ async function ask(key, model, image) {
     return { status: 0, ok: false, text: e && e.name === "AbortError" ? "timeout" : String(e && e.message || e) };
   } finally { clearTimeout(tm); }
 }
-async function read(image) {
+async function read(image, cosa) {
   const key = (process.env.OPENAI_API_KEY || "").trim();
   if (!key) { const e = new Error("no key"); e.code = 500; throw e; }
   let model = (process.env.PLAN_MODEL || "gpt-4.1").trim();
-  let r = await ask(key, model, image);
-  if (!r.ok && (r.status === 404 || /model_not_found|does not exist/i.test(r.text)) && model !== "gpt-4o") { model = "gpt-4o"; r = await ask(key, model, image); }
+  let r = await ask(key, model, image, promptFor(cosa));
+  if (!r.ok && (r.status === 404 || /model_not_found|does not exist/i.test(r.text)) && model !== "gpt-4o") { model = "gpt-4o"; r = await ask(key, model, image, promptFor(cosa)); }
   if (!r.ok) {
     console.error("plan openai", r.status, String(r.text).slice(0, 500));
     const x = r.status === 0 ? (r.text === "timeout" ? { code: "tempo", msg: "Il disegno ci mette troppo a essere letto: riprova, o carica una foto più leggera." } : { code: "rete", msg: "Non riesco a raggiungere il servizio AI. Riprova tra poco." }) : aiErr(r.status, r.text);
@@ -109,7 +125,7 @@ async function read(image) {
   let j; try { j = JSON.parse(r.text); } catch (e) { j = {}; }
   const c = j && j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
   let d; try { d = JSON.parse(c || "{}"); } catch (e) { d = {}; }
-  return clean(d);
+  return clean(d, cosa);
 }
 
 const STAFF = ["info@dgmresine.com", "prova@rendrum.com"];
@@ -119,7 +135,7 @@ async function handle(req, res, action, acc) {
   const img = String((req.body || {}).image || "");
   if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(img) || img.length > MAX_B64) return res.status(400).json({ error: "Carica una foto o un PDF del disegno (massimo 4 MB)." });
   try {
-    const out = await read(img);
+    const out = await read(img, cosaList((req.body || {}).cosa));
     if (!out.piani.length) return res.status(200).json(Object.assign(out, { vuoto: true }));
     return res.status(200).json(out);
   } catch (e) {
@@ -132,4 +148,4 @@ async function handle(req, res, action, acc) {
   }
 }
 
-module.exports = { handle, _test: { evalCalc, clean } };
+module.exports = { handle, _test: { evalCalc, clean, promptFor, cosaList } };
