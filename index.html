@@ -20489,8 +20489,8 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         padForAI(RN.b64, RN.mime).then(function(pad){
           var tl = RN_T.filter(function(x){ return x[0] === RN.t; })[0][1];
           return fetch(AI_ENDPOINT, { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ imageBase64: pad.b64, mimeType: pad.mime, rapporto: pad.ratio, material:'Rinnovo parquet', materialId:'parquet', colorA:'Rinnovo parquet ' + tl, rinnovoParquet:{ tinta: RN.t, fin: RN.f } }) })
-            .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok || !d.imageBase64) throw new Error(d.error || 'Generazione non riuscita. Riprova.'); RN.eng = d.rnEngine || ''; return 'data:' + (d.mimeType || 'image/jpeg') + ';base64,' + d.imageBase64; }); });
-        }).then(function(img){ RN.done = RN_T.filter(function(x){ return x[0] === RN.t; })[0][1].toLowerCase() + ', ' + RN.f + (RN.eng ? ' · motore ' + RN.eng : ''); draw(img); setTimeout(function(){ var x = document.getElementById('rnImg'); if(x) x.scrollIntoView({ block:'center', behavior:'smooth' }); }, 100); })
+            .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok || !d.imageBase64) throw new Error(d.error || 'Generazione non riuscita. Riprova.'); RN.eng = d.rnEngine || ''; RN.why = d.rnWhy || ''; return 'data:' + (d.mimeType || 'image/jpeg') + ';base64,' + d.imageBase64; }); });
+        }).then(function(img){ RN.done = RN_T.filter(function(x){ return x[0] === RN.t; })[0][1].toLowerCase() + ', ' + RN.f + (RN.eng ? ' · motore ' + RN.eng : '') + (RN.why ? ' (OpenAI non riuscito: ' + RN.why + ')' : ''); draw(img); setTimeout(function(){ var x = document.getElementById('rnImg'); if(x) x.scrollIntoView({ block:'center', behavior:'smooth' }); }, 100); })
           .catch(function(e){ bt.disabled = false; bt.textContent = '✨ Genera il rinnovo'; err.textContent = e.message || 'Generazione non riuscita.'; });
       };
     }
