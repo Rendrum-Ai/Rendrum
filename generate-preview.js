@@ -894,16 +894,24 @@ module.exports = async function handler(req, res) {
   const peSel = materialId === "piastrelle" ? SIST.parsePiaEst((req.body || {}).piaEst) : null;
   const psSel = SIST.parsePiscina((req.body || {}).piscina);
   // Rinnovo del parquet esistente (levigatura + nuova finitura): stesso pavimento, cambia solo la superficie. In prova.
-  const RN_T = { naturale: "lo STESSO colore del legno di adesso, ma ravvivato: tono caldo, vivo e uniforme, senza la patina grigia e opaca dell'usura", chiaro: "un tono PIÙ CHIARO del legno di adesso: il colore naturale del legno appena levigato, prima della tinta scura (miele chiaro)", sbiancato: "SBIANCATO: legno chiaro con una leggera velatura bianca, venature ancora visibili", miele: "tinta MIELE calda", noce: "tinta NOCE media, calda", grigio: "tinta GRIGIO TORTORA, venature ancora visibili" };
-  const RN_F = { opaco: "verniciatura OPACA: nessun riflesso lucido, aspetto naturale", satinato: "verniciatura SATINATA: una luce morbida dove arriva il sole, senza effetto specchio", lucido: "verniciatura LUCIDA: riflessi netti della finestra e della luce sul pavimento", olio: "finitura a OLIO: opaca e calda, il legno sembra naturale e vivo" };
+  const RN_T = {
+    naturale: "la STESSA tonalità del legno di adesso: NON schiarire e NON scurire. Solo più viva, uniforme e pulita, senza la patina grigia e opaca",
+    chiaro: "di poco PIÙ CHIARA del legno di adesso, al massimo un tono, come quando si toglie la vecchia vernice ingiallita. Resta lo stesso legno con le stesse differenze tra i listelli: NON farlo diventare un legno diverso (per esempio un rovere chiaro)",
+    sbiancato: "lo stesso legno con sopra una leggera velatura bianca: si vedono ancora i singoli listelli, le loro differenze di colore e le venature",
+    miele: "lo stesso legno con sopra una tinta MIELE calda: si vedono ancora i singoli listelli e le loro differenze di colore",
+    noce: "lo stesso legno con sopra una tinta NOCE media: si vedono ancora i singoli listelli e le loro differenze di colore",
+    grigio: "lo stesso legno con sopra una tinta GRIGIO TORTORA: si vedono ancora i singoli listelli, le loro differenze di colore e le venature"
+  };
+  const RN_F = { opaco: "verniciatura OPACA: nessun riflesso lucido", satinato: "verniciatura SATINATA: una luce morbida dove arriva il sole, senza effetto specchio", lucido: "verniciatura LUCIDA: riflessi netti della finestra e della luce sul pavimento", olio: "finitura a OLIO: opaca, calda e naturale" };
   const rnB = (req.body || {}).rinnovoParquet, rnSel = rnB && typeof rnB === "object" && RN_T[rnB.tinta] && RN_F[rnB.fin] ? { tinta: rnB.tinta, fin: rnB.fin } : null;
   const rnPrompt = rnSel ? [
-    "Modifica questa foto: RINNOVO DEL PARQUET CHE C'È GIÀ (levigatura professionale e nuova finitura). NON è un pavimento nuovo.",
-    "Il pavimento in legno della foto resta lo STESSO: stessi listelli e doghe, stessa larghezza e lunghezza, stessa posa e stesso disegno (a correre, spina di pesce, a quadrotti, a cassero o come nella foto), stesse fughe e giunti, stesso orientamento, stesse differenze naturali di colore tra un listello e l'altro e stesse venature. NON sostituirlo, NON ridisegnarlo, NON cambiare la direzione o la misura dei listelli. Anche i battiscopa restano uguali.",
-    "Cambia SOLO la superficie del legno, come dopo la levigatura: spariscono graffi, righe, segni di scarpe, polvere, calcinacci, macchie, aloni e zone opache, ingrigite o consumate (anche nei passaggi e davanti alle porte). Il legno è pulito e uniforme in tutta la stanza e in tutte le stanze che si vedono.",
-    "Colore: " + RN_T[rnSel.tinta] + ". Finitura: " + RN_F[rnSel.fin] + ".",
-    "Il resto della foto resta IDENTICO: pareti, porte, telai, finestre, tende, termosifoni, tubi, prese, mobili, persone, oggetti e attrezzi appoggiati sul pavimento restano al loro posto e uguali. Stessa luce, stesse ombre, stessa prospettiva e inquadratura.",
-    "Il risultato deve sembrare una fotografia reale dello stesso pavimento appena rinnovato, non un rendering.",
+    "Ritocca questa fotografia come un fotoritoccatore professionista. Lavori SOLO sulla superficie del pavimento in legno che c'è: è lo STESSO pavimento dopo una levigatura e una nuova verniciatura. NON è un pavimento nuovo e NON va sostituito.",
+    "REGOLA VINCOLANTE SUL DISEGNO DEL PAVIMENTO: ogni singolo listello resta esattamente dove è nella foto, con la stessa forma, la stessa larghezza, la stessa lunghezza e la stessa direzione. Restano le stesse fughe e lo stesso disegno di posa: se nella foto ci sono listelli piccoli e stretti, a gruppi, a spina di pesce o a quadrotti, restano così; NON trasformarli MAI in doghe lunghe o larghe e non cambiarne il numero. Restano le stesse differenze di colore tra un listello e l'altro (alcuni più chiari, altri più scuri) e le stesse venature. Confrontando prima e dopo, i listelli devono combaciare uno a uno.",
+    "Cosa togli: graffi, righe, segni di scarpe, polvere, calcinacci, macchie, aloni e zone opache, ingrigite o consumate (anche nei passaggi e davanti alle porte).",
+    "Colore: " + RN_T[rnSel.tinta] + ". Un parquet scuro resta scuro o medio: una levigatura non lo fa diventare chiaro come un legno nuovo.",
+    "Finitura: " + RN_F[rnSel.fin] + ".",
+    "Tutto il resto della foto resta IDENTICO: battiscopa, pareti, porte, telai, finestre, tende, termosifoni, tubi, prese, mobili, persone, oggetti e attrezzi appoggiati sul pavimento, al loro posto e uguali. Stessa luce, stesse ombre, stessa prospettiva e inquadratura.",
+    "Controllo finale prima di rispondere: il pavimento ha gli stessi listelli della foto originale, nella stessa posizione e della stessa misura? Se no, rifallo tenendo i listelli originali.",
   ].join(" ") : "";
   const prompt = rnSel ? rnPrompt : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
