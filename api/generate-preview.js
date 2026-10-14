@@ -947,21 +947,30 @@ module.exports = async function handler(req, res) {
   async function rnChatGpt(b64, mime) {
     const key = (process.env.OPENAI_API_KEY || "").trim(); if (!key) return { why: "no key" };
     const models = [(process.env.RN_CHAT_MODEL || "gpt-5").trim(), "gpt-4.1"].filter(function (m, i, a) { return m && a.indexOf(m) === i; });
-    const tool = { type: "image_generation", input_fidelity: "high", quality: "high", size: "auto", output_format: "png" };
+    const tool = { type: "image_generation", quality: "high", size: "auto", output_format: "png" };
     if ((process.env.RN_TOOL_MODEL || "").trim()) tool.model = process.env.RN_TOOL_MODEL.trim();
     let why = "";
-    for (const model of models) {
+    for (let mi = 0, tries = 0; mi < models.length && tries < 6; tries++) {
+      const model = models[mi];
       const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 200000);
       try {
         const r = await fetch("https://api.openai.com/v1/responses", { method: "POST", signal: ctl.signal, headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
           body: JSON.stringify({ model: model, tools: [tool], tool_choice: { type: "image_generation" },
             input: [{ role: "user", content: [{ type: "input_text", text: rnChatText() }, { type: "input_image", image_url: "data:" + (mime || "image/jpeg") + ";base64," + b64 }] }] }) });
         const t = await r.text(); let j = null; try { j = JSON.parse(t); } catch (e) {}
-        if (!r.ok) { why = model + " " + r.status + " " + t.slice(0, 200); if (r.status === 404 || r.status === 400) continue; return { why: why }; }
+        if (!r.ok) {
+          why = model + " " + r.status + " " + t.slice(0, 200);
+          // un parametro non accettato dall'AI che disegna: lo tolgo e riprovo con lo stesso modello
+          const bad = /does not support the '([a-z_]+)' parameter|Unknown parameter: '?(?:tools\[0\]\.)?([a-z_]+)/i.exec(t);
+          const k = bad && (bad[1] || bad[2]);
+          if (r.status === 400 && k && k in tool && k !== "type") { delete tool[k]; continue; }
+          if (r.status === 404 || r.status === 400) { mi++; continue; }
+          return { why: why };
+        }
         const call = (j && j.output || []).find(function (o) { return o && o.type === "image_generation_call" && o.result; });
         if (call) return { b64: call.result };
-        why = model + " nessuna immagine";
-      } catch (e) { why = model + " " + (e && e.name === "AbortError" ? "timeout" : String(e && e.message || e)); }
+        why = model + " nessuna immagine"; mi++;
+      } catch (e) { why = model + " " + (e && e.name === "AbortError" ? "timeout" : String(e && e.message || e)); mi++; }
       finally { clearTimeout(tm); }
     }
     return { why: why };
