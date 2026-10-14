@@ -975,9 +975,27 @@ module.exports = async function handler(req, res) {
     }
     return { why: why };
   }
+  // Pannelli a listelli (tester): pannello, posa, pareti, fin dove
+  const LS_PAN = { rc: "listelli in legno ROVERE CHIARO (legno chiaro naturale) su feltro fonoassorbente NERO", ro: "listelli in legno ROVERE (legno medio caldo) su feltro fonoassorbente NERO", no: "listelli in legno NOCE (legno scuro marrone) su feltro fonoassorbente NERO", bi: "listelli BIANCHI opachi su feltro fonoassorbente GRIGIO chiaro", pr: "listelli PIENI in legno ROVERE accostati, senza feltro: tra un listello e l'altro solo una scanalatura stretta in ombra", pn: "listelli PIENI in legno NOCE accostati, senza feltro: tra un listello e l'altro solo una scanalatura stretta in ombra" };
+  const LS_POSA = { ver: "listelli VERTICALI, dal basso verso l'alto", ori: "listelli ORIZZONTALI, paralleli al pavimento", dia: "listelli in DIAGONALE a 45 gradi, tutti nella stessa direzione", v: "posa A V (chevron): la parete è divisa in due metà, a sinistra i listelli salgono a 45 gradi in un verso e a destra nel verso opposto, formando una grande V", spi: "posa A SPINA DI PESCE: colonne verticali di pannelli una accanto all'altra, in ogni colonna i listelli sono inclinati a 45 gradi e il verso si alterna da una colonna alla successiva", qua: "posa A QUADROTTI: pannelli quadrati accostati come una scacchiera, in uno i listelli sono verticali e nel successivo orizzontali, alternati", ang: "listelli VERTICALI sulla parete che arrivati in alto CONTINUANO SUL SOFFITTO senza interruzione, girando l'angolo tra parete e soffitto", com: "COMPOSIZIONE geometrica: una parte della parete con listelli in diagonale a 45 gradi, una parte con listelli verticali e una fascia stretta di solo feltro liscio, accostate in modo ordinato" };
+  const LS_DOVE = { fondo: "la parete di fondo, quella di fronte", sinistra: "la parete di sinistra", destra: "la parete di destra", letto: "solo la zona della parete dietro il letto o il divano", tutta: "tutte le pareti che si vedono nella foto", soffitto: "anche il soffitto" };
+  const LS_FIN = { tutta: "su TUTTA l'altezza della parete, dal battiscopa al soffitto", fascia: "solo in una FASCIA verticale larga circa 1,5 metri, dal pavimento al soffitto, centrata dietro la TV, il letto o il divano; il resto della parete resta com'è", meta: "solo nella parte BASSA della parete, fino a circa 1,1 metri da terra, con un bordo superiore dritto e pulito; sopra la parete resta com'è", led: "su TUTTA l'altezza della parete, con una striscia LED nascosta lungo il bordo superiore dei pannelli che fa una luce calda e soffusa che scende sui listelli e sfuma verso il basso" };
+  const lsB = (req.body || {}).listelli, lsSel = lsB && typeof lsB === "object" && LS_PAN[lsB.pan] && LS_POSA[lsB.posa] && LS_FIN[lsB.fin] ? { pan: lsB.pan, posa: lsB.posa, fin: lsB.fin, dove: String(lsB.dove || "fondo").split("+").filter(function (d) { return LS_DOVE[d]; }) } : null;
+  if (lsSel && !lsSel.dove.length) lsSel.dove = ["fondo"];
+  let lsRefB64 = null;
+  function lsPrompt(hasRef) {
+    return [
+      "Questa è una fotografia vera di una stanza. Aggiungi un rivestimento con PANNELLI DECORATIVI A LISTELLI (pannelli fonoassorbenti moderni): " + LS_PAN[lsSel.pan] + ". Ogni listello è largo circa 2,7 cm e sporge di circa 1,5 cm; tra un listello e l'altro c'è una fuga di circa 1,3 cm.",
+      "Posa: " + LS_POSA[lsSel.posa] + ".",
+      "Dove: " + lsSel.dove.map(function (d) { return LS_DOVE[d]; }).join(", ") + ". Rivestimento " + LS_FIN[lsSel.fin] + ".",
+      hasRef ? "La SECONDA immagine è un campione del pannello e della posa scelti, visto di fronte: copia esattamente il colore del legno, il colore del fondo, la proporzione tra listelli e fughe e il disegno della posa. Nella foto i listelli seguono la prospettiva vera della parete e diventano più fitti in lontananza." : "",
+      "Il rivestimento ha bordi dritti e puliti, si ferma attorno a porte, finestre, prese e interruttori senza coprirli. Si vedono le piccole ombre dei listelli sul fondo, come in un pannello vero.",
+      "Tutto il resto della foto resta IDENTICO e al suo posto: pavimento, altre pareti, soffitto (se non è scelto), porte, finestre, tende, termosifoni, mobili, divani, letti, TV, quadri, piante e ogni oggetto, che restano DAVANTI ai pannelli. Stessa inquadratura, stessa prospettiva, stessa luce.",
+    ].filter(Boolean).join(" ");
+  }
   let rnCropB64 = null;
   const rnPrompt = rnSel ? rnBuild("", false) : "";
-  const prompt = rnSel ? rnPrompt : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
+  const prompt = rnSel ? rnPrompt : lsSel ? lsPrompt(false) : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
@@ -1040,6 +1058,18 @@ module.exports = async function handler(req, res) {
   }
 
   let rnEngine = null, rnWhy = null;
+  if (lsSel) {
+    // campione del pannello e della posa, preso dalle immagini dell'app
+    try {
+      const host = String(req.headers["x-forwarded-host"] || req.headers.host || "").split(",")[0].trim();
+      if (/^[a-z0-9.-]+(:\d+)?$/i.test(host)) {
+        const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 8000);
+        const r = await fetch((/^localhost|^127\./.test(host) ? "http://" : "https://") + host + "/img/ls/" + lsSel.pan + "_" + lsSel.posa + ".jpg", { signal: ctl.signal }).finally(function () { clearTimeout(tm); });
+        if (r.ok) { const buf = Buffer.from(await r.arrayBuffer()); if (buf.length > 1000 && buf.length < 1500000) lsRefB64 = buf.toString("base64"); }
+      }
+    } catch (e) { lsRefB64 = null; }
+    promptOut = lsPrompt(!!lsRefB64);
+  }
   if (rnSel) {
     // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
     const chat = await rnChatGpt(imageBase64, mimeType);
@@ -1095,6 +1125,7 @@ module.exports = async function handler(req, res) {
     if (posaRefClean) images.push({ b64: posaRefClean, mime: "image/jpeg" });
     if (sampleClean) images.push({ b64: sampleClean, mime: "image/jpeg" });
     if (rnCropB64) images.push({ b64: rnCropB64, mime: "image/jpeg" });
+    if (lsRefB64) images.push({ b64: lsRefB64, mime: "image/jpeg" });
     if (accentoRefClean) images.push({ b64: accentoRefClean, mime: "image/jpeg" });
     const send = (extra) => {
       const fd = new FormData();
@@ -1222,6 +1253,7 @@ module.exports = async function handler(req, res) {
       contentParts.push({ inline_data: { mime_type: "image/jpeg", data: posaRefClean } });
     }
     if (rnCropB64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: rnCropB64 } });
+    if (lsRefB64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: lsRefB64 } });
     if (sampleClean) {
       contentParts.push({ inline_data: { mime_type: "image/jpeg", data: sampleClean } });
     }
