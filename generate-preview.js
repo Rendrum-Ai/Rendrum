@@ -30,7 +30,7 @@
 // 5. Nell'app, il bottone "Genera anteprima AI" andrà a chiamare quell'indirizzo
 //    (questa parte la collego io appena il backend è online: mandami l'URL).
 
-const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS } = require("./_auth-lib");
+const { paymentsEnabled, currentAccount, supabaseRequest, PLAN_LIMITS, PLANS, trialOf, monthKey, carryOver } = require("./_auth-lib");
 const jobs = require("./_jobs");
 const DECO = require("./_deco");
 const SIST = require("./_sist");
@@ -40,14 +40,14 @@ const PLANS_LIMIT = (tier) => PLAN_LIMITS[tier] || 0;
 // ---- Crediti e prova gratuita (vedi supabase_crediti.sql) ----
 // Senza abbonamento attivo: prima si usano i crediti comprati (pacchetti), poi la prova gratuita:
 // TRIAL_PRIVATO / TRIAL_PRO anteprime entro TRIAL_DAYS giorni dalla prima anteprima.
-const TRIAL_DAYS = 7, TRIAL_PRIVATO = 5, TRIAL_PRO = 10;
+// Giorni e anteprime della prova: TRIAL in _auth-lib.js (professionisti 14 giorni / 10, privati 7 / 5).
 // Account senza limite: quelli di prova di Rendrum, quelli di TEST_EMAILS e RD_UNLIMITED_EMAILS su Vercel (separati da virgola).
 const UNLIMITED_EMAILS = () => ["prova@rendrum.com", "provalo@rendrum.com", "info@rendrum.com", "info@dgmresine.com"]
   .concat(String(process.env.TEST_EMAILS || "").split(","), String(process.env.RD_UNLIMITED_EMAILS || "").split(","))
   .map(x => String(x).trim().toLowerCase()).filter(Boolean);
-const trialLimit = (acc) => (acc.account_type === "privato" ? TRIAL_PRIVATO : TRIAL_PRO);
+const trialLimit = (acc) => trialOf(acc).n;
 // Prenota un'anteprima. Ritorna { kind:"credit"|"trial", undo } oppure "missing" / "over" / "expired".
-async function useCredit(acc) {
+async function useCredit(acc, onlyCredits) {
   const id = encodeURIComponent(acc.id);
   for (let i = 0; i < 3; i++) {
     const r = await supabaseRequest("/pro_accounts?id=eq." + id + "&select=trial_used,trial_start,credits", { method: "GET" }).catch(function () { return { ok: false }; });
@@ -59,8 +59,9 @@ async function useCredit(acc) {
       if (p.ok && Array.isArray(p.data) && p.data.length) return { kind: "credit", undo: { filter: "&credits=eq." + (credits - 1), body: { credits: credits } } };
       continue;
     }
+    if (onlyCredits) return "over";
     const start = row.trial_start ? Date.parse(row.trial_start) : null;
-    if (start && Date.now() - start > TRIAL_DAYS * 86400000) return "expired";
+    if (start && Date.now() - start > trialOf(acc).days * 86400000) return "expired";
     if (used >= trialLimit(acc)) return "over";
     const patch = { trial_used: used + 1 }; if (!start) patch.trial_start = new Date().toISOString();
     const p = await supabaseRequest("/pro_accounts?id=eq." + id + "&trial_used=eq." + used, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify(patch) }).catch(function () { return { ok: false }; });
@@ -153,7 +154,7 @@ module.exports = async function handler(req, res) {
     const t = await useCredit(quotaAcc);
     if (t === "missing") return res.status(503).json({ error: "Le anteprime non sono disponibili in questo momento. Riprova tra poco.", code: "trial_unavailable" });
     if (t === "over" || t === "expired") {
-      const msg = t === "expired" ? "La tua settimana di prova gratuita è finita." : "Hai usato le " + trialLimit(quotaAcc) + " anteprime della prova gratuita.";
+      const msg = t === "expired" ? "La tua prova gratuita è finita." : "Hai usato le " + trialLimit(quotaAcc) + " anteprime della prova gratuita.";
       return res.status(429).json({ error: msg + " Grazie per aver provato Rendrum! Per continuare scrivi a info@rendrum.com.", code: t === "expired" ? "trial_expired" : "trial_over" });
     }
     const origJsonT = res.json.bind(res); let backT = false;
@@ -166,31 +167,56 @@ module.exports = async function handler(req, res) {
       return origJsonT(payload);
     };
   }
+  // Pro Max: anteprima in 4K a richiesta (conta 2 anteprime del mese).
+  const want4k = !!(PLANS[quotaAcc.tier] && PLANS[quotaAcc.tier].k4 && subActive && risoluzione === "4k");
   if (!skipQuota && !unlimited && subActive) {
-    quotaMonth = new Date().toISOString().slice(0, 7);
-    const limit = PLANS_LIMIT(quotaAcc.tier);
-    // Prenotazione atomica dell'anteprima nel database (funzione use_preview):
-    // anche 50 richieste in parallelo non possono superare il limite.
-    const rpc = await supabaseRequest("/rpc/use_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth, p_limit: limit }) }).catch(function () { return { ok: false }; });
-    if (rpc.ok) {
-      if (rpc.data === null || rpc.data === undefined) {
-        return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Passa a un piano superiore o attendi il mese prossimo.", code: "quota_exceeded" });
-      }
-      reserved = true;
-    } else {
-      // Funzione SQL non ancora creata: controllo semplice come prima.
-      const used = quotaAcc.usage_month === quotaMonth ? (quotaAcc.usage_count || 0) : 0;
-      if (used >= limit) return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Passa a un piano superiore o attendi il mese prossimo.", code: "quota_exceeded" });
-      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ usage_month: quotaMonth, usage_count: used + 1 }) }).catch(function () {});
-      reserved = true;
+    quotaMonth = monthKey();
+    // anteprime del mese scorso non usate: si fissano al primo uso del mese nuovo
+    const carry = carryOver(quotaAcc);
+    if (carry > 0 && quotaAcc.bonus_month !== quotaMonth) {
+      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&or=(bonus_month.is.null,bonus_month.neq." + quotaMonth + ")", { method: "PATCH", body: JSON.stringify({ bonus_month: quotaMonth, bonus_n: carry }) }).catch(function () {});
     }
-    // Se la generazione poi fallisce, l'anteprima viene restituita.
+    const limit = PLANS_LIMIT(quotaAcc.tier) + carry;
+    const need = want4k ? 2 : 1;
+    // Prenotazione atomica nel database (funzione use_preview): anche 50 richieste
+    // in parallelo non superano il limite. Senza la funzione: controllo semplice.
+    async function takeOne() {
+      const rpc = await supabaseRequest("/rpc/use_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth, p_limit: limit }) }).catch(function () { return { ok: false }; });
+      if (rpc.ok) return rpc.data !== null && rpc.data !== undefined;
+      const g = await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&select=usage_month,usage_count", { method: "GET" }).catch(function () { return { ok: false }; });
+      const row = (g.ok && Array.isArray(g.data) && g.data[0]) || quotaAcc;
+      const used = row.usage_month === quotaMonth ? (row.usage_count || 0) : 0;
+      if (used >= limit) return false;
+      await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ usage_month: quotaMonth, usage_count: used + 1 }) }).catch(function () {});
+      return true;
+    }
+    async function giveBack(n) {
+      for (let i = 0; i < n; i++) await supabaseRequest("/rpc/release_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth }) }).catch(function () {});
+    }
+    let fromPlan = 0;
+    for (let i = 0; i < need; i++) { if (await takeOne()) fromPlan++; else break; }
+    // Piano finito: si usano le anteprime dei pacchetti comprati (non scadono).
+    const credits = [];
+    while (fromPlan + credits.length < need) {
+      const c = await useCredit(quotaAcc, true);
+      if (!c || typeof c !== "object") break;
+      credits.push(c);
+    }
+    if (fromPlan + credits.length < need) {
+      await giveBack(fromPlan);
+      for (const c of credits) await supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + c.undo.filter, { method: "PATCH", body: JSON.stringify(c.undo.body) }).catch(function () {});
+      if (want4k && fromPlan + credits.length === 1) return res.status(429).json({ error: "Un’anteprima in 4K conta 2 e te ne resta solo 1. Falla in 2K oppure compra un pacchetto.", code: "quota_4k" });
+      return res.status(429).json({ error: "Hai usato tutte le " + limit + " anteprime del tuo piano per questo mese. Puoi comprare un pacchetto di anteprime oppure passare a un piano più grande.", code: "quota_exceeded" });
+    }
+    reserved = true;
+    // Se la generazione poi fallisce, le anteprime vengono restituite.
     const origJson = res.json.bind(res);
     res.json = function (payload) {
       if (reserved && !refunded && res.statusCode >= 400) {
         refunded = true;
-        return supabaseRequest("/rpc/release_preview", { method: "POST", body: JSON.stringify({ p_id: quotaAcc.id, p_month: quotaMonth }) })
-          .catch(function () {}).then(function () { return origJson(payload); });
+        let p = giveBack(fromPlan);
+        credits.forEach(function (c) { p = p.then(function () { return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id) + "&select=credits", { method: "GET" }).then(function (g) { const n = (g.ok && g.data && g.data[0] && Number(g.data[0].credits)) || 0; return supabaseRequest("/pro_accounts?id=eq." + encodeURIComponent(quotaAcc.id), { method: "PATCH", body: JSON.stringify({ credits: n + 1 }) }); }); }); });
+        return p.catch(function () {}).then(function () { return origJson(payload); });
       }
       return origJson(payload);
     };
@@ -231,7 +257,7 @@ module.exports = async function handler(req, res) {
   // Risoluzione in uscita (vale per entrambi i motori): 2K per tutti, modificabile da
   // Vercel con IMAGE_RES = "std" | "2k" | "4k"; i tester possono provarne un'altra.
   const resDefaultAll = String(process.env.IMAGE_RES || process.env.OPENAI_IMAGE_RES || "2k").trim().toLowerCase();
-  const resSel = (isTesterAll && (risoluzione === "2k" || risoluzione === "4k" || risoluzione === "std")) ? risoluzione : ((resDefaultAll === "4k" || resDefaultAll === "std") ? resDefaultAll : "2k");
+  const resSel = want4k ? "4k" : (isTesterAll && (risoluzione === "2k" || risoluzione === "4k" || risoluzione === "std")) ? risoluzione : ((resDefaultAll === "4k" || resDefaultAll === "std") ? resDefaultAll : "2k");
   const ratioIn = Number(rapporto) || 1.5;
   const orientIn = ratioIn >= 1.3 ? "h" : ratioIn <= 0.77 ? "v" : "q";
   // Le risposte di Vercel non possono superare ~4,5 MB: le immagini grandi (PNG di Gemini,
@@ -492,7 +518,7 @@ module.exports = async function handler(req, res) {
   };
   const plafoneNote = !isInterniPittura ? ""
     : effettoScatola
-      ? ` EFFETTO SCATOLA: dipingi pareti E soffitto nello stesso identico colore ${colorRef(colorA, colorAHex)}, senza stacchi tra parete e soffitto, compresi eventuali travi, cornici e sporgenze del soffitto: l'ambiente deve risultare avvolgente e continuo, tutto in un unico colore. Porte, finestre, mobili e pavimento restano come sono.`
+      ? ` EFFETTO SCATOLA: dipingi pareti E soffitto nello stesso identico colore ${colorRef(colorA, colorAHex)}, senza stacchi tra parete e soffitto, compresi eventuali travi, cornici e sporgenze del soffitto (ma NON il cassonetto della tapparella sopra la finestra: fa parte del serramento, non della parete): l'ambiente deve risultare avvolgente e continuo, tutto in un unico colore. Porte, finestre, mobili e pavimento restano come sono.`
       : (plafoneTipo === "corten")
         ? ` SOFFITTO (plafone) EFFETTO CORTEN: tutto il soffitto è rifinito con una finitura decorativa effetto Corten, base ocra/ruggine con macchie e chiazze scure irregolari che imitano l'ossidazione naturale dell'acciaio Corten, aspetto materico e opaco, pattern asimmetrico e naturale, travi e cornici del soffitto comprese. Aspetto realistico del Corten: colore ruggine SCURO e OPACO (bruno-ruggine, mai arancione acceso), ossidazione con macchie e sfumature diverse zona per zona (su un controsoffitto a pannelli ogni pannello è diverso dagli altri, mai la stessa texture ripetuta), riceve la luce della stanza: più scuro in ombra, più caldo dove arriva la luce. Riguarda SOLO il soffitto: le pareti restano nel loro colore. Tra soffitto e pareti non disegnare righe, bordi o fasce.`
       : (colorPlafone && PLAFONE_DECOR[plafoneTipo])
@@ -568,7 +594,7 @@ module.exports = async function handler(req, res) {
   // Pittura interni: porte interne e finestre in un colore a scelta.
   const isPorteInt = materialId === "imbiancatura" && context !== "esterno" && !!porteInterne && !!colorSerramenti;
   const porteIntNote = isPorteInt
-    ? ` PORTE E FINESTRE: dipingi OBBLIGATORIAMENTE nel colore ${colorRef(colorSerramenti, colorSerramentiHex)} tutte le porte interne visibili (ante e stipiti/telai, comprese porte di metallo) e i telai delle finestre e portefinestre. Il loro colore originale non deve restare. NON colorare vetri, maniglie, serrature, cerniere e chiavistelli, che restano identici; le pareti restano nel loro colore.`
+    ? ` PORTE E FINESTRE: dipingi OBBLIGATORIAMENTE nel colore ${colorRef(colorSerramenti, colorSerramentiHex)} tutte le porte interne visibili (ante e stipiti/telai, comprese porte di metallo) e i telai delle finestre e portefinestre, compreso il cassonetto della tapparella sopra la finestra (fa parte del serramento). Il loro colore originale non deve restare. NON colorare vetri, maniglie, serrature, cerniere e chiavistelli, che restano identici; le pareti restano nel loro colore.`
     : "";
   const serramentiNote = isSerramentiStyled
     ? ` Inoltre, dipingi OBBLIGATORIAMENTE TUTTI i serramenti visibili nella foto nel colore ${colorRef(colorSerramenti, colorSerramentiHex)}: telai delle finestre, persiane, scuri, ante a battente, tapparelle e porte/portefinestre esterne. Il loro colore originale (es. marrone/legno) NON deve restare da nessuna parte: nel risultato devono essere tutti di questo colore. Non colorare i vetri, i davanzali e il resto della facciata.`
@@ -855,17 +881,37 @@ module.exports = async function handler(req, res) {
       ? " FINITURA DEI MURI (richiesta dal cliente): INTONACO CIVILE. Tutte le pareti da dipingere hanno una superficie uniforme a GRANA FINE, come sabbia fine (granelli di circa 0,5-1 mm), opaca e regolare su tutta la parete: niente zone lisce, niente rilievi grossi, crepe o buccia d'arancia irregolare dell'intonaco originale. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "")
     : " TEXTURE DEI MURI: la pittura cambia SOLO il colore. Se l'intonaco originale è ruvido, grezzo, a buccia d'arancia o irregolare, nel risultato resta ESATTAMENTE così (stessi rilievi, stesse ombre della grana), solo nel nuovo colore: non lisciare e non rasare i muri. Travi e architravi in LEGNO a vista, cornici, cerniere, ganci e piccoli oggetti fissati al muro NON si dipingono e non spariscono: restano identici." + (plafoneTipo ? " Il trattamento del plafone riguarda solo la superficie del soffitto: le travi in legno a vista sotto il soffitto restano di legno." : "");
   const colorContainNote = isExteriorFacade ? ""
-    : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera.";
+    : " COLORI SOLO DOVE RICHIESTO (regola vincolante): il colore e il materiale scelti si applicano ESCLUSIVAMENTE alle superfici indicate." + (isPorteInt ? " Porte e telai delle finestre vanno SOLO nel colore indicato per porte e finestre." : "") + " Nessun altro oggetto deve prendere quel colore, nemmeno come riflesso o sfumatura: " + (isPorteInt ? "" : "porte (anche metalliche o zincate), telai, ") + "maniglie, serrature, cerniere, tubi, cavi, lampade, prese, mobili e oggetti mantengono ESATTAMENTE il loro colore, materiale e grado di usura originali. Non aggiungere oggetti che non ci sono (prese, interruttori, placche, quadri) e non trasformare quelli esistenti in altro: una cerniera resta una cerniera."
+    + " CASSONETTO DELLA TAPPARELLA: la scatola sopra la finestra che contiene la tapparella (in legno, PVC o metallo, con il suo pannello frontale), anche se è attaccata al soffitto o alla parete, fa parte del SERRAMENTO: NON è parete e NON è soffitto, quindi non prende il colore delle pareti né del soffitto. " + (isPorteInt ? "Va dipinto nello stesso colore scelto per porte e finestre, come i telai." : "Resta IDENTICO alla foto (stesso colore, stessa forma, stessi bordi e viti), come le finestre.")
+    + (isPorteInt ? "" : " FINESTRE: telai, ante e vetri delle finestre restano IDENTICI alla foto, nello stesso colore originale (se sono bianchi restano bianchi), con la stessa apertura dell'anta.")
+    + " Lampade da lavoro, cavalletti, scale, secchi, rulli, aste e altri attrezzi presenti nella foto restano al loro posto: non toglierli.";
   const cappSel = (materialId === "imbiancatura" && context === "esterno") ? SIST.parseCapp((req.body || {}).cappotto) : null;
   const cgSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseCg((req.body || {}).cartongesso) : null;
+  const bsSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseBs((req.body || {}).boiserie) : null;
   const zocSel = (materialId === "imbiancatura" && context === "esterno" && !(cappSel && cappSel.zoc)) ? SIST.parseZoc((req.body || {}).zoccolo) : null;
   const cappNote = (cappSel ? SIST.cappNote(cappSel, null) : "") + (zocSel ? SIST.zocNote(zocSel) : "");
-  const prompt = cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
+  const btSel = SIST.parseBt((req.body || {}).battiscopa, materialId);
+  const peSel = materialId === "piastrelle" ? SIST.parsePiaEst((req.body || {}).piaEst) : null;
+  const psSel = SIST.parsePiscina((req.body || {}).piscina);
+  // Rinnovo del parquet esistente (levigatura + nuova finitura): stesso pavimento, cambia solo la superficie. In prova.
+  const RN_T = { naturale: "lo STESSO colore del legno di adesso, ma ravvivato: tono caldo, vivo e uniforme, senza la patina grigia e opaca dell'usura", chiaro: "un tono PIÙ CHIARO del legno di adesso: il colore naturale del legno appena levigato, prima della tinta scura (miele chiaro)", sbiancato: "SBIANCATO: legno chiaro con una leggera velatura bianca, venature ancora visibili", miele: "tinta MIELE calda", noce: "tinta NOCE media, calda", grigio: "tinta GRIGIO TORTORA, venature ancora visibili" };
+  const RN_F = { opaco: "verniciatura OPACA: nessun riflesso lucido, aspetto naturale", satinato: "verniciatura SATINATA: una luce morbida dove arriva il sole, senza effetto specchio", lucido: "verniciatura LUCIDA: riflessi netti della finestra e della luce sul pavimento", olio: "finitura a OLIO: opaca e calda, il legno sembra naturale e vivo" };
+  const rnB = (req.body || {}).rinnovoParquet, rnSel = rnB && typeof rnB === "object" && RN_T[rnB.tinta] && RN_F[rnB.fin] ? { tinta: rnB.tinta, fin: rnB.fin } : null;
+  const rnPrompt = rnSel ? [
+    "Modifica questa foto: RINNOVO DEL PARQUET CHE C'È GIÀ (levigatura professionale e nuova finitura). NON è un pavimento nuovo.",
+    "Il pavimento in legno della foto resta lo STESSO: stessi listelli e doghe, stessa larghezza e lunghezza, stessa posa e stesso disegno (a correre, spina di pesce, a quadrotti, a cassero o come nella foto), stesse fughe e giunti, stesso orientamento, stesse differenze naturali di colore tra un listello e l'altro e stesse venature. NON sostituirlo, NON ridisegnarlo, NON cambiare la direzione o la misura dei listelli. Anche i battiscopa restano uguali.",
+    "Cambia SOLO la superficie del legno, come dopo la levigatura: spariscono graffi, righe, segni di scarpe, polvere, calcinacci, macchie, aloni e zone opache, ingrigite o consumate (anche nei passaggi e davanti alle porte). Il legno è pulito e uniforme in tutta la stanza e in tutte le stanze che si vedono.",
+    "Colore: " + RN_T[rnSel.tinta] + ". Finitura: " + RN_F[rnSel.fin] + ".",
+    "Il resto della foto resta IDENTICO: pareti, porte, telai, finestre, tende, termosifoni, tubi, prese, mobili, persone, oggetti e attrezzi appoggiati sul pavimento restano al loro posto e uguali. Stessa luce, stesse ombre, stessa prospettiva e inquadratura.",
+    "Il risultato deve sembrare una fotografia reale dello stesso pavimento appena rinnovato, non un rendering.",
+  ].join(" ") : "";
+  const prompt = rnSel ? rnPrompt : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
     `Modifica ${sceneDesc}.`,
     `Applica ${surfaceDesc} la seguente lavorazione: ${textureDesc}.`,
     isFacadeStyled ? colorDesc : piaRivOn ? `I colori da usare sono ${colorDesc}.` : `Il colore/tonalità da usare è ${colorDesc}.`,
     finitura ? `Finitura superficiale ${finitura} (${finitura === "lucido" ? "molto riflettente" : finitura === "opaco" ? "senza riflessi" : "leggermente satinata"}).` : "",
     continuityNote,
+    SIST.btNote(btSel),
     buildNote,
     colorContainNote,
     paintTextureNote,
@@ -1025,7 +1071,12 @@ module.exports = async function handler(req, res) {
         }
       }
       if (!r.ok) {
-        return res.status(r.status).json({ error: "Errore dal servizio AI (OpenAI)", details: (data && data.error && data.error.message) || data });
+        const em = String((data && data.error && (data.error.code || "") + " " + (data.error.message || "")) || "");
+        const staff = quotaAcc && ["info@dgmresine.com", "prova@rendrum.com"].includes(String(quotaAcc.email || "").toLowerCase());
+        console.error("openai images", r.status, em.slice(0, 300));
+        if (r.status === 429 && /insufficient_quota|credit|billing/i.test(em))
+          return res.status(503).json({ error: staff ? "Credito OpenAI finito: ricaricalo su platform.openai.com (Settings → Billing). L'anteprima non ti è stata scalata." : "L'anteprima non è disponibile in questo momento. Riprova più tardi: non ti è stata scalata.", code: "credito" });
+        return res.status(r.status).json({ error: staff ? "Errore dal servizio AI (OpenAI)" : "L'anteprima non è riuscita. Riprova tra poco: non ti è stata scalata.", details: staff ? ((data && data.error && data.error.message) || data) : undefined });
       }
       const b64 = data && data.data && data.data[0] && data.data[0].b64_json;
       if (!b64) return res.status(502).json({ error: "Il modello non ha restituito un'immagine", details: data });
