@@ -900,7 +900,7 @@ module.exports = async function handler(req, res) {
     sbiancato: "levigatura e verniciatura SBIANCATA: sopra al legno una velatura bianca leggera, attraverso la quale si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
     miele: "levigatura e verniciatura colorata MIELE: il legno prende un tono miele caldo, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
     noce: "levigatura e verniciatura colorata NOCE: il legno prende un tono noce medio, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
-    grigio: "levigatura e verniciatura colorata GRIGIO TORTORA: il legno prende un tono grigio tortora, ma si vedono ancora i singoli listelli, le loro differenze di tono e le venature",
+    grigio: "levigatura fino al legno grezzo (il vecchio colore scuro sparisce del tutto) e poi verniciatura colorata GRIGIA: il pavimento diventa GRIGIO vero, un grigio medio chiaro e neutro (grigio cenere), NON marrone e NON grigio-marrone: del colore marrone di prima non resta niente. Si vedono ancora i singoli listelli, con leggere differenze tra grigi più chiari e più scuri, e le venature del legno",
     chiaro: "levigatura e nuova verniciatura: il legno di poco più chiaro, al massimo un tono"
   };
   const RN_F = { opaco: "OPACA: nessun riflesso, aspetto naturale del legno", lucido: "LUCIDA: il pavimento riflette in modo netto la finestra e la luce, come un parquet appena verniciato lucido", satinato: "SATINATA: una luce morbida dove arriva il sole", olio: "a OLIO: opaca e calda" };
@@ -909,9 +909,9 @@ module.exports = async function handler(req, res) {
     return [
       "Questa è una fotografia vera di una stanza con un parquet già posato. Il tuo lavoro è SOLO un ritocco della superficie di QUESTO parquet: è lo stesso pavimento, nello stesso punto, dopo un lavoro di rinnovo fatto da un parquettista. Il pavimento non si cambia, non si sostituisce e non si ridisegna: lo prendi esattamente com'è nella foto e lo fai tornare come nuovo.",
       desc ? "Com'è fatto questo pavimento, e così deve restare: " + desc + "." : "",
-      hasCrop ? "La SECONDA immagine è un ingrandimento della parte bassa di questa stessa foto: mostra da vicino i listelli veri di questo pavimento. Guardala bene: nel risultato i listelli devono essere proprio questi, con la stessa misura, la stessa forma, lo stesso disegno di posa e nella stessa posizione, uno per uno. La seconda immagine serve solo come riferimento: il risultato è la prima foto ritoccata." : "",
+      hasCrop ? "La SECONDA immagine è un ingrandimento della parte bassa di questa stessa foto: mostra da vicino i listelli veri di questo pavimento. Guardala bene: nel risultato i listelli devono essere proprio questi, con la stessa misura, la stessa forma, lo stesso disegno di posa e nella stessa posizione, uno per uno. Nell'ingrandimento si vedono anche polvere, graffi, aloni e segni circolari: quelli NON vanno copiati, dall'ingrandimento prendi SOLO la forma e la posa dei listelli. La seconda immagine serve solo come riferimento: il risultato è la prima foto ritoccata." : "",
       "Ogni listello resta dove è, con la sua misura e la sua direzione; restano le stesse fughe tra i listelli e le stesse differenze di tono tra un listello e l'altro.",
-      "Lavoro fatto: " + RN_T[rnSel.tinta] + ". Sono spariti polvere, calcinacci, graffi, righe, segni di scarpe, macchie, aloni e le zone grigie o consumate.",
+      "Lavoro fatto: " + RN_T[rnSel.tinta] + ". La levigatura ha tolto TUTTO lo strato vecchio: il legno è liscio, pulito e uniforme come appena finito. Non resta NESSUN segno: niente graffi, niente righe, niente segni circolari o a vortice della lucidatrice, niente strisciate, impronte, macchie, aloni, polvere o zone grigie e consumate. Su ogni listello si vedono solo le sue venature naturali del legno.",
       "Finitura " + RN_F[rnSel.fin] + ".",
       "Tutto il resto della foto resta IDENTICO e al suo posto: pareti, battiscopa, porte, finestre, tende, termosifoni, mobili, teli, attrezzi e ogni oggetto appoggiato sul pavimento. Stessa inquadratura, stessa prospettiva, stessa luce.",
     ].filter(Boolean).join(" ");
@@ -1030,7 +1030,7 @@ module.exports = async function handler(req, res) {
     return res.status(413).json({ error: "La foto è troppo pesante, prova con una foto più piccola" });
   }
 
-  let rnEngine = null;
+  let rnEngine = null, rnWhy = null;
   if (rnSel) {
     // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
     const chat = await rnChatGpt(imageBase64, mimeType);
@@ -1040,6 +1040,7 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ imageBase64: cfit.b64, mimeType: cfit.mime, rnEngine: "OpenAI (come ChatGPT)", jobId: job ? job.id : null });
     }
     console.error("rinnovo chatgpt", chat && chat.why);
+    rnWhy = isTesterAll ? String((chat && chat.why) || "").slice(0, 300) : null;
     // 2° motore: Gemini (se c'è la chiave), altrimenti l'AI delle immagini di sempre
     const both = await Promise.all([rnDescribe(imageBase64, mimeType), rnCrop(imageBase64)]);
     rnCropB64 = both[1]; promptOut = rnBuild(both[0], !!rnCropB64);
@@ -1172,7 +1173,7 @@ module.exports = async function handler(req, res) {
       if (isTesterAll) { test = test || {}; test.msAi = msAi; test.msServer = Date.now() - tStart; test.sends = sends; test.engine = "openai " + model; }
       if (test) { test.engine = "openai " + model; test.sizeSent = params.size || "auto"; test.quality = params.quality || quality; if (dropped.length) test.dropped = dropped.join(", "); if (fallbackWhy) test.fallback = fallbackWhy; }
       if (job) await jobs.done(job, fit.b64, fit.mime).catch(function () {});
-      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
+      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, rnEngine: rnEngine || undefined, rnWhy: rnWhy || undefined, jobId: job ? job.id : null });
     } catch (err) {
       console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
     }
@@ -1284,7 +1285,7 @@ module.exports = async function handler(req, res) {
     const gfit = await fitJpeg(inline.data, inline.mime_type || inline.mimeType || "image/png");
     if (isTesterAll) { gtest = gtest || { engine: "gemini " + geminiModel, size: imageConfig.imageSize }; gtest.msAi = msAi; gtest.msServer = Date.now() - tStart; gtest.sends = sends; }
     if (job) await jobs.done(job, gfit.b64, gfit.mime).catch(function () {});
-    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
+    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, rnEngine: rnEngine || undefined, rnWhy: rnWhy || undefined, jobId: job ? job.id : null });
   } catch (err) {
     console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
   }
