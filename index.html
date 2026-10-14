@@ -20377,8 +20377,9 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       d.querySelectorAll('i').forEach(function(x, i){ x.classList.toggle('on', i === Math.min(k, s.length - 1)); }); }, { passive:true });
   };
   // ---------- PROVA: rinnovo del parquet esistente (levigatura + finitura), solo account di prova ----------
-  var RN = { t:'naturale', f:'satinato', b64:null, mime:null, src:null, mix:null };
-  var RN_T = [['naturale', 'Naturale ravvivato'], ['chiaro', 'Più chiaro'], ['sbiancato', 'Sbiancato'], ['miele', 'Miele'], ['noce', 'Noce'], ['grigio', 'Grigio']];
+  var RN = { t:'naturale', f:'satinato', c:'a', b64:null, mime:null, src:null, mix:null };
+  var RN_T = [['naturale', 'Naturale ravvivato'], ['sbiancato', 'Sbiancato']];
+  var RN_C = [['a', 'A · corto'], ['b', 'B · inglese'], ['c', 'C · lungo']];
   var RN_F = [['opaco', 'Opaco'], ['satinato', 'Satinato'], ['lucido', 'Lucido'], ['olio', 'Olio']];
   function rnChips(L, cur, k){ return '<div class="cc-chips">' + L.map(function(x){ return '<button type="button" data-' + k + '="' + x[0] + '"' + (x[0] === cur ? ' class="on"' : '') + '>' + x[1] + '</button>'; }).join('') + '</div>'; }
 
@@ -20474,20 +20475,21 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     function draw(res){
       box.innerHTML = '<div class="cc-sub" style="margin-top:0">Levigatura e nuova finitura del parquet che c’è già. L’AI tiene le stesse doghe e la stessa posa e cambia solo la superficie. Usa un’anteprima.</div>'
         + '<label class="rn-ph">' + (RN.src ? '<img src="' + RN.src + '" alt="">' : '<span>📷 Scatta o scegli la foto del parquet</span>') + '<input type="file" accept="image/*" hidden id="rnF"></label>'
-        + '<div class="cc-q">Colore</div>' + rnChips(RN_T, RN.t, 'rnt') + '<div class="cc-q">Finitura</div>' + rnChips(RN_F, RN.f, 'rnf')
+        + '<div class="cc-q">Colore</div>' + rnChips(RN_T, RN.t, 'rnt') + '<div class="cc-q">Finitura</div>' + rnChips(RN_F, RN.f, 'rnf') + '<div class="cc-q">Comando all’AI (prova)</div>' + rnChips(RN_C, RN.c, 'rnc')
         + '<button type="button" class="pro-auth-submit" id="rnGo"' + (RN.b64 ? '' : ' disabled') + '>✨ Genera il rinnovo</button>'
-        + (res ? '<div class="rn-res"><div class="rn-tab rn-3"><button type="button" class="on" data-rnv="m">Listelli veri</button><button type="button" data-rnv="d">Solo AI</button><button type="button" data-rnv="p">Prima</button></div><img id="rnImg" src="' + (RN.mix || res) + '" alt=""><div class="cc-hint" id="rnHint">' + (RN.mix ? '«Listelli veri»: il disegno dei listelli dalla tua foto, colore e pulizia dall’AI.' : 'Preparo «Listelli veri»…') + '</div><a class="q-link" id="rnDl" href="' + (RN.mix || res) + '" download="rinnovo_parquet.jpg">⬇ Scarica la foto</a></div>' : '');
+        + (res ? '<div class="rn-res"><div class="rn-tab"><button type="button" class="on" data-rnv="d">Dopo</button><button type="button" data-rnv="p">Prima</button></div><img id="rnImg" src="' + res + '" alt=""><div class="cc-hint" id="rnHint">Fatta con il comando ' + (RN.done || '') + '.</div><a class="q-link" id="rnDl" href="' + res + '" download="rinnovo_parquet.jpg">⬇ Scarica la foto</a></div>' : '');
       document.getElementById('rnF').addEventListener('change', function(){ var f = (this.files || [])[0]; this.value = ''; if(!f) return; var r = new FileReader(); r.onload = function(){ var m = /^data:(.+);base64,(.*)$/.exec(String(r.result)); if(!m) return; RN.src = String(r.result); RN.mime = m[1]; RN.b64 = m[2]; draw(); }; r.readAsDataURL(f); });
       box.querySelectorAll('[data-rnt]').forEach(function(b){ b.onclick = function(){ RN.t = b.dataset.rnt; draw(res); }; });
       box.querySelectorAll('[data-rnf]').forEach(function(b){ b.onclick = function(){ RN.f = b.dataset.rnf; draw(res); }; });
+      box.querySelectorAll('[data-rnc]').forEach(function(b){ b.onclick = function(){ RN.c = b.dataset.rnc; draw(res); }; });
       box.querySelectorAll('[data-rnv]').forEach(function(b){ b.onclick = function(){ var u = b.dataset.rnv === 'p' ? RN.src : b.dataset.rnv === 'm' ? (RN.mix || res) : res; document.getElementById('rnImg').src = u; var dl = document.getElementById('rnDl'); if(dl) dl.href = u; box.querySelectorAll('[data-rnv]').forEach(function(x){ x.classList.toggle('on', x === b); }); }; });
       document.getElementById('rnGo').onclick = function(){
         var bt = this, err = document.getElementById('rdXErr'); bt.disabled = true; bt.textContent = '⏳ Sto rinnovando il parquet…'; err.textContent = '';
         padForAI(RN.b64, RN.mime).then(function(pad){
           var tl = RN_T.filter(function(x){ return x[0] === RN.t; })[0][1];
-          return fetch(AI_ENDPOINT, { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ imageBase64: pad.b64, mimeType: pad.mime, rapporto: pad.ratio, material:'Rinnovo parquet', materialId:'parquet', colorA:'Rinnovo parquet ' + tl, rinnovoParquet:{ tinta: RN.t, fin: RN.f } }) })
+          return fetch(AI_ENDPOINT, { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ imageBase64: pad.b64, mimeType: pad.mime, rapporto: pad.ratio, material:'Rinnovo parquet', materialId:'parquet', colorA:'Rinnovo parquet ' + tl, rinnovoParquet:{ tinta: RN.t, fin: RN.f, cmd: RN.c } }) })
             .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok || !d.imageBase64) throw new Error(d.error || 'Generazione non riuscita. Riprova.'); return 'data:' + (d.mimeType || 'image/jpeg') + ';base64,' + d.imageBase64; }); });
-        }).then(function(img){ RN.mix = null; draw(img); rnMix(RN.src, img).then(function(m){ RN.mix = m; var on = box.querySelector('[data-rnv].on'); if(on && on.dataset.rnv === 'm'){ document.getElementById('rnImg').src = m; var dl = document.getElementById('rnDl'); if(dl) dl.href = m; } var hh = document.getElementById('rnHint'); if(hh) hh.textContent = '«Listelli veri»: il disegno dei listelli dalla tua foto, colore e pulizia dall’AI.'; }).catch(function(){ var hh = document.getElementById('rnHint'); if(hh) hh.textContent = 'Non riesco a preparare «Listelli veri»: guarda «Solo AI».'; }); setTimeout(function(){ var x = document.getElementById('rnImg'); if(x) x.scrollIntoView({ block:'center', behavior:'smooth' }); }, 100); })
+        }).then(function(img){ RN.done = RN_C.filter(function(x){ return x[0] === RN.c; })[0][1] + ', ' + RN_T.filter(function(x){ return x[0] === RN.t; })[0][1].toLowerCase() + ', ' + RN.f; draw(img); setTimeout(function(){ var x = document.getElementById('rnImg'); if(x) x.scrollIntoView({ block:'center', behavior:'smooth' }); }, 100); })
           .catch(function(e){ bt.disabled = false; bt.textContent = '✨ Genera il rinnovo'; err.textContent = e.message || 'Generazione non riuscita.'; });
       };
     }

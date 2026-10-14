@@ -903,8 +903,16 @@ module.exports = async function handler(req, res) {
     grigio: "lo stesso legno con sopra una tinta GRIGIO TORTORA: si vedono ancora i singoli listelli, le loro differenze di colore e le venature"
   };
   const RN_F = { opaco: "verniciatura OPACA: nessun riflesso lucido", satinato: "verniciatura SATINATA: una luce morbida dove arriva il sole, senza effetto specchio", lucido: "verniciatura LUCIDA: riflessi netti della finestra e della luce sul pavimento", olio: "finitura a OLIO: opaca, calda e naturale" };
-  const rnB = (req.body || {}).rinnovoParquet, rnSel = rnB && typeof rnB === "object" && RN_T[rnB.tinta] && RN_F[rnB.fin] ? { tinta: rnB.tinta, fin: rnB.fin } : null;
-  const rnPrompt = rnSel ? [
+  const rnB = (req.body || {}).rinnovoParquet, rnSel = rnB && typeof rnB === "object" && RN_T[rnB.tinta] && RN_F[rnB.fin] ? { tinta: rnB.tinta, fin: rnB.fin, cmd: (["a", "b", "c"].indexOf(rnB.cmd) > -1 ? rnB.cmd : "a") } : null;
+  // Comandi di prova: A e B corti (come in ChatGPT), C il comando lungo di prima
+  const RN_FA = { opaco: "una verniciatura opaca", satinato: "una verniciatura satinata", lucido: "una verniciatura lucida", olio: "una finitura a olio" };
+  const RN_FB = { opaco: "a matte varnish", satinato: "a satin varnish", lucido: "a glossy varnish", olio: "a natural oil finish" };
+  const rnShort = !rnSel ? "" : rnSel.cmd === "a"
+    ? "Rendi questo parquet come nuovo, come dopo una levigatura e " + RN_FA[rnSel.fin] + ". Non cambiare il pavimento: stessi listelli, stesso disegno, stessa misura, " + (rnSel.tinta === "sbiancato" ? "lo stesso legno con una leggera velatura bianca sbiancante" : "stesso colore del legno, solo più vivo") + ". Togli solo polvere, graffi, segni e parti consumate. Non cambiare nient'altro nella foto: pareti, porte, finestre, luce e tutti gli oggetti restano uguali e al loro posto."
+    : rnSel.cmd === "b"
+    ? "Restore this existing wooden floor as if it had just been professionally sanded and refinished with " + RN_FB[rnSel.fin] + ". Keep exactly the same floor: the same individual wood strips, the same layout, the same size and " + (rnSel.tinta === "sbiancato" ? "the same wood with a light white-washed bleached tone" : "the same wood colour, just fresher and richer") + ". Only remove dust, scratches, marks and worn areas. Do not change anything else in the photo: walls, doors, windows, lighting and every object stay identical and in place."
+    : "";
+  const rnPrompt = rnSel && rnSel.cmd !== "c" ? rnShort : rnSel ? [
     "Ritocca questa fotografia come un fotoritoccatore professionista. Lavori SOLO sulla superficie del pavimento in legno che c'è: è lo STESSO pavimento dopo una levigatura e una nuova verniciatura. NON è un pavimento nuovo e NON va sostituito.",
     "REGOLA VINCOLANTE SUL DISEGNO DEL PAVIMENTO: ogni singolo listello resta esattamente dove è nella foto, con la stessa forma, la stessa larghezza, la stessa lunghezza e la stessa direzione. Restano le stesse fughe e lo stesso disegno di posa: se nella foto ci sono listelli piccoli e stretti, a gruppi, a spina di pesce o a quadrotti, restano così; NON trasformarli MAI in doghe lunghe o larghe e non cambiarne il numero. Restano le stesse differenze di colore tra un listello e l'altro (alcuni più chiari, altri più scuri) e le stesse venature. Confrontando prima e dopo, i listelli devono combaciare uno a uno.",
     "Cosa togli: graffi, righe, segni di scarpe, polvere, calcinacci, macchie, aloni e zone opache, ingrigite o consumate (anche nei passaggi e davanti alle porte).",
