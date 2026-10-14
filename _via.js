@@ -25,7 +25,7 @@ async function handle(req, res, action) {
       const s = [p.postcode, citta, pr].filter(Boolean).join(" ");
       const full = t + (s ? ", " + s : "");
       if (seen[full.toLowerCase()]) return; seen[full.toLowerCase()] = 1;
-      out.push({ t: t, s: s, full: full, cap: p.postcode || "", comune: citta, prov: pr });
+      out.push({ t: t, s: s, full: full, via: via, civico: p.housenumber || "", cap: p.postcode || "", comune: citta, prov: pr });
     });
     return res.status(200).json({ vie: out.slice(0, 6) });
   } catch (e) {

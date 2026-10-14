@@ -118,7 +118,7 @@ function cleanSettings(b) {
   const iban = str(bk.iban, 40).replace(/\s+/g, "").toUpperCase();
   return {
     impresa: {
-      ragioneSociale: str(i.ragioneSociale, 120), indirizzo: str(i.indirizzo, 200), paese: str(i.paese, 2).toUpperCase() || "IT", piva: str(i.piva, 30), cf: str(i.cf, 20),
+      ragioneSociale: str(i.ragioneSociale, 120), indirizzo: str(i.indirizzo, 200), via: str(i.via, 120), civico: str(i.civico, 12), cap: str(i.cap, 10), comune: str(i.comune, 80), prov: str(i.prov, 4).toUpperCase(), paese: str(i.paese, 2).toUpperCase() || "IT", piva: str(i.piva, 30), cf: str(i.cf, 20),
       telefono: str(i.telefono, 40), email: str(i.email, 120), sito: str(i.sito, 120), rea: str(i.rea, 60),
     },
     banca: { intestatario: str(bk.intestatario, 120), banca: str(bk.banca, 120), iban, linkCarta: /^https:\/\/[^\s"'<>]+$/.test(str(bk.linkCarta, 300)) ? str(bk.linkCarta, 300) : "" },
