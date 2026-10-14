@@ -938,6 +938,34 @@ module.exports = async function handler(req, res) {
       return out.toString("base64");
     } catch (e) { return null; }
   }
+  // Frase semplice, come la scriverebbe una persona a ChatGPT
+  function rnChatText() {
+    const col = rnSel.tinta === "naturale" ? "trasparente (stesso colore di adesso)" : ({ sbiancato: "sbiancata (velatura bianca leggera)", miele: "colorata color miele", noce: "colorata color noce", grigio: "colorata grigio tortora", chiaro: "di un tono più chiara" }[rnSel.tinta] || "trasparente");
+    const fin = rnSel.fin === "lucido" ? "lucida" : "opaca";
+    return "Mi puoi rendere il parquet nuovo, come dopo levigatura e verniciatura " + col + ", con finitura " + fin + "? Va solo rinnovato, non cambiato: stessi listelli, stessa posa, stessa misura. Non togliere e non spostare niente nella stanza: teli, pannelli, attrezzi e oggetti restano dove sono. Stessa inquadratura della foto.";
+  }
+  async function rnChatGpt(b64, mime) {
+    const key = (process.env.OPENAI_API_KEY || "").trim(); if (!key) return { why: "no key" };
+    const models = [(process.env.RN_CHAT_MODEL || "gpt-5").trim(), "gpt-4.1"].filter(function (m, i, a) { return m && a.indexOf(m) === i; });
+    const tool = { type: "image_generation", input_fidelity: "high", quality: "high", size: "auto", output_format: "png" };
+    if ((process.env.RN_TOOL_MODEL || "").trim()) tool.model = process.env.RN_TOOL_MODEL.trim();
+    let why = "";
+    for (const model of models) {
+      const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 200000);
+      try {
+        const r = await fetch("https://api.openai.com/v1/responses", { method: "POST", signal: ctl.signal, headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: model, tools: [tool], tool_choice: { type: "image_generation" },
+            input: [{ role: "user", content: [{ type: "input_text", text: rnChatText() }, { type: "input_image", image_url: "data:" + (mime || "image/jpeg") + ";base64," + b64 }] }] }) });
+        const t = await r.text(); let j = null; try { j = JSON.parse(t); } catch (e) {}
+        if (!r.ok) { why = model + " " + r.status + " " + t.slice(0, 200); if (r.status === 404 || r.status === 400) continue; return { why: why }; }
+        const call = (j && j.output || []).find(function (o) { return o && o.type === "image_generation_call" && o.result; });
+        if (call) return { b64: call.result };
+        why = model + " nessuna immagine";
+      } catch (e) { why = model + " " + (e && e.name === "AbortError" ? "timeout" : String(e && e.message || e)); }
+      finally { clearTimeout(tm); }
+    }
+    return { why: why };
+  }
   let rnCropB64 = null;
   const rnPrompt = rnSel ? rnBuild("", false) : "";
   const prompt = rnSel ? rnPrompt : psSel ? SIST.piscinaPrompt(psSel) : peSel ? SIST.piaEstPrompt(peSel) : bsSel ? SIST.bsPrompt(bsSel, colorRef(colorA, colorAHex)) : cgSel ? SIST.cgPrompt(cgSel, colorRef(colorA, colorAHex)) : isRigheStep ? righeStepPrompt : [
@@ -1002,9 +1030,21 @@ module.exports = async function handler(req, res) {
     return res.status(413).json({ error: "La foto è troppo pesante, prova con una foto più piccola" });
   }
 
+  let rnEngine = null;
   if (rnSel) {
+    // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
+    const chat = await rnChatGpt(imageBase64, mimeType);
+    if (chat && chat.b64) {
+      const cfit = await fitJpeg(chat.b64, "image/png");
+      if (job) await jobs.done(job, cfit.b64, cfit.mime).catch(function () {});
+      return res.status(200).json({ imageBase64: cfit.b64, mimeType: cfit.mime, rnEngine: "OpenAI (come ChatGPT)", jobId: job ? job.id : null });
+    }
+    console.error("rinnovo chatgpt", chat && chat.why);
+    // 2° motore: Gemini (se c'è la chiave), altrimenti l'AI delle immagini di sempre
     const both = await Promise.all([rnDescribe(imageBase64, mimeType), rnCrop(imageBase64)]);
     rnCropB64 = both[1]; promptOut = rnBuild(both[0], !!rnCropB64);
+    if (apiKey) provider = "gemini";
+    rnEngine = provider === "gemini" ? "Gemini" : "OpenAI immagini";
   }
   if (provider === "openai") {
     const model = (process.env.OPENAI_IMAGE_MODEL || "gpt-image-2.5-sunburst").trim();
@@ -1132,7 +1172,7 @@ module.exports = async function handler(req, res) {
       if (isTesterAll) { test = test || {}; test.msAi = msAi; test.msServer = Date.now() - tStart; test.sends = sends; test.engine = "openai " + model; }
       if (test) { test.engine = "openai " + model; test.sizeSent = params.size || "auto"; test.quality = params.quality || quality; if (dropped.length) test.dropped = dropped.join(", "); if (fallbackWhy) test.fallback = fallbackWhy; }
       if (job) await jobs.done(job, fit.b64, fit.mime).catch(function () {});
-      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, jobId: job ? job.id : null });
+      return res.status(200).json({ imageBase64: fit.b64, mimeType: fit.mime, test: test, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
     } catch (err) {
       console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
     }
@@ -1244,7 +1284,7 @@ module.exports = async function handler(req, res) {
     const gfit = await fitJpeg(inline.data, inline.mime_type || inline.mimeType || "image/png");
     if (isTesterAll) { gtest = gtest || { engine: "gemini " + geminiModel, size: imageConfig.imageSize }; gtest.msAi = msAi; gtest.msServer = Date.now() - tStart; gtest.sends = sends; }
     if (job) await jobs.done(job, gfit.b64, gfit.mime).catch(function () {});
-    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, jobId: job ? job.id : null });
+    return res.status(200).json({ imageBase64: gfit.b64, mimeType: gfit.mime, test: gtest, rnEngine: rnEngine || undefined, jobId: job ? job.id : null });
   } catch (err) {
     console.error("generate-preview", err && err.cause || err); return res.status(503).json({ error: "Il servizio AI non ha risposto in tempo. Riprova tra un minuto: l'anteprima non ti è stata scalata." });
   }
