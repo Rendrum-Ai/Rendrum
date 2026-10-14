@@ -11338,6 +11338,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
         invito: window.RD_INV_T || null,
         cartongesso: cgPayload(),
         boiserie: bsPayload(),
+        listelli: lsPayload(),
         battiscopa: btPayload(),
         piaEst: peEstPayload(),
         piscina: piscinaPayload(),
@@ -12302,6 +12303,42 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function estDone(){ if(!SF_ON) return false; if(SF.mat === 'pia_est') return !!(state.pe && state.pe.bordo && state.colorA); if(SF.mat === 'piscina') return !!(state.ps && state.ps.cosa && state.ps.cosa.length && state.colorA); return false; }
   function peEstPayload(){ var p = state.pe; if(!(SF_ON && SF.mat === 'pia_est') || !p || !p.eff) return null; return { eff:p.eff, fmt:p.fmt || '60x60', posa:p.posa || 'dritta', bordo:p.bordo || 'vecchio' }; }
   function piscinaPayload(){ var q = state.ps; if(!(SF_ON && SF.mat === 'piscina') || !q || !q.cosa || !q.cosa.length) return null; return { cosa:q.cosa.slice(), col:q.col || '', bordo:q.bordo || '', sol:q.sol || '' }; }
+  // ===== Pannelli a listelli (tester): pannello, posa, pareti, fin dove =====
+  MAT_LINE_ICON.listelli = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="22" height="24" rx="1.5"/><path d="M10 4v24M15 4v24M20 4v24"/></svg>';
+  var LS_PAN = [['rc','Rovere chiaro','Fondo nero','#C8AA7E'],['ro','Rovere','Fondo nero','#B08E68'],['no','Noce','Fondo nero','#80684F'],['bi','Bianco','Fondo grigio','#E8E7E3'],['pr','Pieni rovere','Senza feltro','#AA8E6C'],['pn','Pieni noce','Senza feltro','#7E6246']];
+  var LS_POSA = [['ver','Verticale','La più scelta'],['ori','Orizzontale','Allarga la stanza'],['dia','Diagonale','A 45°'],['v','A V','Chevron'],['spi','Spina di pesce','Colonne alternate'],['qua','A quadrotti','Dritti e sdraiati'],['ang','Parete e soffitto','Continua sopra'],['com','Composizione','Diagonale, dritta e feltro']];
+  function lsS(){ return state.ls || (state.ls = {}); }
+  function lsImg(pan, posa){ return '<img src="/img/ls/' + pan + '_' + posa + '.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block">'; }
+  function lsWallPic(sel){ return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#EFE9DF"/>' + sel + '<rect y="84" width="120" height="6" fill="#D9CFC1"/></svg>'; }
+  function lsSl(x0, x1, y0, y1){ var o = '<rect x="' + x0 + '" y="' + y0 + '" width="' + (x1 - x0) + '" height="' + (y1 - y0) + '" fill="#2A2420"/>'; for(var x = x0; x < x1; x += 6) o += '<rect x="' + x + '" y="' + y0 + '" width="4" height="' + (y1 - y0) + '" fill="#B98E62"/>'; return o; }
+  function lsFinPic(v){ return lsWallPic(v === 'fascia' ? lsSl(42, 78, 4, 84) + '<rect x="30" y="58" width="60" height="22" rx="3" fill="#C9BBA8"/>' : v === 'meta' ? lsSl(8, 112, 46, 84) : v === 'led' ? lsSl(8, 112, 10, 84) + '<rect x="8" y="6" width="104" height="4" fill="#F6C979"/><rect x="8" y="10" width="104" height="10" fill="#F6C979" opacity=".35"/>' : lsSl(8, 112, 4, 84)); }
+  function lsSoffPic(){ return '<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#FBF8F3"/><path d="M10 6 L110 6 L88 30 L32 30 Z" fill="#E5AE88" stroke="#1D1B18" stroke-width="1.4"/><path d="M32 30 L88 30 L88 70 L32 70 Z" fill="#fff" stroke="#1D1B18" stroke-width="1.4"/><path d="M10 6 L32 30 L32 70 L10 86 M110 6 L88 30 L88 70 L110 86" fill="none" stroke="#1D1B18" stroke-width="1.4"/></svg>'; }
+  function lsPar(l){ return l.pareti || []; }
+  function lsSteps(){ return ['lsPan', 'lsPosa', 'lsDove', 'lsFin']; }
+  function lsQ(st){
+    var l = lsS(), pan = l.pan || 'ro';
+    if(st === 'lsPan') return { t:'Che pannello?', s:'Tocca il legno e il fondo.', opts: LS_PAN.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', lsImg(x[0], 'ver')), sel: l.pan === x[0] }; }) };
+    if(st === 'lsPosa') return { t:'Come li posiamo?', s:'Tocca la posa.', opts: LS_POSA.map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', lsImg(pan, x[0])), sel: l.posa === x[0] }; }) };
+    if(st === 'lsDove') return { t:'Su quali pareti?', s:'Guardando la foto. Puoi sceglierne più di una, poi tocca Avanti.', multi:true, opts: [['fondo','Di fronte','La parete di fondo'],['sinistra','A sinistra',''],['destra','A destra',''],['letto','Dietro il letto o il divano','Solo in quella zona'],['tutta','Tutta la stanza','Tutte le pareti che si vedono'],['soffitto','Anche il soffitto','I listelli continuano sopra']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', x[0] === 'soffitto' ? lsSoffPic() : cgWall(x[0] === 'letto' ? 'fondo' : x[0] === 'tutta' ? 'giro' : x[0])), sel: lsPar(l).indexOf(x[0]) > -1 }; }) };
+    if(st === 'lsFin') return { t:'Fin dove?', s:'Tocca quanto rivestire.', opts: [['tutta','Tutta la parete','Dal pavimento al soffitto'],['fascia','Una fascia','Dietro TV, letto o divano'],['meta','Fino a metà','Parte bassa della parete'],['led','Con luce LED','Striscia nascosta in alto']].map(function(x){ return { v:x[0], n:x[1], d:x[2], pic: sfPic('', lsFinPic(x[0])), sel: l.fin === x[0] }; }) };
+    return null;
+  }
+  function lsApply(st, v){
+    if(['lsPan','lsPosa','lsDove','lsFin'].indexOf(st) < 0) return false;
+    var l = lsS();
+    if(st === 'lsPan'){ var p = LS_PAN.filter(function(x){ return x[0] === v; })[0]; if(p){ l.pan = v; state.colorA = semplCol('Pannelli a listelli ' + p[1], p[3]); } }
+    if(st === 'lsPosa') l.posa = v;
+    if(st === 'lsDove'){ var P = lsPar(l).slice(), i = P.indexOf(v);
+      if(i > -1) P.splice(i, 1); else if(v === 'tutta'){ P = P.filter(function(x){ return x === 'soffitto'; }); P.push(v); } else { if(v !== 'soffitto') P = P.filter(function(x){ return x !== 'tutta'; }); P.push(v); }
+      var ord = ['fondo','sinistra','destra','letto','tutta','soffitto']; P.sort(function(a, c){ return ord.indexOf(a) - ord.indexOf(c); });
+      l.pareti = P; l.dove = P.length ? P.join('+') : null; }
+    if(st === 'lsFin') l.fin = v;
+    return true;
+  }
+  function lsAnswered(st){ var l = state.ls || {}; return st === 'lsPan' ? !!l.pan : st === 'lsPosa' ? !!l.posa : st === 'lsDove' ? !!l.dove : st === 'lsFin' ? !!l.fin : null; }
+  function lsDone(){ return !!(SF_ON && SF.mat === 'listelli' && state.ls && state.ls.fin && state.colorA); }
+  function lsPayload(){ var l = state.ls; if(!(SF_ON && SF.mat === 'listelli') || !l || !l.pan) return null; return { pan: l.pan, posa: l.posa || 'ver', dove: l.dove || 'fondo', fin: l.fin || 'tutta' }; }
+  window.__lsQ = lsQ;
   function sfMats(){
     var pro = state.userType === 'professionista';
     var L = [
@@ -12322,6 +12359,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(pro) L.push({ v:'resina_haccp', n:'Resina HACCP', d:'Cucine professionali e industria' });
     var s1 = semplOn() && !window.RD_INV_MAT; L = L.filter(function(m){ return s1 ? m.v !== 'imbiancatura' : !m.s1; });
     if(rdIsTester()) L.splice(4, 0, { v:'deco', n:'Pareti decorate', d:'Spatolati, marmi, metalli e altre finiture', cat:'imbiancatura' });
+    if(s1 && rdIsBeta()) L.splice(0, 0, { v:'listelli', n:'Pannelli a listelli', d:'Legno su feltro, per pareti e soffitti', cat:'imbiancatura', s1:1, nuovo:1 });
     return L.map(function(m){ var st = CATEGORY_STYLE[m.cat || m.v] || {}; m.bg = st.bg; m.icon = st.icon || ''; return m; });
   }
   function sfSteps(){
@@ -12331,6 +12369,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     else if(c === 'piastrelle'){ s.push('piaDove'); if(state.piaDove === 'riv'){ s.push('piaAlt', 'piaDoccia', 'piaRivTile'); if(state.piaDoccia === 'si') s.push('piaDocTile'); } }
     else if(c === 'imbiancatura'){ s.push('ctx'); if(SF.a.ctx === 'interno'){ s.push('pitCosa', 'pitMuro'); if(semplOn()) semplIntSteps(s); } else if(SF.a.ctx === 'esterno'){ s.push('capp'); if(state.capp && state.capp.on) s.push('cappZoc'); if(semplOn()) semplFacSteps(s); } }
     else if(c === 'boiserie'){ bsSteps().forEach(function(x){ s.push(x); }); }
+    else if(c === 'listelli'){ lsSteps().forEach(function(x){ s.push(x); }); }
     else if(c === 'cartongesso'){ s.push('cgTipo'); cgList().forEach(function(t){ if(t !== 'soffitto') s.push('cgD_' + t); if(cgV2() && CG_MIS[t]) s.push('cgM_' + t); if(cgV2() && t === 'taglio') s.push('cgW_taglio'); if(CG_LUCI_OK.indexOf(t) > -1) s.push('cgL_' + t); }); }
     else if(c === 'deco') s.push('decoStile', 'decoProd', 'decoTinta', 'decoEff', 'decoDove', 'decoProt');
     else if(c === 'legno') s.push('legnoTipo');
@@ -12344,6 +12383,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   function sfAnswered(st){
     var sa = semplAnswered(st); if(sa !== null) return sa;
     var ba = bsAnswered(st); if(ba !== null) return ba;
+    var la = lsAnswered(st); if(la !== null) return la;
     var bta = btAnswered(st); if(bta !== null) return bta;
     var esa = estAnswered(st); if(esa !== null) return esa;
     if(st.indexOf('cgD_') === 0) return !!cgIt(st.slice(4)).dove;
@@ -12401,6 +12441,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     var sq0 = semplQ(st); if(sq0) return sq0;
     var cq = cgQ(st); if(cq) return cq;
     var bq = bsQ(st); if(bq) return bq;
+    var lq = lsQ(st); if(lq) return lq;
     var c3 = cg3Q(st); if(c3) return c3;
     var btq = btQ(st); if(btq) return btq;
     var esq = estQ(st); if(esq) return esq;
@@ -12499,14 +12540,16 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     if(estApply(st, v)) return;
     if(cgApply(st, v)) return;
     if(bsApply(st, v)) return;
+    if(lsApply(st, v)) return;
     if(st === 'mat'){
       var pre = v === 'pit_int' ? 'interno' : v === 'pit_est' ? 'esterno' : null; if(pre) v = 'imbiancatura';
       if(pre && SF.mat === v && SF.a.ctx !== pre){ SF.a = {}; }
       if(SF.mat !== v || !state.category){ SF.a = {}; state.bt = null; }
       SF.mat = v;
-      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie' || v === 'piscina') ? 'imbiancatura' : v === 'pia_est' ? 'piastrelle' : v);
+      sfSelectCat(v === 'legno' ? 'parquet' : (v === 'deco' || v === 'cartongesso' || v === 'boiserie' || v === 'piscina' || v === 'listelli') ? 'imbiancatura' : v === 'pia_est' ? 'piastrelle' : v);
       if(v === 'pia_est' || v === 'piscina'){ var esc = subGrid.children; if(esc[0]) esc[0].click(); SF.a.ctx = 'esterno'; state.colorA = null; if(v === 'pia_est'){ state.pe = state.pe || {}; state.ps = null; } else { state.ps = state.ps || {}; state.pe = null; } } else { state.pe = null; state.ps = null; }
       if(v === 'boiserie'){ var bsc = subGrid.children; if(bsc[0]) bsc[0].click(); SF.a.ctx = 'interno'; state.bs = state.bs || {}; } else { state.bs = null; }
+      if(v === 'listelli'){ var lsc = subGrid.children; if(lsc[0]) lsc[0].click(); SF.a.ctx = 'interno'; state.ls = state.ls || {}; } else { state.ls = null; }
       if(v === 'legno'){ state.material = null; }
       if(v === 'deco'){ var dcards = subGrid.children; if(dcards[0]) dcards[0].click(); SF.a.ctx = 'interno'; state.deco = state.deco && state.deco.fam ? state.deco : { eff:'medio', prot:'none' }; } else { state.deco = null; }
       if(v === 'cartongesso'){ var cgc = subGrid.children; if(cgc[0]) cgc[0].click(); SF.a.ctx = 'interno'; state.cg = state.cg && state.cg.list ? state.cg : { list:[], it:{} }; } else { state.cg = null; }
@@ -12698,7 +12741,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
     // panelLanding non è un "passo" del wizard: è la schermata di ingresso, non entra
     // nel calcolo della barra di avanzamento né nella navigazione avanti/indietro.
     if(SF_ON){
-      var sq = (decoAllOn() || semplDone() || bsDone() || estDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
+      var sq = (decoAllOn() || semplDone() || bsDone() || estDone() || lsDone()) ? ['panelSimple'] : ['panelSimple', 'panelColor'];
       if(accentoActive() || showerActive()) sq.push('panelPhoto');
       return sq.concat(['panelResult']);
     }
