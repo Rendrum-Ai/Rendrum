@@ -2301,6 +2301,32 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
   .ag2-sl>small{display:block;font-size:11px;font-weight:800;letter-spacing:.07em;color:#E9A774}
   .ag2-dots{display:flex;justify-content:center;gap:6px;margin:4px 0 14px}.ag2-dots i{width:6px;height:6px;border-radius:3px;background:#D9CFC4;transition:width .2s}.ag2-dots i.on{width:18px;background:#2B1408}
 </style>
+<style>
+  /* Preventivo: caselle dei lavori */
+  .qi .qi-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 6px}
+  .qi .qi-c{display:flex;flex-direction:column;align-items:flex-start;text-align:left;border:1px solid #EFE6DC;background:#FFFDFB;border-radius:22px;padding:16px 14px;font:inherit;color:#1D1B18;cursor:pointer;box-shadow:0 2px 10px rgba(43,20,8,.05);min-height:150px}
+  .qi .qi-c i{display:block;width:40px;height:40px;color:#C8692E;margin-bottom:12px}.qi .qi-c i svg{width:40px;height:40px}
+  .qi .qi-c b{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:18px;line-height:1.15}
+  .qi .qi-c em{font-style:normal;font-size:13.5px;line-height:1.35;color:#C8692E;font-weight:700;margin-top:6px}
+  .qi .qi-c.qi-alt{border-style:dashed;border-color:#D9A27A}.qi .qi-c.qi-alt em{color:#8A7F72;font-weight:500}
+  .qi .qi-lk{display:block;width:100%;border:0;background:none;color:#C8692E;font:inherit;font-weight:700;font-size:15px;padding:10px 0;cursor:pointer;text-align:center}
+  .qi .qi-li{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .qi .qi-r{display:flex;align-items:center;gap:10px;width:100%;border:1px solid #EADFD3;background:#fff;border-radius:14px;padding:14px 16px;font:inherit;color:#1D1B18;cursor:pointer;text-align:left}
+  .qi .qi-r b{flex:1;font-size:16px}.qi .qi-r em{font-style:normal;color:#8A7F72;font-size:14px;white-space:nowrap}.qi .qi-r span{color:#C8692E;font-size:22px;font-weight:700}
+  .qi .qi-op{background:#fff;border:1.5px solid #C8692E;border-radius:16px;padding:14px 16px}
+  .qi .qi-op .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.qi .qi-op .h b{font-size:17px}.qi .qi-op .h em{font-style:normal;color:#8A7F72;font-size:14.5px;white-space:nowrap}
+  .qi .qi-q{display:flex;align-items:center;justify-content:center;gap:14px;margin:12px 0 6px}
+  .qi .qi-q button{width:46px;height:46px;border-radius:50%;border:0;background:#F6E6DA;color:#A4521F;font-size:24px;font-weight:700;cursor:pointer}
+  .qi .qi-q span{display:flex;align-items:baseline;gap:4px;border:1.5px solid #EADFD3;border-radius:14px;padding:6px 12px;background:#FBF7F2}
+  .qi .qi-q input{width:80px;border:0;background:none;text-align:right;font:inherit;font-size:28px;font-weight:800;color:#1D1B18;outline:none;padding:0}
+  .qi .qi-q small{font-size:15px;color:#8A7F72;font-weight:600}
+  .qi .qi-sub{text-align:center;color:#8A7F72;font-size:14px;margin:4px 0 10px}
+  .qi .qi-add{display:block;box-sizing:border-box;text-align:center;width:100%;border:0;border-radius:14px;background:#C8692E !important;color:#fff !important;font:inherit;font-weight:800;font-size:16px;padding:13px;cursor:pointer}
+  .qi .qi-gh{display:flex;align-items:center;gap:10px;margin:16px 0 8px}
+  .qi .qi-gh i{width:42px;height:42px;border-radius:12px;background:#FBEFE5;color:#C8692E;display:grid;place-items:center;flex:none}.qi .qi-gh i svg{width:28px;height:28px}
+  .qi .qi-gh b{flex:1;font-family:"Playfair Display",Georgia,serif;font-size:19px;font-weight:500}.qi .qi-gh em{font-style:normal;font-weight:800;font-size:15px;color:#2B1408}
+  .qi .qi-more{display:block;width:100%;border:1.5px solid #C8692E;border-radius:16px;background:#fff;color:#2B1408;font:inherit;font-weight:800;font-size:16px;padding:15px;margin:14px 0 4px;cursor:pointer}
+</style>
 </head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -17043,9 +17069,129 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       if(t.length){ q.oggetto = ('Offerta per: ' + t.slice(0, 3).join(', ')).slice(0, 120); q._ogAuto = 1; } }
     if(!q.cantiere.indirizzo && q.cliente.indirizzo) q.cantiere.indirizzo = q.cliente.indirizzo;
   }
+  // ---------- Preventivo «Cosa fai?» con le caselle dei lavori (per ora solo account di prova) ----------
+  // Le caselle servono solo per scegliere; nel preventivo restano solo i lavori scelti, divisi per lavoro.
+  var QI_CATS = [
+    { k:'resina_haccp', n:'Resina HACCP', ic:'resina_haccp', re:/haccp/ },
+    { k:'monolith', n:'Resina', ic:'monolith', re:/resin|monolith/ },
+    { k:'microcemento', n:'Microcemento', ic:'microcemento', re:/microcement/ },
+    { k:'piastrelle', n:'Piastrelle', ic:'piastrelle', re:/piastrell|gres|ceramic|rivestiment|mosaic/ },
+    { k:'imbiancatura', n:'Pittura interni', ic:'pit_int', re:/pittur|tinteggi|imbianc|smalt|stucca/ },
+    { k:'deco', n:'Pareti decorate', ic:'deco', re:/decorat|spatolat|stucco|marmorin|velatur/ },
+    { k:'facciata', n:'Facciata', ic:'pit_est', lav:['cappotto'], re:/facciat|cappotto|esterno|quarzo/ },
+    { k:'cartongesso', n:'Cartongesso', ic:'cartongesso', re:/cartongess|controsoffitt|veletta|nicchia/ },
+    { k:'boiserie', n:'Boiserie', ic:'boiserie', re:/boiserie/ },
+    { k:'parquet', n:'Pavimenti in legno', ic:'legno', lav:['spc', 'laminato', 'legno'], re:/parquet|laminat|\bspc\b|legno/ },
+    { k:'scale', n:'Scale', ic:'scale', re:/scal[ae]|gradin/ },
+    { k:'graniglia_esterni', n:'Graniglia per esterni', ic:'graniglia_esterni', re:/granigli/ },
+    { k:'piscina', n:'Piscina', ic:'piscina', re:/piscin/ }
+  ];
+  var QI_ORDER = ['monolith', 'microcemento', 'piastrelle', 'imbiancatura', 'deco', 'facciata', 'cartongesso', 'boiserie', 'parquet', 'scale', 'graniglia_esterni', 'resina_haccp', 'piscina'];
+  var QI_ALTRO = { k:'altro', n:'Altri lavori', ic:'' };
+  function qiOn(){ try{ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsStaff()); }catch(e){ return false; } }
+  function qiCat(k){ return QI_CATS.filter(function(c){ return c.k === k; })[0] || QI_ALTRO; }
+  function qiOf(v){
+    var l = String((v && v.lavorazione) || '').toLowerCase();
+    if(l){ for(var i = 0; i < QI_CATS.length; i++){ var c = QI_CATS[i]; if(c.k === l || (c.lav && c.lav.indexOf(l) > -1) || l.indexOf(c.k + '_') === 0) return c.k; } if(/^monolith/.test(l)) return 'monolith'; }
+    var t = String((v && v.titolo) || '').toLowerCase();
+    for(var j = 0; j < QI_CATS.length; j++){ if(QI_CATS[j].re.test(t)) return QI_CATS[j].k; }
+    return 'altro';
+  }
+  function qiIcon(c){ var s = (typeof MAT_LINE_ICON !== 'undefined' && MAT_LINE_ICON[c.ic]) || ''; return s || '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="6" y="6" width="20" height="20" rx="4"/><path d="M11 16h10M16 11v10"/></svg>'; }
+  function qiUm(v){ return v.um && v.um !== 'a corpo' ? v.um : ''; }
+  function qiRender(box){
+    var q = qs.cur, LI = (qs.settings && qs.settings.listino) || [], st = qw.ic || (qw.ic = { m: q.voci.length ? 'prev' : 'grid' });
+    var byCat = {}; LI.forEach(function(v, i){ var k = qiOf(v); (byCat[k] = byCat[k] || []).push(i); });
+    var mine = QI_ORDER.filter(function(k){ return byCat[k]; }).concat(byCat.altro ? ['altro'] : []);
+    function go(m, extra){ qw.ic = Object.assign({ m:m }, extra || {}); qiRender(box); qScrollTop(); }
+    function card(c, sub, on, attr){ return '<button type="button" class="qi-c' + (on ? '' : ' off') + '" ' + attr + '><i>' + qiIcon(c) + '</i><b>' + qEsc(c.n) + '</b><em>' + qEsc(sub) + '</em></button>'; }
+    var h = '', back = '← Per chi', t = qpTotals(q);
+    if(st.m === 'grid'){
+      back = q.voci.length ? '← Il preventivo' : '← Per chi';
+      var cards = mine.map(function(k){ var c = qiCat(k), n = byCat[k].length; return card(c, n === 1 ? '1 voce nel listino' : n + ' voci nel listino', true, 'data-qic="' + k + '"'); });
+      if(!LI.length) cards = QI_ORDER.map(function(k){ return card(qiCat(k), 'Scrivi la voce', true, 'data-qiw="' + k + '"'); });
+      else cards.push('<button type="button" class="qi-c qi-alt" data-qia="1"><i><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="16" r="11"/><path d="M16 10v12M10 16h12"/></svg></i><b>＋ Altro lavoro</b><em>Microcemento, piastrelle, facciata…</em></button>');
+      h = qwTop(back) + '<div class="pro-projects-title">Cosa fai?</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + '</div>'
+        + (LI.length ? '' : '<div class="qw-hint">Il listino è vuoto: scegli il lavoro e scrivi la voce. La salvo nel listino per la prossima volta.</div>')
+        + '<div class="qi-g">' + cards.join('') + '</div>' + (semplOn() ? '<button type="button" class="qi-lk" id="qwPlan">📐 Prendi le misure dalla planimetria</button>' : '');
+    } else if(st.m === 'altro'){
+      back = '← Cosa fai';
+      h = qwTop(back) + '<div class="pro-projects-title">Altro lavoro</div><div class="qw-who">Che lavoro è? Poi scrivi la voce</div><div class="qi-g">'
+        + QI_ORDER.filter(function(k){ return !byCat[k]; }).map(function(k){ return card(qiCat(k), 'Scrivi la voce', true, 'data-qiw="' + k + '"'); }).join('')
+        + card(QI_ALTRO, 'Un lavoro diverso', true, 'data-qiw="altro"') + '</div>';
+    } else if(st.m === 'cat'){
+      var c = qiCat(st.k), L = byCat[st.k] || [];
+      back = '← Cosa fai';
+      h = qwTop(back) + '<div class="pro-projects-title">' + qEsc(c.n) + '</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + ' · dal tuo listino</div><div class="qi-li">'
+        + L.map(function(i){ var v = LI[i], u = qiUm(v);
+            if(st.open === i){ var qv = st.q != null ? st.q : '';
+              return '<div class="qi-op"><div class="h"><b>' + qEsc(v.titolo) + '</b><em>' + qEsc(qwEur(v.prezzo)) + (u ? ' / ' + qEsc(u) : '') + '</em></div>'
+                + (u ? '<div class="qi-q"><button type="button" data-qim="-">−</button><span><input type="text" inputmode="decimal" id="qiQ" value="' + qEsc(qv === '' ? '' : qpNum(qv)) + '" placeholder="0"><small>' + qEsc(u) + '</small></span><button type="button" data-qim="+">+</button></div>' : '<div class="qi-sub">a corpo</div>')
+                + '<div class="qi-sub" id="qiTot">' + (u ? (qv > 0 ? '= ' + qEsc(qwEur(qv * (+v.prezzo || 0))) + ' + IVA' : 'Quanti ' + qEsc(u) + '?') : '= ' + qEsc(qwEur(+v.prezzo || 0)) + ' + IVA') + '</div>'
+                + '<div role="button" tabindex="0" class="qi-add" id="qiAdd">Aggiungi</div></div>'; }
+            return '<button type="button" class="qi-r" data-qio="' + i + '"><b>' + qEsc(v.titolo) + '</b><em>' + qEsc(qwEur(v.prezzo)) + (u ? ' / ' + qEsc(u) : '') + '</em><span>＋</span></button>'; }).join('')
+        + '</div><button type="button" class="qi-lk" data-qiw="' + st.k + '">＋ Scrivi un’altra voce di ' + qEsc(c.n.toLowerCase()) + '</button>';
+    } else if(st.m === 'scrivi'){
+      var cw = qiCat(st.k); back = '← Cosa fai';
+      h = qwTop(back) + '<div class="pro-projects-title">' + qEsc(cw.n) + '</div><div class="qw-who">Scrivi la voce</div><div class="qw-add">'
+        + '<div class="field"><input type="text" id="qwT" maxlength="160" placeholder="Cosa fai (es. ' + qEsc(cw.k === 'altro' ? 'Smontaggio vecchio pavimento' : cw.n + ' soggiorno') + ')"></div>'
+        + '<div class="row2"><div class="field"><input type="text" inputmode="decimal" id="qwQ" placeholder="Quantità"></div><div class="field"><select id="qwU">' + Q_UNITS.map(function(u){ return '<option' + (u === 'mq' ? ' selected' : '') + '>' + u + '</option>'; }).join('') + '</select></div></div>'
+        + '<div class="field"><input type="text" inputmode="decimal" id="qwP" placeholder="Prezzo € (per unità)"></div>'
+        + '<label class="qw-ck"><input type="checkbox" id="qwSaveL" checked> Salvala nel mio listino</label>'
+        + '<div role="button" tabindex="0" class="qi-add" id="qwAddOk">Aggiungi</div></div>';
+    } else {
+      // il preventivo: solo i lavori scelti, divisi per lavoro
+      var G = [], gi = {};
+      q.voci.forEach(function(v, i){ var k = qiOf(v); if(!gi[k]){ gi[k] = { k:k, rows:[], tot:0 }; G.push(gi[k]); } gi[k].rows.push(i); gi[k].tot += (+v.qta || 0) * (+v.prezzo || 0); });
+      h = qwTop(back) + '<div class="pro-projects-title">Cosa fai?</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + '</div>'
+        + G.map(function(g){ var c = qiCat(g.k);
+            return '<div class="qi-gh"><i>' + qiIcon(c) + '</i><b>' + qEsc(c.n) + '</b><em>' + qEsc(qwEur(g.tot)) + '</em></div>' + g.rows.map(function(i){ var v = q.voci[i];
+              return '<div class="qw-v"><span class="qw-vt"><b>' + qEsc(v.titolo || 'Voce senza titolo') + '</b><em>' + qEsc(qwEur(v.prezzo)) + (qiUm(v) ? ' / ' + qEsc(v.um) : '') + '</em></span>'
+                + '<span class="qw-q"><button type="button" data-qwm="' + i + '" aria-label="Meno">−</button><input type="text" inputmode="decimal" data-qwq="' + i + '" value="' + qEsc(qpNum(v.qta || 0)) + '"><i>' + qEsc(qiUm(v)) + '</i><button type="button" data-qwp="' + i + '" aria-label="Più">+</button></span>'
+                + '<button type="button" class="qw-x" data-qwx="' + i + '" aria-label="Togli">✕</button></div>'; }).join(''); }).join('')
+        + '<button type="button" class="qi-more" id="qiMore">＋ Aggiungi un altro lavoro</button>'
+        + '<div class="pp-error" id="qwErr"></div><button type="button" class="pro-auth-submit qw-next" id="qwNext">Avanti · ' + qEsc(qwEur(t.totale)) + '</button>';
+    }
+    if(st.m !== 'prev') h += '<div class="pp-error" id="qwErr"></div>';
+    box.innerHTML = '<div class="qi">' + h + '</div>';
+    var $ = function(id){ return document.getElementById(id); }, err = function(x){ var e = $('qwErr'); if(e) e.textContent = x || ''; };
+    $('qwBack').onclick = function(){ if(st.m === 'grid'){ if(q.voci.length) go('prev'); else { qw.ic = null; qw.step = 1; qwRender(); } } else if(st.m === 'prev'){ qw.ic = null; qw.step = 1; qwRender(); } else go('grid'); };
+    box.querySelectorAll('[data-qic]').forEach(function(b){ b.onclick = function(){ var k = b.dataset.qic, L = byCat[k] || []; go('cat', { k:k, open: L.length === 1 ? L[0] : null, q: L.length === 1 ? null : null }); }; });
+    box.querySelectorAll('[data-qia]').forEach(function(b){ b.onclick = function(){ go('altro'); }; });
+    box.querySelectorAll('[data-qiw]').forEach(function(b){ b.onclick = function(){ go('scrivi', { k:b.dataset.qiw }); setTimeout(function(){ var x = $('qwT'); if(x) x.focus(); }, 60); }; });
+    box.querySelectorAll('[data-qio]').forEach(function(b){ b.onclick = function(){ go('cat', { k:st.k, open:+b.dataset.qio, q:null }); setTimeout(function(){ var x = $('qiQ'); if(x) x.focus(); }, 60); }; });
+    var plb = $('qwPlan'); if(plb) plb.onclick = function(){ qw.ic = null; plOpen(); };
+    // metri della voce aperta
+    var qi = $('qiQ'), lv = st.open != null ? LI[st.open] : null;
+    function totUpd(){ var e = $('qiTot'); if(e && lv) e.textContent = st.q > 0 ? '= ' + qwEur(st.q * (+lv.prezzo || 0)) + ' + IVA' : 'Quanti ' + qiUm(lv) + '?'; }
+    if(qi){ qi.addEventListener('input', function(){ st.q = qParse(qi.value); totUpd(); });
+      box.querySelectorAll('[data-qim]').forEach(function(b){ b.onclick = function(){ st.q = Math.max(0, Math.round(((+st.q || 0) + (b.dataset.qim === '+' ? 1 : -1)) * 100) / 100); qi.value = st.q ? qpNum(st.q) : ''; totUpd(); }; }); }
+    var add = $('qiAdd'); if(add) add.onclick = function(){
+      var u = qiUm(lv), n = u ? (+st.q || 0) : 1; if(!(n > 0)){ err('Scrivi quanti ' + u + '.'); return; }
+      q.voci.push({ titolo:lv.titolo, descrizione:lv.descrizione || '', qta:n, um:lv.um || 'a corpo', prezzo:+lv.prezzo || 0, lavorazione: lv.lavorazione || (st.k !== 'altro' ? st.k : '') });
+      qwAuto(); go('prev'); };
+    var ok = $('qwAddOk'); if(ok) ok.onclick = function(){
+      var tt = $('qwT').value.trim(), qq = qParse($('qwQ').value), um = $('qwU').value, pr = qParse($('qwP').value), lav = st.k !== 'altro' ? st.k : '';
+      if(tt.length < 2){ err('Scrivi cosa fai.'); return; }
+      if(!(qq > 0)){ err('Scrivi la quantità.'); return; }
+      q.voci.push({ titolo:tt, descrizione:'', qta:qq, um:um, prezzo:pr, lavorazione:lav });
+      if($('qwSaveL').checked){ try{ var s = qs.settings; s.listino = (s.listino || []).filter(function(x){ return x.titolo !== tt; }); s.listino.push({ titolo:tt, descrizione:'', qta:1, um:um, prezzo:pr, lavorazione:lav }); qApi('listino', 'POST', { listino: s.listino }).catch(function(){}); }catch(e){} }
+      qwAuto(); go('prev'); };
+    // preventivo: metri, togli, avanti
+    var upd = function(){ var tn = $('qwNext'); if(tn) tn.textContent = 'Avanti · ' + qwEur(qpTotals(q).totale); };
+    box.querySelectorAll('[data-qwq]').forEach(function(el){ el.addEventListener('input', function(){ q.voci[+el.dataset.qwq].qta = qParse(el.value); upd(); }); el.addEventListener('change', function(){ qiRender(box); }); });
+    box.querySelectorAll('[data-qwm],[data-qwp]').forEach(function(b){ b.onclick = function(){ var i = +(b.dataset.qwm || b.dataset.qwp), v = q.voci[i]; v.qta = Math.max(0, Math.round(((+v.qta || 0) + (b.dataset.qwm ? -1 : 1)) * 100) / 100); qiRender(box); }; });
+    box.querySelectorAll('[data-qwx]').forEach(function(b){ b.onclick = function(){ q.voci.splice(+b.dataset.qwx, 1); qwAuto(); if(!q.voci.length) go('grid'); else qiRender(box); }; });
+    var more = $('qiMore'); if(more) more.onclick = function(){ go('grid'); };
+    var nx = $('qwNext'); if(nx) nx.onclick = function(){
+      if(!q.voci.length){ err('Aggiungi almeno un lavoro.'); return; }
+      if(q.voci.some(function(v){ return !(+v.qta > 0); })){ err('Metti la quantità a ogni voce.'); return; }
+      qwAuto(); qw.ic = null; qw.step = 3; qwRender(); qScrollTop(); };
+  }
+  window.qiOn = qiOn; window.__qiOf = qiOf;
   function qwOpen(step){
     if(!qs.cur) return;
-    qwClean(); qw.add = false; qw.sub = ''; qw.mailOk = null; try{ qwMailClose(); }catch(e){} qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
+    qwClean(); qw.add = false; qw.ic = null; qw.sub = ''; qw.mailOk = null; try{ qwMailClose(); }catch(e){} qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
     if(!step) step = ((qs.cur.cliente.nome || '').trim() && qs.cur.voci.length) ? 3 : 1;
     qw.step = step; qCard(false); ppShowView('qwiz'); qScrollTop(); qwRender();
   }
@@ -17318,6 +17464,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
       return;
     }
     if(qw.step === 2 && qw.pl && pl){ plRender(box); return; }
+    if(qw.step === 2 && qiOn()){ qiRender(box); return; }
     if(qw.step === 2){
       var LI = (qs.settings && qs.settings.listino) || [], tot = qpTotals(q);
       h = qwTop('← Per chi') + '<div class="pro-projects-title">Cosa fai?</div><div class="qw-who">' + qEsc(q.cliente.nome || '') + '</div>';
