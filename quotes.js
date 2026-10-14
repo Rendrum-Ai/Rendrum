@@ -7,7 +7,7 @@
 //   GET  /api/quotes?action=settings           -> impostazioni preventivi (dati impresa, banca, condizioni, listino)
 //   POST /api/quotes?action=settings           -> salva impostazioni
 // Tabelle: vedi supabase_preventivi.sql
-const { currentAccount, supabaseRequest, getSupabaseConfig } = require("./_auth-lib");
+const { currentAccount, supabaseRequest, getSupabaseConfig, isBeta } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 const { vatCheck } = require("./_vat");
 
@@ -179,7 +179,7 @@ module.exports = async function handler(req, res) {
     if (action === "mail") {
       if (req.method !== "POST") return res.status(405).json({ error: "Usa POST" });
       const em = String(acc.email || "").toLowerCase();
-      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
+      if (!(em === "prova@rendrum.com" || em === "info@dgmresine.com" || isBeta(acc) || process.env.MAIL_QUOTE_ALL === "1")) return res.status(403).json({ error: "Invio email non ancora attivo.", code: "nomail" });
       const key = (process.env.RESEND_API_KEY || "").trim();
       if (!key) return res.status(503).json({ error: "Invio email non attivo.", code: "noemail" });
       const b = req.body || {}, EM = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/;
