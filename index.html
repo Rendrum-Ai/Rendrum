@@ -2335,6 +2335,11 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 .r13-new svg{width:46px;height:46px;margin-bottom:6px}.r13-new b{font-size:23px;letter-spacing:-.01em}.r13-new em{font-style:normal;font-size:14px;opacity:.92}.r13-new:active{transform:scale(.985)}
 .r13-sec{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#9A8F84;margin:20px 2px 8px}
 .r13-ex{margin-top:14px}
+.r13-nm{color:#C8692E}
+.r13-sa{margin:10px 0 4px}.r13-sab{display:block;width:100%;border:0;border-radius:14px;padding:13px 10px;font:inherit;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(135deg,#E9A877,#C8692E);box-shadow:0 6px 16px rgba(200,105,46,.28);cursor:pointer}.r13-sab:disabled{opacity:.45;box-shadow:none}
+.r13-sah{font-size:12.5px;color:#7A6E64;margin-top:5px;text-align:center}
+.r13-sch{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #C8692E;border-radius:14px;padding:8px;margin-bottom:8px;cursor:pointer}.r13-sch img,.r13-sch0{width:64px;height:52px;border-radius:10px;object-fit:cover;flex:none}.r13-sch0{display:grid;place-items:center;background:#F3E4D8;font-size:22px}
+.r13-sch span{flex:1;min-width:0}.r13-sch b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r13-sch em{display:block;font-style:normal;font-size:12.5px;color:#7A6E64}.r13-sch u{text-decoration:none;color:#C8692E;font-weight:800;font-size:13.5px;padding:6px;flex:none}
 html.rd-v2-pre #rdOggi{pointer-events:none}
 #r13Cur{position:fixed;inset:0;z-index:9998;background:var(--bg,#F7F5F1);display:flex;align-items:center;justify-content:center;transition:opacity .4s ease}#r13Cur img{width:min(60vw,280px);height:auto;border-radius:22%}#r13Cur.out{opacity:0;pointer-events:none}#r13Cur.app{background:#270F03}#r13Cur.app img{width:calc(max(100vw,100vh) * .1999);border-radius:0}
 .r13-tsk{background:linear-gradient(100deg,#EFE9E1 30%,#F7F2EC 50%,#EFE9E1 70%)}
@@ -15841,7 +15846,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
     function phStrip(id, k){
       var ph = d.foto.map(function(f, i){ return { f:f, i:i }; }).filter(function(x){ return x.f.rif === id; });
       return '<div class="so-rph">' + ph.map(function(x){ return '<img data-sothumb="' + x.i + '" alt="Foto">'; }).join('')
-        + '<label class="q-add so-file">📷 ' + (ph.length ? 'Altra foto' : (k === 'pro' ? 'Foto di questo ' : 'Foto di questa ') + SO_NOUN[k][0]) + '<input type="file" accept="image/*" multiple hidden data-sofile="' + id + '"></label></div>';
+        + '<label class="q-add so-file">📷 ' + (ph.length ? 'Altra foto' : (k === 'pro' ? 'Foto di questo ' : 'Foto di questa ') + SO_NOUN[k][0]) + '<input type="file" accept="image/*" multiple hidden data-sofile="' + id + '"></label></div>' + (typeof r13SoRow === 'function' ? r13SoRow(id) : '');
     }
     function closed(r, sum){
       var n = d.foto.filter(function(f){ return f.rif === r.id; }).length, ok = soDone(r.k, r.x);
@@ -16156,6 +16161,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
         if(v.k === MAIN) main = r; mine.push(r);
       });
       main = main || mine[0];
+      try{ var r13m = rdIsBeta() ? r13SoMat(d, sk) : []; if(main && r13m.length){ main.titolo += ' · ' + r13m.join(', '); main.descrizione = (main.descrizione ? main.descrizione + '\n' : '') + 'Scelto dal cliente: ' + r13m.join(', '); } }catch(e){}
       if(main && st) main.descrizione = (main.descrizione ? main.descrizione + '\n' : '') + 'Scelte: ' + st;
       righe = righe.concat(mine);
     });
@@ -16180,6 +16186,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
         if(sp.length) q.specifiche = sp.join('\n') + (q.specifiche ? '\n' + q.specifiche : '');
       }).then(function(){
         if(c.leadId) qs.leadId = c.leadId;
+        try{ if(rdIsBeta()) r13SoQuotePv(d); }catch(e){}
         var zero = righe.filter(function(r){ return !r.prezzo; }).length, m = document.getElementById('qEdMsg');
         if(m) m.textContent = 'Preventivo compilato dal sopralluogo (' + righe.length + ' righe' + (zero ? ', ' + zero + ' senza prezzo nel listino: completale' : '') + '). Controlla e salva.';
       });
@@ -17505,7 +17512,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
   function r13Head(){
     var d = new Date(), h = d.getHours(), sal = h < 13 ? 'Buongiorno' : h < 18 ? 'Buon pomeriggio' : 'Buonasera', nome = '';
     try{ nome = String((proAccount && proAccount.companyName) || localStorage.getItem('rdV2Name') || '').trim(); }catch(e){}
-    return '<div class="v3h"><div><span class="v3d">' + qEsc(d.toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">' + qEsc(sal + (nome ? ', ' + nome : '')) + '</h1></div></div>';
+    return '<div class="v3h"><div><span class="v3d">' + qEsc(d.toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">' + qEsc(sal + (nome ? ',' : '')) + (nome ? '<br><span class="r13-nm">' + qEsc(nome) + '</span>' : '') + '</h1></div></div>';
   }
   function r13Render(box, vm, live, ex){
     var hh = r13Head() + '<div class="r13" id="r13Home"><button type="button" class="r13-new" id="r13New">' + R13_SVG(R13_CAM) + '<b>Nuova anteprima</b><em>scatta o scegli una foto</em></button>'
@@ -17515,7 +17522,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
       + (vm.n ? '<div class="r13-todo">' + vm.todo.map(function(c, i){ return '<button type="button" data-r13t="' + i + '"><i>' + (R13_FI[c.f] || '•') + '</i><span><b>' + qEsc(c.t) + '</b><em>' + qEsc(c.s) + '</em></span><u>›</u></button>'; }).join('') + '</div>'
         : '<div class="r13-todo"><div class="r13-ok"><i>👍</i><span><b>Niente in sospeso</b><em>le cose da fare compariranno qui</em></span></div></div>')
       + (ex ? '<div class="r13-ex">' + ex + '</div>' : '')
-      + (vm.ag.length ? '<div class="r13-sec r13-sh2"><span>Ultime anteprime</span><u id="r13All2">Tutte ›</u></div><div class="r13-ag">' + vm.ag.map(function(g){ return '<button type="button" data-r13k="' + qEsc(g.k) + '"><img src="' + qEsc(g.img) + '" alt="" loading="lazy">' + (g.n > 1 ? '<s>' + g.n + '</s>' : '') + '</button>'; }).join('') + '</div>' : '');
+      + ''
     var y = window.scrollY; box.innerHTML = hh + '</div>'; box.dataset.ready = 1; box.dataset.live = live ? '1' : '0'; if(y) window.scrollTo(0, y);
     if(!live) return;
     document.getElementById('r13New').addEventListener('click', function(){ v3Cam(); });
@@ -17622,7 +17629,8 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
     r13.key = key; r13.view = 'st'; r13.del = null;
     var g = key === 'local' ? r13.pend : r13Find(key); if(!g) return r13Gal();
     r13.sel = selId || (r13.sel && g.items.some(function(p){ return p.id === r13.sel; }) ? r13.sel : g.top.id);
-    var box = rxOpen(g.cli ? g.cli.nome : 'Anteprima', function(){ r13Gal(); });
+    var bs = r13.backSo && (r13.backSo.key === key || key === 'local') ? r13.backSo : null;
+    var box = rxOpen(g.cli ? g.cli.nome : 'Anteprima', bs ? function(){ r13ToSo(bs); } : function(){ r13Gal(); });
     r13StDraw(box, g);
   }
   function r13Cur(g){ return g.items.filter(function(p){ return p.id === r13.sel; })[0] || g.items[0]; }
@@ -17710,12 +17718,14 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
     var bp = (layerOriginal && layerOriginal.b64) ? layerOriginal : { b64: state.photoBase64, mime: state.photoMime };
     var tit = ''; try{ tit = layerTitle(); }catch(e){}
     var it = { id:'local', photoAfterUrl:'data:' + (aiResultImageMime || 'image/png') + ';base64,' + aiResultImageBase64, photoBeforeUrl: bp.b64 ? 'data:' + (bp.mime || 'image/jpeg') + ';base64,' + bp.b64 : null, material: tit || (state.material && state.material.name) || '', colorName: (state.colorA || {}).name || '', createdAt: new Date().toISOString(), notes:'' };
-    var cli = null; try{ cli = window.pcCli && window.pcCli(); }catch(e){}
+    var cli = null; try{ cli = window.pcCli && window.pcCli(); }catch(e){} var sx = r13.so; if(sx && !(cli && cli.nome)) cli = sx.cli;
+    if(sx) r13.backSo = { soId: sx.soId, room: sx.room, key: 'local' };
     r13.pend = { key:'local', local:true, before: it.photoBeforeUrl, items:[it], top:it, cli: cli && cli.nome ? cli : null };
     r13.sel = 'local'; r13St('local', 'local');
     a.p.then(function(id){
       if(!id){ var e = document.getElementById('r13Err'); if(e && r13.key === 'local') e.textContent = 'Non sono riuscito a salvarla: la trovi comunque qui sopra nel risultato.'; return; }
-      return r13Load(true).then(function(){ var g = r13GrpOf(id); if(g && r13.view === 'st' && r13.key === 'local'){ r13.pend = null; r13St(g.key, id); } });
+      var link = sx && sx.cli && sx.cli.nome ? r13Up({ id:id, clientName:sx.cli.nome, clientContact:sx.cli.tel || '', siteAddress:sx.cli.via || '' }).catch(function(){}) : Promise.resolve();
+      return link.then(function(){ return r13Load(true); }).then(function(){ var g = r13GrpOf(id); if(g && sx){ r13SoLink(sx, g.key); if(r13.backSo) r13.backSo.key = g.key; } if(g && r13.view === 'st' && r13.key === 'local'){ r13.pend = null; r13St(g.key, id); } });
     });
   }
   // «Diventa un lavoro»: cliente (se manca) e primo passo, tutto già compilato
@@ -17728,7 +17738,8 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
     document.body.appendChild(w);
     w.addEventListener('click', function(e){ if(e.target === w){ w.remove(); return; } var b = e.target.closest('[data-r13p]'); if(!b) return; w.remove(); var k = b.dataset.r13p;
       if(k === 'ag') rxAgendaForm(null, { tipo:'sopralluogo', cliente:c.nome, telefono:c.tel || '', indirizzo:c.via || '', titolo:'Sopralluogo · ' + tit });
-      if(k === 'so'){ rxClose(); (typeof soNew0 === 'function' ? soNew0 : soNew)(function(x){ x.clientName = c.nome; x.phone = c.tel || ''; x.address = c.via || ''; }); }
+      if(k === 'so'){ rxClose(); (typeof soNew0 === 'function' ? soNew0 : soNew)(function(x){ x.clientName = c.nome; x.phone = c.tel || ''; x.address = c.via || '';
+        try{ var rid = soRid(), bu = g.before || p.photoBeforeUrl, sk = r13GuessSk(p), sup = {}; if(sk && SO_SCHEDE[sk]){ x.data.lavori = [sk]; if(SO_SCHEDE[sk].mis === 'stanze') sup[sk] = Object.assign({ pav:false, par:false, sof:false }, SO_SCHEDE[sk].sup); } x.data.ambienti.push({ id:rid, nome:'Stanza', sup:sup }); if(bu) x.data.foto.push({ url:bu, local:'', nota:'', rif:rid }); x.data.ante = {}; x.data.ante[rid] = { key:g.key }; }catch(e){} }); }
       if(k === 'pv') r13Quote(g, p);
     });
   }
@@ -17763,6 +17774,74 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
   function r13CtImg(L){
     if(!r13.grp){ r13Load(); return; }
     L.forEach(function(c){ if(c.img) return; var k = ctNorm(c.nome); var g = r13.grp.filter(function(x){ return x.cli && ctNorm(x.cli.nome) === k; }).sort(function(a, b){ return (b.heart ? 1 : 0) - (a.heart ? 1 : 0); })[0]; if(g) c.img = g.top.photoAfterUrl; });
+  }
+  // ----- sopralluogo: l'anteprima dentro la stanza, il ♥ nel preventivo -----
+  var R13_SO_CAT = { facciata:'imbiancatura', interni:'imbiancatura', resine:'monolith', microcemento:'microcemento', scale:'scale', piastrelle:'piastrelle', legno:'legno', haccp:'monolith', graniglia:'graniglia_esterni' };
+  function r13SoRoom(d, id){ var r = soRooms(d).filter(function(x){ return x.id === id; })[0]; return r || null; }
+  function r13SoSks(d, r){
+    return (d.lavori || []).filter(function(sk){ var S = SO_SCHEDE[sk]; if(!S) return false;
+      if(r.k === 'amb'){ var s = (r.x.sup || {})[sk]; return S.mis === 'stanze' && !!(s && (s.pav || s.par || s.sof)); }
+      if(r.k === 'pro') return S.mis === 'prospetti'; if(r.k === 'area') return S.mis === 'aree' && (!r.x.lav || !r.x.lav.length || r.x.lav.indexOf(sk) > -1); return false; });
+  }
+  function r13SoRow(id){
+    try{ if(!r13On() || !so.cur) return ''; }catch(e){ return ''; }
+    var d = so.cur.data, ln = (d.ante || {})[id], g = ln ? r13Find(ln.key) : null, nf = d.foto.filter(function(f){ return f.rif === id; }).length;
+    if(ln && !r13.grp) r13Load().then(function(){ try{ if(so.tab === 'mis') soDrawMis(); }catch(e){} });
+    var h = '';
+    if(ln) h += '<div class="r13-sch" data-r13sov="' + qEsc(id) + '">' + (g ? '<img src="' + qEsc(g.top.photoAfterUrl) + '" alt="">' : '<span class="r13-sch0">✨</span>') + '<span><b>' + (g ? (g.heart ? '♥ ' + qEsc(g.heart.colorName || r13Tit(g.heart)) : qEsc(r13Tit(g.top))) : 'Anteprima della stanza') + '</b><em>' + (g ? (g.heart ? qEsc(String(g.heart.material || '').split(' · ')[0] || 'scelta') + ' · scelta del cliente' : (g.items.length > 1 ? g.items.length + ' versioni' : '1 versione') + ' · tocca e metti ♥ alla migliore') : 'carico…') + '</em></span><u>Vedi ›</u></div>';
+    h += '<button type="button" class="r13-sab" data-r13so="' + qEsc(id) + '"' + (nf ? '' : ' disabled') + '>✨ ' + (ln ? 'Prova un altro materiale' : 'Anteprima di questa stanza') + '</button>' + (nf ? '' : '<div class="r13-sah">Fai prima una foto: l’anteprima parte da quella.</div>');
+    return '<div class="r13-sa">' + h + '</div>';
+  }
+  function r13SoGo(id){
+    var c = so.cur; if(!c) return; var d = c.data, ph = d.foto.filter(function(f){ return f.rif === id; }), f = ph[ph.length - 1]; if(!f) return;
+    var ln = (d.ante || {})[id], g = ln ? r13Find(ln.key) : null, r = r13SoRoom(d, id), sks = r ? r13SoSks(d, r) : [];
+    var cat = sks.length === 1 ? (R13_SO_CAT[sks[0]] || null) : (r && r.k === 'pro' ? 'imbiancatura' : null);
+    var cli = { nome: c.clientName || '', tel: c.phone || '', via: c.address || '' };
+    try{ soLocalSave(); }catch(e){}
+    var src = g && g.before ? g.before : (f.local || f.url);
+    fetch(src).then(function(x){ if(!x.ok) throw 0; return x.blob(); }).then(function(b){
+      r13.so = { soId: c.id, room: id, cli: cli };
+      r13.again = g && g.before ? { before: g.before, pending: true, pk: null } : null;
+      document.getElementById('proProjectsModal').classList.remove('open');
+      v3Start(new File([b], 'stanza.' + ((b.type || '').split('/')[1] || 'jpg'), { type: b.type || 'image/jpeg' }), cat);
+    }).catch(function(){ try{ soMsg('Non riesco a leggere la foto: riprova.', true); }catch(e){} });
+  }
+  function r13SoLink(sx, key){
+    var put = function(it){ it.data = it.data || {}; it.data.ante = it.data.ante || {}; it.data.ante[sx.room] = { key: key }; };
+    try{ if(so.cur && so.cur.id === sx.soId){ put(so.cur); so.dirty = true; soLocalSave(); return; } }catch(e){}
+    try{ var k = soLocalKey(sx.soId), it = JSON.parse(localStorage.getItem(k) || 'null'); if(it){ put(it); localStorage.setItem(k, JSON.stringify(it)); } }catch(e){}
+  }
+  function r13ToSo(bs){
+    r13.so = null; r13.backSo = null; rxClose(); pbModal(); qCard(false); soEdit(bs.soId);
+    var n = 0, t = setInterval(function(){ n++; try{ if(so.cur && so.cur.id === bs.soId && document.getElementById('soMis')){ clearInterval(t); so.room = bs.room; soShow('mis'); setTimeout(function(){ var el = document.querySelector('[data-r13so="' + bs.room + '"]'); if(el && el.scrollIntoView) el.scrollIntoView({ block:'center' }); }, 150); } }catch(e){} if(n > 30) clearInterval(t); }, 150);
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target; if(!t || !t.closest) return;
+    var b = t.closest('[data-r13so]'); if(b && !b.disabled){ e.preventDefault(); r13SoGo(b.dataset.r13so); return; }
+    var v = t.closest('[data-r13sov]'); if(v){ e.preventDefault(); var d = so.cur && so.cur.data, rid = v.dataset.r13sov, ln = d && (d.ante || {})[rid]; if(!ln) return;
+      try{ soLocalSave(); }catch(x){} r13.backSo = { soId: so.cur.id, room: rid, key: ln.key }; r13.so = { soId: so.cur.id, room: rid, cli: { nome: so.cur.clientName || '', tel: so.cur.phone || '', via: so.cur.address || '' } };
+      document.getElementById('proProjectsModal').classList.remove('open'); r13Load().then(function(){ if(r13Find(ln.key)) r13St(ln.key); else r13Gal(); }); }
+  }, true);
+  // materiale col ♥ nelle voci del preventivo (voce principale di ogni lavoro)
+  function r13SoMat(d, sk){
+    var out = []; soRooms(d).forEach(function(r){ var ln = (d.ante || {})[r.id], g = ln ? r13Find(ln.key) : null; if(!g || !g.heart) return; if(r13SoSks(d, r).indexOf(sk) < 0) return; var t = String(g.heart.colorName || '').trim() || r13Tit(g.heart); if(out.indexOf(t) < 0) out.push(t); });
+    return out;
+  }
+  function r13SoQuotePv(d){
+    var best = null; soRooms(d).forEach(function(r){ var ln = (d.ante || {})[r.id], g = ln ? r13Find(ln.key) : null; if(g && (!best || (g.heart && !best.heart))) best = g; });
+    if(!best) return; var p = best.heart || best.top, tit = r13Tit(p);
+    Promise.all([loadImgCors(p.photoAfterUrl), loadImgCors(best.before || p.photoBeforeUrl)]).then(function(im){
+      if(!im[0] || !qs.cur) return; var A = imgToJpeg(im[0], 1400), B = im[1] ? imgToJpeg(im[1], 1400) : null;
+      qs.cur.anteprima = { attiva:true, righe:['Lavorazione: ' + tit] }; qs.newPreview = { dopo:{ url:A.url, w:A.w, h:A.h }, prima: B ? { url:B.url, w:B.w, h:B.h } : null };
+      try{ qRenderPreviewBox(); }catch(e){}
+    });
+  }
+  // dal materiale dell'anteprima, il lavoro del sopralluogo
+  function r13GuessSk(p){
+    var t = String((p && (p.material + ' ' + (p.colorName || ''))) || '').toLowerCase();
+    var L = [[/parquet|laminato|spc|legno/, 'legno'], [/microcemento/, 'microcemento'], [/piastrell|lastr|gres/, 'piastrelle'], [/haccp/, 'haccp'], [/graniglia/, 'graniglia'], [/resin|monolith|marmo|terrazzo|spatolat/, 'resine'], [/facciat|cappotto|esterno/, 'facciata'], [/scal/, 'scale'], [/pittur|imbianc|pareti|decorat|boiserie|listell|cartongesso/, 'interni']];
+    for(var i = 0; i < L.length; i++) if(L[i][0].test(t)) return L[i][1];
+    return null;
   }
   function qwOpen(step){
     if(!qs.cur) return;
