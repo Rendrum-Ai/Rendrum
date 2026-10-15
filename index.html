@@ -17534,12 +17534,12 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
   }
   // barra in basso (H1-B): Oggi · Cantieri · Agenda · Preventivi · Altro, attaccata al fondo
   function r13Sync(){
-    var on = r13On(); try{ if(on) localStorage.setItem('rdH1B', '1'); else if(proAccount || window.__rdAuthDone) localStorage.removeItem('rdH1B'); }catch(e){}
+    var on = r13On(); try{ if(on) localStorage.setItem('rdH1B', '1'); else if(proAccount) localStorage.setItem('rdH1B', '0'); }catch(e){}
     r13TabSet(on);
   }
   // all'apertura, prima che arrivi l'account: subito lo scheletro della home nuova (non quella vecchia)
   function r13Pre(box, nome, sal){
-    var on = false; try{ on = localStorage.getItem('rdH1B') === '1'; }catch(e){} if(!on) return false;
+    var on = true; try{ on = localStorage.getItem('rdH1B') !== '0'; }catch(e){} if(!on) return false;
     r13TabSet(true);
     box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">' + qEsc(sal + (nome ? ', ' + nome : '')) + '</h1></div></div>'
       + '<div class="r13" id="r13Pre"><div class="r13-new">' + R13_SVG(R13_CAM) + '<b>Nuova anteprima</b><em>scatta o scegli una foto</em></div><div class="r13-two"><div class="r13-tl r13-tsk"></div><div class="r13-tl r13-tsk"></div></div>'
