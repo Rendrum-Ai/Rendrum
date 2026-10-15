@@ -2335,6 +2335,7 @@ html:not([data-theme="dark"]) .hwA p{font-size:14px; color:#8A7F72; line-height:
 .r13-new svg{width:46px;height:46px;margin-bottom:6px}.r13-new b{font-size:23px;letter-spacing:-.01em}.r13-new em{font-style:normal;font-size:14px;opacity:.92}.r13-new:active{transform:scale(.985)}
 .r13-sec{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#9A8F84;margin:20px 2px 8px}
 .r13-ex{margin-top:14px}
+.r13-tsk{background:linear-gradient(100deg,#EFE9E1 30%,#F7F2EC 50%,#EFE9E1 70%)}
 .r13-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .r13-tl{position:relative;height:150px;border:0;border-radius:22px;overflow:hidden;padding:0;background:#2B1408;color:#fff;font:inherit;text-align:left;cursor:pointer}
 .r13-tl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.r13-tl0{position:absolute;inset:0;display:grid;place-items:center;color:#E9A877}.r13-tl0 svg{width:44px;height:44px;margin-top:-30px}
@@ -17533,7 +17534,20 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
   }
   // barra in basso (H1-B): Oggi · Cantieri · Agenda · Preventivi · Altro, attaccata al fondo
   function r13Sync(){
-    var on = r13On(); document.body.classList.toggle('r13', on);
+    var on = r13On(); try{ if(on) localStorage.setItem('rdH1B', '1'); else if(proAccount || window.__rdAuthDone) localStorage.removeItem('rdH1B'); }catch(e){}
+    r13TabSet(on);
+  }
+  // all'apertura, prima che arrivi l'account: subito lo scheletro della home nuova (non quella vecchia)
+  function r13Pre(box, nome, sal){
+    var on = false; try{ on = localStorage.getItem('rdH1B') === '1'; }catch(e){} if(!on) return false;
+    r13TabSet(true);
+    box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">' + qEsc(sal + (nome ? ', ' + nome : '')) + '</h1></div></div>'
+      + '<div class="r13" id="r13Pre"><div class="r13-new">' + R13_SVG(R13_CAM) + '<b>Nuova anteprima</b><em>scatta o scegli una foto</em></div><div class="r13-two"><div class="r13-tl r13-tsk"></div><div class="r13-tl r13-tsk"></div></div>'
+      + '<div class="r13-sec">Da fare oggi</div><div class="rd-o-skel" style="height:120px;border-radius:18px"></div></div>';
+    return true;
+  }
+  function r13TabSet(on){
+    document.body.classList.toggle('r13', on);
     var tab = document.getElementById('rdTab'); if(!tab) return;
     var pv = tab.querySelector('[data-rdtab="prev"]'), cam = tab.querySelector('[data-rdtab="cam"]'), ag = tab.querySelector('[data-rdtab="agenda"]');
     if(!ag && pv){
@@ -21711,7 +21725,7 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
   function rdOggiPreview(){
     var box = document.getElementById('rdOggi'), nome = ''; try{ nome = localStorage.getItem('rdV2Name') || ''; }catch(e){}
     var h = new Date().getHours(), saluto = h < 13 ? 'Buongiorno' : h < 18 ? 'Buon pomeriggio' : 'Buonasera';
-    box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">I tuoi cantieri</h1></div></div><div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div><div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
+    if(!r13Pre(box, nome, saluto)) box.innerHTML = '<div class="v3h"><div><span class="v3d">' + qEsc(new Date().toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' })) + '</span><h1 class="v3t">I tuoi cantieri</h1></div></div><div class="v3st">' + '<span class="v3sk"></span>'.repeat(5) + '</div><div class="rd-o-skel" style="height:300px;border-radius:24px"></div>';
     document.getElementById('rdTab').hidden = false;
     setTimeout(function(){ if(document.documentElement.classList.contains('rd-v2-pre')){ window.__rdAuthDone = true; rdV2Sync(); } }, 8000);
   }
