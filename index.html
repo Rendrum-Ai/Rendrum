@@ -2397,6 +2397,11 @@ html[data-theme="dark"] .r13-it,html[data-theme="dark"] .r13-ch button,html[data
 html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color:var(--rt0,#F7F5F1)}
 </style><script>try{ if(/RendrumApp/.test(navigator.userAgent)){ var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = 'img/apertura.jpg'; document.head.appendChild(l); } }catch(e){}</script>
 <style>
+.cpa{background:#fff;border:1px solid #E8E3D9;border-radius:20px;overflow:hidden;margin:0 0 12px}
+.cpa-p{display:block;width:100%;height:132px;border:0;padding:0;background-size:cover;background-position:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cpa-x{padding:11px 14px 14px}.cpa-t b{font-size:17px;color:#1D1B18}.cpa-t em{font-style:normal;font-size:13px;color:#7A766E;margin-left:6px}
+.cpa-bt{display:flex;gap:10px;margin-top:11px}.cpa-bt button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:44px;border-radius:999px;border:1.5px solid #1D1B18;background:#fff;color:#1D1B18;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.cpa-bt button.k{background:#1D1B18;color:#fff}.cpa-bt svg{width:19px;height:19px}.cpa-bt button:active{transform:scale(.98)}
 .cpn-mz{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cpn-ls{display:block;background:#fff;border:1px solid #E8E3D9;border-radius:20px;overflow:hidden}
 .cpn-li{display:flex;align-items:center;gap:14px;width:100%;border:0;border-bottom:1px solid #F0ECE4;background:none;padding:12px 14px;font:inherit;color:#1D1B18;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}.cpn-li:last-child{border-bottom:0}.cpn-li:active{background:#F4F2EE}
@@ -17967,11 +17972,28 @@ body.r13 .cp-big{aspect-ratio:1/1}
     wrap.querySelectorAll('[data-cps]').forEach(function(b){ var s = S[+b.dataset.cps]; if(!s) return; var n = cpnCount(s), col = s.groups.every(cpnIsCol);
       b.className = 'cpn-li'; b.innerHTML = cpnFan5(s) + '<span class="cpn-tx"><b>' + qEsc(s.n) + '</b><em>' + qEsc((s.groups.length > 1 ? s.groups.length + ' cartelle · ' : '') + n + (col ? ' colori' : ' campioni')) + '</em></span><u>›</u>'; });
   }
+  // dentro la cartella: una scheda per voce, foto grande + «Vedi i colori» e «📷 Provalo»
+  function cpnPhoto(g){
+    if(cpnIsCol(g)) return 'background:linear-gradient(90deg,' + cpnPick(g.list, 8).map(function(c, k, L){ return (c.hex || '#ccc') + ' ' + (k * 100 / L.length) + '% ' + ((k + 1) * 100 / L.length) + '%'; }).join(',') + ')';
+    var c = g.list[Math.min(2, g.list.length - 1)]; return cpBg(c, g, true);
+  }
   function cpnSec(s){
-    document.querySelectorAll('#rdXB [data-cpg]').forEach(function(b){ var g = s.groups[+b.dataset.cpg]; if(!g) return;
-      var col = cpnIsCol(g), L = cpnPick(g.list, col ? 12 : 6);
-      b.className = 'cpn-row'; var t = b.querySelector('span'); var txt = t ? t.outerHTML : '';
-      b.innerHTML = '<span class="cpn-st">' + L.map(function(c){ return '<i style="' + (col ? 'background:' + (c.hex || '#ccc') : cpBg(c, g)) + '"></i>'; }).join('') + '</span><span class="cpn-rt">' + txt + '</span>'; });
+    var bs = document.querySelectorAll('#rdXB [data-cpg]'), wait = false;
+    bs.forEach(function(b){ var i = +b.dataset.cpg, g = s.groups[i]; if(!g) return;
+      var st = cpnPhoto(g); if(!/url\(|gradient/.test(st) && (g.key || (g.list[0] || {}).tex)) wait = true;
+      var n = g.list.length, fin = g.list[0] && g.list[0].th && !g.list[0].code;
+      var d = document.createElement('div'); d.className = 'cpa';
+      d.innerHTML = '<button type="button" class="cpa-p" data-cpv="' + i + '" style="' + st + '" aria-label="' + qEsc(g.n) + '"></button><div class="cpa-x"><div class="cpa-t"><b>' + qEsc(g.n) + '</b><em>' + n + (fin ? (n === 1 ? ' finitura' : ' finiture') : (n === 1 ? ' colore' : ' colori')) + (g.d ? ' · ' + qEsc(g.d) : '') + '</em></div>'
+        + '<div class="cpa-bt"><button type="button" data-cpv="' + i + '">Vedi i colori</button><button type="button" class="k" data-cpt="' + i + '">' + R13_SVG(R13_CAM) + 'Provalo</button></div></div>';
+      b.parentNode.replaceChild(d, b);
+    });
+    var box = document.getElementById('rdXB');
+    box.querySelectorAll('[data-cpv]').forEach(function(x){ x.addEventListener('click', function(){ cpGroup(s, s.groups[+x.dataset.cpv], function(){ cpSec(s); }); }); });
+    box.querySelectorAll('[data-cpt]').forEach(function(x){ x.addEventListener('click', function(){ cpTry(s, s.groups[+x.dataset.cpt], null); }); });
+    // le texture (es. marmo) arrivano un attimo dopo: quando sono pronte, rifaccio solo le foto
+    if(wait){ var tries = 0, t = setInterval(function(){ var ok = true;
+      box.querySelectorAll('.cpa-p').forEach(function(x){ var g = s.groups[+x.dataset.cpv]; if(!g) return; var st = cpnPhoto(g); if(/url\(/.test(st)){ if(x.getAttribute('style') !== st) x.setAttribute('style', st); } else if(g.key) ok = false; });
+      if(ok || ++tries > 20 || !document.querySelector('#rdXB .cpa')) clearInterval(t); }, 300); }
   }
   function cpnColor(box, s, g, c, back){
     var i = g.list.indexOf(c), sim = [];
@@ -20934,7 +20956,7 @@ body.r13 .cp-big{aspect-ratio:1/1}
         if(!state.material || state.material.id !== p.mat || pickPhase !== 'A' || state.colorA) return;
         var grid = document.getElementById('colorCluster'); if(!grid || !grid.offsetParent) return;
         if(p.catalog && state.colorCatalog !== p.catalog){ state.colorCatalog = p.catalog; renderCluster(); }
-        clearInterval(t); window.rdCampPend = null; openColorPreview(p.c); setTimeout(function(){ var b = document.getElementById('cpmSelect'); if(b) b.click(); }, 120);
+        clearInterval(t); window.rdCampPend = null; if(!p.c) return; openColorPreview(p.c); setTimeout(function(){ var b = document.getElementById('cpmSelect'); if(b) b.click(); }, 120);
       }catch(e){ clearInterval(t); try{ console.warn("cpTry", e && e.message); }catch(_){} }
     }, 500);
   }
