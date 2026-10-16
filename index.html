@@ -22465,7 +22465,17 @@ body.r13 .cp-big{aspect-ratio:1/1}
   if(IS_APP){
     var CP = window.Capacitor && window.Capacitor.Plugins || {};
     // Toglie la schermata di avvio appena la pagina è pronta.
-    try{ if(CP.SplashScreen) CP.SplashScreen.hide(); }catch(e){}
+    try{ if(CP.SplashScreen){
+      var rdSpGo = function(){ try{ CP.SplashScreen.hide({ fadeOutDuration: 500 }); }catch(e){ try{ CP.SplashScreen.hide(); }catch(x){} } };
+      var rdSpWait = Math.max(0, 2000 - (window.performance && performance.now ? performance.now() : 0));
+      setTimeout(function(){
+        // se c'è il telo con la stessa foto, aspetta che la foto sia caricata (massimo 3 secondi in più)
+        var cur = document.getElementById('r13Cur');
+        if(!cur || !cur.classList.contains('app')) return rdSpGo();
+        var im = new Image(), done = false, go = function(){ if(done) return; done = true; rdSpGo(); };
+        im.onload = go; im.onerror = go; im.src = 'img/apertura.jpg'; if(im.complete) go(); setTimeout(go, 3000);
+      }, rdSpWait);
+    } }catch(e){}
     // Quando si torna nell'app, aggiorna account e anteprime rimaste
     // (es. abbonamento attivato dal sito nel frattempo).
     try{
