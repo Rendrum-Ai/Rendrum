@@ -17546,18 +17546,19 @@ body.r13 .cp-big{aspect-ratio:1/1}
   }
   var R13_FAN = ['#F4F4ED', '#E3D9C6', '#C6A664', '#B5652E', '#A72920', '#6C4675', '#13447C', '#317F43', '#7D8471', '#383E42'];
   function r13Fan(){ return '<span class="r13-fan">' + R13_FAN.map(function(h, k){ return '<i style="background:' + h + ';transform:rotate(' + (-34 + k * 7.5) + 'deg)"></i>'; }).join('') + '</span>'; }
-  function r13CarHtml(vm){
+  function r13CarHtml(vm, pos){
     var L = vm.car || [];
     if(!L.length) return vm.sub === 'carico…' ? '' : '<div class="r13-sec">Ultime anteprime</div><button type="button" class="r13-car0" id="r13Gal">' + R13_SVG(R13_GAL) + '<span><b>Qui vedrai le tue anteprime</b><em>tocca «Nuova anteprima» e fai la prima</em></span></button>';
     return '<div class="r13-sec r13-sh2"><span>Ultime anteprime</span><u id="r13All2">Tutte ›</u></div><div class="r13-car" id="r13Car">'
-      + L.map(function(c){ return '<button type="button" class="r13-cd" data-r13c="' + qEsc(c.k) + '">' + (c.b ? '<img class="b" src="' + qEsc(c.b) + '" alt="" loading="lazy">' : '') + '<img class="a' + (c.b ? '' : ' x') + '" src="' + qEsc(c.a) + '" alt="" loading="lazy">' + (c.b ? '<i class="ln"></i>' : '') + '<span class="lb"><b>' + qEsc(c.n) + '</b><em>' + qEsc(c.w) + '</em></span></button>'; }).join('')
-      + '</div>' + (L.length > 1 ? '<div class="r13-dots" id="r13Dots">' + L.map(function(){ return '<i></i>'; }).join('') + '</div>' : '');
+      + L.map(function(c, i){ return '<button type="button" class="r13-cd' + (pos ? ' ' + r13CarPos(i, L.length) : '') + '" data-r13c="' + qEsc(c.k) + '">' + (c.b ? '<img class="b" src="' + qEsc(c.b) + '" alt="" decoding="async">' : '') + '<img class="a' + (c.b ? '' : ' x') + '" src="' + qEsc(c.a) + '" alt="" decoding="async">' + (c.b ? '<i class="ln"></i>' : '') + '<span class="lb"><b>' + qEsc(c.n) + '</b><em>' + qEsc(c.w) + '</em></span></button>'; }).join('')
+      + '</div>' + (L.length > 1 ? '<div class="r13-dots" id="r13Dots">' + L.map(function(c, i){ return '<i' + (pos && i === r13CarIdx(L.length) ? ' class="on"' : '') + '></i>'; }).join('') + '</div>' : '');
   }
   // carosello: le anteprime scorrono da sole (ogni 3 secondi); col dito si ferma e si scorre a mano
+  function r13CarIdx(N){ return N ? (r13.carI = ((r13.carI || 0) % N + N) % N) : 0; }
+  function r13CarPos(i, N){ var c = r13CarIdx(N), d = ((i - c) % N + N) % N; if(d > N / 2) d -= N; if(N === 2 && d === -1) d = 1; return d === 0 ? 'p0' : d === 1 ? 'p1' : d === -1 ? 'pm1' : d > 0 ? 'p2' : 'pm2'; }
   function r13CarLay(){
-    var box = document.getElementById('r13Car'); if(!box) return; var cs = box.querySelectorAll('.r13-cd'), N = cs.length, c = r13.carI = ((r13.carI || 0) % N + N) % N;
-    cs.forEach(function(e, i){ var d = ((i - c) % N + N) % N; if(d > N / 2) d -= N; if(N === 2 && d === -1) d = 1;
-      e.className = 'r13-cd ' + (d === 0 ? 'p0' : d === 1 ? 'p1' : d === -1 ? 'pm1' : d > 0 ? 'p2' : 'pm2'); });
+    var box = document.getElementById('r13Car'); if(!box) return; var cs = box.querySelectorAll('.r13-cd'), N = cs.length, c = r13CarIdx(N);
+    cs.forEach(function(e, i){ var k = 'r13-cd ' + r13CarPos(i, N); if(e.className !== k) e.className = k; });
     document.querySelectorAll('#r13Dots i').forEach(function(e, i){ e.className = i === c ? 'on' : ''; });
   }
   function r13CarBind(){
@@ -17573,24 +17574,40 @@ body.r13 .cp-big{aspect-ratio:1/1}
       if(b.classList.contains('p0')) return r13St(b.dataset.r13c);
       var all = [].slice.call(box.querySelectorAll('.r13-cd')); r13.carI = all.indexOf(b); r13CarLay(); });
   }
+  // la home si disegna una volta; dopo si cambia solo il pezzo che è cambiato (così le foto non sfarfallano)
   function r13Render(box, vm, live, ex){
-    var hh = r13Head() + '<div class="r13" id="r13Home"><button type="button" class="r13-new" id="r13New">' + R13_SVG(R13_CAM) + '<b>Nuova anteprima</b></button>'
-      + '<button type="button" class="r13-cp" id="r13Camp">' + r13Fan() + '<b>Campionario</b></button>'
-      + r13CarHtml(vm)
-      + '<div class="r13-sec r13-sh2"><span>Da fare oggi' + (vm.n ? ' · ' + vm.n : '') + '</span>' + (vm.n ? '<u id="r13All">Tutto ›</u>' : '') + '</div>'
-      + (vm.n ? '<div class="r13-todo">' + vm.todo.map(function(c, i){ return '<button type="button" data-r13t="' + i + '"><i>' + (R13_FI[c.f] || '•') + '</i><span><b>' + qEsc(c.t) + '</b><em>' + qEsc(c.s) + '</em></span><u>›</u></button>'; }).join('') + '</div>'
-        : '<div class="r13-todo"><div class="r13-ok"><i>👍</i><span><b>Niente in sospeso</b><em>le cose da fare compariranno qui</em></span></div></div>')
-      + (ex ? '<div class="r13-ex">' + ex + '</div>' : '');
-    var y = window.scrollY; box.innerHTML = hh + '</div>'; box.dataset.ready = 1; box.dataset.live = live ? '1' : '0'; if(y) window.scrollTo(0, y);
-    r13CarLay();
-    if(!live) return;
-    r13CarBind();
-    document.getElementById('r13New').addEventListener('click', function(){ v3Cam(); });
-    var gb = document.getElementById('r13Gal'); if(gb) gb.addEventListener('click', function(){ r13Gal(); });
-    document.getElementById('r13Camp').addEventListener('click', function(){ try{ cpHome(); }catch(e){ var b = document.querySelector('#rdAltro [data-rxgo2="campionario"]'); if(b) b.click(); } });
-    box.querySelectorAll('[data-r13t]').forEach(function(b){ b.addEventListener('click', function(){ var c = (r13._todo || [])[+b.dataset.r13t]; if(c && c.next) c.next.fn(); }); });
-    var a1 = document.getElementById('r13All'); if(a1) a1.addEventListener('click', function(){ ctOpen(); rdTabOn('proj'); });
-    var a2 = document.getElementById('r13All2'); if(a2) a2.addEventListener('click', function(){ r13Gal(); });
+    var P = { h: r13Head(),
+      top: '<button type="button" class="r13-new" id="r13New">' + R13_SVG(R13_CAM) + '<b>Nuova anteprima</b></button><button type="button" class="r13-cp" id="r13Camp">' + r13Fan() + '<b>Campionario</b></button>',
+      car: r13CarHtml(vm, false),
+      todo: '<div class="r13-sec r13-sh2"><span>Da fare oggi' + (vm.n ? ' · ' + vm.n : '') + '</span>' + (vm.n ? '<u id="r13All">Tutto ›</u>' : '') + '</div>'
+        + (vm.n ? '<div class="r13-todo">' + vm.todo.map(function(c, i){ return '<button type="button" data-r13t="' + i + '"><i>' + (R13_FI[c.f] || '•') + '</i><span><b>' + qEsc(c.t) + '</b><em>' + qEsc(c.s) + '</em></span><u>›</u></button>'; }).join('') + '</div>'
+          : '<div class="r13-todo"><div class="r13-ok"><i>👍</i><span><b>Niente in sospeso</b><em>le cose da fare compariranno qui</em></span></div></div>'),
+      ex: ex ? '<div class="r13-ex">' + ex + '</div>' : '' };
+    var K = ['h', 'top', 'car', 'todo', 'ex'], W = { h:'r13HW', top:'r13TW', car:'r13CW', todo:'r13DW', ex:'r13EW' }, ch = {};
+    var root = document.getElementById('r13Home'), old = box._r13;
+    if(!root || !box.contains(root) || !old){
+      var y = window.scrollY;
+      box.innerHTML = '<div id="r13HW" style="display:contents">' + P.h + '</div><div class="r13" id="r13Home">' + K.slice(1).map(function(k){ return '<div id="' + W[k] + '" style="display:contents">' + (k === 'car' ? r13CarHtml(vm, true) : P[k]) + '</div>'; }).join('') + '</div>';
+      K.forEach(function(k){ ch[k] = true; }); ch.full = true; if(y) window.scrollTo(0, y);
+    } else K.forEach(function(k){ if(old[k] !== P[k]){ document.getElementById(W[k]).innerHTML = k === 'car' ? r13CarHtml(vm, true) : P[k]; ch[k] = true; } });
+    var was = box.dataset.live === '1' && !!old && !ch.full; box._r13 = P; box.dataset.ready = 1; box.dataset.live = live ? '1' : '0';
+    if(ch.car) r13CarLay();
+    if(!live) return ch;
+    var nb = !was;
+    if(ch.car || nb) r13CarBind();
+    if(ch.top || nb){
+      document.getElementById('r13New').addEventListener('click', function(){ v3Cam(); });
+      document.getElementById('r13Camp').addEventListener('click', function(){ try{ cpHome(); }catch(e){ var b = document.querySelector('#rdAltro [data-rxgo2="campionario"]'); if(b) b.click(); } });
+    }
+    if(ch.car || nb){
+      var gb = document.getElementById('r13Gal'); if(gb) gb.addEventListener('click', function(){ r13Gal(); });
+      var a2 = document.getElementById('r13All2'); if(a2) a2.addEventListener('click', function(){ r13Gal(); });
+    }
+    if(ch.todo || nb){
+      box.querySelectorAll('#r13DW [data-r13t]').forEach(function(b){ b.addEventListener('click', function(){ var c = (r13._todo || [])[+b.dataset.r13t]; if(c && c.next) c.next.fn(); }); });
+      var a1 = document.getElementById('r13All'); if(a1) a1.addEventListener('click', function(){ ctOpen(); rdTabOn('proj'); });
+    }
+    ch.bindEx = !!(ch.ex || nb); return ch;
   }
   function r13CacheGet(){ try{ var x = JSON.parse(localStorage.getItem('rdH1Bc') || 'null'); return x && x.v === 2 && x.vm ? x : null; }catch(e){ return null; } }
   function r13CacheSet(vm){ try{ localStorage.setItem('rdH1Bc', JSON.stringify({ v:2, e: String((proAccount && proAccount.email) || ''), vm: vm })); }catch(e){} }
@@ -17610,7 +17627,7 @@ body.r13 .cp-big{aspect-ratio:1/1}
       return Promise.all(extra).then(function(){
         var ex = '', sera = null; try{ if(window.agEsitoHtml) ex += window.agEsitoHtml(todo); }catch(e){} try{ sera = ccSeraFind(todo); if(sera) ex += ccSeraHtml(sera, r13._tar); }catch(e){} try{ ex += invHomeHtml(); }catch(e){} try{ ex += inHomeHtml(todo); }catch(e){} try{ ex += tmFeedHtml(); }catch(e){}
         if(!ex || !document.getElementById('r13Home')) return;
-        r13Render(box, vm, true, ex);
+        var rr = r13Render(box, vm, true, ex); if(!rr.bindEx) return;
         try{ ctCosaBind(box); }catch(e){} try{ if(sera) ccSeraBind(box, sera, r13._tar); }catch(e){} try{ tmFeedBind(box); }catch(e){} try{ inHomeBind(box, todo, function(){ r13HomeB(box); }); }catch(e){} try{ invHomeBind(box); }catch(e){}
       });
     });
