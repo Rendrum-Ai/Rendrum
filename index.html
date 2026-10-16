@@ -2418,6 +2418,14 @@ body.r13 .cp-big{border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.12)}body.r
 .hbr-p{position:absolute;right:0;top:10px;bottom:10px;width:7px;background:repeating-linear-gradient(#fff 0 1.5px,#d9d4cb 1.5px 3px);border-radius:2px 0 0 2px}
 .hbr b{position:absolute;left:30px;right:150px;top:18px;font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:21px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hbr em{position:absolute;left:30px;bottom:16px;font-style:normal;font-size:13px;opacity:.7}
 .hbr-c{position:absolute;right:22px;top:50%;transform:translateY(-50%);display:flex;gap:7px}.hbr-c i{width:38px;height:38px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.35)}
+.hbr.cat{height:104px;background:#fff;color:#1D1B18;border:1px solid #E8E3D9;border-radius:14px;box-shadow:0 3px 10px rgba(29,27,24,.08)}
+.hbr.cat:before{display:none}
+.hbr.cat .hbr-c{left:0;right:auto;top:0;bottom:0;transform:none;width:34px;flex-direction:column;gap:0}
+.hbr.cat .hbr-c i{flex:1;width:34px;height:auto;border-radius:0;border:0}
+.hbr.cat .hbr-lg{left:50px;right:76px;top:12px;bottom:12px;height:auto;max-width:none;justify-content:center}
+.hbr.cat .hbr-lg img{max-height:60px;max-width:100%;height:auto;border-radius:6px}
+.hbr.cat em{left:auto;right:16px;top:30px;bottom:auto;font-size:12px;color:#7A766E;opacity:1;text-align:right}
+.hbr.cat u{position:absolute;right:16px;bottom:24px;text-decoration:none;font-size:20px;color:#7A766E}
 .cpl{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;margin-top:4px}
 .cpl-b{position:relative;height:200px;border:0;padding:0;border-radius:6px 14px 14px 6px;background:#1D1B18;color:#fff;font:inherit;text-align:left;cursor:pointer;overflow:hidden;box-shadow:0 6px 16px rgba(29,27,24,.25);-webkit-tap-highlight-color:transparent}.cpl-b:active{transform:scale(.98)}
 .cpl-s{position:absolute;left:0;top:0;bottom:0;width:18px;display:flex;flex-direction:column}.cpl-s i{flex:1;background-size:cover;background-position:center}.cpl-s.t{width:24px}.cpl-b s{position:absolute;left:38px;bottom:40px;text-decoration:none;font-size:11px;letter-spacing:.12em;opacity:.6}.cpl-s.t~b,.cpl-s.t~em{left:38px}
@@ -18171,9 +18179,11 @@ body.r13 .cp-big{aspect-ratio:1/1}
 
   // tutte le sezioni con più cartelle: libretti stesi in orizzontale, tre campioni diversi per riga
   function cpnRowsHtml(groups, used){
-    var pick = groups.map(function(g){ return cpnVaried(g, 3, used); });
+    var pick = groups.map(function(g){ return cpnVaried(g, CPN_LOGOS[g.id] ? 6 : 3, used); });
     return { pick:pick, html:'<div class="hbl">' + groups.map(function(g, i){ var n = g.list.length, fin = g.list[0] && g.list[0].th && !g.list[0].code;
       var lg = CPN_LOGOS[g.id];
+      // marchi con logo: scheda a catalogo, colonna di colori a sinistra e logo grande al centro
+      if(lg) return '<button type="button" class="hbr cat" data-hb="' + i + '"><span class="hbr-c">' + pick[i].map(function(c){ return '<i style="' + cpBg(c, g) + '"></i>'; }).join('') + '</span><span class="hbr-lg"><img src="' + lg + '" alt="' + qEsc(g.n) + '"></span><em>' + n + (n === 1 ? ' colore' : ' colori') + '</em><u>›</u></button>';
       return '<button type="button" class="hbr' + (lg ? ' lg' : '') + '" data-hb="' + i + '"><span class="hbr-p"></span>' + (lg ? '<span class="hbr-lg"><img src="' + lg + '" alt="' + qEsc(g.n) + '"></span>' : '<b>' + qEsc(g.n) + '</b>') + '<em>' + n + (fin ? (n === 1 ? ' finitura' : ' finiture') : (n === 1 ? ' colore' : ' colori')) + '</em><span class="hbr-c">' + pick[i].map(function(c){ return '<i style="' + cpBg(c, g) + '"></i>'; }).join('') + '</span></button>'; }).join('') + '</div>' };
   }
   function cpnRows(s){
