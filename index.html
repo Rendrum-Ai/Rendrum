@@ -2407,14 +2407,21 @@ html[data-theme="dark"] .r13-ver button,html[data-theme="dark"] .r13-cap b{color
 .cpz-h{text-align:center;font-size:12px;opacity:.5;margin-top:10px}
 body.r13 .cp-gr{gap:12px}body.r13 .cp-sw i{border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.12)}body.r13 .cp-sw b{display:block;font-size:13px;margin-top:6px}
 body.r13 .cp-big{border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.12)}body.r13 .cp-big span{background:rgba(0,0,0,.55)!important;color:#fff}
+.cpl{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;margin-top:4px}
+.cpl-b{position:relative;height:200px;border:0;padding:0;border-radius:6px 14px 14px 6px;background:#1D1B18;color:#fff;font:inherit;text-align:left;cursor:pointer;overflow:hidden;box-shadow:0 6px 16px rgba(29,27,24,.25);-webkit-tap-highlight-color:transparent}.cpl-b:active{transform:scale(.98)}
+.cpl-s{position:absolute;left:0;top:0;bottom:0;width:18px;display:flex;flex-direction:column}.cpl-s i{flex:1}
+.cpl-p{position:absolute;right:0;top:12px;bottom:12px;width:7px;background:repeating-linear-gradient(#fff 0 1.5px,#d9d4cb 1.5px 3px);border-radius:2px 0 0 2px}
+.cpl-b b{position:absolute;left:32px;right:16px;top:20px;font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:23px;line-height:1.15}
+.cpl-b em{position:absolute;left:32px;bottom:18px;font-style:normal;font-size:13px;opacity:.7}
+.cpl-h{text-align:center;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#9A958D;margin:18px 0 8px}
 .cpa{background:#fff;border:1px solid #E8E3D9;border-radius:20px;overflow:hidden;margin:0 0 12px}
 .cpa-p{display:block;width:100%;height:132px;border:0;padding:0;background-size:cover;background-position:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cpa-x{padding:11px 14px 14px}.cpa-t b{font-size:17px;color:#1D1B18}.cpa-t em{font-style:normal;font-size:13px;color:#7A766E;margin-left:6px}
 .cpa-bt{display:flex;gap:10px;margin-top:11px}.cpa-bt button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:44px;border-radius:999px;border:1.5px solid #1D1B18;background:#fff;color:#1D1B18;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
 .cpa-bt button.k{background:#1D1B18;color:#fff}.cpa-bt svg{width:19px;height:19px}.cpa-bt button:active{transform:scale(.98)}
 .cpn-mz{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cpn-ls{display:block;background:#fff;border:1px solid #E8E3D9;border-radius:20px;overflow:hidden}
-.cpn-li{display:flex;align-items:center;gap:14px;width:100%;border:0;border-bottom:1px solid #F0ECE4;background:none;padding:12px 14px;font:inherit;color:#1D1B18;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}.cpn-li:last-child{border-bottom:0}.cpn-li:active{background:#F4F2EE}
+.cpn-ls{display:block;background:none;border:0;border-radius:0;overflow:visible}
+.cpn-li{display:flex;align-items:center;gap:16px;width:100%;border:0;border-bottom:1px solid #E6E1D8;background:none;padding:14px 2px;font:inherit;color:#1D1B18;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}.cpn-li:last-child{border-bottom:0}.cpn-li:active{background:#F4F2EE}
 .cpn-fn{position:relative;flex:none;width:58px;height:50px}.cpn-fn i{position:absolute;left:23px;bottom:0;width:13px;height:46px;border-radius:3px;transform-origin:50% 100%;background-size:cover;background-position:center;box-shadow:0 1px 3px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.7)}
 .cpn-tx{flex:1;min-width:0}.cpn-tx b{display:block;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cpn-tx em{display:block;font-style:normal;font-size:13px;color:#7A766E;margin-top:2px}
 .cpn-li u{text-decoration:none;color:#9A958D;font-size:20px}
@@ -17988,6 +17995,7 @@ body.r13 .cp-big{aspect-ratio:1/1}
     var c = g.list[Math.min(2, g.list.length - 1)]; return cpBg(c, g, true);
   }
   function cpnSec(s){
+    if(s.book) return cpnBooks(s);
     var bs = document.querySelectorAll('#rdXB [data-cpg]'), wait = false;
     bs.forEach(function(b){ var i = +b.dataset.cpg, g = s.groups[i]; if(!g) return;
       var st = cpnPhoto(g); if(!/url\(|gradient/.test(st) && (g.key || (g.list[0] || {}).tex)) wait = true;
@@ -18064,6 +18072,29 @@ body.r13 .cp-big{aspect-ratio:1/1}
   // se una foto non c'è in una cartella, la cerco nell'altra (img/ oppure le cartelle caricate a parte)
   window.addEventListener('error', function(e){ var t = e.target; if(!t || t.tagName !== 'IMG' || t.dataset.alt) return; var u = t.getAttribute('src') || '', m = u.match(/\/img\/(?:2_img_prima_parte\/|3_img_seconda_parte\/)?(dl_[^\/?#]+)$/); if(!m) return;
     t.dataset.alt = 1; t.src = /_parte\//.test(u) ? '/img/' + m[1] : '/img/' + (R13_DLP[m[1]] || '2_img_prima_parte') + '/' + m[1]; }, true);
+  // ----- Pittura interni e Facciate separate, Porte e serramenti a parte (tester) -----
+  function cpnSplit(S){
+    var out = [];
+    S.forEach(function(s){
+      if(s.id !== 'pittura'){ out.push(s); return; }
+      var cart = s.groups.filter(function(g){ return g.id !== 'ser'; }), ser = s.groups.filter(function(g){ return g.id === 'ser'; });
+      var cp = function(sub){ return cart.map(function(g){ return Object.assign({}, g, { sub:sub }); }); };
+      out.push({ id:'pint', n:'Pittura interni', d:'RAL · NCS · Sikkens', groups:cp('pit_int'), book:1 });
+      out.push({ id:'fac', n:'Facciate', d:'Colori per la facciata · RAL · NCS · Sikkens', groups:cp('pit_est'), book:1 });
+      if(ser.length) out.push({ id:'serr', n:'Porte e serramenti', d:'Colori dei serramenti', groups:ser.map(function(g){ return Object.assign({}, g, { n:'Colori serramenti', sub:'pit_est' }); }) });
+    });
+    return out;
+  }
+  // libretti chiusi con i colori sul dorso (idea P5)
+  function cpnBooks(s){
+    var bs = document.querySelectorAll('#rdXB [data-cpg]'); if(!bs.length) return;
+    var w = document.createElement('div'); w.className = 'cpl';
+    w.innerHTML = s.groups.map(function(g, i){ var hx = cpnPick(g.list, 9).map(function(c){ return c.hex || '#ccc'; });
+      return '<button type="button" class="cpl-b" data-cpv="' + i + '"><span class="cpl-s">' + hx.map(function(h){ return '<i style="background:' + h + '"></i>'; }).join('') + '</span><span class="cpl-p"></span><b>' + qEsc(g.n) + '</b><em>' + g.list.length + ' colori</em></button>'; }).join('');
+    bs[0].parentNode.insertBefore(w, bs[0]); bs.forEach(function(b){ b.remove(); });
+    w.insertAdjacentHTML('afterend', '<div class="cpl-h">Tocca un libretto per aprirlo</div>');
+    w.querySelectorAll('[data-cpv]').forEach(function(x){ x.addEventListener('click', function(){ cpGroup(s, s.groups[+x.dataset.cpv], function(){ cpSec(s); }); }); });
+  }
   function qwOpen(step){
     if(!qs.cur) return;
     qwClean(); qw.add = false; qw.ic = null; qw.sub = ''; qw.mailOk = null; try{ qwMailClose(); }catch(e){} qw.pl = 0; pl = null; qw.ogg0 = !!(qs.cur.oggetto || '').trim() && !qs.cur._ogAuto;
@@ -20857,7 +20888,8 @@ body.r13 .cp-big{aspect-ratio:1/1}
   var CP = { schede:null, back:[] };
   function cpOn(){ try{ return !!(proAccount && proAccount.accountType !== 'privato' && rdIsBeta()); }catch(e){ return false; } }
   function cpPal(k){ try{ return (PALETTES[k] || []).slice(); }catch(e){ return []; } }
-  function cpSections(){
+  function cpSections(){ var S0 = cpSections0(); try{ if(rdIsBeta()) return cpnSplit(S0); }catch(e){} return S0; }
+  function cpSections0(){
     var dn = (typeof RD_DECO_NEW !== 'undefined' && RD_DECO_NEW) || null, deco = [];
     if(dn) dn.fam.forEach(function(f){ f.items.forEach(function(it){ var L = (dn.sw[it.k] || []).map(function(c){ return { name:c.n, code:c.code || '', hex:c.hex, th:c.th, big:c.img }; }); if(L.length) deco.push({ id:'d_' + it.k, n:it.n, d:(/colori/i.test(it.d || '') ? '' : it.d), list:L, sk:it.k, mat:'imbiancatura', lens:'imbiancatura', lav:'imbiancatura', deco:it.n }); }); });
     var pia = cpPal('piastrelle'); try{ pia = pia.concat((RD_PAL_PROVA && RD_PAL_PROVA.piastrelle) || []); }catch(e){}
@@ -20992,14 +21024,14 @@ body.r13 .cp-big{aspect-ratio:1/1}
   }
   // "Provalo su una foto": apre la Nuova anteprima e, scelto il lavoro, mette già il colore
   function cpTry(s, g, c){
-    window.rdCampPend = { mat:g.mat, lens:g.lens, catalog:g.catalog || null, c:c, deco:g.deco || null, at:Date.now() };
+    window.rdCampPend = { mat:g.mat, lens:g.lens, sub:g.sub || null, catalog:g.catalog || null, c:c, deco:g.deco || null, at:Date.now() };
     try{ rxClose(); }catch(e){}
     if(typeof v3Cam === 'function') v3Cam();
     var tries = 0, t = setInterval(function(){
       var p = window.rdCampPend; if(!p || ++tries > 240 || Date.now() - p.at > 180000){ clearInterval(t); return; }
       try{
         // scelta del lavoro: tocca da solo il lavoro del campionario (una volta sola per voce)
-        var stp = window.rdSfStep ? window.rdSfStep() : '', sv = [p.mat, p.lens].filter(Boolean); p.hit = p.hit || {};
+        var stp = window.rdSfStep ? window.rdSfStep() : '', sv = [p.sub, p.mat, p.lens].filter(Boolean); p.hit = p.hit || {};
         if(stp && stp !== 'foto') for(var j = 0; j < sv.length; j++){ var sb = document.querySelector('#sfBody [data-sfv="' + sv[j] + '"]'); if(sb && sb.offsetParent && !p.hit[stp]){ p.hit[stp] = 1; setTimeout(function(x){ return function(){ x.click(); }; }(sb), 300); return; } }
         if(p.deco){ if(state.material && state.material.id === 'imbiancatura'){ clearInterval(t); window.rdCampPend = null; var m = document.getElementById('aiStatus') || document.getElementById('sfBody'); try{ rdToast && rdToast('Ora scegli «Pareti decorate» → ' + p.deco); }catch(e){} } return; }
         if(!state.material || state.material.id !== p.mat || pickPhase !== 'A' || state.colorA) return;
