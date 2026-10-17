@@ -19391,6 +19391,49 @@ body.r13 .cp-big{aspect-ratio:1/1}
       });
     }).catch(function(){ lst.innerHTML = '<div class="nb-none">Foto dei cantieri non disponibili adesso. Riprova tra poco.</div>'; });
   }
+  // ---------- «Nuova anteprima»: strisciando su si allunga con altre opzioni (solo account di prova) — 17/10 ----------
+  var NB_CLI_IC = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="14" height="26" rx="3"/><path d="M14 24h4"/><path d="M13 12.5l2.5 2.5 4.5-5"/></svg>';
+  function nbMore(ov){
+    var s = ov && ov.querySelector('.v3ci2.nb'); if(!s || s.querySelector('.nb-more')) return;
+    var cards = [].slice.call(document.querySelectorAll('#r13Car [data-r13c]')).slice(0, 10);
+    var h = '<div class="nb-sec">Ultime anteprime</div>';
+    h += cards.length ? '<div class="nb-row">' + cards.map(function(b, i){ var im = b.querySelector('img.a') || b.querySelector('img'), n = b.querySelector('.lb b'); return '<button type="button" class="nb-th" data-nbr="' + i + '"><i style="background-image:url(&quot;' + qEsc(im ? im.getAttribute('src') : '') + '&quot;)"></i><span>' + qEsc(n ? n.textContent : '') + '</span></button>'; }).join('') + '</div>'
+      : '<div class="nb-none">Qui vedrai le tue ultime anteprime.</div>';
+    h += '<div class="nb-sec">Per quale cantiere?</div><div class="nb-cts" id="nbCts"><div class="nb-none">Carico i cantieri…</div></div>';
+    h += '<div class="nb-sec">Fallo fare al cliente</div><button type="button" class="nb-cli" id="nbCli"><span class="nb-ci">' + NB_CLI_IC + '</span><span class="nb-ct"><b>Manda il link al cliente</b><em>fa la foto lui e vede il lavoro finito con il tuo nome</em></span><u>›</u></button>';
+    var pull = document.createElement('button'); pull.type = 'button'; pull.className = 'nb-pull'; pull.setAttribute('aria-label', 'Altre opzioni'); pull.innerHTML = '<i></i><span>Altre opzioni</span>';
+    var m = document.createElement('div'); m.className = 'nb-more'; m.innerHTML = h;
+    s.appendChild(pull); s.appendChild(m);
+    pull.addEventListener('click', function(){ s.classList.toggle('nb-open'); if(!s.classList.contains('nb-open')) s.scrollTop = 0; });
+    m.querySelectorAll('[data-nbr]').forEach(function(b){ b.addEventListener('click', function(){ var o = cards[+b.dataset.nbr]; ov.hidden = true; if(o) o.click(); }); });
+    document.getElementById('nbCli').addEventListener('click', function(){ ov.hidden = true; invSheet({}, null); });
+    var L0 = (typeof ct !== 'undefined' && ct.list && ct.list.length) ? ct.list : null;
+    (L0 ? Promise.resolve(L0) : ctLoad()).then(function(L){
+      var box = document.getElementById('nbCts'); if(!box) return;
+      L = (L || ct.list || []).filter(function(c){ return c.aperto; }).slice(0, 4);
+      if(!L.length){ box.innerHTML = '<div class="nb-none">Nessun cantiere aperto.</div>'; return; }
+      box.innerHTML = L.map(function(c, i){ var f = nbFoto(c)[0]; return '<button type="button" class="nb-crow" data-nbc="' + i + '"><i' + (f ? ' style="background-image:url(&quot;' + qEsc(f) + '&quot;)"' : '') + '>' + (f ? '' : qEsc(String(c.nome || 'C').charAt(0).toUpperCase())) + '</i><span class="nb-ct"><b>' + qEsc(c.nome || 'Cliente') + '</b><em>' + qEsc(String(c.lavoro || '').slice(0, 44)) + '</em></span><u>›</u></button>'; }).join('');
+      box.querySelectorAll('[data-nbc]').forEach(function(b){ b.addEventListener('click', function(){ nbCt1(ov, L[+b.dataset.nbc]); }); });
+    }).catch(function(){ var box = document.getElementById('nbCts'); if(box) box.innerHTML = '<div class="nb-none">Non riesco a caricare i cantieri.</div>'; });
+  }
+  // un solo cantiere: le sue foto, per farne l'anteprima
+  function nbCt1(ov, c){
+    var s = ov.querySelector('.v3ci2'); s.classList.remove('nb-open'); s.scrollTop = 0;
+    s.innerHTML = '<div class="grab"></div><button type="button" class="nb-back" id="nbBack">‹ Indietro</button><h3>' + qEsc(c.nome || 'Cliente') + '</h3><p>Scegli la foto per l’anteprima.</p><div class="nb-list" id="nbList"><div class="nb-none">Carico le foto…</div></div><div class="nb-err"></div>';
+    document.getElementById('nbBack').addEventListener('click', v3CamB);
+    var lst = document.getElementById('nbList');
+    ['touchstart', 'touchmove'].forEach(function(ev){ lst.addEventListener(ev, function(e){ e.stopPropagation(); }, { passive:true }); });
+    var base = nbFoto(c);
+    Promise.all((c.g.sopr || []).filter(function(x){ return !x.local; }).slice(0, 3).map(function(x){
+      return soApi('sopr-get', 'GET', null, '&id=' + encodeURIComponent(x.id)).then(function(r){ return (r && r.ok && r.d && r.d.item && r.d.item.data && r.d.item.data.foto || []).map(function(f){ return f.url; }); }).catch(function(){ return []; });
+    })).then(function(a){
+      var all = base.concat.apply(base, a); all = all.filter(function(u, i){ return u && all.indexOf(u) === i; }).slice(0, 24);
+      lst.innerHTML = all.length ? '<div class="nb-grid">' + all.map(function(u){ return nbThumb(u, ''); }).join('') + '</div>'
+        : '<div class="nb-none">Questo cantiere non ha ancora foto. Torna indietro e tocca «Scatta».</div>';
+      nbBind(ov);
+    });
+  }
+  (function(){ var b0 = v3CamB; v3CamB = function(){ b0(); try{ if(rdIsStaff()) nbMore(document.getElementById('v3C')); }catch(e){ console.error(e); } }; })();
   window.v3CamB = v3CamB;
   // ---------- Costi del cantiere: ore, materiali (foto fattura), attrezzi e mezzi (per ora solo account di prova) ----------
   var CC = { tar:null, tarId:null, tarOk:false };
@@ -23159,17 +23202,18 @@ html.rd-vetro #ctAnte .v3ge{ display:none; }
 html.rd-vetro #ctAnte .ct-ai{ display:inline-flex; color:var(--accent); }
 html.rd-vetro #ctAnte .ct-ai svg{ width:20px; height:20px; }
 </style>
-<script id="rd-tendina-js">/* Tendina «Nuova anteprima»: si chiude strisciando verso il basso (solo account di prova, html.rd-vetro) — 12/10 */
+<script id="rd-tendina-js">/* Tendina «Nuova anteprima»: giù si chiude, su si allunga con altre opzioni (solo account di prova, html.rd-vetro) — 12/10, 17/10 */
 (function(){
   var st = null;
   function on(){ return document.documentElement.classList.contains('rd-vetro'); }
+  function ovEl(){ return document.getElementById('v3C'); }
   function end(close){
-    if(!st) return; var s = st.s, ov = document.getElementById('v3C'); st = null;
+    if(!st) return; var s = st.s, ov = ovEl(); st = null;
     s.style.transition = 'transform .22s ease';
     if(ov) ov.style.transition = 'background-color .22s ease';
     if(close){
       s.style.transform = 'translateY(105%)'; if(ov) ov.style.backgroundColor = 'rgba(29,20,12,0)';
-      setTimeout(function(){ if(ov){ ov.hidden = true; ov.style.backgroundColor = ''; ov.style.transition = ''; } s.style.transition = ''; s.style.transform = ''; }, 230);
+      setTimeout(function(){ if(ov){ ov.hidden = true; ov.style.backgroundColor = ''; ov.style.transition = ''; } s.classList.remove('nb-open'); s.style.transition = ''; s.style.transform = ''; }, 230);
     } else {
       s.style.transform = ''; if(ov) ov.style.backgroundColor = '';
       setTimeout(function(){ s.style.transition = ''; if(ov) ov.style.transition = ''; }, 240);
@@ -23178,26 +23222,34 @@ html.rd-vetro #ctAnte .ct-ai svg{ width:20px; height:20px; }
   document.addEventListener('touchstart', function(e){
     if(!on() || e.touches.length !== 1) return;
     var s = e.target.closest && e.target.closest('#v3C .v3ci2'); if(!s) return;
-    var t = e.touches[0]; st = { s: s, x: t.clientX, y: t.clientY, t: Date.now(), dy: 0, go: false };
+    var t = e.touches[0]; st = { s: s, x: t.clientX, y: t.clientY, t: Date.now(), dy: 0, go: false, top: s.scrollTop };
   }, { passive: true });
   document.addEventListener('touchmove', function(e){
-    if(!st) return; var t = e.touches[0], dy = t.clientY - st.y, dx = t.clientX - st.x;
+    if(!st) return; var t = e.touches[0], dy = t.clientY - st.y, dx = t.clientX - st.x, s = st.s;
     if(!st.go){
-      if(Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)){ st = null; return; }   // scorre i lavori di lato
-      if(dy < -10){ st = null; return; }
+      if(Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)){ st = null; return; }   // scorre di lato
+      if(dy < -14){   // su: si allunga
+        if(s.querySelector('.nb-more') && !s.classList.contains('nb-open')){ s.classList.add('nb-open'); if(e.cancelable) e.preventDefault(); }
+        st = null; return;
+      }
       if(dy < 10) return;
-      st.go = true; st.s.style.transition = 'none';
+      if(s.classList.contains('nb-open') && st.top > 0){ st = null; return; }   // dentro le opzioni: si scorre e basta
+      st.go = true; s.style.transition = 'none';
     }
     st.dy = Math.max(0, dy);
-    st.s.style.transform = 'translateY(' + st.dy + 'px)';
-    var ov = document.getElementById('v3C'), k = Math.max(0, 1 - st.dy / (st.s.offsetHeight || 400));
-    if(ov) ov.style.backgroundColor = 'rgba(18,14,10,' + (0.55 * k).toFixed(3) + ')';
+    s.style.transform = 'translateY(' + st.dy + 'px)';
+    var ov = ovEl(), k = Math.max(0, 1 - st.dy / (s.offsetHeight || 400));
+    if(ov) ov.style.backgroundColor = 'rgba(29,20,12,' + (0.30 * k).toFixed(3) + ')';
     if(e.cancelable) e.preventDefault();
   }, { passive: false });
   document.addEventListener('touchend', function(){
     if(!st) return; if(!st.go){ st = null; return; }
-    var v = st.dy / Math.max(1, Date.now() - st.t);
-    end(st.dy > (st.s.offsetHeight || 400) * 0.25 || (v > 0.5 && st.dy > 40));
+    var s = st.s, h = s.offsetHeight || 400, v = st.dy / Math.max(1, Date.now() - st.t);
+    if(s.classList.contains('nb-open') && st.dy < h * 0.45){   // aperta: prima si richiude
+      if(st.dy > 70 || v > 0.5){ s.classList.remove('nb-open'); s.scrollTop = 0; }
+      end(false); return;
+    }
+    end(st.dy > h * 0.25 || (v > 0.5 && st.dy > 40));
   }, { passive: true });
   document.addEventListener('touchcancel', function(){ end(false); }, { passive: true });
 })();
@@ -23412,5 +23464,125 @@ html:not(.rd-web) #aiBox{left:0;right:0;bottom:0;top:calc(env(safe-area-inset-to
 })();</script>
 <style>html.ai-cover #aiFab{visibility:hidden !important;pointer-events:none !important}</style>
 <script>(function(){var L=["/img/20d65d771cf8.jpg", "/img/d119bd588eba.jpg", "/img/e4da388bc024.jpg", "/img/24c8337cd2ca.webp", "/img/509d77ec077e.webp", "/img/d1100acf2ff6.webp", "/img/e36d984333cc.webp", "/img/2d2a7706e869.webp", "/img/f079f64e7c9a.webp", "/img/6ddedf189b59.webp", "/img/191e8d2750a1.webp", "/img/c4efc84e0e49.webp", "/img/bfe0c56c3865.webp", "/img/0b0bad957939.webp", "/img/bc54c4178bfe.webp", "/img/9c30ba55f14f.webp", "/img/7e514b68e054.webp", "/img/25b0361d7988.webp", "/img/020bb9d8cbd3.webp", "/img/5203be4dd579.webp", "/img/46001871bafa.jpg", "/img/33d2f26e6179.jpg", "/img/76a074dcc078.jpg", "/img/9dae66e48535.jpg", "/img/db16e22c6fe2.jpg", "/img/1e7d86c46030.jpg", "/img/cde4a5d1850e.jpg", "/img/e50a1ef332d8.jpg", "/img/4be9ae8d3a57.jpg", "/img/63bbaa1ebd0d.jpg", "/img/38083c5e716e.jpg", "/img/7d7b5ea55c32.jpg", "/img/13f26ad7ee39.jpg", "/img/3b97b071bef2.jpg", "/img/a4259b6e1b6c.jpg", "/img/a4ba9d1aada9.jpg", "/img/6abfb1fbcaa8.jpg", "/img/23136628f180.jpg", "/img/08eb21ab64b7.jpg", "/img/009c6a4922cc.jpg", "/img/beccef4462f3.jpg", "/img/0eaff4559018.jpg", "/img/fc9ae622da0d.jpg", "/img/866ecbcd084e.jpg", "/img/df0abf8ff2fd.jpg", "/img/820fb9b19df1.jpg", "/img/2ac3124811a5.jpg", "/img/d8140e31ed4b.jpg", "/img/27339ab7ed10.jpg", "/img/3cf803949a7d.jpg", "/img/89de5af35d25.jpg", "/img/0d75fd1c8a31.jpg", "/img/a26cd56ba187.jpg", "/img/4655feefd3ff.jpg", "/img/4085f099d866.jpg", "/img/df44f5d458f5.jpg", "/img/7b950d1a2d67.jpg", "/img/e3c5aea12450.jpg", "/img/016d218c261d.jpg", "/img/a578ff42b8a0.jpg", "/img/6bb575e23858.jpg", "/img/56f02287d7e2.jpg", "/img/0af41ede3161.jpg", "/img/234a7f398e08.jpg", "/img/a31c08704ce1.jpg", "/img/6c384170daa7.jpg", "/img/bb597d17f1b5.jpg", "/img/d476ce14e3d8.jpg", "/img/0aee290aaecd.jpg", "/img/7faa99a08c39.jpg", "/img/152bbada85f3.jpg", "/img/c5f76229c0f6.jpg", "/img/b5166a6a49ec.jpg", "/img/f23152c6a99d.jpg", "/img/393ae7e2d3e6.jpg", "/img/a3ee837cde64.jpg", "/img/603b90171430.jpg", "/img/129810bc828a.jpg", "/img/eb752d50dbdc.jpg", "/img/521e3a38017c.jpg", "/img/a58dbe3a4626.jpg", "/img/ed8851a1782c.jpg", "/img/16f7566d6723.jpg", "/img/1d43d03442c0.jpg", "/img/28a424fee328.jpg", "/img/f103d8645143.jpg", "/img/0decf658ebea.jpg", "/img/70d8085d004f.webp", "/img/630f0175d4d6.webp", "/img/2e470bbbd354.jpg", "/img/f920ece929ec.jpg", "/img/9527ad14df62.jpg", "/img/fc102091e825.jpg", "/img/61faa8daf450.jpg", "/img/514c3f5248f0.jpg", "/img/195de051b883.jpg", "/img/11a819bd15d1.jpg", "/img/98419685b8e2.jpg", "/img/a9f5145540a6.jpg", "/img/52161dbeac79.jpg", "/img/07ca1d183134.jpg", "/img/67c8cc3a0211.jpg", "/img/e5795d31e3c4.jpg", "/img/d81246063f8d.jpg", "/img/bb9f00704090.jpg", "/img/6aa351ec523e.jpg"];function go(){try{var c=navigator.connection;if(c&&c.saveData)return;}catch(e){}var i=0;function nx(){if(i>=L.length)return;var im=new Image();im.decoding="async";im.onload=im.onerror=function(){setTimeout(nx,30)};im.src=L[i++];}nx();}function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(go);}if(document.readyState==="complete")setTimeout(idle,1500);else window.addEventListener("load",function(){setTimeout(idle,1500)});})();</script>
+<style id="rd-1710-css">/* 17/10 — solo account di prova (html.rd-vetro) */
+/* spazio in fondo: il contenuto finisce poco sopra la barra */
+html.rd-vetro .rd-sheet-in::after{ height:0 !important; }
+html.rd-vetro:not(.rd-web) .rd-sheet-in{ padding-bottom:calc(84px + env(safe-area-inset-bottom,0px)) !important; }
+html.rd-vetro.rd-web .rd-sheet-in{ padding-bottom:20px !important; }
+html.rd-vetro body.rd-v2 #rdOggi{ padding-bottom:4px !important; }
+html.rd-vetro:not(.rd-web) body.rd-v2{ padding-bottom:calc(53px + env(safe-area-inset-bottom,0px)) !important; }
+html.rd-vetro:not(.rd-web) .rd-x-b{ padding-bottom:calc(84px + env(safe-area-inset-bottom,0px)) !important; }
+/* Preventivi: sopra la pagina aperta, misura senza animazione */
+html.rd-vetro .pro-projects-modal.open{ z-index:1000; }
+html.rd-vetro #rdTab{ z-index:1001; }
+html.rd-vetro .pro-projects-card{ transition:opacity .16s ease !important; }
+/* tendina «Nuova anteprima» che si allunga */
+html.rd-vetro .v3ci2.nb{ max-height:calc(100vh - 30px); max-height:calc(100dvh - 30px); transition:max-height .28s ease; }
+html.rd-vetro .v3ci2.nb .nb-hint{ margin-bottom:4px; }
+.nb-pull,.nb-more{ display:none; }
+html.rd-vetro .nb-pull{ display:flex; flex-direction:column; align-items:center; gap:4px; width:100%; border:none; background:none; font-family:inherit; font-size:12px; font-weight:600; color:var(--ink-soft,#6F685F); padding:6px 0 0; cursor:pointer; }
+html.rd-vetro .nb-pull i{ width:10px; height:10px; border-left:2px solid currentColor; border-top:2px solid currentColor; transform:rotate(45deg); margin-top:4px; transition:transform .25s ease; }
+html.rd-vetro .nb-open .nb-pull i{ transform:rotate(225deg); margin-top:-2px; }
+html.rd-vetro .nb-open .nb-pull span{ display:none; }
+html.rd-vetro .nb-more{ display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .3s ease, opacity .2s ease; }
+html.rd-vetro .v3ci2.nb.nb-open{ overflow-y:auto; touch-action:pan-y !important; -webkit-overflow-scrolling:touch; }
+html.rd-vetro .nb-open .nb-more{ max-height:1400px; opacity:1; padding-top:6px; }
+.nb-sec{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft,#6F685F); margin:16px 0 8px; }
+.nb-row{ display:flex; gap:10px; overflow-x:auto; margin:0 -18px; padding:0 18px 4px; scrollbar-width:none; touch-action:pan-x; }
+.nb-row::-webkit-scrollbar{ display:none; }
+.nb-crow,.nb-cli{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:1px solid var(--line,#E8E3DB); background:rgba(255,255,255,.6); border-radius:16px; padding:10px 12px; font-family:inherit; color:var(--ink,#1D1B18); cursor:pointer; margin-bottom:8px; }
+.nb-crow i{ flex:none; width:46px; height:46px; border-radius:12px; background:var(--rt2,#F6E6DA) center/cover no-repeat; display:grid; place-items:center; font-style:normal; font-weight:800; color:var(--rt1,#C8692E); }
+.nb-ci{ flex:none; width:46px; height:46px; border-radius:12px; background:var(--rt2,#F6E6DA); color:var(--rt1,#C8692E); display:grid; place-items:center; }
+.nb-ci svg{ width:26px; height:26px; }
+.nb-ct{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.nb-ct b{ font-size:15px; }
+.nb-ct em{ font-style:normal; font-size:12.5px; color:var(--ink-soft,#6F685F); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nb-crow u,.nb-cli u{ text-decoration:none; font-size:20px; color:var(--ink-soft,#6F685F); }
+.nb-crow:active,.nb-cli:active{ transform:scale(.99); }
+</style>
+<script id="rd-1710-nav">/* Navigazione (solo account di prova, html.rd-vetro) — 17/10
+   1) Ciò che si apre dal menu «Altro», quando si chiude, riporta al menu «Altro».
+   2) «Preventivi» si apre sopra la pagina dove sei; alla chiusura torni lì.
+   3) La finestra «Preventivi» si mostra già della misura giusta (niente allargamento). */
+(function(){
+  var H = document.documentElement;
+  function on(){ return H.classList.contains('rd-vetro'); }
+  function vis(e){ if(!e || e.hidden) return false; var c = getComputedStyle(e); if(c.display === 'none' || c.visibility === 'hidden') return false; var r = e.getBoundingClientRect(); return r.width > 40 && r.height > 40; }
+  var SKIP = { rdTab:1, rdAltro:1, aiFab:1, aiBox:1, rwSide:1 };
+  function anyOverlay(){
+    var L = document.body.children;
+    for(var i = 0; i < L.length; i++){
+      var e = L[i]; if(SKIP[e.id] || e.tagName === 'SCRIPT' || e.tagName === 'STYLE' || e.tagName === 'HEADER' || e.tagName === 'MAIN') continue;
+      var c = getComputedStyle(e); if(c.position !== 'fixed') continue;
+      if((+c.zIndex || 0) < 50) continue;
+      if(e.classList.contains('pro-projects-modal') && !e.classList.contains('open')) continue;
+      if(vis(e)) return true;
+    }
+    return false;
+  }
+  function tabOn(k){ document.querySelectorAll('#rdTab [data-rdtab]').forEach(function(b){ b.classList.toggle('on', b.dataset.rdtab === k); }); }
+  function curTab(){ var b = document.querySelector('#rdTab [data-rdtab].on'); return b ? b.dataset.rdtab : 'home'; }
+
+  // ---- 1) ritorno al menu Altro ----
+  var back = null, timer = null;
+  function stop(){ back = null; if(timer){ clearInterval(timer); timer = null; } }
+  function watch(){
+    if(timer) clearInterval(timer);
+    timer = setInterval(function(){
+      if(!back){ stop(); return; }
+      var alt = document.getElementById('rdAltro'), shown = anyOverlay();
+      if(shown){ back.seen = true; return; }
+      if(alt && alt.classList.contains('open')){ stop(); return; }
+      if(!back.seen){ if(Date.now() - back.t > 4000) stop(); return; }
+      stop();
+      if(alt){ alt.classList.add('open'); tabOn('altro'); }
+    }, 150);
+  }
+  document.addEventListener('click', function(e){
+    if(!on()) return;
+    var alt = e.target.closest && e.target.closest('#rdAltro');
+    if(alt){
+      var b = e.target.closest('button, a, [data-rxgo2], [data-rdalt]');
+      if(!b || /esci/i.test(b.textContent || '') || b.dataset.rxgo2 === 'esci') return;
+      back = { t: Date.now(), seen: false }; watch(); return;
+    }
+    if(e.target.closest && e.target.closest('#rdTab [data-rdtab], #rwSide [data-rw]')) stop();   // cambi sezione: niente ritorno
+  }, true);
+
+  // ---- 2) Preventivi sopra la pagina dove sei ----
+  var pv = null;
+  document.addEventListener('click', function(e){
+    if(!on()) return;
+    var b = e.target.closest && e.target.closest('#rdTab [data-rdtab="prev"]'); if(!b) return;
+    var x = document.getElementById('rdX'), keep = !!(x && !x.hidden);
+    pv = { tab: curTab() === 'prev' ? 'home' : curTab(), keep: keep };
+    if(keep) setTimeout(function(){ x.hidden = false; H.classList.add('rd-x-open'); }, 0);
+  }, true);
+
+  // ---- 3) misura fissa all'apertura + ritorno alla pagina di prima ----
+  function hook(){
+    var m = document.getElementById('proProjectsModal'); if(!m || m.__rd17) return; m.__rd17 = 1;
+    var was = m.classList.contains('open');
+    new MutationObserver(function(){
+      var op = m.classList.contains('open'); if(op === was) return; was = op;
+      if(!on()) return;
+      var c = m.querySelector('.pro-projects-card');
+      if(op && c){
+        c.style.setProperty('transition', 'none', 'important'); c.style.setProperty('opacity', '0', 'important');
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ setTimeout(function(){ c.style.setProperty('transition', 'opacity .16s ease', 'important'); c.style.removeProperty('opacity'); setTimeout(function(){ c.style.removeProperty('transition'); }, 220); }, 70); }); });
+      }
+      if(!op && pv){
+        var p = pv; pv = null;
+        setTimeout(function(){
+          var x = document.getElementById('rdX');
+          if(p.keep && x && x.hidden && !document.querySelector('#rdAltro.open')){ x.hidden = false; H.classList.add('rd-x-open'); }
+          if(!document.querySelector('#rdAltro.open')) tabOn(p.keep ? p.tab : (p.tab === 'altro' ? 'home' : p.tab));
+        }, 30);
+      }
+    }).observe(m, { attributes:true, attributeFilter:['class'] });
+  }
+  hook(); document.addEventListener('DOMContentLoaded', hook); setTimeout(hook, 1500);
+})();
+</script>
 </body>
 </html>
