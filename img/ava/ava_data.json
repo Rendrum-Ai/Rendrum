@@ -1,0 +1,4649 @@
+{
+ "marchio": {
+  "id": "ava",
+  "n": "La Fabbrica AVA",
+  "produttore": "La Fabbrica AVA",
+  "logo": "/img/ava/logo.png"
+ },
+ "pavimenti": [
+  "ava_absolute",
+  "ava_amazon",
+  "ava_avorio_segesta",
+  "ava_blue_evolution",
+  "ava_breccia_capraia",
+  "ava_breccia_sicilia",
+  "ava_bronze_amani",
+  "ava_calacatta_oro",
+  "ava_ca_foscari",
+  "ava_chianca",
+  "ava_cotto_del_casale",
+  "ava_deep_stone",
+  "ava_gemstone",
+  "ava_graniti",
+  "ava_green_sky",
+  "ava_green_sunset",
+  "ava_honey_wood",
+  "ava_hurban",
+  "ava_i_quarzi",
+  "ava_il_cerreto",
+  "ava_imperial",
+  "ava_kauri",
+  "ava_kist",
+  "ava_klastos",
+  "ava_le_malte",
+  "ava_macchia_antica",
+  "ava_moon_cream",
+  "ava_noble_stone",
+  "ava_onice_iride",
+  "ava_pierres_des_chateaux",
+  "ava_puro",
+  "ava_royal_stone",
+  "ava_sahara_noir",
+  "ava_skyline",
+  "ava_statuario",
+  "ava_statuario_reale",
+  "ava_velaris",
+  "ava_venezia",
+  "ava_wabi_sabi"
+ ],
+ "rivestimenti": [
+  "ava_avorio_segesta",
+  "ava_breccia_capraia",
+  "ava_breccia_sicilia",
+  "ava_bronze_amani",
+  "ava_calacatta_oro",
+  "ava_chianca",
+  "ava_deep_stone",
+  "ava_gemstone",
+  "ava_graniti",
+  "ava_green_sky",
+  "ava_green_sunset",
+  "ava_grooves",
+  "ava_honey_wood",
+  "ava_hurban",
+  "ava_i_quarzi",
+  "ava_il_cerreto",
+  "ava_imagine",
+  "ava_imperial",
+  "ava_kist",
+  "ava_kist_lux",
+  "ava_klastos",
+  "ava_le_malte",
+  "ava_macchia_antica",
+  "ava_moon_cream",
+  "ava_noble_stone",
+  "ava_onice_iride",
+  "ava_pierres_des_chateaux",
+  "ava_puro",
+  "ava_sahara_noir",
+  "ava_skyline",
+  "ava_small",
+  "ava_statuario",
+  "ava_statuario_reale",
+  "ava_up",
+  "ava_velaris",
+  "ava_wabi_sabi"
+ ],
+ "esterni": [
+  {
+   "id": "ava_amazon",
+   "colori": [
+    "Kamba",
+    "Nawa",
+    "Arara",
+    "Matis",
+    "Surma"
+   ],
+   "formati": [
+    "40×120 cm"
+   ],
+   "spessori": [
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 2: «Indoor 8,8 mm e Outdoor 20 mm R11»; pag. 14: 40x120 20 mm R11C per tutti i colori"
+  },
+  {
+   "id": "ava_blue_evolution",
+   "colori": [
+    "Black",
+    "Anthracite",
+    "Grey"
+   ],
+   "formati": [
+    "80×80 cm"
+   ],
+   "spessori": [
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 3: «20 mm OUTDOOR R11C» (80×80 Nat Ret); pag. 4: gradoni e griglie 20 mm R11C"
+  },
+  {
+   "id": "ava_ca_foscari",
+   "colori": [
+    "Lino",
+    "Canapa",
+    "Avana",
+    "Tabacco",
+    "Moro"
+   ],
+   "formati": [
+    "40×120 cm",
+    "20×120 cm"
+   ],
+   "spessori": [
+    "20 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato R11C"
+   ],
+   "prova": "pag. 2: «Outdoor 8,8 mm R11: 20x120 Nat Ret» e «Outdoor 20 mm R11: 40x120 Nat Ret»; pag. 15: tabelle 8,8 mm R11C (20x120) e 20 mm R11C (40x120) per tutti i colori; 40×120 solo 20 mm, 20×120 esterno 8,8 mm"
+  },
+  {
+   "id": "ava_chianca",
+   "colori": [
+    "Otranto",
+    "Ostuni",
+    "Cursi",
+    "Carparo"
+   ],
+   "formati": [
+    "100×100 cm",
+    "60,9×60,9 cm",
+    "40,6×60,9 cm",
+    "40,6×40,6 cm",
+    "20,3×40,6 cm",
+    "20,3×20,3 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "prova": "pag. 4: «8,8 mm OUTDOOR R11C» (100×100 per tutti i colori; formati modulari solo Ostuni e Cursi) e «20 mm OUTDOOR R11C» 100×100; pag. 18-19 tabelle per colore; pag. 2: «sia indoor, sia outdoor»"
+  },
+  {
+   "id": "ava_cotto_del_casale",
+   "colori": [
+    "Bruno",
+    "Rosado"
+   ],
+   "formati": [
+    "60,9×60,9 cm",
+    "40,6×60,9 cm",
+    "40,6×40,6 cm",
+    "20,3×40,6 cm",
+    "20,3×20,3 cm"
+   ],
+   "spessori": [
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale"
+   ],
+   "prova": "pag. 8-9: «OUTDOOR 8,8 mm R11-C» per Bruno e Rosado; pag. 12: tabella «8,8 R11C» solo Bruno e Rosado"
+  },
+  {
+   "id": "ava_honey_wood",
+   "colori": [
+    "Noce",
+    "Rovere",
+    "Olmo",
+    "Bricola",
+    "Larice"
+   ],
+   "formati": [
+    "40×120 cm",
+    "20×120 cm"
+   ],
+   "spessori": [
+    "20 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 5: «OUTDOOR R11C» 20×120 8,8 mm (tutte e 5 le essenze, codici 191051-191055 a pag. 57) e 40×120 20 mm «Mix: Rovere, Bricola, Olmo» (codice 191046); pag. 53-56 «Outdoor Mix», «L’indoor e l’outdoor»"
+  },
+  {
+   "id": "ava_hurban",
+   "colori": [
+    "Graphite",
+    "Gray",
+    "Avio",
+    "White",
+    "Beige",
+    "Ocra"
+   ],
+   "formati": [
+    "100×100 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 4: «8,8 OUTDOOR R11C» (Gray, White, Beige) e «20 OUTDOOR R11C» 100x100; pag. 29: codici 20 mm R11C per tutti i colori"
+  },
+  {
+   "id": "ava_i_quarzi",
+   "colori": [
+    "Antracite",
+    "Prasio",
+    "Diaspro",
+    "Madera"
+   ],
+   "formati": [
+    "60×60 cm",
+    "30,5×60,5 cm",
+    "30×60 cm",
+    "30×30 cm",
+    "20,3×40,6 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "prova": "pag. 3: «IQIN&OUT 8,8mm Nat / Nat Ret R11C outdoor indoor», «IQOUTDOOR20mm» e «20mm Nat Ret R11C outdoor»; pag. 6: «8,8 R11C» e «20 R11C 60x60»; pag. 16 tabelle «8,8 R11C» e «20 R11C»"
+  },
+  {
+   "id": "ava_il_cerreto",
+   "colori": [
+    "Pinot Grigio",
+    "Champagne",
+    "Chardonnay",
+    "Amarone"
+   ],
+   "formati": [
+    "40×120 cm",
+    "20×120 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato R11C"
+   ],
+   "prova": "pag. 3: «8,8 OUTDOOR R11C (Champagne - Chardonnay)» 20×120 e «20 OUTDOOR R11C» 40×120; pag. 21: 20×120 R11C solo Champagne e Chardonnay, 40×120 20 mm Pinot Grigio, Champagne, Chardonnay, Amarone"
+  },
+  {
+   "id": "ava_kist",
+   "colori": [
+    "Charcoal",
+    "Dark Blue",
+    "Jade",
+    "Light Grey",
+    "Ivory",
+    "Beige"
+   ],
+   "formati": [
+    "4,8×45 cm"
+   ],
+   "spessori": [
+    "9,5 mm"
+   ],
+   "finiture": [
+    "opaco"
+   ],
+   "prova": "pag. 6: «Versatile e ideale per ogni progetto, sia da interno che da esterno» (foto facciata esterna Light Grey a pag. 9); stesso prodotto, nessuna versione esterna separata"
+  },
+  {
+   "id": "ava_klastos",
+   "colori": [
+    "Grey",
+    "Beige",
+    "White"
+   ],
+   "formati": [
+    "60×120 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 4 e 20: «8,8 mm OUTDOOR R11C» e «20 mm OUTDOOR R11C» 60×120 Nat Ret per Grey, Beige, White; pag. 22: codici 60×120 R11C solo Grey/White/Beige"
+  },
+  {
+   "id": "ava_moon_cream",
+   "colori": [
+    "Grigio",
+    "Beige",
+    "Terra"
+   ],
+   "formati": [
+    "100×100 cm",
+    "60×60 cm",
+    "30×60 cm",
+    "30×30 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato R11C",
+    "peel rettificato (bocciardato) R11C"
+   ],
+   "prova": "pag. 4: «8,8 mm OUTDOOR R11C» (100×100 Nat, 60×60/30×60/30×30 Peel) e «20 mm OUTDOOR R11C» (100×100 Nat); pag. 24 tabella R11C solo Grigio, Beige, Terra"
+  },
+  {
+   "id": "ava_noble_stone",
+   "colori": [
+    "Beige",
+    "Grey",
+    "Taupe"
+   ],
+   "formati": [
+    "60×120 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 6: «superficie da esterno 60x120 in 8,8 mm»; pag. 27: «8,8 OUTDOOR» e «20 OUTDOOR» Beige/Grey/Taupe 60x120 Nat Ret R11C; pag. 19 e 22: «Floor BEIGE / TAUPE 60x120 Nat Ret 20mm R11C»; pag. 34: codici R11C e 20 mm solo per Beige, Grey, Taupe (White e Dark «-»)"
+  },
+  {
+   "id": "ava_pierres_des_chateaux",
+   "colori": [
+    "Chenonceau",
+    "Chambord",
+    "Cheverny",
+    "Ussé",
+    "Fontainebleau"
+   ],
+   "formati": [
+    "100×100 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 3 e 21-25: «8,8 OUTDOOR R11C» e «20 OUTDOOR R11C» 100x100; pag. 8-9, 16: «OUTDOOR Floor ... Nat Ret R11 20 mm»"
+  },
+  {
+   "id": "ava_royal_stone",
+   "colori": [
+    "Gold"
+   ],
+   "formati": [
+    "100×100 cm",
+    "60×60 cm"
+   ],
+   "spessori": [
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 10: «20 OUTDOOR R11C» (100×100 e 60×60 Nat Ret 20 mm, codici 122013 e 122007); pag. 8-9: «60x60 Nat Ret 20 R11C», «Royal Stone 100x100 Nat Ret 20mm R11C»"
+  },
+  {
+   "id": "ava_skyline",
+   "colori": [
+    "Antracite",
+    "Fumo",
+    "Ghiaccio",
+    "Beige"
+   ],
+   "formati": [
+    "100×100 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 4: «8,8 OUTDOOR R11C» e «20 OUTDOOR R11C» 100×100 Nat Ret; pag. 3: «dal rivestimento al pavimento per interni ed esterni»; pag. 19-20: codici 100×100 R11C 8,8 e 20 mm, gradoni e griglie 20 mm"
+  },
+  {
+   "id": "ava_velaris",
+   "colori": [
+    "Grigio",
+    "Bianco",
+    "Beige",
+    "Brown"
+   ],
+   "formati": [
+    "60×120 cm"
+   ],
+   "spessori": [
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 4: «spazi outdoor, grazie alla versione dedicata in 60×120 cm con spessore 20 mm»; pag. 19: «20 mm OUTDOOR 60x120 Nat Ret R11C»; pag. 21: codici 20 mm per tutti e 4 i colori"
+  },
+  {
+   "id": "ava_venezia",
+   "colori": [
+    "Imperial Navona"
+   ],
+   "formati": [
+    "100×100 cm",
+    "60×60 cm",
+    "40×60 cm",
+    "40×40 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "prova": "pag. 4: «8,8 R10B & R11C (Imperial Navona)», «20 R11C (Imperial Navona)», «estende il progetto anche agli spazi en plein air»; pag. 23: tabella Imperial Navona Nat Ret R11C e 100×100 20 mm R11C; pag. 15-17: «Floor VENEZIA IMPERIAL NAVONA ... Nat Ret R11C»"
+  }
+ ],
+ "collezioni": [
+  {
+   "id": "ava_absolute",
+   "n": "Absolute",
+   "d": "Absolute Black & White",
+   "materiale": "",
+   "effetto": "materico",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "160×160 cm",
+    "120×120 cm",
+    "80×160 cm",
+    "60×120 cm",
+    "80×80 cm",
+    "60×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_absolute/scheda.pdf",
+   "fonte": "LF_AVA_Absolute_catalog.pdf, pagine 1-4 (texture da pag. 3); verifiche su LF_AVA_Catalogo-Generale_2026.pdf, pagine 175-177",
+   "note": "uso: «Floor» (Absolute White 120x120 Nat Ret) a pag. 4, DCOF ≥ 0,42 a pag. 3, battiscopa e gradini a pag. 4; nel Catalogo Generale (pag. 177) anche «Calpestio / Foot traffic»: Black LOW, White HIGH. Il PDF non parla di parete/rivestimento. Interno/esterno non indicato. Materiale non scritto nel PDF della collezione (solo ISO 13006 - G - BIa); il Catalogo Generale a pag. 176 scrive «Gres Porcellanato». 6 mm: 160×320, 160×160, 80×160, 80×80, 120×280, 120×120 in Nat Ret e Lap Ret; 8,8 mm: 60×120 e 60×60 solo Nat Ret. Decoro: Mosaico 30×30 (6 mm, Nat Ret e Lap Ret) per entrambi i colori. Pezzi speciali: battiscopa 8×80 (6 mm) e 6,5×120 (8,8 mm), gradini costa retta 33×160 e 33×120 anche SX/DX (solo su richiesta). Shade spectrum V1 low. I riquadri campione (pag. 3 del PDF e pag. 176 del Catalogo Generale) sono a tinta piatta senza grana: per questo le texture sono ritagliate da superfici frontali nelle ambientazioni, a risoluzione originale bassa.",
+   "colori": [
+    {
+     "n": "Black",
+     "code": "",
+     "hex": "#000000",
+     "img": "/img/ava/ava_absolute/black.jpg",
+     "th": "/img/ava/ava_absolute/black_t.jpg",
+     "px": 560,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione ufficiale di pag. 3 (96 ppi). Nel PDF (e nel Catalogo Generale) il campione è a tinta piena, senza grana visibile."
+    },
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#FBFAF6",
+     "img": "/img/ava/ava_absolute/white.jpg",
+     "th": "/img/ava/ava_absolute/white_t.jpg",
+     "px": 560,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione ufficiale di pag. 3 (96 ppi). Nel PDF (e nel Catalogo Generale) il campione è a tinta piena, senza grana visibile."
+    }
+   ]
+  },
+  {
+   "id": "ava_amazon",
+   "n": "Amazon",
+   "d": "Due spessori per progetti ambiziosi",
+   "materiale": "",
+   "effetto": "legno",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "40×120 cm",
+    "20×120 cm",
+    "7,5×45 cm",
+    "7,5×40,7 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_amazon/scheda.pdf",
+   "fonte": "LF_AVA_Amazon_Catalog.pdf, pagine 2-3, 11-15",
+   "note": "uso: «Indoor 8,8 mm e Outdoor 20 mm R11» a pag. 2, R10B (8,8 mm) e R11C (20 mm), «Floor» Kamba Chevron/Listello, battiscopa, gradini, gradoni e griglie a pag. 14 → pavimento. Il testo non parla di parete (alcune foto mostrano doghe a parete ma senza scritta «Wall»). ambiente: «Indoor 8,8 mm e Outdoor 20 mm» a pag. 2. 8,8 mm (R10B): 20×120 Nat Ret, Chevron 7,5×40,7 Nat e Listello 7,5×45 Nat; 20 mm (R11C): 40×120 Nat Ret = pavimento esterno. Chevron e Listello non disponibili in Surma. Il PDF dice «5 varianti cromatiche ... e 2 finiture». Pezzi speciali: battiscopa 6,5×120, gradino costa retta 33×120 (anche SX/DX), in 20 mm gradone 40×120 costa toro/costa retta (anche angolo SX/DX) e griglia 20×60 (anche angolo SX/DX), su richiesta. Stonalizzazione V2 moderate. Materiale non scritto in modo esplicito (solo ISO 13006 - G - BIa). I riquadri campione mostrano doghe posate con fughe: per rispettare la regola «niente fughe» ogni texture è una sola doga (proporzione 1:7 circa); il Catalogo Generale ha le stesse foto a 72 ppi (meno pixel).",
+   "colori": [
+    {
+     "n": "Kamba",
+     "code": "",
+     "hex": "#D6D0C5",
+     "img": "/img/ava/ava_amazon/kamba.jpg",
+     "th": "/img/ava/ava_amazon/kamba_t.jpg",
+     "px": 691,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: una doga intera 20×120 dal riquadro campione pag. 11, ritagliata dentro le fughe (nativa 150 ppi). texture: risoluzione originale bassa (98 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Nawa",
+     "code": "",
+     "hex": "#B7AB9E",
+     "img": "/img/ava/ava_amazon/nawa.jpg",
+     "th": "/img/ava/ava_amazon/nawa_t.jpg",
+     "px": 689,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: una doga intera 20×120 dal riquadro campione pag. 11, ritagliata dentro le fughe (nativa 150 ppi). texture: risoluzione originale bassa (98 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Arara",
+     "code": "",
+     "hex": "#D7CBB9",
+     "img": "/img/ava/ava_amazon/arara.jpg",
+     "th": "/img/ava/ava_amazon/arara_t.jpg",
+     "px": 691,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: una doga intera 20×120 dal riquadro campione pag. 12, ritagliata dentro le fughe (nativa 150 ppi). texture: risoluzione originale bassa (98 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Matis",
+     "code": "",
+     "hex": "#C1AF97",
+     "img": "/img/ava/ava_amazon/matis.jpg",
+     "th": "/img/ava/ava_amazon/matis_t.jpg",
+     "px": 689,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: una doga intera 20×120 dal riquadro campione pag. 12, ritagliata dentro le fughe (nativa 150 ppi). texture: risoluzione originale bassa (98 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Surma",
+     "code": "",
+     "hex": "#C8B091",
+     "img": "/img/ava/ava_amazon/surma.jpg",
+     "th": "/img/ava/ava_amazon/surma_t.jpg",
+     "px": 683,
+     "formati": [
+      "40×120 cm",
+      "20×120 cm"
+     ],
+     "finiture": [],
+     "note": "Texture: una doga intera 20×120 dal riquadro campione pag. 13, ritagliata dentro le fughe (nativa 150 ppi). texture: risoluzione originale bassa (98 px). Formati: solo 20×120 (8,8 mm) e 40×120 (20 mm), niente Chevron/Listello.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ],
+   "esterno": {
+    "colori": [
+     "Kamba",
+     "Nawa",
+     "Arara",
+     "Matis",
+     "Surma"
+    ],
+    "formati": [
+     "40×120 cm"
+    ],
+    "spessori": [
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 2: «Indoor 8,8 mm e Outdoor 20 mm R11»; pag. 14: 40x120 20 mm R11C per tutti i colori"
+   }
+  },
+  {
+   "id": "ava_avorio_segesta",
+   "n": "Avorio Segesta",
+   "d": "Rade venature color terra si intrecciano come rami sotto il sole",
+   "materiale": "gres porcellanato",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_avorio_segesta/scheda.pdf",
+   "fonte": "LF_AVA_Avorio-Segesta_Catalog.pdf, pagine 2-6; texture da LF_AVA_Catalogo-Generale_2026.pdf pag. 54 (foto lastra 597×910 px, più grande della foto 352×821 px nel PDF della collezione)",
+   "note": "uso: didascalia «Wall & Floor» a pag. 4, R10A e «DCOF ≥ 0,42 (naturale)», battiscopa e gradini a pag. 5; legenda «floor and wall porcelain» a pag. 6. ambiente: il PDF non scrive interno/esterno. Materiale: «porcelain» nella legenda (catalogo generale: «Gres Porcellanato»). Effetto: intestazione «MARMO E PIETRA» a pag. 5 (catalogo generale: «Marble Selection»). 120×280 solo 6 mm; 60×120 solo 8,8 mm (R10A sul naturale). Naturale = «Materic Touch for Natural surface». Il PDF avverte che struttura e tono tra 6 mm e 8,8 mm possono differire. Sviluppo grafico: 4 pattern 120×280, 19 pattern 60×120 (il catalogo generale indica 16). Pezzi speciali 8,8 mm: battiscopa 6,5×120, gradino costa retta 33×120 e gradino SX/DX (su richiesta). Un solo colore.",
+   "colori": [
+    {
+     "n": "Avorio Segesta",
+     "code": "",
+     "hex": "#E2D7C1",
+     "img": "/img/ava/ava_avorio_segesta/avorio_segesta.jpg",
+     "th": "/img/ava/ava_avorio_segesta/avorio_segesta_t.jpg",
+     "px": 865,
+     "formati": [],
+     "finiture": [],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "ava_blue_evolution",
+   "n": "Blue Evolution",
+   "d": "",
+   "materiale": "",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "80×80 cm"
+   ],
+   "spessori": [
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_blue_evolution/scheda.pdf",
+   "fonte": "LF_AVA_Blue-Evolution_catalog.pdf, pagine 1-4",
+   "note": "uso: «20 mm OUTDOOR R11C», «DCOF ≥ 0,42» a pag. 3, gradoni e griglie a pag. 4 → pavimento esterno; il PDF non parla di parete/rivestimento. Effetto: intestazione nel PDF «MARMO E PIETRA», nel catalogo generale la collezione è in «Stone Selection» → pietra. Materiale non scritto nel PDF (solo ISO 13006 - G - BIa). Nessuna frase descrittiva nel PDF. Shade spectrum V2 moderate; 19 grafiche (patterns) per l'80×80. Pezzi speciali 20 mm (solo su richiesta): gradone 40×80 costa toro / costa retta, gradone angolo SX/DX, griglia 20×80 e griglia angolo SX/DX. Nessun decoro/mosaico.",
+   "esterno": {
+    "colori": [
+     "Black",
+     "Anthracite",
+     "Grey"
+    ],
+    "formati": [
+     "80×80 cm"
+    ],
+    "spessori": [
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 3: «20 mm OUTDOOR R11C» (80×80 Nat Ret); pag. 4: gradoni e griglie 20 mm R11C"
+   },
+   "colori": [
+    {
+     "n": "Black",
+     "code": "",
+     "hex": "#534C49",
+     "img": "/img/ava/ava_blue_evolution/black.jpg",
+     "th": "/img/ava/ava_blue_evolution/black_t.jpg",
+     "px": 596,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia colore a pag. 3 (immagine nativa 96 ppi, ritaglio 596×390 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (390 px). Nel Catalogo Generale (pag. 160) la stessa foto è a 72 ppi, più piccola.",
+     "ambiente": [
+      "esterno"
+     ]
+    },
+    {
+     "n": "Anthracite",
+     "code": "",
+     "hex": "#746D6A",
+     "img": "/img/ava/ava_blue_evolution/anthracite.jpg",
+     "th": "/img/ava/ava_blue_evolution/anthracite_t.jpg",
+     "px": 516,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia colore a pag. 3 (immagine nativa 96 ppi, ritaglio 516×388 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (388 px). Lo «sviluppo grafico» di pag. 4 è fatto di 19 tessere da 196 px separate da fughe, quindi non usabile. Catalogo Generale a 72 ppi, più piccolo.",
+     "ambiente": [
+      "esterno"
+     ]
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#A49F9E",
+     "img": "/img/ava/ava_blue_evolution/grey.jpg",
+     "th": "/img/ava/ava_blue_evolution/grey_t.jpg",
+     "px": 609,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia colore a pag. 3 (immagine nativa 96 ppi, ritaglio 609×394 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (394 px). Catalogo Generale a 72 ppi, più piccolo.",
+     "ambiente": [
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_breccia_capraia",
+   "n": "Breccia Capraia",
+   "d": "Superfici eteree, punteggiate da venature viola e verdi",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_breccia_capraia/scheda.pdf",
+   "fonte": "LF_AVA_Breccia-Capraia_Catalog-2.pdf, pagine 2-6; texture dal Catalogo Generale LF_AVA_Catalogo-Generale_2026.pdf pag. 38 (foto lastra a pagina intera, 597×910 px contro 352×821 px nel PDF della collezione)",
+   "note": "uso: «Wall & Floor» a pag. 3 (120×280 Lap Ret); pavimento anche da R10A, DCOF ≥ 0,42 (naturale), battiscopa e gradini a pag. 5. Ambiente: il PDF non dice interno/esterno e non c'è versione outdoor. 120×280 solo 6 mm, 60×120 solo 8,8 mm (R10A naturale); entrambi Nat Ret e Lap Ret. La finitura naturale è «Materic Touch» («* Materic Touch for Natural surface»). Pezzi speciali (Nat Ret e Lap Ret): battiscopa 6,5×120, gradino costa retta 33×120 e gradino costa retta SX-DX 33×120 (gradini solo su richiesta). Nessun decoro. Materiale: il PDF della collezione non scrive «gres porcellanato» (solo norma UNI EN 14411 - ISO 13006 - G - BIa); il Catalogo Generale pag. 38 scrive «Gres Porcellanato». Effetto: nel PDF «MARMO E PIETRA»; il Catalogo Generale la classifica «Marble Selection», quindi marmo. Il PDF avverte che struttura e tono tra 6 mm e 8,8 mm potrebbero presentare differenze. Un solo colore (stesso nome della collezione).",
+   "colori": [
+    {
+     "n": "Breccia Capraia",
+     "code": "",
+     "hex": "#EBE5DF",
+     "img": "/img/ava/ava_breccia_capraia/breccia_capraia.jpg",
+     "th": "/img/ava/ava_breccia_capraia/breccia_capraia_t.jpg",
+     "px": 865,
+     "formati": [],
+     "finiture": [],
+     "note": "texture dal Catalogo Generale pag. 38 (591×865 px a 72 ppi): la foto del PDF della collezione (pag. 2) è più piccola."
+    }
+   ]
+  },
+  {
+   "id": "ava_breccia_sicilia",
+   "n": "Breccia Sicilia",
+   "d": "Intrecci di rosso, marrone e grigio si fondono in una sinfonia di colori",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_breccia_sicilia/scheda.pdf",
+   "fonte": "LF_AVA_Breccia-Sicilia_Catalog-2.pdf, pagine 2-7; texture da LF_AVA_Catalogo-Generale_2026.pdf, pagina 58 (foto lastra più grande: 597×910 px nativi, contro 353×822 nel PDF della collezione)",
+   "note": "uso: «R10A naturale», battiscopa (Skirting) e gradini a pag. 6 → pavimento; didascalia «Wall & Counter Top BRECCIA SICILIA» a pag. 3 → rivestimento. Ambiente interno/esterno non indicato. Materiale non scritto nel PDF della collezione (solo ISO 13006 - G - BIa; «Gres Porcellanato» compare solo nel catalogo generale). Effetto: intestazione «MARMO E PIETRA» a pag. 6, «Marble Selection» nel catalogo generale. 120×280 solo 6 mm; 60×120 solo 8,8 mm (R10A naturale). Nat Ret = «Materic Touch for Natural surface». Lastre 120×280 con 4 grafiche continue (fornite random; vena continua su richiesta con maggiorazione); 60×120: 27 grafiche (20 secondo il catalogo generale). Pezzi speciali (8,8 mm): battiscopa 6,5×120, gradino costa retta 33×120 e gradino SX/DX 33×120 (su richiesta). Il PDF avverte possibili differenze di struttura e tono tra 6 mm e 8,8 mm. Stonalizzazione V3 (dal catalogo generale). Esterni: nessuna versione da esterno nel PDF né nel catalogo generale (né outdoor, né 20 mm, né R11).",
+   "colori": [
+    {
+     "n": "Breccia Sicilia",
+     "code": "",
+     "hex": "#9B8776",
+     "img": "/img/ava/ava_breccia_sicilia/breccia_sicilia.jpg",
+     "th": "/img/ava/ava_breccia_sicilia/breccia_sicilia_t.jpg",
+     "px": 863,
+     "formati": [],
+     "finiture": [],
+     "note": "Colore unico. Texture dalla foto lastra del catalogo generale pag. 58 (591×863 px nativi)."
+    }
+   ]
+  },
+  {
+   "id": "ava_bronze_amani",
+   "n": "Bronze Amani",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_bronze_amani/scheda.pdf",
+   "fonte": "LF_AVA_Bronze-Amani_catalog-4.pdf, pagine 2-5 (texture da pag. 3)",
+   "note": "uso: scritta «Floor» (Bronze Amani 120x280 Lap Ret) a pag. 4, DCOF ≥ 0,42 e R10A naturale a pag. 3, battiscopa e gradini a pag. 5 → pavimento; l'ambientazione a pag. 2 e 5 mostra il prodotto anche a parete (schienale cucina), senza scritta «wall»/«rivestimento» → rivestimento. Ambiente interno/esterno non indicato. Categoria scritta: «MARMO E PIETRA». Materiale non scritto (solo ISO 13006 - G - BIa). Variazione cromatica V2 (Moderate). 120×280 solo 6 mm e solo Lap Ret (11 pattern); 60×120 solo 8,8 mm, Nat Ret (R10A) e Lap Ret. Decoro: Mosaico 30×30 Lap Ret (6 mm). Pezzi speciali 8,8 mm: battiscopa 6,5×120, gradini costa retta 33×120 (anche SX/DX, solo su richiesta).",
+   "colori": [
+    {
+     "n": "Bronze Amani",
+     "code": "",
+     "hex": "#685950",
+     "img": "/img/ava/ava_bronze_amani/bronze_amani.jpg",
+     "th": "/img/ava/ava_bronze_amani/bronze_amani_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra a tutta altezza pag. 3 (metà sinistra), 96 ppi nativi (796×1213 px originali)."
+    }
+   ]
+  },
+  {
+   "id": "ava_calacatta_oro",
+   "n": "Calacatta Oro",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_calacatta_oro/scheda.pdf",
+   "fonte": "LF_AVA_Calacatta-Oro_catalog-1.pdf, pagine 1-5",
+   "note": "uso: didascalie «Floor» e «Wall» a pag. 4-5, DCOF ≥ 0,42, R10A naturale (8,8 mm), gradini e battiscopa a pag. 5 → pavimento e rivestimento. Ambiente interno/esterno non indicato (la didascalia «Bathtub Lap 20 mm» riguarda una vasca, non una versione outdoor). Categoria nel PDF: «MARMO E PIETRA». Materiale non scritto (solo ISO 13006 - G - BIa). 6 mm: 160×320 e 120×280 Nat Ret e Lap Ret, 120×120 solo Lap Ret; 8,8 mm (R10A naturale): 60×120 Nat Ret e Lap Ret. Shade spectrum V3 high. Pezzi speciali: gradini costa retta 33×160 e 33×120 (anche SX/DX, su richiesta), battiscopa 6,5×120. Nessun decoro/mosaico. Il Catalogo Generale ha la stessa collezione a 72 ppi (meno pixel), quindi è stata usata la foto del PDF della collezione.",
+   "colori": [
+    {
+     "n": "Calacatta Oro",
+     "code": "",
+     "hex": "#F1EEE4",
+     "img": "/img/ava/ava_calacatta_oro/calacatta_oro.jpg",
+     "th": "/img/ava/ava_calacatta_oro/calacatta_oro_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto superficie a tutta altezza pag. 3 (metà sinistra), nativa 796×1213 px a 96 ppi."
+    }
+   ]
+  },
+  {
+   "id": "ava_ca_foscari",
+   "n": "Ca’ Foscari",
+   "d": "Soluzioni di continuità tra indoor e outdoor",
+   "materiale": "gres porcellanato",
+   "effetto": "legno",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "40×120 cm",
+    "20×120 cm",
+    "7,5×45 cm",
+    "7,5×40,7 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_ca_foscari/scheda.pdf",
+   "fonte": "LF_AVA_Ca-Foscari_catalog-1.pdf, pagine 1-3, 12-18 (dati da pag. 2, 3, 13-15; texture da pag. 13-14)",
+   "note": "uso: R10A / R11C, DCOF ≥ 0,42, battiscopa, gradini, gradoni e griglie a pag. 15, posa chevron «parquet» a pag. 16-18 → pavimento; il PDF non parla di parete/rivestimento. ambiente: «Indoor 8,8 mm» e «Outdoor 8,8 mm R11 / Outdoor 20 mm R11» a pag. 2, «Soluzioni di continuità tra indoor e outdoor» a pag. 3 → interno ed esterno. Materiale: «GRES PORCELLANATO IN MASSA / Full body porcelain tiles». Categoria scritta: «LEGNO». Variazione V2 (Moderate). Interno 8,8 mm R10A: 20×120 Nat Ret, Chevron 7,5×40,7 Nat (SX/DX), Listello 7,5×45 Nat. Esterno: 20×120 Nat Ret 8,8 mm R11C e 40×120 Nat Ret 20 mm R11C, tutti i colori. Pag. 3 cita anche un formato 40x80 R11 che però non compare nelle tabelle tecniche (non inserito). Pezzi speciali 8,8 mm: battiscopa 6,5×120, gradini costa retta 33×120 (anche SX/DX); 20 mm: gradone 40×120 costa toro/costa retta (anche angolo SX/DX), griglia 20×60 (anche angolo SX/DX) e griglia 8,8 mm 20×120 R11C; gradini/gradoni/griglie solo su richiesta.",
+   "esterno": {
+    "colori": [
+     "Lino",
+     "Canapa",
+     "Avana",
+     "Tabacco",
+     "Moro"
+    ],
+    "formati": [
+     "40×120 cm",
+     "20×120 cm"
+    ],
+    "spessori": [
+     "20 mm",
+     "8,8 mm"
+    ],
+    "finiture": [
+     "naturale rettificato R11C"
+    ],
+    "prova": "pag. 2: «Outdoor 8,8 mm R11: 20x120 Nat Ret» e «Outdoor 20 mm R11: 40x120 Nat Ret»; pag. 15: tabelle 8,8 mm R11C (20x120) e 20 mm R11C (40x120) per tutti i colori; 40×120 solo 20 mm, 20×120 esterno 8,8 mm"
+   },
+   "colori": [
+    {
+     "n": "Lino",
+     "code": "",
+     "hex": "#D6CFBD",
+     "img": "/img/ava/ava_ca_foscari/lino.jpg",
+     "th": "/img/ava/ava_ca_foscari/lino_t.jpg",
+     "px": 577,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Texture: riquadro campione «Lino» pag. 13 (in alto a sinistra), sotto il nome stampato, 72 ppi nativi (anche il Catalogo Generale è a 72 ppi); il campione mostra più listoni 20x120 posati, con le fughe. texture: risoluzione originale bassa (298 px)."
+    },
+    {
+     "n": "Canapa",
+     "code": "",
+     "hex": "#C6B297",
+     "img": "/img/ava/ava_ca_foscari/canapa.jpg",
+     "th": "/img/ava/ava_ca_foscari/canapa_t.jpg",
+     "px": 577,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Texture: riquadro campione «Canapa» pag. 13 (in basso a sinistra), sotto il nome stampato, 72 ppi nativi (anche il Catalogo Generale è a 72 ppi); il campione mostra più listoni 20x120 posati, con le fughe. texture: risoluzione originale bassa (298 px)."
+    },
+    {
+     "n": "Avana",
+     "code": "",
+     "hex": "#B79D7C",
+     "img": "/img/ava/ava_ca_foscari/avana.jpg",
+     "th": "/img/ava/ava_ca_foscari/avana_t.jpg",
+     "px": 577,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Texture: riquadro campione «Avana» pag. 13 (in alto a destra), sotto il nome stampato, 72 ppi nativi (anche il Catalogo Generale è a 72 ppi); il campione mostra più listoni 20x120 posati, con le fughe. texture: risoluzione originale bassa (298 px)."
+    },
+    {
+     "n": "Tabacco",
+     "code": "",
+     "hex": "#A08566",
+     "img": "/img/ava/ava_ca_foscari/tabacco.jpg",
+     "th": "/img/ava/ava_ca_foscari/tabacco_t.jpg",
+     "px": 577,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Texture: riquadro campione «Tabacco» pag. 14 (in alto a sinistra), sotto il nome stampato, 72 ppi nativi (anche il Catalogo Generale è a 72 ppi); il campione mostra più listoni 20x120 posati, con le fughe. texture: risoluzione originale bassa (298 px)."
+    },
+    {
+     "n": "Moro",
+     "code": "",
+     "hex": "#7C6A53",
+     "img": "/img/ava/ava_ca_foscari/moro.jpg",
+     "th": "/img/ava/ava_ca_foscari/moro_t.jpg",
+     "px": 577,
+     "formati": [
+      "40×120 cm",
+      "20×120 cm"
+     ],
+     "finiture": [
+      "naturale rettificato"
+     ],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Texture: riquadro campione «Moro» pag. 13 (in basso a destra), sotto il nome stampato, 72 ppi nativi (anche il Catalogo Generale è a 72 ppi); il campione mostra più listoni 20x120 posati, con le fughe. texture: risoluzione originale bassa (298 px). Moro non esiste in Chevron 7,5×40,7 né Listello 7,5×45."
+    }
+   ]
+  },
+  {
+   "id": "ava_chianca",
+   "n": "Chianca",
+   "d": "Chianca è la serie multiformato in gres porcellanato a marchio La Fabbrica",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "100×100 cm",
+    "60×120 cm",
+    "60,9×60,9 cm",
+    "40,6×60,9 cm",
+    "40,6×40,6 cm",
+    "20,3×40,6 cm",
+    "20,3×20,3 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_chianca/scheda.pdf",
+   "fonte": "LF_AVA_Chianca_Catalog.pdf, pagine 2-21 (texture dalle fasce colore di pag. 4)",
+   "note": "uso: didascalie «Wall» e «Floor» nelle ambientazioni (pag. 6-17), R10B e «OUTDOOR R11C» a pag. 4, battiscopa, gradini e gradoni a pag. 21; a pag. 2 «adatta per ogni soluzione progettuale sia indoor, sia outdoor». 20 mm: solo 100×100 Nat Ret, OUTDOOR R11C (pavimento esterno). 8,8 mm R10B: tutti i formati; 100×100 e 60×120 Nat Ret, formati modulari (60,9×60,9, 40,6×60,9, 40,6×40,6, 20,3×40,6, 20,3×20,3) solo Nat. 8,8 mm OUTDOOR R11C: 100×100 Nat Ret per tutti i colori; formati modulari R11C solo Ostuni e Cursi. Categoria nel PDF: «MARMO E PIETRA» (ispirata alla roccia calcarea pugliese). Decori: Mosaico 30×30 e Spaccatella 30×30 (Nat Ret) per tutti i colori; Muretto 3D 61×15 (Nat, spessore 7-11 mm) con angoli interno/esterno 20×10×15 per Otranto, Ostuni e Carparo. Pezzi speciali: battiscopa 7×100 e 7×60, gradino costa retta 33×120 anche SX/DX (8,8 mm); Elemento Elle monolitico 15×30×4 R11C; gradone 50×100 anche SX/DX e costa toro (20 mm); vari solo su richiesta. Grafiche: 8 (100×100), 16 (60×120), 27 (60,9×60,9 e 40,6×60,9), 32 (40,6×40,6), 54 (20,3×40,6 e 20,3×20,3), 8 (100×100 20 mm). Schemi di posa modulari a pag. 20. Shade spectrum V2 moderate. Foto dei colori a 72 ppi: il Catalogo Generale (pag. 151) ha le stesse fasce, non più grandi.",
+   "esterno": {
+    "colori": [
+     "Otranto",
+     "Ostuni",
+     "Cursi",
+     "Carparo"
+    ],
+    "formati": [
+     "100×100 cm",
+     "60,9×60,9 cm",
+     "40,6×60,9 cm",
+     "40,6×40,6 cm",
+     "20,3×40,6 cm",
+     "20,3×20,3 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato",
+     "naturale"
+    ],
+    "prova": "pag. 4: «8,8 mm OUTDOOR R11C» (100×100 per tutti i colori; formati modulari solo Ostuni e Cursi) e «20 mm OUTDOOR R11C» 100×100; pag. 18-19 tabelle per colore; pag. 2: «sia indoor, sia outdoor»"
+   },
+   "colori": [
+    {
+     "n": "Otranto",
+     "code": "",
+     "hex": "#CCC5BA",
+     "img": "/img/ava/ava_chianca/otranto.jpg",
+     "th": "/img/ava/ava_chianca/otranto_t.jpg",
+     "px": 414,
+     "formati": [],
+     "finiture": [],
+     "note": "Esterno: solo 100×100 (8,8 mm R11C e 20 mm R11C); formati modulari solo 8,8 mm R10B. Texture: fascia colore di pag. 4 (597×229 px nativi), ritagliata a destra della scritta. texture: risoluzione originale bassa (193 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Ostuni",
+     "code": "",
+     "hex": "#DBD3C6",
+     "img": "/img/ava/ava_chianca/ostuni.jpg",
+     "th": "/img/ava/ava_chianca/ostuni_t.jpg",
+     "px": 414,
+     "formati": [],
+     "finiture": [],
+     "note": "Esterno: 100×100 (8,8 mm e 20 mm R11C) e formati modulari 8,8 mm OUTDOOR R11C. Texture: fascia colore di pag. 4 (597×230 px nativi), ritagliata a destra della scritta. texture: risoluzione originale bassa (189 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Cursi",
+     "code": "",
+     "hex": "#CFC0AD",
+     "img": "/img/ava/ava_chianca/cursi.jpg",
+     "th": "/img/ava/ava_chianca/cursi_t.jpg",
+     "px": 414,
+     "formati": [],
+     "finiture": [],
+     "note": "Esterno: 100×100 (8,8 mm e 20 mm R11C) e formati modulari 8,8 mm OUTDOOR R11C; decoro Muretto 3D non disponibile. Texture: fascia colore di pag. 4 (597×229 px nativi), ritagliata a destra della scritta. texture: risoluzione originale bassa (188 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Carparo",
+     "code": "",
+     "hex": "#D1B898",
+     "img": "/img/ava/ava_chianca/carparo.jpg",
+     "th": "/img/ava/ava_chianca/carparo_t.jpg",
+     "px": 414,
+     "formati": [],
+     "finiture": [],
+     "note": "Esterno: solo 100×100 (8,8 mm R11C e 20 mm R11C); formati modulari solo 8,8 mm R10B. Texture: fascia colore di pag. 4 (597×229 px nativi), ritagliata a destra della scritta. texture: risoluzione originale bassa (214 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_cotto_del_casale",
+   "n": "Cotto del Casale",
+   "d": "sintonia tra tradizione e contemporaneità",
+   "materiale": "",
+   "effetto": "terracotta",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "60,9×60,9 cm",
+    "40,6×60,9 cm",
+    "40,6×40,6 cm",
+    "20,3×40,6 cm",
+    "20,3×20,3 cm"
+   ],
+   "spessori": [
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_cotto_del_casale/scheda.pdf",
+   "fonte": "LF_AVA_Cotto-del-Casale_Catalog.pdf, pagine 2-12 (texture: piastrella frontale 315×315 px alle pagine 3-6; il Catalogo Generale pag. 187 ha solo strisce con fughe e scritte, non più grandi)",
+   "note": "uso: didascalie «FLOOR» a pag. 7 e 12, versione «OUTDOOR 8,8 mm R11-C», battiscopa, gradini ed elle monolitico a pag. 12; nessuna prova di rivestimento per questa serie (la «WALL» di pag. 7 è Brush White Bone, altro prodotto). ambiente: pagine colore con «INDOOR» e «OUTDOOR»; versione outdoor R11C solo per Bruno e Rosado (Ocra e Greige solo indoor). Materiale: il PDF della collezione non lo scrive (il catalogo generale indica «Gres Porcellanato»). Effetto: il PDF parla di «interpretazione di un cotto originale» / «unique terracotta». Finitura: solo «Nat» (non è scritto se rettificato). Sistema modulare (schemi di posa a pag. 13-14). Decori per tutti i colori: Capri 20,3×20,3 lucido, Pompei 20,3×20,3 satinato, Pompei Fascia 10×40,6 satinato (venduti a composizione). Pezzi speciali: battiscopa 7×60,9, gradino costa retta 33×60,9 e SX/DX (su richiesta); elle monolitico estruso 15×30×4 R11C solo Bruno e Rosado (su richiesta).",
+   "colori": [
+    {
+     "n": "Bruno",
+     "code": "",
+     "hex": "#AF7C5A",
+     "img": "/img/ava/ava_cotto_del_casale/bruno.jpg",
+     "th": "/img/ava/ava_cotto_del_casale/bruno_t.jpg",
+     "px": 285,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (285 px). Anche versione outdoor R11C.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Rosado",
+     "code": "",
+     "hex": "#C69A77",
+     "img": "/img/ava/ava_cotto_del_casale/rosado.jpg",
+     "th": "/img/ava/ava_cotto_del_casale/rosado_t.jpg",
+     "px": 285,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (285 px). Anche versione outdoor R11C.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Ocra",
+     "code": "",
+     "hex": "#CBB08E",
+     "img": "/img/ava/ava_cotto_del_casale/ocra.jpg",
+     "th": "/img/ava/ava_cotto_del_casale/ocra_t.jpg",
+     "px": 285,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (285 px). Solo indoor.",
+     "ambiente": [
+      "interno"
+     ]
+    },
+    {
+     "n": "Greige",
+     "code": "",
+     "hex": "#BCB0A1",
+     "img": "/img/ava/ava_cotto_del_casale/greige.jpg",
+     "th": "/img/ava/ava_cotto_del_casale/greige_t.jpg",
+     "px": 285,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (285 px). Solo indoor.",
+     "ambiente": [
+      "interno"
+     ]
+    }
+   ],
+   "esterno": {
+    "colori": [
+     "Bruno",
+     "Rosado"
+    ],
+    "formati": [
+     "60,9×60,9 cm",
+     "40,6×60,9 cm",
+     "40,6×40,6 cm",
+     "20,3×40,6 cm",
+     "20,3×20,3 cm"
+    ],
+    "spessori": [
+     "8,8 mm"
+    ],
+    "finiture": [
+     "naturale"
+    ],
+    "prova": "pag. 8-9: «OUTDOOR 8,8 mm R11-C» per Bruno e Rosado; pag. 12: tabella «8,8 R11C» solo Bruno e Rosado"
+   }
+  },
+  {
+   "id": "ava_deep_stone",
+   "n": "Deep Stone",
+   "d": "Superfici di straordinaria bellezza per un dècor elegante e sofisticato.",
+   "materiale": "",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_deep_stone/scheda.pdf",
+   "fonte": "LF_AVA_Deep-Stone_Catalog-2.pdf, pagine 2-4, 8-20",
+   "note": "uso: didascalie «Wall & Floor» a pag. 8-9, «Floor» e «Wall» a pag. 11-17, R10B, DCOF ≥ 0,42, battiscopa e gradini a pag. 20 → pavimento e rivestimento. Ambiente interno/esterno non indicato. Categoria nel PDF: «Marmo e Pietra», «ispirata all’essenza della pietra ardesia» → pietra. Materiale non scritto in modo esplicito (solo ISO 13006 - G - BIa). 6 mm: solo 120×280 (Nat Ret con «Materic Touch» per la superficie naturale, e Lap Ret); 8,8 mm: 60×120 Nat Ret R10B e Lap Ret, 60×60 e 30×60 solo Nat Ret R10B. Il PDF avverte che struttura e tono tra 6 mm e 8,8 mm potrebbero presentare differenze. Decori (8,8 mm, Nat Ret R10B, in tutti e 4 i colori): Mosaico 30×30, Stick 30×60, Muretto 30×60. Pezzi speciali: battiscopa 7×60, gradino costa retta 33×120 (anche SX/DX, su richiesta). Stonalizzazione V4 random. Il Catalogo Generale ha strisce campione più piccole (72 ppi), usato il PDF della collezione.",
+   "colori": [
+    {
+     "n": "Blue",
+     "code": "",
+     "hex": "#4E5055",
+     "img": "/img/ava/ava_deep_stone/blue.jpg",
+     "th": "/img/ava/ava_deep_stone/blue_t.jpg",
+     "px": 945,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia lastra a tutta altezza pag. 18, ritagliata evitando la scritta del nome e l'ombra sui bordi (nativa 96 ppi). texture: risoluzione originale bassa (229 px)."
+    },
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#E2DCD6",
+     "img": "/img/ava/ava_deep_stone/white.jpg",
+     "th": "/img/ava/ava_deep_stone/white_t.jpg",
+     "px": 902,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia lastra a tutta altezza pag. 18, ritagliata evitando la scritta del nome e l'ombra sui bordi (nativa 96 ppi). texture: risoluzione originale bassa (225 px)."
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#D0C1AE",
+     "img": "/img/ava/ava_deep_stone/beige.jpg",
+     "th": "/img/ava/ava_deep_stone/beige_t.jpg",
+     "px": 902,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia lastra a tutta altezza pag. 18, ritagliata evitando la scritta del nome e l'ombra sui bordi (nativa 96 ppi). texture: risoluzione originale bassa (230 px)."
+    },
+    {
+     "n": "Natural",
+     "code": "",
+     "hex": "#86735C",
+     "img": "/img/ava/ava_deep_stone/natural.jpg",
+     "th": "/img/ava/ava_deep_stone/natural_t.jpg",
+     "px": 816,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia lastra a tutta altezza pag. 18, ritagliata evitando la scritta del nome e l'ombra sui bordi (nativa 96 ppi). texture: risoluzione originale bassa (236 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_gemstone",
+   "n": "Gemstone",
+   "d": "una pietra esclusiva di origine vulcanica, di una bellezza unica quanto rara",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "lappato rettificato",
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_gemstone/scheda.pdf",
+   "fonte": "LF_AVA_Gemstone_catalog.pdf, pagine 2-6, 9-10, 13, 16, 19-22 (texture da pag. 5, 9, 13, 16)",
+   "note": "uso: «Wall & Floor» a pag. 6 e 10, «Wall» / «Floor» nelle ambientazioni (pag. 7, 11, 14, 17); pavimento anche da R10B, DCOF ≥ 0,42, battiscopa e gradini (pag. 4, 21). Ambiente: il PDF non dice interno/esterno e non c'è versione outdoor. 120×280 solo 6 mm lappato rettificato; 60×120 8,8 mm naturale rettificato (R10B) e lappato rettificato; 60×60 e 30×60 solo 8,8 mm naturale rettificato. Decori 8,8 mm in tutti i colori: Mosaico 30×30 e Muretto 30×30 (Nat Ret), Octagone 30×28 e Rombo 31×31 (Lap Ret). Pezzi speciali: battiscopa 7×60, gradino costa retta 33×120 e gradino costa retta SX-DX 33×120 (Nat Ret e Lap Ret). Materiale: «Lastre in gres porcellanato pressate a secco» e «Gres porcellanato colorato in massa» (pag. 4, 22). Stonalizzazione V3. Effetto: nel PDF «MARMO E PIETRA»; il Catalogo Generale la classifica «Stone Selection», quindi pietra.",
+   "colori": [
+    {
+     "n": "Ocean",
+     "code": "",
+     "hex": "#9F9C9A",
+     "img": "/img/ava/ava_gemstone/ocean.jpg",
+     "th": "/img/ava/ava_gemstone/ocean_t.jpg",
+     "px": 485,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (332 px), foto ravvicinata della lastra a pag. 5 (72 ppi; anche il Catalogo Generale ha solo 72 ppi)."
+    },
+    {
+     "n": "Natural",
+     "code": "",
+     "hex": "#E8E5DE",
+     "img": "/img/ava/ava_gemstone/natural.jpg",
+     "th": "/img/ava/ava_gemstone/natural_t.jpg",
+     "px": 483,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (397 px), foto ravvicinata della lastra a pag. 9 (72 ppi; anche il Catalogo Generale ha solo 72 ppi)."
+    },
+    {
+     "n": "Desert",
+     "code": "",
+     "hex": "#CCBDAE",
+     "img": "/img/ava/ava_gemstone/desert.jpg",
+     "th": "/img/ava/ava_gemstone/desert_t.jpg",
+     "px": 737,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (335 px), foto ravvicinata della lastra a pag. 13 (72 ppi; anche il Catalogo Generale ha solo 72 ppi)."
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#A49A91",
+     "img": "/img/ava/ava_gemstone/grey.jpg",
+     "th": "/img/ava/ava_gemstone/grey_t.jpg",
+     "px": 677,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (265 px), foto ravvicinata della lastra a pag. 16 (72 ppi; anche il Catalogo Generale ha solo 72 ppi)."
+    }
+   ]
+  },
+  {
+   "id": "ava_graniti",
+   "n": "Graniti",
+   "d": "Texture ricche e dettagli tridimensionali si fondono",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_graniti/scheda.pdf",
+   "fonte": "LF_AVA_Graniti_Preview-Catalog.pdf, pagine 1-23 (texture da pag. 5; dati da pag. 5 e 22). Catalogo generale pag. 98-105 controllato: campioni più piccoli (229 px), non usato.",
+   "note": "uso: didascalie «Wall» e «Floor» (es. pag. 7, 8, 12, 16, 20; «Wall & Floor» Dark Paradise pag. 15), «R10B» sul 60×120, battiscopa (Skirting) e gradini a pag. 22. Ambiente interno/esterno non indicato. Effetto: «Stone Selection» a pag. 1. 120×280 solo 6 mm; 60×120 solo 8,8 mm Nat Ret R10B. Tutto Nat Ret con «Materic Touch Technology». Nella tabella del 120×280 ci sono due colonne Nat Ret con price code diversi: Dark Paradise e Sequoia White M158, Alaska White e Terranova M162. Grafiche: 120×280 3 (Sequoia White 4), 60×120 15. Pezzi speciali (8,8 mm Nat Ret R10B): battiscopa 6,5×120, gradino costa retta 33×120 e gradino SX/DX 33×120 (su richiesta). Il PDF avverte possibili differenze di struttura e tono tra 6 mm e 8,8 mm. Stonalizzazione V2. Catalogo «Preview». Texture a bassa risoluzione: la foto frontale pulita più grande è la striscia della pagina Overview; le foto ambientate più grandi hanno fughe, ombre e mobili. Esterni: nessuna versione da esterno nel PDF né nel catalogo generale (né outdoor, né 20 mm, né R11).",
+   "colori": [
+    {
+     "n": "Alaska White",
+     "code": "",
+     "hex": "#C3B4A0",
+     "img": "/img/ava/ava_graniti/alaska_white.jpg",
+     "th": "/img/ava/ava_graniti/alaska_white_t.jpg",
+     "px": 564,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia campione della pagina «Overview» (pag. 5), parte sotto il nome. texture: risoluzione originale bassa (226 px di lato corto, 96 ppi). Foto e ambientazioni a pag. 6-9."
+    },
+    {
+     "n": "Terranova",
+     "code": "",
+     "hex": "#72716E",
+     "img": "/img/ava/ava_graniti/terranova.jpg",
+     "th": "/img/ava/ava_graniti/terranova_t.jpg",
+     "px": 564,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia campione della pagina «Overview» (pag. 5), parte sotto il nome. texture: risoluzione originale bassa (circa 240 px di lato corto, 96 ppi). Foto e ambientazioni a pag. 10-13."
+    },
+    {
+     "n": "Dark Paradise",
+     "code": "",
+     "hex": "#2E2C2B",
+     "img": "/img/ava/ava_graniti/dark_paradise.jpg",
+     "th": "/img/ava/ava_graniti/dark_paradise_t.jpg",
+     "px": 564,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia campione della pagina «Overview» (pag. 5), parte sotto il nome. texture: risoluzione originale bassa (circa 240 px di lato corto, 96 ppi). Foto e ambientazioni a pag. 14-17."
+    },
+    {
+     "n": "Sequoia White",
+     "code": "",
+     "hex": "#CCCBC7",
+     "img": "/img/ava/ava_graniti/sequoia_white.jpg",
+     "th": "/img/ava/ava_graniti/sequoia_white_t.jpg",
+     "px": 564,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: striscia campione della pagina «Overview» (pag. 5), parte sotto il nome. texture: risoluzione originale bassa (circa 240 px di lato corto, 96 ppi). Foto e ambientazioni a pag. 18-21."
+    }
+   ]
+  },
+  {
+   "id": "ava_green_sky",
+   "n": "Green Sky",
+   "d": "Estetica maestosa dai variegati contrasti",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm"
+   ],
+   "spessori": [
+    "6 mm"
+   ],
+   "finiture": [
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_green_sky/scheda.pdf",
+   "fonte": "LF_AVA_Green-Sky_Catalog-1.pdf, pagine 2-6; texture da LF_AVA_Catalogo-Generale_2026.pdf, pagina 77 (foto lastra più grande: 597×910 px nativi, contro 352×821 nel PDF della collezione)",
+   "note": "uso: didascalia «Wall GREEN SKY 120x280 Lap Ret» a pag. 3 → rivestimento; nelle caratteristiche tecniche a pag. 6 «DCOF ≥ 0,42 (naturale)» → pavimento (dubbio: Green Sky esiste solo Lap Ret, nessun battiscopa/gradino). Ambiente interno/esterno non indicato. Materiale non scritto nel PDF della collezione (solo ISO 13006 - G - BIa; «Gres Porcellanato» solo nel catalogo generale). Effetto: intestazione «MARMO E PIETRA» a pag. 5, «Marble Selection» nel catalogo generale. Unico articolo: 120×280 6 mm Lap Ret, codice 278002. Lastre con 4 grafiche continue. Nessun pezzo speciale, decoro o mosaico. Stonalizzazione V3 (dal catalogo generale). Esterni: nessuna versione da esterno nel PDF né nel catalogo generale (né outdoor, né 20 mm, né R11).",
+   "colori": [
+    {
+     "n": "Green Sky",
+     "code": "",
+     "hex": "#AAB3A0",
+     "img": "/img/ava/ava_green_sky/green_sky.jpg",
+     "th": "/img/ava/ava_green_sky/green_sky_t.jpg",
+     "px": 863,
+     "formati": [],
+     "finiture": [],
+     "note": "Colore unico. Texture dalla foto lastra del catalogo generale pag. 77 (591×863 px nativi)."
+    }
+   ]
+  },
+  {
+   "id": "ava_green_sunset",
+   "n": "Green Sunset",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "60×120 cm"
+   ],
+   "spessori": [
+    "8,8 mm"
+   ],
+   "finiture": [
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_green_sunset/scheda.pdf",
+   "fonte": "LF_AVA_Green-Sunset_catalog.pdf, pagine 2-4",
+   "note": "uso: didascalie «Wall GREEN SUNSET 60x120 Lap Ret» e «Floor GREEN SUNSET 60x120 Lap Ret» a pag. 2-3, DCOF ≥ 0,42, battiscopa e gradini a pag. 4 → pavimento e rivestimento. Ambiente interno/esterno non indicato. Categoria nel PDF: «MARBLE SELECTION». Materiale non scritto (solo ISO 13006 - G - BIa). Un solo formato 60×120, 8,8 mm, solo Lap Ret; 20 pattern grafici. Shade V3. Pezzi speciali: battiscopa 6,5×120, gradini costa retta 33×120 (anche SX/DX, su richiesta). Nessun decoro/mosaico. La frase del PDF («Un’anima primordiale si svela in un verde cenere, tra vene granata e frammenti di quarzo.») supera 80 caratteri, quindi «d» è vuoto. Il Catalogo Generale ha le foto a 72 ppi (meno pixel), usato il PDF della collezione.",
+   "colori": [
+    {
+     "n": "Green Sunset",
+     "code": "",
+     "hex": "#97998D",
+     "img": "/img/ava/ava_green_sunset/green_sunset.jpg",
+     "th": "/img/ava/ava_green_sunset/green_sunset_t.jpg",
+     "px": 692,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: una piastrella intera 60×120 della foto pavimento vista dall'alto a pag. 3, ritagliata dentro le fughe (nativa 144 ppi). texture: risoluzione originale bassa (340 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_grooves",
+   "n": "Grooves",
+   "d": "Grooves è un rivestimento ceramico versatile ed essenziale",
+   "materiale": "monocottura in pasta bianca",
+   "effetto": "materico",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "7,5×15 cm"
+   ],
+   "spessori": [
+    "9 mm"
+   ],
+   "finiture": [
+    "opaco (matte)",
+    "lucido (glossy)"
+   ],
+   "pdf": "/img/ava/ava_grooves/scheda.pdf",
+   "fonte": "LF_AVA_Grooves_Catalog.pdf, pagine 3, 6, 8, 11, 13, 15, 16",
+   "note": "uso: «Da rivestimento / Wall tile(s)» a pag. 3 e 16 (legenda: simbolo «da rivestimento»); nessuna prova di pavimento. Ambiente interno/esterno non scritto. Materiale: «Monocottura in pasta bianca / White body single-fired wall tile» (non gres porcellanato), UNI EN 14411 - ISO 13006 B III a - GL, variazione V1. Categoria scritta a pag. 16: «MATERICO». Finiture: «FINISH OPACO / LUCIDO - MATTE / GLOSSY». Ogni colore esiste in 7,5×15 liscio e in 7,5×15 «decor mix» (mix casuale di 5 strutture decorative a rilievo), entrambi Matte e Glossy; pezzo speciale Jolly 1,2×20 Matte/Glossy. Bordi naturali, fughe consigliate min. 2 mm. Texture: il formato è piccolo (7,5×15), quindi le texture sono porzioni frontali di parete posata prese dalle ambientazioni e contengono le fughe tra le piastrelle; non esistono nel PDF foto grandi di una superficie senza fughe; la luce delle ambientazioni crea leggere sfumature/ombre.",
+   "colori": [
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#D4D0CB",
+     "img": "/img/ava/ava_grooves/white.jpg",
+     "th": "/img/ava/ava_grooves/white_t.jpg",
+     "px": 790,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: parete WHITE DECOR MIX Matte, pag. 6 (foto destra, sopra gli oggetti), 144 ppi nativi; contiene fughe e una leggera lama di luce. texture: risoluzione originale bassa (280 px lato corto)."
+    },
+    {
+     "n": "Bone",
+     "code": "",
+     "hex": "#A89F8F",
+     "img": "/img/ava/ava_grooves/bone.jpg",
+     "th": "/img/ava/ava_grooves/bone_t.jpg",
+     "px": 640,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: parete BONE DECOR MIX Matte nella nicchia, pag. 8, 144 ppi nativi; contiene fughe. texture: risoluzione originale bassa (376 px lato corto)."
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#BDBAB3",
+     "img": "/img/ava/ava_grooves/grey.jpg",
+     "th": "/img/ava/ava_grooves/grey_t.jpg",
+     "px": 950,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: parete cucina GREY 7,5x15 Matte - Glossy (mix di piastrelle lisce opache e lucide), pag. 11 a sinistra, 144 ppi nativi; contiene fughe. texture: risoluzione originale bassa (460 px lato corto)."
+    },
+    {
+     "n": "Sage",
+     "code": "",
+     "hex": "#68726D",
+     "img": "/img/ava/ava_grooves/sage.jpg",
+     "th": "/img/ava/ava_grooves/sage_t.jpg",
+     "px": 920,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: parete bagno SAGE DECOR MIX Matte, pag. 13 (a destra della vasca), 144 ppi nativi; contiene fughe e leggere ombre."
+    }
+   ]
+  },
+  {
+   "id": "ava_honey_wood",
+   "n": "Honey Wood",
+   "d": "Honey Wood è un’inedita interpretazione del legno naturale",
+   "materiale": "gres porcellanato",
+   "effetto": "legno",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "esterno": {
+    "colori": [
+     "Noce",
+     "Rovere",
+     "Olmo",
+     "Bricola",
+     "Larice"
+    ],
+    "formati": [
+     "40×120 cm",
+     "20×120 cm"
+    ],
+    "spessori": [
+     "20 mm",
+     "8,8 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 5: «OUTDOOR R11C» 20×120 8,8 mm (tutte e 5 le essenze, codici 191051-191055 a pag. 57) e 40×120 20 mm «Mix: Rovere, Bricola, Olmo» (codice 191046); pag. 53-56 «Outdoor Mix», «L’indoor e l’outdoor»"
+   },
+   "decorativa": false,
+   "formati": [
+    "40×240 cm",
+    "24×240 cm",
+    "40×120 cm",
+    "30×120 cm",
+    "20×120 cm",
+    "15×85 cm",
+    "7,5×40,7 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "9,5 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_honey_wood/scheda.pdf",
+   "fonte": "LF_AVA_Honey-Wood_Catalog.pdf, pagine 4-7, 11, 14, 18, 22, 28-29, 32, 39, 45, 48, 52-53, 56-58 (texture da pag. 11, foto listoni 144 ppi; il Catalogo Generale ha solo 72 ppi)",
+   "note": "uso: «R10B/R11C», «Floor», battiscopa (Skirting), gradini (Gradino/Gradone) e Outdoor Mix 20 mm a pag. 5, 57-58; «Wall» con Bricola 24×240 a pag. 29 e decori a parete a pag. 39-44; ambiente: «Indoor and outdoor» e Outdoor Mix 20 mm R11C a pag. 53-56. Spessori per formato: 40×240 e 24×240 solo 6 mm; 30×120 e 20×120 8,8 mm R10B; 20×120 anche 8,8 mm R11C «OUTDOOR» (pag. 5) in tutte e 5 le essenze; Chevron XL 15×85 9,5 mm (finitura naturale, non rettificato); Chevron Mix 7,5×40,7 8,8 mm (naturale). 40×120 solo 20 mm R11C «Outdoor Mix» (mix di Rovere, Bricola e Olmo, codice 191046): pavimento esterno. 7,5×40,7 solo «Chevron Mix» (mix di Noce, Rovere, Bricola e Olmo, codice 191047). Chevron XL anche come «Chevron XL Mix» (Noce, Rovere, Bricola, codice 191200). Decori (mix delle 5 essenze con Statuario o Pierres des Châteaux Chambord, 8,8 mm Nat Ret): Rigato 30×30, Inciso 30×30, Spina 30×34, Rombo 30×35, Tapparella 20×120. Pezzi speciali: battiscopa 6,5×120, gradino costa retta 33×120 (anche SX/DX), gradone 40×120 20 mm (costa toro/costa retta, anche angolo SX/DX). Il PDF avverte che struttura e tono tra 6 mm e 8,8 mm potrebbero presentare differenze. Stonalizzazione V2. Il PDF chiama le 5 essenze tutte su fondo color «Miele».",
+   "colori": [
+    {
+     "n": "Noce",
+     "code": "",
+     "hex": "#B7987C",
+     "img": "/img/ava/ava_honey_wood/noce.jpg",
+     "th": "/img/ava/ava_honey_wood/noce_t.jpg",
+     "px": 1080,
+     "formati": [
+      "40×240 cm",
+      "24×240 cm",
+      "30×120 cm",
+      "20×120 cm",
+      "15×85 cm"
+     ],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (360 px di larghezza, foto listone a pag. 11).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Rovere",
+     "code": "",
+     "hex": "#CEAE8A",
+     "img": "/img/ava/ava_honey_wood/rovere.jpg",
+     "th": "/img/ava/ava_honey_wood/rovere_t.jpg",
+     "px": 1080,
+     "formati": [
+      "40×240 cm",
+      "24×240 cm",
+      "30×120 cm",
+      "20×120 cm",
+      "15×85 cm"
+     ],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (368 px di larghezza, foto listone a pag. 11).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Olmo",
+     "code": "",
+     "hex": "#CAA987",
+     "img": "/img/ava/ava_honey_wood/olmo.jpg",
+     "th": "/img/ava/ava_honey_wood/olmo_t.jpg",
+     "px": 1080,
+     "formati": [
+      "40×240 cm",
+      "24×240 cm",
+      "30×120 cm",
+      "20×120 cm"
+     ],
+     "finiture": [],
+     "note": "Chevron XL 15×85 non disponibile in Olmo; presente nel Chevron Mix e nell'Outdoor Mix. texture: risoluzione originale bassa (368 px di larghezza, foto listone a pag. 11).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Bricola",
+     "code": "",
+     "hex": "#BD9975",
+     "img": "/img/ava/ava_honey_wood/bricola.jpg",
+     "th": "/img/ava/ava_honey_wood/bricola_t.jpg",
+     "px": 1080,
+     "formati": [
+      "40×240 cm",
+      "24×240 cm",
+      "30×120 cm",
+      "20×120 cm",
+      "15×85 cm"
+     ],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (368 px di larghezza, foto listone a pag. 11).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Larice",
+     "code": "",
+     "hex": "#CCA679",
+     "img": "/img/ava/ava_honey_wood/larice.jpg",
+     "th": "/img/ava/ava_honey_wood/larice_t.jpg",
+     "px": 1080,
+     "formati": [
+      "40×240 cm",
+      "24×240 cm",
+      "30×120 cm",
+      "20×120 cm"
+     ],
+     "finiture": [],
+     "note": "Chevron XL 15×85 non disponibile in Larice; Larice non fa parte del Chevron Mix né dell'Outdoor Mix. texture: risoluzione originale bassa (352 px di larghezza, foto listone a pag. 11).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_hurban",
+   "n": "Hurban",
+   "d": "Un cemento dall’aspetto morbido, una superficie naturale levigata dal tempo",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "100×100 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_hurban/scheda.pdf",
+   "fonte": "LF_AVA_Hurban_catalog.pdf, pagine 2-30",
+   "note": "uso: didascalie «Floor» (pag. 6, 8, 10, 12, 14, 16, 18, 24, 26, 28) e «Wall»/«Wall & Floor» (pag. 10, 14, 18, 20, 22, 24, 26), R10B/R11C, battiscopa, gradini, gradoni e griglie a pag. 29 → pavimento e rivestimento. ambiente: versioni «OUTDOOR R11C» 8,8 mm e 20 mm a pag. 4 e nelle pagine colore, didascalia «Graphite 100x100 Nat Ret 20mm R11» a pag. 6/8 → esterno; interno = versioni normali R10B (il PDF non scrive «indoor»). Categoria nel PDF: «MATERICO» (testo: «Un cemento dall’aspetto morbido...»). Materiale: «Lastre in gres porcellanato pressate a secco» (6 mm) e «Gres porcellanato colorato in massa» (8,8 mm). 6 mm R10B: 120×280 (tutti) e 120×120 (non in Avio e Ocra); 8,8 mm R10B: 100×100, 60×120, 60×60, 30×60; 8,8 mm OUTDOOR R11C 100×100 solo Gray, White, Beige; 20 mm OUTDOOR R11C 100×100 tutti i colori; Queens 100×100 20 mm R11C solo Gray e Beige. Tutto Nat Ret. Decori (8,8 mm Nat Ret, tutti i colori): Mosaico 30×30, Spaccatella 30×30, Quadrotto Intarsio 30×30, Muretto 30×60. Pezzi speciali: battiscopa 7×100 e 7×60, gradino costa retta 33×120 (anche SX/DX), gradone costa toro 50×100 e griglia 20×100 (20 mm, anche angolo SX/DX, su richiesta). Stonalizzazione V2 moderate. Il Catalogo Generale ha le stesse foto a 72 ppi ma più piccole.",
+   "esterno": {
+    "colori": [
+     "Graphite",
+     "Gray",
+     "Avio",
+     "White",
+     "Beige",
+     "Ocra"
+    ],
+    "formati": [
+     "100×100 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 4: «8,8 OUTDOOR R11C» (Gray, White, Beige) e «20 OUTDOOR R11C» 100x100; pag. 29: codici 20 mm R11C per tutti i colori"
+   },
+   "colori": [
+    {
+     "n": "Graphite",
+     "code": "",
+     "hex": "#5C5652",
+     "img": "/img/ava/ava_hurban/graphite.jpg",
+     "th": "/img/ava/ava_hurban/graphite_t.jpg",
+     "px": 713,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Esterno solo 100×100 20 mm R11C. Texture: lastra 120×280 dello sviluppo grafico pag. 7 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    },
+    {
+     "n": "Gray",
+     "code": "",
+     "hex": "#8E877E",
+     "img": "/img/ava/ava_hurban/gray.jpg",
+     "th": "/img/ava/ava_hurban/gray_t.jpg",
+     "px": 713,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Esterno 100×100 8,8 mm e 20 mm R11C, anche decoro Queens 100×100 20 mm. Texture: lastra 120×280 dello sviluppo grafico pag. 11 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    },
+    {
+     "n": "Avio",
+     "code": "",
+     "hex": "#788184",
+     "img": "/img/ava/ava_hurban/avio.jpg",
+     "th": "/img/ava/ava_hurban/avio_t.jpg",
+     "px": 713,
+     "formati": [
+      "120×280 cm",
+      "100×100 cm",
+      "60×120 cm",
+      "60×60 cm",
+      "30×60 cm"
+     ],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Niente 120×120. Esterno solo 100×100 20 mm R11C. Texture: lastra 120×280 dello sviluppo grafico pag. 15 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    },
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#D8CDC1",
+     "img": "/img/ava/ava_hurban/white.jpg",
+     "th": "/img/ava/ava_hurban/white_t.jpg",
+     "px": 713,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Esterno 100×100 8,8 mm e 20 mm R11C. Texture: lastra 120×280 dello sviluppo grafico pag. 19 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#BCA897",
+     "img": "/img/ava/ava_hurban/beige.jpg",
+     "th": "/img/ava/ava_hurban/beige_t.jpg",
+     "px": 713,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Esterno 100×100 8,8 mm e 20 mm R11C, anche decoro Queens 100×100 20 mm. Texture: lastra 120×280 dello sviluppo grafico pag. 23 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    },
+    {
+     "n": "Ocra",
+     "code": "",
+     "hex": "#BB9468",
+     "img": "/img/ava/ava_hurban/ocra.jpg",
+     "th": "/img/ava/ava_hurban/ocra_t.jpg",
+     "px": 713,
+     "formati": [
+      "120×280 cm",
+      "100×100 cm",
+      "60×120 cm",
+      "60×60 cm",
+      "30×60 cm"
+     ],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Niente 120×120. Esterno solo 100×100 20 mm R11C. Texture: lastra 120×280 dello sviluppo grafico pag. 27 (nativa 309×721 px a 72 ppi; il PDF dice che la grafica del 120×280 è meno stonalizzata degli altri formati). texture: risoluzione originale bassa (301 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_i_quarzi",
+   "n": "I Quarzi",
+   "d": "Continuità di superficie e coerenza cromatica tra ambienti esterni e interni.",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "esterno": {
+    "colori": [
+     "Antracite",
+     "Prasio",
+     "Diaspro",
+     "Madera"
+    ],
+    "formati": [
+     "60×60 cm",
+     "30,5×60,5 cm",
+     "30×60 cm",
+     "30×30 cm",
+     "20,3×40,6 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato",
+     "naturale"
+    ],
+    "prova": "pag. 3: «IQIN&OUT 8,8mm Nat / Nat Ret R11C outdoor indoor», «IQOUTDOOR20mm» e «20mm Nat Ret R11C outdoor»; pag. 6: «8,8 R11C» e «20 R11C 60x60»; pag. 16 tabelle «8,8 R11C» e «20 R11C»"
+   },
+   "decorativa": false,
+   "formati": [
+    "60×60 cm",
+    "30,5×60,5 cm",
+    "30×60 cm",
+    "30×30 cm",
+    "20,3×40,6 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_i_quarzi/scheda.pdf",
+   "fonte": "LF_AVA_I-Quarzi_catalog-1.pdf, pagine 3-6, 8, 14-17 (texture da pag. 14-15)",
+   "note": "uso: «Rivestimento / Wall» negli ambiti di applicazione a pag. 4 e «per pavimenti e rivestimenti» a pag. 8; pavimento anche da battiscopa, gradini, R10A/R11C e DCOF a pag. 16-17. Ambiente: «indoor»/«outdoor» a pag. 3. Due versioni in 8,8 mm: interno R10A (60×60, 30×60, 30×30 Nat Ret; 30,5×60,5 Nat) e antiscivolo R11C per esterno e interni commerciali (stessi formati più 20,3×40,6 Nat). 20 mm R11C solo 60×60 Nat Ret (esterno: posa a secco su erba/ghiaia/sabbia, sopraelevata, piscina, carrabile). 30,5×60,5 e 20,3×40,6 solo finitura naturale (non rettificato). 20,3×40,6 non disponibile in Antracite. Decori 8,8 mm R10A Nat Ret in tutti i colori: Mosaico 30×30 e Muretto 15×60. Pezzi speciali: battiscopa 9,5×60, gradino costa retta 33×60 (anche SX/DX e R11), elle monolitico estruso 15×30×4 R11C, e in 20 mm gradone 30×60 e 15×60 (costa toro/costa retta, angoli SX/DX), copertina rettilinea 30×60, angolo curvilineo 60×60, griglia 15×60 e 30×60 (pezzi 20 mm su richiesta). Stonalizzazione: Antracite V2, Prasio/Diaspro/Madera V3. Il PDF avverte che tra 8,8 e 20 mm non si garantisce l'abbinabilità di tono. Effetto: nel PDF l'intestazione è «MARMO E PIETRA» (pag. 17); il Catalogo Generale la classifica «Stone Selection», quindi pietra.",
+   "colori": [
+    {
+     "n": "Antracite",
+     "code": "",
+     "hex": "#5A514D",
+     "img": "/img/ava/ava_i_quarzi/antracite.jpg",
+     "th": "/img/ava/ava_i_quarzi/antracite_t.jpg",
+     "px": 341,
+     "formati": [
+      "60×60 cm",
+      "30,5×60,5 cm",
+      "30×60 cm",
+      "30×30 cm"
+     ],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "Non disponibile nel formato 20,3×40,6 (pag. 16). texture: risoluzione originale bassa (341 px), foto piastrella 60×60 8,8 mm a 150 ppi; il Catalogo Generale ha solo 72 ppi."
+    },
+    {
+     "n": "Prasio",
+     "code": "",
+     "hex": "#B1A398",
+     "img": "/img/ava/ava_i_quarzi/prasio.jpg",
+     "th": "/img/ava/ava_i_quarzi/prasio_t.jpg",
+     "px": 341,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "texture: risoluzione originale bassa (341 px), foto piastrella 60×60 8,8 mm a 150 ppi; il Catalogo Generale ha solo 72 ppi."
+    },
+    {
+     "n": "Diaspro",
+     "code": "",
+     "hex": "#DFD1BC",
+     "img": "/img/ava/ava_i_quarzi/diaspro.jpg",
+     "th": "/img/ava/ava_i_quarzi/diaspro_t.jpg",
+     "px": 341,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "texture: risoluzione originale bassa (341 px), foto piastrella 60×60 8,8 mm a 150 ppi; il Catalogo Generale ha solo 72 ppi."
+    },
+    {
+     "n": "Madera",
+     "code": "",
+     "hex": "#CBB79F",
+     "img": "/img/ava/ava_i_quarzi/madera.jpg",
+     "th": "/img/ava/ava_i_quarzi/madera_t.jpg",
+     "px": 341,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "interno",
+      "esterno"
+     ],
+     "note": "texture: risoluzione originale bassa (341 px), foto piastrella 60×60 8,8 mm a 150 ppi; il Catalogo Generale ha solo 72 ppi."
+    }
+   ]
+  },
+  {
+   "id": "ava_il_cerreto",
+   "n": "Il Cerreto",
+   "d": "",
+   "materiale": "gres porcellanato",
+   "effetto": "legno",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "40×120 cm",
+    "23,4×148 cm",
+    "30×120 cm",
+    "20×120 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_il_cerreto/scheda.pdf",
+   "fonte": "LF_AVA_Il-Cerreto_catalog-1.pdf, pagine 2-21 (texture da pagine 4, 6, 8, 10, 13)",
+   "note": "Materiale scritto: «Gres porcellanato in massa». Categoria: «LEGNO» (pag. 3, 16-20), ma la pagina tecnica 21 riporta «MATERICO». Formato 23,4×148 scritto anche «23x149» (pag. 2, 5, 7). Formati per spessore: 23,4×148, 30×120, 20×120 8,8 mm R10B; 20×120 8,8 mm OUTDOOR R11C solo Champagne e Chardonnay; 40×120 solo 20 mm OUTDOOR R11C (no Soave). Decori 8,8 mm R10B: Rete esagonale 30×26 (fatto con Il Cerreto e Pierres des Châteaux: Chardonnay Beige, Champagne Grey, Amarone Brown, Champagne White, Champagne Black, Pinot Grigio White) e Chrome 60×120. Pezzi speciali: battiscopa 6,5×120 e 6,5×148, gradino costa retta 33×120 (anche SX-DX), gradone costa toro 40×120 20 mm R11C (su richiesta). Shade V2. Nessuna frase descrittiva breve in italiano adatta. uso: «FLOOR» nelle didascalie (pag. 2-15), R10B/R11C, gradini e battiscopa a pag. 21 → pavimento; «WALL: Decoro Chrome / Decoro rete esagonale» a pag. 15 → rivestimento (solo decori a parete). ambiente: «OUTDOOR R11C» e «20 OUTDOOR» a pag. 3; «sia indoor sia outdoor» a pag. 13.",
+   "esterno": {
+    "colori": [
+     "Pinot Grigio",
+     "Champagne",
+     "Chardonnay",
+     "Amarone"
+    ],
+    "formati": [
+     "40×120 cm",
+     "20×120 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato R11C"
+    ],
+    "prova": "pag. 3: «8,8 OUTDOOR R11C (Champagne - Chardonnay)» 20×120 e «20 OUTDOOR R11C» 40×120; pag. 21: 20×120 R11C solo Champagne e Chardonnay, 40×120 20 mm Pinot Grigio, Champagne, Chardonnay, Amarone"
+   },
+   "colori": [
+    {
+     "n": "Pinot Grigio",
+     "code": "",
+     "hex": "#AAA598",
+     "img": "/img/ava/ava_il_cerreto/pinot_grigio.jpg",
+     "th": "/img/ava/ava_il_cerreto/pinot_grigio_t.jpg",
+     "px": 794,
+     "formati": [],
+     "finiture": [],
+     "note": "Outdoor solo 40×120 20 mm R11C (non 20×120 8,8 mm R11C). Texture dalla foto della singola doga a tutta altezza a pag. 4 (72 ppi nativi; le altre foto del PDF e del Catalogo Generale hanno fughe o sono a 72 ppi più piccole). texture: risoluzione originale bassa (129 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Champagne",
+     "code": "",
+     "hex": "#DFD9CE",
+     "img": "/img/ava/ava_il_cerreto/champagne.jpg",
+     "th": "/img/ava/ava_il_cerreto/champagne_t.jpg",
+     "px": 791,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla foto della singola doga a tutta altezza a pag. 6 (72 ppi nativi; le altre foto del PDF e del Catalogo Generale hanno fughe o sono a 72 ppi più piccole). texture: risoluzione originale bassa (134 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Soave",
+     "code": "",
+     "hex": "#BBA380",
+     "img": "/img/ava/ava_il_cerreto/soave.jpg",
+     "th": "/img/ava/ava_il_cerreto/soave_t.jpg",
+     "px": 791,
+     "formati": [
+      "23,4×148 cm",
+      "30×120 cm",
+      "20×120 cm"
+     ],
+     "finiture": [],
+     "note": "Solo 8,8 mm R10B: non disponibile nelle versioni outdoor (20×120 R11C e 40×120 20 mm). Texture dalla foto della singola doga a tutta altezza a pag. 8 (72 ppi nativi; le altre foto del PDF e del Catalogo Generale hanno fughe o sono a 72 ppi più piccole). texture: risoluzione originale bassa (124 px).",
+     "ambiente": [
+      "interno"
+     ]
+    },
+    {
+     "n": "Chardonnay",
+     "code": "",
+     "hex": "#B29B7E",
+     "img": "/img/ava/ava_il_cerreto/chardonnay.jpg",
+     "th": "/img/ava/ava_il_cerreto/chardonnay_t.jpg",
+     "px": 794,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla foto della singola doga a tutta altezza a pag. 10 (72 ppi nativi; le altre foto del PDF e del Catalogo Generale hanno fughe o sono a 72 ppi più piccole). texture: risoluzione originale bassa (129 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Amarone",
+     "code": "",
+     "hex": "#725A41",
+     "img": "/img/ava/ava_il_cerreto/amarone.jpg",
+     "th": "/img/ava/ava_il_cerreto/amarone_t.jpg",
+     "px": 794,
+     "formati": [],
+     "finiture": [],
+     "note": "Outdoor solo 40×120 20 mm R11C (non 20×120 8,8 mm R11C). Texture dalla foto della singola doga a tutta altezza a pag. 13 (72 ppi nativi; le altre foto del PDF e del Catalogo Generale hanno fughe o sono a 72 ppi più piccole). texture: risoluzione originale bassa (129 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_imagine",
+   "n": "Imagine",
+   "d": "Una raccolta unica di lastre ceramiche decorate",
+   "materiale": "gres porcellanato",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno"
+   ],
+   "decorativa": true,
+   "formati": [
+    "120×280 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_imagine/scheda.pdf",
+   "fonte": "LF_AVA_Imagine_catalog.pdf, pagine 1-47; texture da LF_AVA_Catalogo-Generale_2026.pdf, pagine 192-200",
+   "note": "Nessuna categoria/effetto scritta: il PDF dice «DECORATED SLABS FOR ARCHITECTURE», lastre decorate in stile carta da parati, 9 soggetti in 2 formati. 120×280 solo 6 mm, 60×120 solo 8,8 mm («I due formati differiscono leggermente per grafica e finitura superficiale»). Areca, Botanical, Kenzia, Plumage: 1 pattern; Autumn, Jungle Chic, Naif, Paradise, Shadow Leaves: 2 pattern A/B. Alcuni 60×120 venduti a composizione (*). Fuga consigliata 1 mm. Le foto ravvicinate (pag. 7, 11, 15…) non usate: luce radente, ombre e prospettiva. uso: «Le lastre della collezione IMAGINE sono destinate esclusivamente al rivestimento di pareti di ambienti interni» a pag. 46, didascalie «WALL» → solo rivestimento, interno.",
+   "colori": [
+    {
+     "n": "Areca",
+     "code": "",
+     "hex": "#C3B99B",
+     "img": "/img/ava/ava_imagine/areca.jpg",
+     "th": "/img/ava/ava_imagine/areca_t.jpg",
+     "px": 724,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra intera 120×280 dal Catalogo Generale pag. 200 (1 pattern; 72 ppi nativi, più grande della stessa immagine nel PDF della collezione). texture: risoluzione originale bassa (305 px)."
+    },
+    {
+     "n": "Autumn",
+     "code": "",
+     "hex": "#A6A199",
+     "img": "/img/ava/ava_imagine/autumn.jpg",
+     "th": "/img/ava/ava_imagine/autumn_t.jpg",
+     "px": 514,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra 120×280 pattern A dal Catalogo Generale pag. 199 (bordo alto con la lettera «A» escluso; esiste anche il pattern B). 72 ppi nativi, più grande della stessa immagine nel PDF della collezione. texture: risoluzione originale bassa (222 px)."
+    },
+    {
+     "n": "Botanical",
+     "code": "",
+     "hex": "#797663",
+     "img": "/img/ava/ava_imagine/botanical.jpg",
+     "th": "/img/ava/ava_imagine/botanical_t.jpg",
+     "px": 724,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra intera 120×280 dal Catalogo Generale pag. 193 (1 pattern; 72 ppi nativi, più grande della stessa immagine nel PDF della collezione). texture: risoluzione originale bassa (305 px)."
+    },
+    {
+     "n": "Jungle Chic",
+     "code": "",
+     "hex": "#D4CEBD",
+     "img": "/img/ava/ava_imagine/jungle_chic.jpg",
+     "th": "/img/ava/ava_imagine/jungle_chic_t.jpg",
+     "px": 514,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra 120×280 pattern A dal Catalogo Generale pag. 197 (bordo alto con la lettera «A» escluso; esiste anche il pattern B). 72 ppi nativi, più grande della stessa immagine nel PDF della collezione. texture: risoluzione originale bassa (222 px)."
+    },
+    {
+     "n": "Kenzia",
+     "code": "",
+     "hex": "#525346",
+     "img": "/img/ava/ava_imagine/kenzia.jpg",
+     "th": "/img/ava/ava_imagine/kenzia_t.jpg",
+     "px": 724,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra intera 120×280 dal Catalogo Generale pag. 192 (1 pattern; 72 ppi nativi, più grande della stessa immagine nel PDF della collezione). texture: risoluzione originale bassa (305 px)."
+    },
+    {
+     "n": "Naif",
+     "code": "",
+     "hex": "#97B0A3",
+     "img": "/img/ava/ava_imagine/naif.jpg",
+     "th": "/img/ava/ava_imagine/naif_t.jpg",
+     "px": 514,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra 120×280 pattern A dal Catalogo Generale pag. 195 (bordo alto con la lettera «A» escluso; esiste anche il pattern B). 72 ppi nativi, più grande della stessa immagine nel PDF della collezione. texture: risoluzione originale bassa (222 px)."
+    },
+    {
+     "n": "Plumage",
+     "code": "",
+     "hex": "#586262",
+     "img": "/img/ava/ava_imagine/plumage.jpg",
+     "th": "/img/ava/ava_imagine/plumage_t.jpg",
+     "px": 724,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra intera 120×280 dal Catalogo Generale pag. 194 (1 pattern; 72 ppi nativi, più grande della stessa immagine nel PDF della collezione). texture: risoluzione originale bassa (305 px)."
+    },
+    {
+     "n": "Paradise",
+     "code": "",
+     "hex": "#ACAE91",
+     "img": "/img/ava/ava_imagine/paradise.jpg",
+     "th": "/img/ava/ava_imagine/paradise_t.jpg",
+     "px": 514,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra 120×280 pattern A dal Catalogo Generale pag. 196 (bordo alto con la lettera «A» escluso; esiste anche il pattern B). 72 ppi nativi, più grande della stessa immagine nel PDF della collezione. texture: risoluzione originale bassa (222 px)."
+    },
+    {
+     "n": "Shadow Leaves",
+     "code": "",
+     "hex": "#C2B8AC",
+     "img": "/img/ava/ava_imagine/shadow_leaves.jpg",
+     "th": "/img/ava/ava_imagine/shadow_leaves_t.jpg",
+     "px": 514,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: lastra 120×280 pattern A dal Catalogo Generale pag. 198 (bordo alto con la lettera «A» escluso; esiste anche il pattern B). 72 ppi nativi, più grande della stessa immagine nel PDF della collezione. texture: risoluzione originale bassa (222 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_imperial",
+   "n": "Imperial",
+   "d": "Dal Travertino Romano e dalle antiche terme di Hierapolis nasce Imperial",
+   "materiale": "",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×120 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm",
+    "10×30 cm"
+   ],
+   "spessori": [
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_imperial/scheda.pdf",
+   "fonte": "LF_AVA_Imperial_Catalog.pdf, pagine 2-16 (texture dai riquadri lastra 60×120 delle pagine 4, 7, 9, 11)",
+   "note": "uso: didascalie «FLOOR» e «WALL» nelle ambientazioni (pag. 2, 5, 6, 8, 10, 12 e 16), R10B naturale, DCOF ≥ 0,42, battiscopa e gradini a pag. 16. Interno/esterno non indicato. Categoria nel PDF: «MARMO E PIETRA» (il testo parla di «pietra classica» dal travertino romano). Materiale non scritto (solo ISO 13006 - G - BIa). Tutti i formati 8,8 mm, in Nat Ret e Lap Ret. Decori 8,8 mm Nat Ret: Mosaico 30×30, Esagona 28×29, Muretto 30×30, Intreccio 30×30 (non per Navona), Spina di pesce 30,5×30,5. Pezzi speciali: battiscopa 7×60 Nat Ret, gradino costa retta 33×120 Nat Ret e Lap Ret, anche SX/DX (gradini solo su richiesta). Grafiche: 10 (120×120), 15 (60×120), 30 (60×60), 53 (30×60), 318 (10×30). Shade spectrum V2 moderate. Nel Catalogo Generale (pag. 136) calpestio (finitura naturale): Tivoli LOW, Alabastrino e Navona MEDIUM, Trevi HIGH. Le foto dei colori nel PDF sono a 72 ppi; il Catalogo Generale (pag. 134) ha solo fasce più piccole.",
+   "colori": [
+    {
+     "n": "Alabastrino",
+     "code": "",
+     "hex": "#D2D1CC",
+     "img": "/img/ava/ava_imperial/alabastrino.jpg",
+     "th": "/img/ava/ava_imperial/alabastrino_t.jpg",
+     "px": 552,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro lastra di pag. 4 (283×560 px nativi). texture: risoluzione originale bassa (273 px)."
+    },
+    {
+     "n": "Trevi",
+     "code": "",
+     "hex": "#E3E0D9",
+     "img": "/img/ava/ava_imperial/trevi.jpg",
+     "th": "/img/ava/ava_imperial/trevi_t.jpg",
+     "px": 552,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro lastra di pag. 7 (283×560 px nativi). texture: risoluzione originale bassa (273 px)."
+    },
+    {
+     "n": "Navona",
+     "code": "",
+     "hex": "#D3C8B3",
+     "img": "/img/ava/ava_imperial/navona.jpg",
+     "th": "/img/ava/ava_imperial/navona_t.jpg",
+     "px": 552,
+     "formati": [],
+     "finiture": [],
+     "note": "Decoro Intreccio 30×30 non disponibile per Navona. Texture: riquadro lastra di pag. 9 (283×560 px nativi). texture: risoluzione originale bassa (273 px)."
+    },
+    {
+     "n": "Tivoli",
+     "code": "",
+     "hex": "#C3B59E",
+     "img": "/img/ava/ava_imperial/tivoli.jpg",
+     "th": "/img/ava/ava_imperial/tivoli_t.jpg",
+     "px": 552,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro lastra di pag. 11 (283×560 px nativi). texture: risoluzione originale bassa (273 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_kauri",
+   "n": "Kauri",
+   "d": "Kauri si ispira a questo legno dallo stile unico",
+   "materiale": "gres porcellanato",
+   "effetto": "legno",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "interno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "20×120 cm",
+    "7,5×45 cm",
+    "7,5×40,7 cm"
+   ],
+   "spessori": [
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_kauri/scheda.pdf",
+   "fonte": "LF_AVA_Kauri_catalog-1.pdf, pagine 2-3, 16-20, 23 (texture da pag. 16-18); verifica decoro Tech su LF_AVA_Catalogo-Generale_2026.pdf pag. 227",
+   "note": "uso: «Floor» (didascalia Nelson 20x120 Lap Ret), «R10A naturale», DCOF ≥ 0,42, battiscopa (Skirting) e gradini a pag. 19; Chevron «classico della pavimentazione parquet» a pag. 20; il PDF non parla di parete/rivestimento. ambiente: «Indoor 8,8 mm» a pag. 2. Tutto 8,8 mm. 20×120 in Nat Ret (R10A) e Lap Ret; Chevron 7,5×40,7 (SX/DX) e Listello 7,5×45 solo Nat (R10A). Decoro «Tech» 60×120 Lap Ret (pannello a spina di legni misti) solo per Victoria, Tasman, Awanui, Fiordland (nel catalogo generale indicato come «Decoro»). Pezzi speciali (Nat Ret): battiscopa 6,5×120 (anche Lap Ret), gradino costa retta 33×120 e gradino SX/DX 33×120 (su richiesta). Fino a 50 soluzioni grafiche; grafiche per formato (catalogo generale): 20×120 39, 7,5×40,7 50, 7,5×45 50. Stonalizzazione V3. Le texture sono riquadri di posa a listoni (fughe sottili tra le doghe inevitabili: nel PDF non c'è una foto più grande di una singola doga). Esterni: nessuna versione da esterno nel PDF né nel catalogo generale (né outdoor, né 20 mm, né R11).",
+   "colori": [
+    {
+     "n": "Victoria",
+     "code": "",
+     "hex": "#726F6B",
+     "img": "/img/ava/ava_kauri/victoria.jpg",
+     "th": "/img/ava/ava_kauri/victoria_t.jpg",
+     "px": 464,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 18 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Disponibile anche il decoro «Victoria Tech» 60×120 Lap Ret."
+    },
+    {
+     "n": "Tasman",
+     "code": "",
+     "hex": "#8A8D87",
+     "img": "/img/ava/ava_kauri/tasman.jpg",
+     "th": "/img/ava/ava_kauri/tasman_t.jpg",
+     "px": 466,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 17 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Disponibile anche il decoro «Tasman Tech» 60×120 Lap Ret."
+    },
+    {
+     "n": "Nelson",
+     "code": "",
+     "hex": "#C2BEB5",
+     "img": "/img/ava/ava_kauri/nelson.jpg",
+     "th": "/img/ava/ava_kauri/nelson_t.jpg",
+     "px": 474,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 16 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Non disponibile in versione Tech 60×120."
+    },
+    {
+     "n": "Awanui",
+     "code": "",
+     "hex": "#E1DBD1",
+     "img": "/img/ava/ava_kauri/awanui.jpg",
+     "th": "/img/ava/ava_kauri/awanui_t.jpg",
+     "px": 474,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 16 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Disponibile anche il decoro «Awanui Tech» 60×120 Lap Ret."
+    },
+    {
+     "n": "Catlins",
+     "code": "",
+     "hex": "#D2C9B1",
+     "img": "/img/ava/ava_kauri/catlins.jpg",
+     "th": "/img/ava/ava_kauri/catlins_t.jpg",
+     "px": 474,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 16 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Non disponibile in versione Tech 60×120."
+    },
+    {
+     "n": "Fiordland",
+     "code": "",
+     "hex": "#8B7E6B",
+     "img": "/img/ava/ava_kauri/fiordland.jpg",
+     "th": "/img/ava/ava_kauri/fiordland_t.jpg",
+     "px": 442,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione a pag. 17 (posa di listoni 20×120 con fughe sottili visibili). texture: risoluzione originale bassa (335 px). Disponibile anche il decoro «Fiordland Tech» 60×120 Lap Ret."
+    }
+   ]
+  },
+  {
+   "id": "ava_kist",
+   "n": "Kist",
+   "d": "Un omaggio all'iconico Brick",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "4,8×45 cm"
+   ],
+   "spessori": [
+    "9,5 mm"
+   ],
+   "finiture": [
+    "opaco"
+   ],
+   "pdf": "/img/ava/ava_kist/scheda.pdf",
+   "fonte": "LF_AVA_Kist_Catalog.pdf, pagine 2-14 (texture da pagine 7, 9, 11, 13)",
+   "note": "Finitura scritta nel PDF «Matte» (tradotto opaco). Antiscivolo: «R10B» a pag. 5, ma «Matte R10A» nella tabella di pag. 14. Posa con fuga di 5 mm (bordi irregolari volutamente), 60 grafiche diverse. Pezzo speciale: Angolo Incollato 10×35×4,8 Matte. Kist e Kist Lux non si possono combinare; Kist Lux è citato ma non ha tabelle in questo PDF (non inserito). Shade V3. uso: «floor and wall» a pag. 5 e 14, «per vestire pavimenti e pareti» a pag. 5, R10 → pavimento e rivestimento. ambiente: «Versatile e ideale per ogni progetto, sia da interno che da esterno» a pag. 6. Le texture sono campioni di posa: comprendono le fughe (il pezzo è un listello 4,8×45, una superficie senza fughe non esiste nel PDF); posa diversa tra colori (dritta, spina di pesce o verticale) come stampato nel PDF.",
+   "esterno": {
+    "colori": [
+     "Charcoal",
+     "Dark Blue",
+     "Jade",
+     "Light Grey",
+     "Ivory",
+     "Beige"
+    ],
+    "formati": [
+     "4,8×45 cm"
+    ],
+    "spessori": [
+     "9,5 mm"
+    ],
+    "finiture": [
+     "opaco"
+    ],
+    "prova": "pag. 6: «Versatile e ideale per ogni progetto, sia da interno che da esterno» (foto facciata esterna Light Grey a pag. 9); stesso prodotto, nessuna versione esterna separata"
+   },
+   "colori": [
+    {
+     "n": "Charcoal",
+     "code": "",
+     "hex": "#595859",
+     "img": "/img/ava/ava_kist/charcoal.jpg",
+     "th": "/img/ava/ava_kist/charcoal_t.jpg",
+     "px": 306,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione posa dritta della pagina Overview (pag. 13). texture: risoluzione originale bassa (172 px). Nessun campione più grande nel PDF né nel Catalogo Generale (72 ppi).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Dark Blue",
+     "code": "",
+     "hex": "#747F89",
+     "img": "/img/ava/ava_kist/dark_blue.jpg",
+     "th": "/img/ava/ava_kist/dark_blue_t.jpg",
+     "px": 396,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione a spina di pesce a pag. 7 (90 ppi nativi). texture: risoluzione originale bassa (377 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Jade",
+     "code": "",
+     "hex": "#949E99",
+     "img": "/img/ava/ava_kist/jade.jpg",
+     "th": "/img/ava/ava_kist/jade_t.jpg",
+     "px": 306,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione posa dritta della pagina Overview (pag. 13). texture: risoluzione originale bassa (173 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Light Grey",
+     "code": "",
+     "hex": "#A49D96",
+     "img": "/img/ava/ava_kist/light_grey.jpg",
+     "th": "/img/ava/ava_kist/light_grey_t.jpg",
+     "px": 833,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione a pag. 9 (posa verticale, 150 ppi nativi).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Ivory",
+     "code": "",
+     "hex": "#B7AFA6",
+     "img": "/img/ava/ava_kist/ivory.jpg",
+     "th": "/img/ava/ava_kist/ivory_t.jpg",
+     "px": 306,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione posa dritta della pagina Overview (pag. 13). texture: risoluzione originale bassa (172 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#9C8C7F",
+     "img": "/img/ava/ava_kist/beige.jpg",
+     "th": "/img/ava/ava_kist/beige_t.jpg",
+     "px": 496,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dal campione a spina di pesce a pag. 11 (90 ppi nativi). texture: risoluzione originale bassa (376 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_kist_lux",
+   "n": "Kist Lux",
+   "d": "Un omaggio all'iconico Brick",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "4,8×45 cm"
+   ],
+   "spessori": [
+    "9,5 mm"
+   ],
+   "finiture": [
+    "lucido"
+   ],
+   "pdf": "/img/ava/ava_kist_lux/scheda.pdf",
+   "fonte": "LF_AVA_Kist-Lux_Catalog.pdf, pagine 2-16 (texture da pag. 15); verifica su LF_AVA_Catalogo-Generale_2026.pdf, pag. 251",
+   "note": "uso: «da rivestimento / wall tiles» a pag. 5 e pag. 16, «effetti vibranti per rivestimenti a parete» a pag. 5, tutte le ambientazioni sono «Wall»; nessun gradino/battiscopa né classe di calpestio. Nella tabella tecnica c'è anche «DCOF ≥ 0,42», ma il prodotto è dichiarato solo da rivestimento, quindi non ho messo pavimento (da verificare). ambiente: il catalogo generale (pag. 251) scrive «9,5 mm INDOOR» e «Da rivestimento. Wall tile» → interno. Materiale: «collezione in gres porcellanato Kist e Kist Lux» a pag. 2. Effetto: «MATERICO» a pag. 16 (nel catalogo generale è nella sezione MiniShape). Finitura nel PDF «Glossy» (tradotta lucido). 60 grafiche diverse; fuga consigliata almeno 2 mm (posa ortogonale) e 3 mm (spina di pesce). Bordi irregolari voluti. Kist e Kist Lux non possono essere combinati tra loro. Pezzi speciali per ogni colore (Glossy): Angolo incollato 10×35×4,8 e Quarter Round 1,4×45. Nessun decoro/mosaico. Le texture mostrano il listello posato in orizzontale con le fughe: il prodotto è un listello 4,8×45 cm e nel PDF non esiste una superficie piena senza fughe nella finitura Glossy; il catalogo generale (pag. 251) ha fasce senza fughe ma a 72 ppi e con aspetto/colori diversi dal lucido Lux, quindi non usate.",
+   "colori": [
+    {
+     "n": "Charcoal Lux",
+     "code": "",
+     "hex": "#6A6A6A",
+     "img": "/img/ava/ava_kist_lux/charcoal_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/charcoal_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Dark Blue Lux",
+     "code": "",
+     "hex": "#686F77",
+     "img": "/img/ava/ava_kist_lux/dark_blue_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/dark_blue_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Jade Lux",
+     "code": "",
+     "hex": "#8B8F84",
+     "img": "/img/ava/ava_kist_lux/jade_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/jade_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Light Grey Lux",
+     "code": "",
+     "hex": "#B1AAA3",
+     "img": "/img/ava/ava_kist_lux/light_grey_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/light_grey_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Ivory Lux",
+     "code": "",
+     "hex": "#CEC8C1",
+     "img": "/img/ava/ava_kist_lux/ivory_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/ivory_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Beige Lux",
+     "code": "",
+     "hex": "#88796A",
+     "img": "/img/ava/ava_kist_lux/beige_lux.jpg",
+     "th": "/img/ava/ava_kist_lux/beige_lux_t.jpg",
+     "px": 308,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pannello «Overview» a pag. 15 (posa orizzontale, immagine nativa 90 ppi, ritaglio 308×186 px originali, senza la scritta del nome). Comprende le fughe tra i listelli. Texture: risoluzione originale bassa (186 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_klastos",
+   "n": "Klastos",
+   "d": "Una reinterpretazione contemporanea dell’arenaria",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "3D Satin rettificato",
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_klastos/scheda.pdf",
+   "fonte": "LF_AVA_Klastos_Catalog_LW.pdf, pagine 2-24 (texture: Dark, Grey, White, Taupe dalle lastre di pag. 20 a 150 ppi; Beige dalla lastra 120×280 di pag. 21 a 150 ppi). La collezione non è nel Catalogo Generale 2026.",
+   "note": "uso: didascalie «Wall …» e «Floor …» nelle ambientazioni (es. «Wall Dark 120x280 3D Satin Ret», «Floor Dark 60x120 Nat Ret»), «R10B naturale», «DCOF ≥ 0,42», battiscopa e gradini a pag. 22. ambiente: «OUTDOOR» 8,8 mm R11C e 20 mm R11C (60×120 Nat Ret) solo per Grey, Beige, White; il PDF non scrive «indoor/interno». Effetto: «Stone Selection» in copertina. Finiture per formato: 120×280 solo 6 mm 3D Satin Ret; 120×120 e 60×120 8,8 mm 3D Satin Ret e Nat Ret (R10B); 60×60 e 30×60 solo 8,8 mm Nat Ret (R10B); outdoor 60×120 Nat Ret R11C in 8,8 mm e 20 mm. «3D Satin» = finitura opaca, setosa (nome lasciato com'è). Il PDF avverte che 3D Satin e Naturale, e 6 e 8,8 mm, possono avere lievi differenze di tono. Decori 8,8 mm: Sliver 60×120 Nat Ret (struttura decorativa, solo White e Beige), Mosaico 30×30 (tutti i colori), Basket 24,9×24,9 (White con inserti: White-Dark, White-Grey, White-Beige, White-Taupe), Spaccatella 29,1×29,1 Nat (tutti i colori). Pezzi speciali: battiscopa 7×60, gradino costa retta 33×120 e SX/DX; outdoor (Grey, White, Beige): gradino R11C, elemento a «L» incollato, gradone 30×120 costa toro e angolo SX/DX 20 mm (su richiesta). Texture di pag. 20: lastre con ombre ai bordi, ritagliata solo la parte centrale senza ombre e sopra la scritta del colore. ambiente «interno» dedotto: il PDF non scrive «indoor», ma le versioni non outdoor (Dark, Taupe e i formati R10B) compaiono solo in ambientazioni interne con didascalie «Wall/Floor».",
+   "colori": [
+    {
+     "n": "Dark",
+     "code": "",
+     "hex": "#625B53",
+     "img": "/img/ava/ava_klastos/dark.jpg",
+     "th": "/img/ava/ava_klastos/dark_t.jpg",
+     "px": 885,
+     "formati": [],
+     "finiture": [],
+     "note": "Solo interno: non esiste in versione outdoor.",
+     "ambiente": [
+      "interno"
+     ]
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#AEA299",
+     "img": "/img/ava/ava_klastos/grey.jpg",
+     "th": "/img/ava/ava_klastos/grey_t.jpg",
+     "px": 885,
+     "formati": [],
+     "finiture": [],
+     "note": "Anche outdoor 8,8 mm e 20 mm R11C.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#EDE5DB",
+     "img": "/img/ava/ava_klastos/white.jpg",
+     "th": "/img/ava/ava_klastos/white_t.jpg",
+     "px": 885,
+     "formati": [],
+     "finiture": [],
+     "note": "Anche outdoor 8,8 mm e 20 mm R11C; anche decoro Sliver.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#CBB9A7",
+     "img": "/img/ava/ava_klastos/beige.jpg",
+     "th": "/img/ava/ava_klastos/beige_t.jpg",
+     "px": 835,
+     "formati": [],
+     "finiture": [],
+     "note": "Anche outdoor 8,8 mm e 20 mm R11C; anche decoro Sliver. Texture dalla lastra 120×280 di pag. 21 (colore confrontato con il campione rotondo «beige» di pag. 4).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Taupe",
+     "code": "",
+     "hex": "#B2A193",
+     "img": "/img/ava/ava_klastos/taupe.jpg",
+     "th": "/img/ava/ava_klastos/taupe_t.jpg",
+     "px": 885,
+     "formati": [],
+     "finiture": [],
+     "note": "Non esiste in versione outdoor.",
+     "ambiente": [
+      "interno"
+     ]
+    }
+   ],
+   "esterno": {
+    "colori": [
+     "Grey",
+     "Beige",
+     "White"
+    ],
+    "formati": [
+     "60×120 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 4 e 20: «8,8 mm OUTDOOR R11C» e «20 mm OUTDOOR R11C» 60×120 Nat Ret per Grey, Beige, White; pag. 22: codici 60×120 R11C solo Grey/White/Beige"
+   }
+  },
+  {
+   "id": "ava_le_malte",
+   "n": "Le Malte",
+   "d": "Una superficie matte dalla delicata struttura appena pronunciata",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "80×80 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_le_malte/scheda.pdf",
+   "fonte": "LF_AVA_Le-Malte_Catalog.pdf, pagine 1, 7, 10, 19-39 (didascalie), 41-49, 54 (texture da pag. 42-47). Catalogo generale pag. 178-181 controllato: campioni più piccoli (154 px), non usato.",
+   "note": "uso: didascalie «Wall» e «Floor» (es. pag. 19, 22, 27, 30-31, 34-35, 38-39), battiscopa (Skirting) e gradini a pag. 49 → pavimento e rivestimento. Ambiente interno/esterno non indicato. Effetto: «Materico» a pag. 1 e 49; il PDF descrive l'effetto resina spatolata. Materiale: «gres porcellanato di alta qualità» a pag. 10. 6 mm: 120×280, 120×120, 60×120 (tutti i 6 colori); 8,8 mm: 80×80 solo Grey, Taupe, Beige, Ivory. Tutto Nat Ret. Pezzi speciali 6 mm: gradino costa retta 33×120 e gradino SX/DX 33×120 (tutti i colori, su richiesta); 8,8 mm: battiscopa 8×80, gradino costa retta 33×80 e SX/DX 33×80 (solo Grey, Taupe, Beige, Ivory; gradini su richiesta). Nessun decoro o mosaico. Stonalizzazione V1. DCOF ≥ 0,42. Esterni: nessuna versione da esterno (né outdoor, né 20 mm, né R11); il «20 mm» a pag. 55 è solo nelle note generiche sull'abbinabilità tra spessori.",
+   "colori": [
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#938F8C",
+     "img": "/img/ava/ava_le_malte/grey.jpg",
+     "th": "/img/ava/ava_le_malte/grey_t.jpg",
+     "px": 603,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 42), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi)."
+    },
+    {
+     "n": "Taupe",
+     "code": "",
+     "hex": "#ACA39A",
+     "img": "/img/ava/ava_le_malte/taupe.jpg",
+     "th": "/img/ava/ava_le_malte/taupe_t.jpg",
+     "px": 603,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 43), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi)."
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#E1D8C9",
+     "img": "/img/ava/ava_le_malte/beige.jpg",
+     "th": "/img/ava/ava_le_malte/beige_t.jpg",
+     "px": 603,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 44), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi)."
+    },
+    {
+     "n": "Ivory",
+     "code": "",
+     "hex": "#E4E0D7",
+     "img": "/img/ava/ava_le_malte/ivory.jpg",
+     "th": "/img/ava/ava_le_malte/ivory_t.jpg",
+     "px": 603,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 45), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi)."
+    },
+    {
+     "n": "Sage",
+     "code": "",
+     "hex": "#899E95",
+     "img": "/img/ava/ava_le_malte/sage.jpg",
+     "th": "/img/ava/ava_le_malte/sage_t.jpg",
+     "px": 603,
+     "formati": [
+      "120×280 cm",
+      "120×120 cm",
+      "60×120 cm"
+     ],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 46), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi). Solo 6 mm: niente 80×80 8,8 mm né battiscopa/gradini 8,8 mm."
+    },
+    {
+     "n": "Avio",
+     "code": "",
+     "hex": "#889BAA",
+     "img": "/img/ava/ava_le_malte/avio.jpg",
+     "th": "/img/ava/ava_le_malte/avio_t.jpg",
+     "px": 603,
+     "formati": [
+      "120×280 cm",
+      "120×120 cm",
+      "60×120 cm"
+     ],
+     "finiture": [],
+     "note": "Texture: foto lastra 120×280 della pagina «Formati per colore» (pag. 47), parte sotto il nome del colore. texture: risoluzione originale bassa (334 px di lato corto, 72 ppi). Solo 6 mm: niente 80×80 8,8 mm né battiscopa/gradini 8,8 mm."
+    }
+   ]
+  },
+  {
+   "id": "ava_macchia_antica",
+   "n": "Macchia Antica",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_macchia_antica/scheda.pdf",
+   "fonte": "LF_AVA_Macchia-Antica_catalog-1.pdf, pagine 1-5",
+   "note": "uso: «DCOF ≥ 0,42 naturale» e «R10A naturale» a pag. 3, battiscopa e gradini a pag. 5 → pavimento; didascalia «Backsplash / Counter top Macchia Antica Lap» a pag. 5 (parete cucina) → rivestimento. Ambiente interno/esterno non indicato. Effetto: intestazione «MARMO E PIETRA»; nel catalogo generale è nella sezione «Marble Selection» → marmo. Materiale non scritto nel PDF (solo ISO 13006 - G - BIa). Nessuna frase descrittiva nel PDF. 160×320, 120×280, 120×120 solo 6 mm; 60×120 solo 8,8 mm (R10A naturale). 120×120 solo lappato rettificato. Lastre 160×320 e 120×280 con 5 grafiche, fornite random; composizione a vena continua solo su richiesta con maggiorazione. Grafiche: 160×320 5, 120×280 5, 120×120 10, 60×120 23. Shade spectrum V3 high. Pezzi speciali: gradino costa retta 33×160 e 33×120 (anche SX/DX, su richiesta), battiscopa 6,5×120 (8,8 mm). Nessun decoro/mosaico. Un solo colore.",
+   "colori": [
+    {
+     "n": "Macchia Antica",
+     "code": "",
+     "hex": "#E1D5C8",
+     "img": "/img/ava/ava_macchia_antica/macchia_antica.jpg",
+     "th": "/img/ava/ava_macchia_antica/macchia_antica_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra a tutta altezza a pag. 3 (immagine nativa 96 ppi, ritaglio 786×1204 px originali, ridotto a 705×1080)."
+    }
+   ]
+  },
+  {
+   "id": "ava_moon_cream",
+   "n": "Moon Cream",
+   "d": "Moon Cream traduce il fascino lunare in un linguaggio di equilibrio e armonia.",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "100×100 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm",
+    "30×30 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "peel rettificato (bocciardato)",
+    "mesh rettificato (intreccio in rilievo)"
+   ],
+   "pdf": "/img/ava/ava_moon_cream/scheda.pdf",
+   "fonte": "LF-AVA_Moon-Cream_Catalog.pdf, pagine 1-25; texture da LF_AVA_Catalogo-Generale_2026.pdf, pag. 107",
+   "note": "Categoria nel PDF: «Stone Selection». «Peel» = «Superficie bocciardata», «Mesh» = «intreccio in rilievo» (pag. 5 e 7). Formati per spessore: 120×280 solo 6 mm (Nat Ret, Materic Touch); 120×120, 100×100, 60×120 Nat, 60×60 Nat, 60×120 Peel e 60×120 Mesh 8,8 mm R10B; outdoor R11C 8,8 mm: 60×60, 30×60, 30×30 Peel e 100×100 Nat; outdoor 20 mm: 100×100 Nat R11C (outdoor solo Grigio, Beige, Terra). Decori 8,8 mm (tutti i colori): Mosaico Mix 30×30, Muretto Mix 29×39, Listello Mix 7,5×30 (Mix = 3 superfici: liscia, Peel e Mesh), Decoro 3D 20×120 Peel. Pezzi speciali: battiscopa 7×100 e 7×60, gradini costa retta 33×100/33×120 (anche SX-DX), gradini R11C 33×100, Elle monolitico estruso 15×30×4 R11C, gradoni 20 mm 50×100 (costa retta / costa toro, anche angolo SX/DX). Shade V2. uso: «Wall ...» e «Floor ...» nelle didascalie (pag. 10-20), R10B/R11C, gradini e battiscopa a pag. 24 → pavimento e rivestimento. ambiente: «equilibrio tra indoor e outdoor» a pag. 2, «8,8 OUTDOOR» e «20 OUTDOOR» a pag. 4; «Floor indoor / Floor outdoor» a pag. 13.",
+   "esterno": {
+    "colori": [
+     "Grigio",
+     "Beige",
+     "Terra"
+    ],
+    "formati": [
+     "100×100 cm",
+     "60×60 cm",
+     "30×60 cm",
+     "30×30 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato R11C",
+     "peel rettificato (bocciardato) R11C"
+    ],
+    "prova": "pag. 4: «8,8 mm OUTDOOR R11C» (100×100 Nat, 60×60/30×60/30×30 Peel) e «20 mm OUTDOOR R11C» (100×100 Nat); pag. 24 tabella R11C solo Grigio, Beige, Terra"
+   },
+   "colori": [
+    {
+     "n": "Grigio",
+     "code": "",
+     "hex": "#B8B2A7",
+     "img": "/img/ava/ava_moon_cream/grigio.jpg",
+     "th": "/img/ava/ava_moon_cream/grigio_t.jpg",
+     "px": 442,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla fascia colore della pagina Overview del Catalogo Generale (pag. 107, 72 ppi nativi; nel PDF della collezione la fascia di pag. 4 è più stretta: 149 px con ombre ai bordi). texture: risoluzione originale bassa (163 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Bianco",
+     "code": "",
+     "hex": "#D7CFC3",
+     "img": "/img/ava/ava_moon_cream/bianco.jpg",
+     "th": "/img/ava/ava_moon_cream/bianco_t.jpg",
+     "px": 442,
+     "formati": [
+      "120×280 cm",
+      "120×120 cm",
+      "100×100 cm",
+      "60×120 cm",
+      "60×60 cm"
+     ],
+     "finiture": [],
+     "note": "Solo interno: non disponibile nelle versioni outdoor R11C (60×60, 30×60, 30×30 Peel 8,8 mm; 100×100 R11C 8,8 e 20 mm) né nei gradoni 20 mm. Texture dalla fascia colore della pagina Overview del Catalogo Generale (pag. 107, 72 ppi nativi; nel PDF della collezione la fascia di pag. 4 è più stretta: 149 px con ombre ai bordi). texture: risoluzione originale bassa (153 px).",
+     "ambiente": [
+      "interno"
+     ]
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#C8BFB0",
+     "img": "/img/ava/ava_moon_cream/beige.jpg",
+     "th": "/img/ava/ava_moon_cream/beige_t.jpg",
+     "px": 442,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla fascia colore della pagina Overview del Catalogo Generale (pag. 107, 72 ppi nativi; nel PDF della collezione la fascia di pag. 4 è più stretta: 149 px con ombre ai bordi). texture: risoluzione originale bassa (161 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Naturale",
+     "code": "",
+     "hex": "#CDBEA8",
+     "img": "/img/ava/ava_moon_cream/naturale.jpg",
+     "th": "/img/ava/ava_moon_cream/naturale_t.jpg",
+     "px": 442,
+     "formati": [
+      "120×280 cm",
+      "120×120 cm",
+      "100×100 cm",
+      "60×120 cm",
+      "60×60 cm"
+     ],
+     "finiture": [],
+     "note": "Solo interno: non disponibile nelle versioni outdoor R11C (60×60, 30×60, 30×30 Peel 8,8 mm; 100×100 R11C 8,8 e 20 mm) né nei gradoni 20 mm. Texture dalla fascia colore della pagina Overview del Catalogo Generale (pag. 107, 72 ppi nativi; nel PDF della collezione la fascia di pag. 4 è più stretta: 149 px con ombre ai bordi). texture: risoluzione originale bassa (156 px).",
+     "ambiente": [
+      "interno"
+     ]
+    },
+    {
+     "n": "Terra",
+     "code": "",
+     "hex": "#BBAB93",
+     "img": "/img/ava/ava_moon_cream/terra.jpg",
+     "th": "/img/ava/ava_moon_cream/terra_t.jpg",
+     "px": 442,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla fascia colore della pagina Overview del Catalogo Generale (pag. 107, 72 ppi nativi; nel PDF della collezione la fascia di pag. 4 è più stretta: 149 px con ombre ai bordi). texture: risoluzione originale bassa (163 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_noble_stone",
+   "n": "Noble Stone",
+   "d": "Fisionomie minerarie dalle morbide venature e tenui contrasti di colore",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "100×100 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "satinato 3D rettificato"
+   ],
+   "pdf": "/img/ava/ava_noble_stone/scheda.pdf",
+   "fonte": "LF_AVA_Noble-Stone_Catalog.pdf, pagine 3-34 (texture da pag. 28-32)",
+   "note": "uso: didascalie «Wall» e «Floor» nelle ambientazioni (pag. 9-26), R10B / R11C, DCOF ≥ 0,42, battiscopa 7×100 e 7×60, gradini e gradone a pag. 27 e 34 → pavimento e rivestimento. ambiente: «superficie da esterno 60x120 in 8,8 mm» a pag. 6, «8,8 OUTDOOR» e «20 OUTDOOR» 60×120 Nat Ret R11C a pag. 27 → esterno (solo Beige, Grey, Taupe); interno non scritto esplicitamente. Effetto: «Marmo e Pietra» in copertina e pag. 34; nel catalogo generale è in «Stone Selection» → pietra. Materiale: «in un gres porcellanato dall'estetica minimale» a pag. 4. Spessori: 120×280 e 120×120 solo 6 mm Nat Ret; 100×100, 60×120, 60×60, 30×60 in 8,8 mm Nat Ret R10B; 60×120 anche 8,8 mm «3D Satin Ret» (finitura opaca setosa con venature incise, pag. 5; tradotta satinato 3D rettificato) e 8,8 mm OUTDOOR Nat Ret R11C e 20 mm OUTDOOR Nat Ret R11C (20 mm: pavimento esterno). Decori per tutti e 5 i colori (8,8 mm): 3D Stripes 60×120 Nat Ret R10B, Mosaico 30×30, Muretto 30×60 (inserti 3D Satin), Mosaico Modulo 30×30 (con Jungle Stone Wild Lap), Basket 29,7×29,7 (con Ca' Foscari). Pezzi speciali: battiscopa 7×100 e 7×60, gradino costa retta 33×120 e SX/DX, Elemento a «L» incollato, gradone 30×120 costa toro 20 mm R11C (solo Beige, Grey, Taupe; su richiesta). Grafiche: 120×280 4, 120×120 8, 100×100 12, 60×120 12, 60×60 24, 30×60 48, 60×120 R11 8,8 e 20 mm 12. Shade spectrum V2 moderate. Struttura e tono tra 6 mm e 8,8 mm possono differire.",
+   "esterno": {
+    "colori": [
+     "Beige",
+     "Grey",
+     "Taupe"
+    ],
+    "formati": [
+     "60×120 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 6: «superficie da esterno 60x120 in 8,8 mm»; pag. 27: «8,8 OUTDOOR» e «20 OUTDOOR» Beige/Grey/Taupe 60x120 Nat Ret R11C; pag. 19 e 22: «Floor BEIGE / TAUPE 60x120 Nat Ret 20mm R11C»; pag. 34: codici R11C e 20 mm solo per Beige, Grey, Taupe (White e Dark «-»)"
+   },
+   "colori": [
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#EFEBE4",
+     "img": "/img/ava/ava_noble_stone/white.jpg",
+     "th": "/img/ava/ava_noble_stone/white_t.jpg",
+     "px": 927,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [],
+     "note": "Nessuna versione da esterno (codici R11C e 20 mm «-» a pag. 34). Texture: foto lastra 120×280 a pag. 29 (immagine nativa 150 ppi, ritaglio 393×927 px originali, dentro una sola lastra). Texture: risoluzione originale bassa (393 px). Nel Catalogo Generale le foto sono a 72 ppi, più piccole."
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#EFE1CF",
+     "img": "/img/ava/ava_noble_stone/beige.jpg",
+     "th": "/img/ava/ava_noble_stone/beige_t.jpg",
+     "px": 927,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "esterno"
+     ],
+     "note": "Ha anche la versione OUTDOOR 60×120 Nat Ret R11C in 8,8 mm e 20 mm. Texture: foto lastra 120×280 a pag. 30 (immagine nativa 150 ppi, ritaglio 393×927 px originali, dentro una sola lastra). Texture: risoluzione originale bassa (393 px). Nel Catalogo Generale le foto sono a 72 ppi, più piccole."
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#C8C3BC",
+     "img": "/img/ava/ava_noble_stone/grey.jpg",
+     "th": "/img/ava/ava_noble_stone/grey_t.jpg",
+     "px": 927,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "esterno"
+     ],
+     "note": "Ha anche la versione OUTDOOR 60×120 Nat Ret R11C in 8,8 mm e 20 mm. Texture: foto lastra 120×280 a pag. 28 (immagine nativa 150 ppi, ritaglio 393×927 px originali, dentro una sola lastra). Texture: risoluzione originale bassa (393 px). Nel Catalogo Generale le foto sono a 72 ppi, più piccole."
+    },
+    {
+     "n": "Taupe",
+     "code": "",
+     "hex": "#A09892",
+     "img": "/img/ava/ava_noble_stone/taupe.jpg",
+     "th": "/img/ava/ava_noble_stone/taupe_t.jpg",
+     "px": 927,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "esterno"
+     ],
+     "note": "Ha anche la versione OUTDOOR 60×120 Nat Ret R11C in 8,8 mm e 20 mm. Texture: foto lastra 120×280 a pag. 31 (immagine nativa 150 ppi, ritaglio 393×927 px originali, dentro una sola lastra). Texture: risoluzione originale bassa (393 px). Nel Catalogo Generale le foto sono a 72 ppi, più piccole."
+    },
+    {
+     "n": "Dark",
+     "code": "",
+     "hex": "#3B3431",
+     "img": "/img/ava/ava_noble_stone/dark.jpg",
+     "th": "/img/ava/ava_noble_stone/dark_t.jpg",
+     "px": 927,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [],
+     "note": "Nessuna versione da esterno (codici R11C e 20 mm «-» a pag. 34). Texture: foto lastra 120×280 a pag. 32 (immagine nativa 150 ppi, ritaglio 393×927 px originali, dentro una sola lastra). Texture: risoluzione originale bassa (393 px). Nel Catalogo Generale le foto sono a 72 ppi, più piccole."
+    }
+   ]
+  },
+  {
+   "id": "ava_onice_iride",
+   "n": "Onice Iride",
+   "d": "Un viaggio nello spazio e nel tempo.",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "120×120 cm",
+    "80×160 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_onice_iride/scheda.pdf",
+   "fonte": "LF_AVA_Onice-Iride_catalog-1.pdf, pagine 2-24 (texture dalle foto lastra a tutta altezza delle pagine 4, 7, 10, 13, 16, 19)",
+   "note": "uso: didascalie «Wall» e «Floor» nelle ambientazioni (pag. 5, 8, 11, 14, 17, 20), gradini e battiscopa a pag. 23. Interno/esterno non indicato. Categoria nel PDF: «MARMO E PIETRA» (onice). Materiale non scritto (solo ISO 13006 - G - BIa). Solo finitura Lap Ret. 6 mm: 160×320, 120×280, 120×120, 80×160; 8,8 mm: 60×120. Nessun decoro/mosaico. Pezzi speciali: gradini costa retta 33×160 e 33×120 anche SX/DX (6 mm), battiscopa 6,5×120 e gradino 33×120 anche SX/DX (8,8 mm); gradini solo su richiesta. Grafiche: 4 (160×320 e 120×280), 8 (120×120), 16 (80×160), 24 (60×120). Shade spectrum V3 high.",
+   "colori": [
+    {
+     "n": "Cobalto",
+     "code": "",
+     "hex": "#9AA7B7",
+     "img": "/img/ava/ava_onice_iride/cobalto.jpg",
+     "th": "/img/ava/ava_onice_iride/cobalto_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra di pag. 4 (977×1895 px nativi, 150 ppi), ridotta a 1080 px di lato lungo."
+    },
+    {
+     "n": "Giada",
+     "code": "",
+     "hex": "#98A381",
+     "img": "/img/ava/ava_onice_iride/giada.jpg",
+     "th": "/img/ava/ava_onice_iride/giada_t.jpg",
+     "px": 1080,
+     "formati": [
+      "120×280 cm",
+      "120×120 cm",
+      "60×120 cm"
+     ],
+     "finiture": [],
+     "note": "Giada non è disponibile in 160×320 e 80×160. Texture: foto lastra di pag. 7 (977×1895 px nativi, 150 ppi), ridotta a 1080 px di lato lungo."
+    },
+    {
+     "n": "Argento",
+     "code": "",
+     "hex": "#B1AEAD",
+     "img": "/img/ava/ava_onice_iride/argento.jpg",
+     "th": "/img/ava/ava_onice_iride/argento_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra di pag. 10 (977×1894 px nativi, 150 ppi), ridotta a 1080 px di lato lungo."
+    },
+    {
+     "n": "Avorio",
+     "code": "",
+     "hex": "#D4CBC5",
+     "img": "/img/ava/ava_onice_iride/avorio.jpg",
+     "th": "/img/ava/ava_onice_iride/avorio_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra di pag. 13 (150 ppi), ridotta a 1080 px di lato lungo."
+    },
+    {
+     "n": "Ambra",
+     "code": "",
+     "hex": "#E8D3BF",
+     "img": "/img/ava/ava_onice_iride/ambra.jpg",
+     "th": "/img/ava/ava_onice_iride/ambra_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra di pag. 16 (977×1894 px nativi, 150 ppi), ridotta a 1080 px di lato lungo."
+    },
+    {
+     "n": "Malaga",
+     "code": "",
+     "hex": "#C3A99C",
+     "img": "/img/ava/ava_onice_iride/malaga.jpg",
+     "th": "/img/ava/ava_onice_iride/malaga_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra di pag. 19 (977×1894 px nativi, 150 ppi), ridotta a 1080 px di lato lungo."
+    }
+   ]
+  },
+  {
+   "id": "ava_pierres_des_chateaux",
+   "n": "Pierres des Châteaux",
+   "d": "Gres porcellanato colorato in massa.",
+   "materiale": "gres porcellanato",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "100×100 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm",
+    "10×30 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_pierres_des_chateaux/scheda.pdf",
+   "fonte": "LF_AVA_Pierres-des-Chateaux_catalog.pdf, pagine 2-26",
+   "note": "uso: didascalie «Floor» (pag. 2, 5-6, 8-9, 13-14, 16-17), «Wall» e «Wall & Floor» (pag. 6, 11, 13-14, 17-18), R10B/R11C, battiscopa, gradini e gradone a pag. 26 → pavimento e rivestimento. ambiente: «INDOOR» e «OUTDOOR ... R11 20 mm» a pag. 8-9 e 16, «20 OUTDOOR R11C» a pag. 3 e 21-25. Categoria nel PDF: «MARMO E PIETRA» → pietra. 8,8 mm R10B: 100×100, 60×120, 60×60, 30×60, 10×30 Nat Ret; 100×100 anche 8,8 mm OUTDOOR R11C (non in Chenonceau) e 20 mm OUTDOOR R11C (tutti i colori) = pavimento esterno. Decori (8,8 mm Nat Ret, tutti i colori): Decoro Rose 100×100, Mosaico 30×30, Spina di pesce 30×30 (33,5×30 in tabella), Rete esagonale 30×26 (realizzata con la serie Il Cerreto). Pezzi speciali: battiscopa 7×100 e 7×60, gradino costa retta 33×60 (anche SX/DX), gradone costa toro 50×100 20 mm (su richiesta). Stonalizzazione V3 high. Il Catalogo Generale ha strisce campione più piccole (184 px di lato corto a 72 ppi), usato il PDF della collezione.",
+   "colori": [
+    {
+     "n": "Chenonceau",
+     "code": "",
+     "hex": "#5F5C58",
+     "img": "/img/ava/ava_pierres_des_chateaux/chenonceau.jpg",
+     "th": "/img/ava/ava_pierres_des_chateaux/chenonceau_t.jpg",
+     "px": 518,
+     "formati": [],
+     "finiture": [],
+     "note": "Niente versione 100×100 8,8 mm OUTDOOR R11C (solo 20 mm per esterno). Texture: riquadro campione superficie pag. 4 (nativo 270×530 px a 96 ppi). texture: risoluzione originale bassa (256 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Chambord",
+     "code": "",
+     "hex": "#A49C97",
+     "img": "/img/ava/ava_pierres_des_chateaux/chambord.jpg",
+     "th": "/img/ava/ava_pierres_des_chateaux/chambord_t.jpg",
+     "px": 518,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione superficie pag. 7 (nativo 270×530 px a 96 ppi). texture: risoluzione originale bassa (256 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Cheverny",
+     "code": "",
+     "hex": "#A69E95",
+     "img": "/img/ava/ava_pierres_des_chateaux/cheverny.jpg",
+     "th": "/img/ava/ava_pierres_des_chateaux/cheverny_t.jpg",
+     "px": 518,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione superficie pag. 10 (nativo 270×530 px a 96 ppi). texture: risoluzione originale bassa (256 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Ussé",
+     "code": "",
+     "hex": "#C4BBB3",
+     "img": "/img/ava/ava_pierres_des_chateaux/usse.jpg",
+     "th": "/img/ava/ava_pierres_des_chateaux/usse_t.jpg",
+     "px": 518,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione superficie pag. 12 (nativo 270×530 px a 96 ppi). texture: risoluzione originale bassa (256 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Fontainebleau",
+     "code": "",
+     "hex": "#BCAB9B",
+     "img": "/img/ava/ava_pierres_des_chateaux/fontainebleau.jpg",
+     "th": "/img/ava/ava_pierres_des_chateaux/fontainebleau_t.jpg",
+     "px": 518,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: riquadro campione superficie pag. 15 (nativo 270×530 px a 96 ppi). texture: risoluzione originale bassa (256 px).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ],
+   "esterno": {
+    "colori": [
+     "Chenonceau",
+     "Chambord",
+     "Cheverny",
+     "Ussé",
+     "Fontainebleau"
+    ],
+    "formati": [
+     "100×100 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 3 e 21-25: «8,8 OUTDOOR R11C» e «20 OUTDOOR R11C» 100x100; pag. 8-9, 16: «OUTDOOR Floor ... Nat Ret R11 20 mm»"
+   }
+  },
+  {
+   "id": "ava_puro",
+   "n": "Puro",
+   "d": "PURO è la forma più essenziale del cemento",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "60×120 cm"
+   ],
+   "spessori": [
+    "7 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_puro/scheda.pdf",
+   "fonte": "LF-AVA_Puro_Catalog.pdf, pagine 1-9, 12-23, 25-26 (dati da pag. 3, 6, 25-26; texture da pag. 7 e 8)",
+   "note": "uso: «wall and floor porcelain», ANSI A326.3 DCOF ≥ 0,42 a pag. 26, «Adattabile anche ai pavimenti» a pag. 5 e ambientazioni «Floor Cipria/Malva/Gesso/Cielo 60x120» → pavimento e rivestimento (tecnologia WallX nata per il rivestimento). Ambiente interno/esterno non scritto. Categoria scritta: «Materic Selection» (il testo parla di effetto cemento). Gres porcellanato sottile WallX 7 mm, UNI EN 14411 - ISO 13006 - G - BIa, variazione V1 (Low). Tutto 60×120 Nat Ret 7 mm. Decori 60×120 Nat Ret: Tropic Intense, Tropic Soft, Tropic Fresh (motivo botanico, verso di posa obbligato, grafica ad incastro, fuga min. 2 mm) e Plasmato Cipria, Plasmato Avorio, Plasmato Gesso (struttura a rilievo). Nessun pezzo speciale indicato. I campioni dei 6 colori nel PDF sono a tinta piatta.",
+   "colori": [
+    {
+     "n": "Malva",
+     "code": "",
+     "hex": "#A1867F",
+     "img": "/img/ava/ava_puro/malva.jpg",
+     "th": "/img/ava/ava_puro/malva_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px)."
+    },
+    {
+     "n": "Cipria",
+     "code": "",
+     "hex": "#E7D7CA",
+     "img": "/img/ava/ava_puro/cipria.jpg",
+     "th": "/img/ava/ava_puro/cipria_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px). Esiste anche il decoro Plasmato Cipria 60×120 Nat Ret (struttura a rilievo)."
+    },
+    {
+     "n": "Avorio",
+     "code": "",
+     "hex": "#ECE3DC",
+     "img": "/img/ava/ava_puro/avorio.jpg",
+     "th": "/img/ava/ava_puro/avorio_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px). Esiste anche il decoro Plasmato Avorio 60×120 Nat Ret (struttura a rilievo)."
+    },
+    {
+     "n": "Salvia",
+     "code": "",
+     "hex": "#CACDBA",
+     "img": "/img/ava/ava_puro/salvia.jpg",
+     "th": "/img/ava/ava_puro/salvia_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px)."
+    },
+    {
+     "n": "Cielo",
+     "code": "",
+     "hex": "#B2B5BC",
+     "img": "/img/ava/ava_puro/cielo.jpg",
+     "th": "/img/ava/ava_puro/cielo_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px)."
+    },
+    {
+     "n": "Gesso",
+     "code": "",
+     "hex": "#F7F0EA",
+     "img": "/img/ava/ava_puro/gesso.jpg",
+     "th": "/img/ava/ava_puro/gesso_t.jpg",
+     "px": 421,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: fascia campione «plain colors» pag. 7 (metà superiore, sopra il nome), 72 ppi nativi; nel PDF il campione è a tinta piatta uniforme (nessuna venatura). texture: risoluzione originale bassa (~190 px). Esiste anche il decoro Plasmato Gesso 60×120 Nat Ret (struttura a rilievo)."
+    },
+    {
+     "n": "Tropic Intense",
+     "code": "",
+     "hex": "#CBBAB2",
+     "img": "/img/ava/ava_puro/tropic_intense.jpg",
+     "th": "/img/ava/ava_puro/tropic_intense_t.jpg",
+     "px": 433,
+     "formati": [],
+     "finiture": [],
+     "note": "Decoro Tropic (motivo botanico continuo, con verso di posa obbligato), esiste solo come decoro 60×120 Nat Ret. Texture: fascia campione pag. 8 (metà inferiore, sotto il nome), 72 ppi nativi. texture: risoluzione originale bassa (~190 px)."
+    },
+    {
+     "n": "Tropic Soft",
+     "code": "",
+     "hex": "#F8F5F2",
+     "img": "/img/ava/ava_puro/tropic_soft.jpg",
+     "th": "/img/ava/ava_puro/tropic_soft_t.jpg",
+     "px": 433,
+     "formati": [],
+     "finiture": [],
+     "note": "Decoro Tropic (motivo botanico continuo, con verso di posa obbligato), esiste solo come decoro 60×120 Nat Ret. Texture: fascia campione pag. 8 (metà inferiore, sotto il nome), 72 ppi nativi. texture: risoluzione originale bassa (~190 px)."
+    },
+    {
+     "n": "Tropic Fresh",
+     "code": "",
+     "hex": "#D0DAE4",
+     "img": "/img/ava/ava_puro/tropic_fresh.jpg",
+     "th": "/img/ava/ava_puro/tropic_fresh_t.jpg",
+     "px": 433,
+     "formati": [],
+     "finiture": [],
+     "note": "Decoro Tropic (motivo botanico continuo, con verso di posa obbligato), esiste solo come decoro 60×120 Nat Ret. Texture: fascia campione pag. 8 (metà inferiore, sotto il nome), 72 ppi nativi. texture: risoluzione originale bassa (~190 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_royal_stone",
+   "n": "Royal Stone",
+   "d": "new vision of stone",
+   "materiale": "",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "esterno"
+   ],
+   "esterno": {
+    "colori": [
+     "Gold"
+    ],
+    "formati": [
+     "100×100 cm",
+     "60×60 cm"
+    ],
+    "spessori": [
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 10: «20 OUTDOOR R11C» (100×100 e 60×60 Nat Ret 20 mm, codici 122013 e 122007); pag. 8-9: «60x60 Nat Ret 20 R11C», «Royal Stone 100x100 Nat Ret 20mm R11C»"
+   },
+   "decorativa": false,
+   "formati": [
+    "100×100 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30,5×60,5 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "naturale"
+   ],
+   "pdf": "/img/ava/ava_royal_stone/scheda.pdf",
+   "fonte": "LF_AVA_Royal-Stone_Catalog.pdf, pagine 2-11 (texture da pag. 2, foto superficie a pagina intera)",
+   "note": "uso: classe antiscivolo R10A/R11C e DCOF ≥ 0,42, battiscopa, gradini e gradoni (pag. 10-11), versione «OUTDOOR» 20 mm (pag. 10); il PDF non parla di rivestimento/parete. Ambiente: «OUTDOOR» solo per il 20 mm R11C; per l'8,8 mm R10A il PDF non scrive interno/indoor (le foto sono ambienti interni), quindi «interno» non è indicato. Materiale: il PDF della collezione non scrive «gres porcellanato» (solo la norma ISO 13006 - G - BIa); il Catalogo Generale (pag. 148) lo indica come «Gres Porcellanato». Un solo colore: Gold. 8,8 mm R10A: 60×120, 60×60, 30×60, 100×100 Nat Ret e 30,5×60,5 Nat (non rettificato); 20 mm R11C: 100×100 e 60×60 Nat Ret (esterno). Decoro: Mosaico 30×30 Nat Ret (8,8 mm). Modulo multiformato 60×120 + 60×60 + 30×60 con fuga 3 mm (pag. 7). Pezzi speciali 8,8 mm: battiscopa 9,5×60, gradino costa retta 33×60 e 33×120 (anche SX-DX); 20 mm: gradone 30×60 costa toro/costa retta (anche angolo SX/DX), griglia 15×60 e 30×60 (anche angolo SX/DX; in tabella la riga è scritta «GRIGIO», probabile refuso per Gold). Pezzi 20 mm solo su richiesta. Stonalizzazione V3. Effetto: «MARMO E PIETRA» e «new vision of stone» nel PDF, quindi pietra. Il PDF avverte che tra 8,8 e 20 mm non si garantisce l'abbinabilità di tono.",
+   "colori": [
+    {
+     "n": "Gold",
+     "code": "",
+     "hex": "#DEC8AA",
+     "img": "/img/ava/ava_royal_stone/gold.jpg",
+     "th": "/img/ava/ava_royal_stone/gold_t.jpg",
+     "px": 902,
+     "formati": [],
+     "finiture": [],
+     "ambiente": [
+      "esterno"
+     ],
+     "note": "texture: foto della superficie a pagina intera, pag. 2 (645×902 px a 72 ppi, nessuna fonte più grande; il Catalogo Generale ha 72 ppi). Ambiente: solo «esterno» è scritto (20 mm OUTDOOR); l'8,8 mm non ha indicazione."
+    }
+   ]
+  },
+  {
+   "id": "ava_sahara_noir",
+   "n": "Sahara Noir",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "80×180 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_sahara_noir/scheda.pdf",
+   "fonte": "LF_AVA_Sahara-Noir_catalog-1.pdf, pagine 2-4 (texture da pag. 3)",
+   "note": "uso: battiscopa (Skirting) e gradini (Step) a pag. 4 → pavimento; l'ambientazione a pag. 2 mostra le lastre posate a parete (nessuna scritta «wall»/«rivestimento» nel PDF) → rivestimento. Ambiente interno/esterno non indicato. Categoria scritta: «MARMO E PIETRA». Materiale non scritto (solo ISO 13006 - G - BIa). Variazione cromatica V2 (Moderate). 120×280 solo 6 mm; 80×180 e 60×120 solo 8,8 mm. 120×280 ha 4 pattern grafici. Pezzi speciali 8,8 mm: battiscopa 6,5×120, gradini costa retta 33×120 (anche SX/DX, solo su richiesta).",
+   "colori": [
+    {
+     "n": "Sahara Noir",
+     "code": "",
+     "hex": "#0A090A",
+     "img": "/img/ava/ava_sahara_noir/sahara_noir.jpg",
+     "th": "/img/ava/ava_sahara_noir/sahara_noir_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra a tutta altezza pag. 3 (metà sinistra), 96 ppi nativi (796×1213 px originali)."
+    }
+   ]
+  },
+  {
+   "id": "ava_skyline",
+   "n": "Skyline",
+   "d": "La rigorosità materica del cemento e la sua estetica suggestiva",
+   "materiale": "gres porcellanato",
+   "effetto": "materico",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "160×160 cm",
+    "80×160 cm",
+    "120×120 cm",
+    "100×100 cm",
+    "60×120 cm",
+    "80×80 cm",
+    "60×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_skyline/scheda.pdf",
+   "fonte": "LF_AVA_Skyline_catalog-1.pdf, pagine 2-20 (texture da pag. 15-18)",
+   "note": "uso: pag. 3 «dal rivestimento al pavimento per interni ed esterni»; didascalie «floor and wall», «wall», «floor» nelle ambientazioni (pag. 6-14); «OUTDOOR R11C», DCOF ≥ 0,42, battiscopa, gradini, gradoni e griglie a pag. 4 e 19-20 → pavimento e rivestimento. ambiente: «per interni ed esterni» a pag. 3; 100×100 8,8 mm e 20 mm «OUTDOOR R11C» → esterno. Effetto: «effetto materico» a pag. 2 e intestazione «MATERICO» a pag. 20. Materiale: «Le caratteristiche del gres porcellanato» a pag. 2. Frase «d» presa dall'inizio della frase di pag. 2 (continua «definiscono Skyline...»). Spessori: 160×320, 120×280, 160×160, 80×160, 120×120, 80×80 solo 6 mm (alcuni formati indicati come «modular system»); 100×100, 60×120, 60×60 in 8,8 mm; 100×100 anche 8,8 mm OUTDOOR R11C e 20 mm OUTDOOR R11C (20 mm: pavimento esterno). Il testo a pag. 3 cita anche un 324×163 cm in 12 mm e le didascalie un «360x120», ma non sono nelle tabelle tecniche: non inseriti. Decoro: Mosaico 30×30 (6 mm, Nat Ret) per tutti i colori. Pezzi speciali: battiscopa 8×80, 6,5×120, 7×100; gradini costa retta 33×160, 33×120, 33×100 (anche SX/DX, su richiesta); 20 mm: gradone 50×100 e griglia 20×100 (anche SX/DX), altri pezzi (copertina 30×100, angoli curvilinei). Shade spectrum V2 moderate. Nessuna altra finitura oltre Nat Ret.",
+   "esterno": {
+    "colori": [
+     "Antracite",
+     "Fumo",
+     "Ghiaccio",
+     "Beige"
+    ],
+    "formati": [
+     "100×100 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 4: «8,8 OUTDOOR R11C» e «20 OUTDOOR R11C» 100×100 Nat Ret; pag. 3: «dal rivestimento al pavimento per interni ed esterni»; pag. 19-20: codici 100×100 R11C 8,8 e 20 mm, gradoni e griglie 20 mm"
+   },
+   "colori": [
+    {
+     "n": "Antracite",
+     "code": "",
+     "hex": "#545354",
+     "img": "/img/ava/ava_skyline/antracite.jpg",
+     "th": "/img/ava/ava_skyline/antracite_t.jpg",
+     "px": 737,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 160×320 a pag. 15 (immagine nativa 72 ppi, ritaglio 488×737 px originali sotto il nome stampato). Texture: risoluzione originale bassa (488 px). Nel Catalogo Generale (pag. 163) le foto colore sono anch'esse a 72 ppi e più piccole (598×230).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Fumo",
+     "code": "",
+     "hex": "#9E9C97",
+     "img": "/img/ava/ava_skyline/fumo.jpg",
+     "th": "/img/ava/ava_skyline/fumo_t.jpg",
+     "px": 737,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 160×320 a pag. 16 (immagine nativa 72 ppi, ritaglio 488×737 px originali sotto il nome stampato). Texture: risoluzione originale bassa (488 px). Nel Catalogo Generale (pag. 163) le foto colore sono anch'esse a 72 ppi e più piccole (598×230).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Ghiaccio",
+     "code": "",
+     "hex": "#D7D7CE",
+     "img": "/img/ava/ava_skyline/ghiaccio.jpg",
+     "th": "/img/ava/ava_skyline/ghiaccio_t.jpg",
+     "px": 737,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 160×320 a pag. 17 (immagine nativa 72 ppi, ritaglio 488×737 px originali sotto il nome stampato). Texture: risoluzione originale bassa (488 px). Nel Catalogo Generale (pag. 163) le foto colore sono anch'esse a 72 ppi e più piccole (598×230).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#D8CAB3",
+     "img": "/img/ava/ava_skyline/beige.jpg",
+     "th": "/img/ava/ava_skyline/beige_t.jpg",
+     "px": 737,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra 160×320 a pag. 18 (immagine nativa 72 ppi, ritaglio 488×737 px originali sotto il nome stampato). Texture: risoluzione originale bassa (488 px). Nel Catalogo Generale (pag. 163) le foto colore sono anch'esse a 72 ppi e più piccole (598×230).",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ava_small",
+   "n": "Small",
+   "d": "La Fabbrica debutta nel piccolo formato in grande stile.",
+   "materiale": "ceramica a pasta bianca (monoporosa)",
+   "effetto": "materico",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "6,5×20 cm",
+    "5,1×16,1 cm",
+    "12,4×10,7 cm",
+    "10×10 cm"
+   ],
+   "spessori": [
+    "9 mm"
+   ],
+   "finiture": [
+    "Bright"
+   ],
+   "pdf": "/img/ava/ava_small/scheda.pdf",
+   "fonte": "LF_AVA_Small_catalog.pdf, pagine 3-10, 40-47 (texture da pag. 10, ritaglio a 72 ppi nativi; Catalogo Generale 2026 pag. 232 controllato: stessi campioni 201×227 px, nessuna fonte più grande)",
+   "note": "uso: «Da rivestimento / Wall tile» a pag. 46 e «Pasta bianca - rivestimento / wall tiles» a pag. 47; nessuna prova di pavimento (i «Mixed floor» delle ambientazioni sono altri prodotti). ambiente: il PDF non scrive interno/esterno. Materiale: il PDF dice «ceramica a pasta bianca, detta anche monoporosa» (non gres porcellanato), UNI EN 14411 B III GL. Effetto: intestazione «MATERICO» a pag. 46. Finitura «Bright» lasciata com'è: legenda non trovata né nel PDF né nel catalogo generale. 12,4×10,7 è un esagono. Pezzi speciali per ogni colore: Jolly 1,2×20 e Pencil bullnose 3×20. Decori: linea Trend (5 colori: Beige, Black, Ocher, Light Blue, Navy; 12,4×10,7, Arco 10×10, Diagonal 10×10, Rhombus 6,5×20, Sun 6,5×20, 5,1×16,1) e Amalfi (motivi maiolica misti; 12,4×10,7, 10×10, 6,5×20, 5,1×16,1), senza texture separate. Fuga consigliata almeno 3 mm. Texture: nel PDF e nel Catalogo Generale i campioni colore sono immagini a 72 ppi di circa 199×227 px; ritagliati a pixel originali (191×182 px), senza ingrandire.",
+   "colori": [
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#EAE7E2",
+     "img": "/img/ava/ava_small/white.jpg",
+     "th": "/img/ava/ava_small/white_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Black",
+     "code": "",
+     "hex": "#373732",
+     "img": "/img/ava/ava_small/black.jpg",
+     "th": "/img/ava/ava_small/black_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#A9A09D",
+     "img": "/img/ava/ava_small/grey.jpg",
+     "th": "/img/ava/ava_small/grey_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Navy",
+     "code": "",
+     "hex": "#22496D",
+     "img": "/img/ava/ava_small/navy.jpg",
+     "th": "/img/ava/ava_small/navy_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Prussian",
+     "code": "",
+     "hex": "#255761",
+     "img": "/img/ava/ava_small/prussian.jpg",
+     "th": "/img/ava/ava_small/prussian_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Light Blue",
+     "code": "",
+     "hex": "#8E9BA8",
+     "img": "/img/ava/ava_small/light_blue.jpg",
+     "th": "/img/ava/ava_small/light_blue_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Sage",
+     "code": "",
+     "hex": "#AEBFAF",
+     "img": "/img/ava/ava_small/sage.jpg",
+     "th": "/img/ava/ava_small/sage_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Emerald",
+     "code": "",
+     "hex": "#304F40",
+     "img": "/img/ava/ava_small/emerald.jpg",
+     "th": "/img/ava/ava_small/emerald_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Flamingo",
+     "code": "",
+     "hex": "#D4AE9B",
+     "img": "/img/ava/ava_small/flamingo.jpg",
+     "th": "/img/ava/ava_small/flamingo_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#C2AF99",
+     "img": "/img/ava/ava_small/beige.jpg",
+     "th": "/img/ava/ava_small/beige_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Ocher",
+     "code": "",
+     "hex": "#D4A854",
+     "img": "/img/ava/ava_small/ocher.jpg",
+     "th": "/img/ava/ava_small/ocher_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    },
+    {
+     "n": "Prune",
+     "code": "",
+     "hex": "#8F4C55",
+     "img": "/img/ava/ava_small/prune.jpg",
+     "th": "/img/ava/ava_small/prune_t.jpg",
+     "px": 191,
+     "formati": [],
+     "finiture": [],
+     "note": "texture: risoluzione originale bassa (182 px)"
+    }
+   ]
+  },
+  {
+   "id": "ava_statuario",
+   "n": "Statuario",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm",
+    "60×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_statuario/scheda.pdf",
+   "fonte": "LF_AVA_Statuario_catalog-1.pdf, pagine 2-5 (texture da pag. 3)",
+   "note": "Categoria nel PDF: «MARMO E PIETRA». Materiale non scritto nel PDF (solo norme ISO 13006 BIa / UNI EN 14411). Nessuna frase descrittiva in italiano. Formati: 160×320, 120×280, 120×120 solo 6 mm; 60×120 e 60×60 solo 8,8 mm. Slab A/B 160×320 6 mm (macchia aperta / book match) solo lappato rettificato. Decoro: Mosaico 30×30 6 mm, naturale e lappato rettificato. Pezzi speciali: gradino costa retta 33×120 (anche SX/DX, solo su richiesta) e battiscopa 6,5×120 (8,8 mm). Shade spectrum V2 moderate. Interno/esterno non indicato. uso: «DCOF ≥ 0,42 naturale» a pag. 3, gradini e battiscopa a pag. 5 → pavimento; a pag. 5 «Backsplash / Counter top / Furniture» (Statuario Lap) e a pag. 2 parete cucina rivestita → rivestimento (nessuna scritta «wall/rivestimento» esplicita).",
+   "colori": [
+    {
+     "n": "Statuario",
+     "code": "",
+     "hex": "#F7F2EC",
+     "img": "/img/ava/ava_statuario/statuario.jpg",
+     "th": "/img/ava/ava_statuario/statuario_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture dalla foto lastra a pag. 3 (immagine nativa 96 ppi, ritaglio 779×1195 px originali, ridotto a 704×1080). Nel Catalogo Generale la stessa foto è a 72 ppi (più piccola)."
+    }
+   ]
+  },
+  {
+   "id": "ava_statuario_reale",
+   "n": "Statuario Reale",
+   "d": "",
+   "materiale": "",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "160×320 cm",
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm"
+   ],
+   "finiture": [
+    "naturale rettificato",
+    "lappato rettificato"
+   ],
+   "pdf": "/img/ava/ava_statuario_reale/scheda.pdf",
+   "fonte": "LF_AVA_Statuario-Reale_catalog.pdf, pagine 1-5 (texture dalla foto lastra di pag. 3)",
+   "note": "uso: DCOF ≥ 0,42 naturale e «R10A naturale» (8,8 mm) a pag. 3, gradini e battiscopa a pag. 5; didascalia «Wall Statuario Reale 160x320 Lap Ret» a pag. 5. Il Catalogo Generale (pag. 36) scrive anche «Wall & Floor» e Calpestio HIGH (finitura naturale). Interno/esterno non indicato. Categoria nel PDF: «MARMO E PIETRA». Materiale non scritto nel PDF della collezione (solo ISO 13006 - G - BIa); il Catalogo Generale scrive «Gres Porcellanato». Nessuna frase descrittiva. Formati: 160×320, 120×280 (Nat Ret e Lap Ret) e 120×120 (solo Lap Ret) in 6 mm; 60×120 solo 8,8 mm (Nat Ret e Lap Ret, R10A naturale). Grafiche: 6 pattern per 160×320 e 120×280, 12 per 120×120, 30 per 60×120; composizione di 6 lastre a vena continua 160×320 e 120×280 (6 mm) solo su richiesta con maggiorazione di prezzo. Nessun decoro/mosaico. Pezzi speciali: gradini costa retta 33×160 e 33×120 anche SX/DX (6 mm), battiscopa 6,5×120 e gradini 33×120 (8,8 mm); gradini solo su richiesta. Shade spectrum V2 moderate.",
+   "colori": [
+    {
+     "n": "Statuario Reale",
+     "code": "",
+     "hex": "#F4F1EB",
+     "img": "/img/ava/ava_statuario_reale/statuario_reale.jpg",
+     "th": "/img/ava/ava_statuario_reale/statuario_reale_t.jpg",
+     "px": 1080,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: foto lastra a tutta pagina di pag. 3 (796×1213 px nativi, 96 ppi), ridotta a 1080 px di lato lungo."
+    }
+   ]
+  },
+  {
+   "id": "ava_up",
+   "n": "UP",
+   "d": "UP rappresenta un nuovo modo di intendere la ceramica",
+   "materiale": "ceramica in pasta bianca (monoporosa)",
+   "effetto": "materico",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "5×25 cm",
+    "10×10 cm"
+   ],
+   "spessori": [
+    "9 mm",
+    "15 mm"
+   ],
+   "finiture": [
+    "opaco",
+    "lucido"
+   ],
+   "pdf": "/img/ava/ava_up/scheda.pdf",
+   "fonte": "LF_AVA_UP_catalog.pdf, pagine 2-3, 14-43 (texture dalla foto indice dei 7 colori a pag. 14)",
+   "note": "uso: «Da rivestimento. Wall tile» a pag. 42, «PASTA BIANCA - RIVESTIMENTO» a pag. 43, a pag. 2 «rivestimento in monoporosa». ambiente: «donando classe agli interni» a pag. 2 (rivestimento interno); nessuna indicazione di esterno. Materiale: «ceramica in pasta bianca, nota anche come monoporosa» (pag. 3), UNI EN 14411 - ISO 13006 B III - GL. Categoria a pag. 42: «MATERICO». Finiture: nel PDF «Matte» (= opaco) e «Glossy» (= lucido), per tutti i colori e tutti i pezzi. 9 mm: 10×10 e 5×25 lisci; 15 mm (superfici strutturate 3D): Cuscino 5×25 e 10×10, Cannettato 5×25, Lingotto 5×25 e 10×10. Pezzo speciale: Jolly 1,2×20 (9 mm, Matte e Glossy). Bordi naturali, fughe consigliate minimo 2 mm. Schemi di posa a pag. 41. Il Catalogo Generale (pag. 238) mostra una versione Up con altri colori e codici (es. Sage, 180xxx): non usata. Le pagine-colore del PDF sono a tinta piatta disegnata; le texture sono ritagliate dalle facce piane delle piastrelle nella foto di pag. 14 (96 ppi), quindi a risoluzione bassa e con leggere sfumature di luce.",
+   "colori": [
+    {
+     "n": "Black",
+     "code": "",
+     "hex": "#2C2829",
+     "img": "/img/ava/ava_up/black.jpg",
+     "th": "/img/ava/ava_up/black_t.jpg",
+     "px": 448,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in alto nella foto di pag. 14. texture: risoluzione originale bassa (180 px)."
+    },
+    {
+     "n": "Grey",
+     "code": "",
+     "hex": "#BDB5B2",
+     "img": "/img/ava/ava_up/grey.jpg",
+     "th": "/img/ava/ava_up/grey_t.jpg",
+     "px": 178,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in basso nella foto di pag. 14. texture: risoluzione originale bassa (148 px)."
+    },
+    {
+     "n": "White",
+     "code": "",
+     "hex": "#F3F0EB",
+     "img": "/img/ava/ava_up/white.jpg",
+     "th": "/img/ava/ava_up/white_t.jpg",
+     "px": 445,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in alto nella foto di pag. 14. texture: risoluzione originale bassa (188 px)."
+    },
+    {
+     "n": "Bone",
+     "code": "",
+     "hex": "#EBE4DB",
+     "img": "/img/ava/ava_up/bone.jpg",
+     "th": "/img/ava/ava_up/bone_t.jpg",
+     "px": 426,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: parte più piana del pezzo Bone nella foto di pag. 14; la superficie è curva e ha una sfumatura di luce da sinistra a destra. texture: risoluzione originale bassa (84 px)."
+    },
+    {
+     "n": "Avana",
+     "code": "",
+     "hex": "#B16A50",
+     "img": "/img/ava/ava_up/avana.jpg",
+     "th": "/img/ava/ava_up/avana_t.jpg",
+     "px": 448,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in alto nella foto di pag. 14. texture: risoluzione originale bassa (186 px)."
+    },
+    {
+     "n": "Green",
+     "code": "",
+     "hex": "#ACC1BA",
+     "img": "/img/ava/ava_up/green.jpg",
+     "th": "/img/ava/ava_up/green_t.jpg",
+     "px": 164,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in basso nella foto di pag. 14. texture: risoluzione originale bassa (132 px)."
+    },
+    {
+     "n": "Blue",
+     "code": "",
+     "hex": "#7F98A7",
+     "img": "/img/ava/ava_up/blue.jpg",
+     "th": "/img/ava/ava_up/blue_t.jpg",
+     "px": 448,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: faccia piana in alto nella foto di pag. 14. texture: risoluzione originale bassa (177 px)."
+    }
+   ]
+  },
+  {
+   "id": "ava_velaris",
+   "n": "Velaris",
+   "d": "Essenziale, autentica, concreta.",
+   "materiale": "",
+   "effetto": "pietra",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [
+    "interno",
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "120×280 cm",
+    "120×120 cm",
+    "60×120 cm",
+    "60×60 cm",
+    "30×60 cm"
+   ],
+   "spessori": [
+    "6 mm",
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_velaris/scheda.pdf",
+   "fonte": "LF_AVA_Velaris_Web_Catalog-1.pdf, pagine 2-22 (texture: Grigio, Bianco, Brown dalle lastre di pag. 19 a 150 ppi; Beige dalla lastra 120×280 di pag. 20 a 150 ppi). Catalogo Generale pag. 138 controllato: stesse lastre a 72 ppi, più piccole.",
+   "note": "uso: didascalie «Wall» e «Floor» nelle ambientazioni (es. «Wall & Floor BEIGE 60x120 Nat Ret»), R10B, «DCOF ≥ 0,42», battiscopa e gradini nella parte tecnica (pag. 21). ambiente: «dall’interior design più sofisticato agli spazi outdoor» e versione «20 mm OUTDOOR» 60×120 Nat Ret R11C (tutti e 4 i colori). Effetto: intestazione «Marmo e Pietra», il testo parla di «pietra calcarea». Materiale: il PDF non scrive «gres porcellanato» (solo la norma ISO 13006 - G - BIa). Formati: 120×280 solo 6 mm; 120×120, 60×120, 60×60, 30×60 in 8,8 mm (R10B); 60×120 anche 20 mm R11C. Finitura: «Nat Ret»; su 120×280 e 120×120 è «Materic Touch», sugli altri formati naturale con «delicate increspature». Decori: Colonna (3D) 60×120 Nat Ret solo Bianco e Beige; Mosaico 30×30 Nat Ret R10B tutti i colori; bacchetta di metallo 1×120 (Rame, Oro, Silver, Acciaio). Pezzi speciali: battiscopa 7×60, gradino costa retta 33×120 e SX/DX; 20 mm: gradone 30×120 costa toro e angolo SX/DX (su richiesta). Texture di pag. 19: lastre con ombre ai bordi, ritagliata solo la parte centrale senza ombre e senza la scritta del colore.",
+   "colori": [
+    {
+     "n": "Grigio",
+     "code": "",
+     "hex": "#C8C0B8",
+     "img": "/img/ava/ava_velaris/grigio.jpg",
+     "th": "/img/ava/ava_velaris/grigio_t.jpg",
+     "px": 1077,
+     "formati": [],
+     "finiture": [],
+     "note": "",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Bianco",
+     "code": "",
+     "hex": "#EEE8DE",
+     "img": "/img/ava/ava_velaris/bianco.jpg",
+     "th": "/img/ava/ava_velaris/bianco_t.jpg",
+     "px": 1077,
+     "formati": [],
+     "finiture": [],
+     "note": "Anche decoro Colonna.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Beige",
+     "code": "",
+     "hex": "#E7D6BC",
+     "img": "/img/ava/ava_velaris/beige.jpg",
+     "th": "/img/ava/ava_velaris/beige_t.jpg",
+     "px": 929,
+     "formati": [],
+     "finiture": [],
+     "note": "Anche decoro Colonna. Texture dalla lastra 120×280 (Materic Touch) di pag. 20.",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    },
+    {
+     "n": "Brown",
+     "code": "",
+     "hex": "#B69C86",
+     "img": "/img/ava/ava_velaris/brown.jpg",
+     "th": "/img/ava/ava_velaris/brown_t.jpg",
+     "px": 1077,
+     "formati": [],
+     "finiture": [],
+     "note": "",
+     "ambiente": [
+      "interno",
+      "esterno"
+     ]
+    }
+   ],
+   "esterno": {
+    "colori": [
+     "Grigio",
+     "Bianco",
+     "Beige",
+     "Brown"
+    ],
+    "formati": [
+     "60×120 cm"
+    ],
+    "spessori": [
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 4: «spazi outdoor, grazie alla versione dedicata in 60×120 cm con spessore 20 mm»; pag. 19: «20 mm OUTDOOR 60x120 Nat Ret R11C»; pag. 21: codici 20 mm per tutti e 4 i colori"
+   }
+  },
+  {
+   "id": "ava_venezia",
+   "n": "Venezia",
+   "d": "Venezia nasce dal dialogo tra materia e tempo.",
+   "materiale": "gres porcellanato",
+   "effetto": "marmo",
+   "uso": [
+    "pavimento"
+   ],
+   "ambiente": [
+    "esterno"
+   ],
+   "decorativa": false,
+   "formati": [
+    "100×100 cm",
+    "60×60 cm",
+    "40×60 cm",
+    "40×40 cm"
+   ],
+   "spessori": [
+    "8,8 mm",
+    "20 mm"
+   ],
+   "finiture": [
+    "naturale rettificato"
+   ],
+   "pdf": "/img/ava/ava_venezia/scheda.pdf",
+   "fonte": "LF_AVA_Venezia_Catalog_.pdf, pagine 3-24; texture da LF_AVA_Catalogo-Generale_2026.pdf, pag. 93",
+   "note": "uso: didascalie «Floor VENEZIA ...» in tutte le ambientazioni, R10B / R11C, DCOF ≥ 0,42, battiscopa 7×60, gradini 33×60, gradone 50×100 a pag. 23 → pavimento. Le scritte «Wall» e «Backsplash» del PDF riguardano altre serie (Statuario Reale, Macchia Antica, Black Gold 120×280, mosaico Imperial Navona 30×30) che non sono nelle tabelle Venezia, quindi non ho messo rivestimento. ambiente: Imperial Navona «OUTDOOR» R11C 8,8 mm e 100×100 20 mm, «estende il progetto anche agli spazi en plein air» → esterno solo per Imperial Navona; per gli altri colori interno/esterno non indicato. Effetto: «Marble Selection» (copertina e pag. 23). Materiale: «superfici modulari in grès porcellanato» a pag. 3. Formati modulari 60×60, 40×60, 40×40 in 8,8 mm con bordi dritti rettificati ed effetto burattato in superficie (Tumbled Edges), da posare con fuga di 3 mm; disponibile anche MULTIFORMATO (un 60×60, due 40×60, un 40×40 = 1 m²) e 8 schemi di posa (moduli). 100×100 solo Imperial Navona 20 mm R11C (bordi dritti rettificati; 20 mm: pavimento esterno). Statuario Reale, Macchia Antica, Black Gold: Nat Ret R10B; Imperial Navona: Nat Ret R11C. Pezzi speciali: battiscopa 7×60 (R10B), gradino costa retta 33×60 e SX/DX, Elle monolitico estruso 15×30×4 (Imperial Navona), gradone 50×100 costa retta/toro e angolo SX/DX (20 mm, Imperial Navona). Nessun decoro/mosaico Venezia nelle tabelle. Texture: il catalogo della collezione ha solo foto di posa modulare (tessere da circa 230 px separate da fughe); usate le fasce colore senza fughe del Catalogo Generale pag. 93 (più pixel di superficie piena). ambiente per colore: solo Imperial Navona ha la versione da esterno; il PDF non scrive «interno» per nessun colore (Imperial Navona ha anche la versione R10B oltre a quella R11C OUTDOOR).",
+   "esterno": {
+    "colori": [
+     "Imperial Navona"
+    ],
+    "formati": [
+     "100×100 cm",
+     "60×60 cm",
+     "40×60 cm",
+     "40×40 cm"
+    ],
+    "spessori": [
+     "8,8 mm",
+     "20 mm"
+    ],
+    "finiture": [
+     "naturale rettificato"
+    ],
+    "prova": "pag. 4: «8,8 R10B & R11C (Imperial Navona)», «20 R11C (Imperial Navona)», «estende il progetto anche agli spazi en plein air»; pag. 23: tabella Imperial Navona Nat Ret R11C e 100×100 20 mm R11C; pag. 15-17: «Floor VENEZIA IMPERIAL NAVONA ... Nat Ret R11C»"
+   },
+   "colori": [
+    {
+     "n": "Statuario Reale",
+     "code": "",
+     "hex": "#F1EEE9",
+     "img": "/img/ava/ava_venezia/statuario_reale.jpg",
+     "th": "/img/ava/ava_venezia/statuario_reale_t.jpg",
+     "px": 344,
+     "formati": [],
+     "finiture": [],
+     "note": "60×60, 40×60, 40×40 solo 8,8 mm R10B. Texture: fascia colore del Catalogo Generale pag. 93 (immagine nativa 72 ppi, ritaglio 344×212 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (212 px).",
+     "ambiente": []
+    },
+    {
+     "n": "Macchia Antica",
+     "code": "",
+     "hex": "#DFD8CE",
+     "img": "/img/ava/ava_venezia/macchia_antica.jpg",
+     "th": "/img/ava/ava_venezia/macchia_antica_t.jpg",
+     "px": 349,
+     "formati": [],
+     "finiture": [],
+     "note": "60×60, 40×60, 40×40 solo 8,8 mm R10B. Texture: fascia colore del Catalogo Generale pag. 93 (immagine nativa 72 ppi, ritaglio 349×204 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (204 px).",
+     "ambiente": []
+    },
+    {
+     "n": "Imperial Navona",
+     "code": "",
+     "hex": "#D8CBBA",
+     "img": "/img/ava/ava_venezia/imperial_navona.jpg",
+     "th": "/img/ava/ava_venezia/imperial_navona_t.jpg",
+     "px": 312,
+     "formati": [
+      "100×100 cm",
+      "60×60 cm",
+      "40×60 cm",
+      "40×40 cm"
+     ],
+     "finiture": [],
+     "note": "Unico colore con 100×100 cm in 20 mm R11C e con versione OUTDOOR R11C anche in 8,8 mm (pavimento esterno). Prodotto distinto dal colore Navona della serie Imperial. Texture: fascia colore del Catalogo Generale pag. 93 (immagine nativa 72 ppi, ritaglio 312×211 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (211 px).",
+     "ambiente": [
+      "esterno"
+     ]
+    },
+    {
+     "n": "Black Gold",
+     "code": "",
+     "hex": "#363431",
+     "img": "/img/ava/ava_venezia/black_gold.jpg",
+     "th": "/img/ava/ava_venezia/black_gold_t.jpg",
+     "px": 362,
+     "formati": [],
+     "finiture": [],
+     "note": "60×60, 40×60, 40×40 solo 8,8 mm R10B. Texture: fascia colore del Catalogo Generale pag. 93 (immagine nativa 72 ppi, ritaglio 362×215 px originali, evitato il nome stampato). Texture: risoluzione originale bassa (215 px).",
+     "ambiente": []
+    }
+   ]
+  },
+  {
+   "id": "ava_wabi_sabi",
+   "n": "Wabi Sabi",
+   "d": "superfici in gres porcellanato 15×15 e 6×25 cm: vive, materiche, autentiche.",
+   "materiale": "gres porcellanato",
+   "effetto": "",
+   "uso": [
+    "pavimento",
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": false,
+   "formati": [
+    "6×25 cm",
+    "15×15 cm"
+   ],
+   "spessori": [
+    "9 mm",
+    "9,5 mm"
+   ],
+   "finiture": [
+    "lucido (glossy)"
+   ],
+   "pdf": "/img/ava/ava_wabi_sabi/scheda.pdf",
+   "fonte": "LF_AVA_Wabi-Sabi_Catalog.pdf, pagine 1, 4, 7-26 (dati da pag. 4 e 26; texture da pag. 7, 8, 10, 12, 13, 15, 17, 19, 21, 23)",
+   "note": "uso: «wall and floor porcelain (foot traffic: LOW)» a pag. 4 e 26 → pavimento e rivestimento; i decori Hinode e Yuhi sono «only wall tiles» (solo rivestimento). Ambiente interno/esterno non scritto (a pag. 9 c'è una piscina all'aperto con Saru-cielo, Hayato-blu, Ren-bianco 15x15, ma senza scritta «outdoor/esterno»). Categoria (marmo/pietra/legno…) non scritta; nome linea «MiniShape». Variazione cromatica V2 (Moderate). 15×15 = 9 mm, 6×25 = 9,5 mm; spessori leggermente diversi, posa combinata sconsigliata. Tutti i colori in 15×15 e 6×25 Glossy. Pezzo speciale: Quarter Round 1,4×25 Glossy (9,5 mm). Decori 15×15 Glossy (9 mm, mix casuale di 6 disegni): HINODE-Pattern caldo e YUHI-Pattern freddo (solo decoro, nessuna texture separata). Bordi naturali, fughe consigliate min. 2 mm. Le texture sono prese dalle ambientazioni (pareti posate, con fughe e riflessi): non esiste nel PDF una foto campione grande per colore.",
+   "colori": [
+    {
+     "n": "Hayato blu",
+     "code": "",
+     "hex": "#383E49",
+     "img": "/img/ava/ava_wabi_sabi/hayato_blu.jpg",
+     "th": "/img/ava/ava_wabi_sabi/hayato_blu_t.jpg",
+     "px": 320,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 7 (foto piccola a destra, parete 15x15 Glossy), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (206 px)."
+    },
+    {
+     "n": "Saru cielo",
+     "code": "",
+     "hex": "#82959D",
+     "img": "/img/ava/ava_wabi_sabi/saru_cielo.jpg",
+     "th": "/img/ava/ava_wabi_sabi/saru_cielo_t.jpg",
+     "px": 466,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 8 (parete 6x25 Glossy posata a spina di pesce, sopra la vasca), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (314 px)."
+    },
+    {
+     "n": "Haku cenere",
+     "code": "",
+     "hex": "#A2A39A",
+     "img": "/img/ava/ava_wabi_sabi/haku_cenere.jpg",
+     "th": "/img/ava/ava_wabi_sabi/haku_cenere_t.jpg",
+     "px": 456,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 10 (foto piccola a sinistra, parete 15x15 Glossy), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (284 px)."
+    },
+    {
+     "n": "Kaen grigio",
+     "code": "",
+     "hex": "#AFB0AB",
+     "img": "/img/ava/ava_wabi_sabi/kaen_grigio.jpg",
+     "th": "/img/ava/ava_wabi_sabi/kaen_grigio_t.jpg",
+     "px": 504,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 12 (foto a sinistra, parete 6x25 Glossy), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (284 px)."
+    },
+    {
+     "n": "Ren bianco",
+     "code": "",
+     "hex": "#BBB6B1",
+     "img": "/img/ava/ava_wabi_sabi/ren_bianco.jpg",
+     "th": "/img/ava/ava_wabi_sabi/ren_bianco_t.jpg",
+     "px": 512,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 13 (parete 6x25 Glossy tra camicia e tavolino), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (200 px)."
+    },
+    {
+     "n": "Raku crema",
+     "code": "",
+     "hex": "#CFCCC3",
+     "img": "/img/ava/ava_wabi_sabi/raku_crema.jpg",
+     "th": "/img/ava/ava_wabi_sabi/raku_crema_t.jpg",
+     "px": 534,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 15 (foto piccola a destra, backsplash 15x15 Glossy), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (353 px)."
+    },
+    {
+     "n": "Tsuchi cipria",
+     "code": "",
+     "hex": "#A18776",
+     "img": "/img/ava/ava_wabi_sabi/tsuchi_cipria.jpg",
+     "th": "/img/ava/ava_wabi_sabi/tsuchi_cipria_t.jpg",
+     "px": 674,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 17 (parete 6x25 Glossy posata a spina di pesce, sopra i barattoli), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce."
+    },
+    {
+     "n": "Gan acquamarina",
+     "code": "",
+     "hex": "#99A294",
+     "img": "/img/ava/ava_wabi_sabi/gan_acquamarina.jpg",
+     "th": "/img/ava/ava_wabi_sabi/gan_acquamarina_t.jpg",
+     "px": 466,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 19 (parete 6x25 Glossy), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (360 px)."
+    },
+    {
+     "n": "Reki verde",
+     "code": "",
+     "hex": "#394A3E",
+     "img": "/img/ava/ava_wabi_sabi/reki_verde.jpg",
+     "th": "/img/ava/ava_wabi_sabi/reki_verde_t.jpg",
+     "px": 501,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 21 (foto piccola a sinistra, parete 6x25 Glossy in orizzontale), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (224 px)."
+    },
+    {
+     "n": "Kawa muschio",
+     "code": "",
+     "hex": "#52452A",
+     "img": "/img/ava/ava_wabi_sabi/kawa_muschio.jpg",
+     "th": "/img/ava/ava_wabi_sabi/kawa_muschio_t.jpg",
+     "px": 320,
+     "formati": [],
+     "finiture": [],
+     "note": "Texture: pag. 23 (parete 15x15 Glossy tra le due lampade), 96 ppi nativi; porzione di parete posata con fughe (formato piccolo, nel PDF non c'è una foto di superficie senza fughe), smalto lucido con riflessi della luce. texture: risoluzione originale bassa (162 px)."
+    }
+   ]
+  }
+ ]
+}
