@@ -20,6 +20,17 @@ const { uploadPhoto } = require("./_projects-lib");
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito"];
 const SINGLE = ["site", "tariffe", "commerc"];
+const MT_TIPI = ["pia", "legno", "resina", "pittura", "colla", "barra", "acc"];
+// cosa cerca la lettura della scheda per ogni tipo di materiale
+const MT_AI = {
+  pia: "È una PIASTRELLA o lastra (gres, ceramica). Cerca solo i dati di vendita: per OGNI formato elencato nella scheda metti in 'opzioni' un oggetto { formato (es. '60×120 cm'), pz (pezzi per scatola), conf (m² per scatola), riga (testo esatto della riga da cui li prendi) }. Poi metti in formato, pz e conf quelli del primo formato. Ignora rese, mani, consumi di colla.",
+  legno: "È un PAVIMENTO IN LEGNO, SPC o LAMINATO. Cerca formato della doga, m² per pacco (conf) e pezzi per pacco (pz). Se ci sono più formati elencali in 'opzioni' come { formato, pz, conf, riga }. confUm 'pacco' o 'scatola'. Ignora rese e mani.",
+  resina: "È una RESINA, MICROCEMENTO o RASANTE. Cerca il consumo in kg/m² di OGNI strato o mano indicato e mettilo in 'strati' come [{ n (nome strato o mano), resa (kg/m²), riga }]. conf = kg per confezione.",
+  pittura: "È una PITTURA, PRIMER o IMPREGNANTE. Cerca la resa in m² per litro per UNA mano (resaMq; se c'è un intervallo usa il valore più basso), il numero di mani consigliate (mani) e i litri della latta (conf, um 'l').",
+  colla: "È una COLLA o una FUGA per piastrelle. Cerca il consumo in kg/m², che di solito cambia con il formato della piastrella: metti in 'consumi' ogni riga come [{ f (formato o condizione), resa (kg/m²), riga }]. conf = kg per sacco.",
+  barra: "È un BATTISCOPA o PROFILO. Cerca la lunghezza di una barra in metri (conf) e confUm 'barra'.",
+  acc: "È un ACCESSORIO (rete, nastro, distanziatori, crocette, tasselli…). Cerca quanti m² copre una confezione (ogni) oppure quanti pezzi ci sono (conf).",
+};
 const TOKEN = /^[a-f0-9]{20}$/;
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
 
@@ -95,6 +106,13 @@ function clean(kind, d, old) {
     conf: num(d.conf, 100000), confUm: str(d.confUm, 20), scarto: num(d.scarto, 100), ogni: num(d.ogni, 100000), fisso: int(d.fisso, 0, 10000),
     colore: !!d.colore, prezzo: num(d.prezzo, 1e6), scheda: url(d.scheda), nota: str(d.nota, 300),
     base: ["mq", "iso", "guide", "perim", "partenza", "spigoli", "montanti", "davanzali"].includes(d.base) ? d.base : "",
+    // calcolo per tipo di materiale (17/10): piastrelle, legno, resina, pittura, colla e fughe, barre, accessori
+    tipo: MT_TIPI.includes(d.tipo) ? d.tipo : "",
+    formato: str(d.formato, 40), pz: int(d.pz, 0, 10000), resaMq: num(d.resaMq, 1000),
+    strati: (Array.isArray(d.strati) ? d.strati : []).slice(0, 8).map(x => ({ n: str(x && x.n, 40), resa: num(x && x.resa, 1000) })).filter(x => x.n || x.resa),
+    consumi: (Array.isArray(d.consumi) ? d.consumi : []).slice(0, 8).map(x => ({ f: str(x && x.f, 60), resa: num(x && x.resa, 1000) })).filter(x => x.resa),
+    fsel: int(d.fsel, 0, 7),
+    src: Object.fromEntries(Object.entries(obj(d.src)).slice(0, 12).map(([k, v]) => [str(k, 20).replace(/[^a-zA-Z]/g, ""), str(v, 160)]).filter(([k, v]) => k && v)),
   };
   if (kind === "fornitore") return { nome: str(d.nome, 120), telefono: str(d.telefono, 40), email: str(d.email, 120), note: str(d.note, 300) };
   if (kind === "ordine") {
@@ -299,7 +317,11 @@ async function handle(req, res, action, acc) {
     const du = String(b.dataUrl || "");
     const isPdf = /^data:application\/pdf;base64,/.test(du), isImg = /^data:image\/(jpeg|png|webp);base64,/.test(du);
     if ((!isPdf && !isImg) || du.length > 9000000) return res.status(400).json({ error: "Carica una foto o un PDF (massimo 6 MB)." });
-    const prompt = "Sei un tecnico di cantiere. Dalla scheda tecnica o dalla confezione di questo prodotto edile estrai SOLO quello che c'è scritto, in JSON con queste chiavi: " +
+    const tipo = MT_TIPI.includes(b.tipo) ? b.tipo : "";
+    const prompt = tipo ? ("Sei un tecnico di cantiere. Leggi questa scheda tecnica o confezione ed estrai SOLO quello che c'è scritto, senza inventare: se un valore non c'è metti 0 o stringa vuota. " + MT_AI[tipo] +
+      " Rispondi solo con un JSON con queste chiavi: nome, codice, formato, pz, conf, confUm, resaMq, mani, um, ogni, strati, consumi, opzioni, " +
+      "src (oggetto: per ogni numero che hai trovato, la chiave del campo e il testo esatto della riga della scheda, max 120 caratteri, es. { \"conf\": \"60×120 · 2 pz · 1,44 m²\" }).")
+      : "Sei un tecnico di cantiere. Dalla scheda tecnica o dalla confezione di questo prodotto edile estrai SOLO quello che c'è scritto, in JSON con queste chiavi: " +
       "nome (nome commerciale), codice (codice prodotto o vuoto), modo ('resa' se si consuma in kg o litri al m², 'scatola' se è venduto a scatole o rotoli con m² per confezione, 'metro' se a barre/rotoli in metri lineari, 'pezzo' altrimenti), " +
       "resa (numero: consumo per m² per UNA mano; se c'è un intervallo usa il valore medio; 0 se non c'è), um ('kg' o 'l'), mani (numero di mani consigliate, 1 se non indicato), " +
       "conf (numero: contenuto di una confezione in kg, litri, m² o metri), confUm (nome della confezione in italiano: secchio, latta, sacco, scatola, rotolo, barra, kit…), nota (max 120 caratteri: condizioni importanti, es. spessore o supporto a cui si riferisce la resa). " +
@@ -311,6 +333,13 @@ async function handle(req, res, action, acc) {
     let out = j && (j.output_text || ((j.output || []).flatMap(o => o.content || []).map(c => c.text || "").join("")));
     let d = null; try { d = JSON.parse(String(out || "").replace(/^```json|```$/g, "")); } catch (e) { d = null; }
     if (!r || !r.ok || !d) return res.status(502).json({ error: "Non sono riuscito a leggere la scheda. Prova con una foto più nitida o scrivi i numeri a mano." });
+    if (tipo) {
+      const opz = (Array.isArray(d.opzioni) ? d.opzioni : []).slice(0, 8).map(o => ({ formato: str(o && o.formato, 40), pz: int(o && o.pz, 0, 10000), conf: num(o && o.conf, 100000), riga: str(o && o.riga, 160) })).filter(o => o.formato || o.conf);
+      (Array.isArray(d.strati) ? d.strati : []).forEach((x, i) => { if (x && x.riga) { d.src = obj(d.src); d.src["strato" + i] = x.riga; } });
+      (Array.isArray(d.consumi) ? d.consumi : []).forEach((x, i) => { if (x && x.riga) { d.src = obj(d.src); d.src["consumo" + i] = x.riga; } });
+      const out = clean("materiale", Object.assign({}, d, { tipo, nota: "" }));
+      return res.status(200).json({ data: out, opzioni: opz });
+    }
     return res.status(200).json({ data: clean("materiale", Object.assign({}, d, { nota: d.nota ? "Dalla scheda: " + d.nota : "" })) });
   }
   if (action === "px-mail-ordine") {
