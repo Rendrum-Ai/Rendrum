@@ -2441,7 +2441,9 @@ body.r13 .cp-big{border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.12)}body.r
 .cpn-mz{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cpn-ls{display:block;background:none;border:0;border-radius:0;overflow:visible}
 .cpn-li{display:flex;align-items:center;gap:16px;width:100%;border:0;border-bottom:1px solid #E6E1D8;background:none;padding:14px 2px;font:inherit;color:#1D1B18;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}.cpn-li:last-child{border-bottom:0}.cpn-li:active{background:#F4F2EE}
-.cpn-fn{position:relative;flex:none;width:58px;height:50px}.cpn-fn i{position:absolute;left:23px;bottom:0;width:13px;height:46px;border-radius:3px;transform-origin:50% 100%;background-size:cover;background-position:center;box-shadow:0 1px 3px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.7)}
+.cpn-fn{position:relative;flex:none;width:58px;height:50px}
+.cpn-mt{position:relative;flex:none;width:58px;height:50px}.cpn-mt i,.cpn-mt b{position:absolute;left:9px;top:5px;width:40px;height:40px;border-radius:8px;background-size:cover;background-position:center}.cpn-mt i{box-shadow:0 2px 5px rgba(0,0,0,.22)}.cpn-mt b{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.cpn-gh{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A847B;margin:18px 2px 2px}.cpn-gh:first-child{margin-top:4px}.cpn-fn i{position:absolute;left:23px;bottom:0;width:13px;height:46px;border-radius:3px;transform-origin:50% 100%;background-size:cover;background-position:center;box-shadow:0 1px 3px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.7)}
 .cpn-tx{flex:1;min-width:0}.cpn-tx b{display:block;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cpn-tx em{display:block;font-style:normal;font-size:13px;color:#7A766E;margin-top:2px}
 .cpn-li u{text-decoration:none;color:#9A958D;font-size:20px}
 .cpn-t{position:relative;height:150px;border:0;border-radius:20px;overflow:hidden;padding:0;background:var(--rt109,#EFE9E1);color:#fff;font:inherit;text-align:left;cursor:pointer}
@@ -18054,9 +18056,13 @@ body.r13 .cp-big{aspect-ratio:1/1}
   }
   function cpnCount(s){ var n = 0; s.groups.forEach(function(g){ n += g.list.length; }); return n; }
   // prima pagina: una riga per lavorazione, con un piccolo ventaglio dei suoi campioni
-  function cpnFan5(s){
+  // ventaglio per le cartelle colori: colori diversi da quelli già usati nelle cartelle sopra (niente rosa)
+  function cpnFan5(s, used){
     var out = [];
-    if(s.groups.every(cpnIsCol)){ var hx = []; s.groups.forEach(function(g){ cpnPick(g.list, 4).forEach(function(c){ if(c.hex) hx.push(c.hex); }); }); out = cpnPick(hx, 5).map(function(h){ return 'background:' + h; }); }
+    if(s.groups.every(cpnIsCol)){ var all = []; s.groups.forEach(function(g){ all = all.concat(cpnPick(g.list, 60)); });
+      var pick = used ? cpnVaried({ list: all }, 5, used) : [];
+      if(pick.length < 5){ var hx = []; s.groups.forEach(function(g){ cpnPick(g.list, 4).forEach(function(c){ if(c.hex) hx.push(c); }); }); pick = cpnPick(hx, 5); }
+      out = pick.map(function(c){ return 'background:' + (c.hex || c); }); }
     else {
       var foto = [], altri = [];
       s.groups.forEach(function(g){ g.list.forEach(function(c){ var st = cpBg(c, g); (/url\(/.test(st) ? foto : altri).push(st); }); });
@@ -18064,11 +18070,29 @@ body.r13 .cp-big{aspect-ratio:1/1}
     }
     return '<span class="cpn-fn">' + out.map(function(st, k){ return '<i style="' + st + ';transform:rotate(' + (-30 + k * 15) + 'deg)"></i>'; }).join('') + '</span>';
   }
+  // icona dei materiali: tessera con due finiture divise in diagonale
+  function cpnMat2(s){
+    var foto = [], altri = [];
+    s.groups.forEach(function(g){ g.list.forEach(function(c){ var st = cpBg(c, g); (/url\(/.test(st) ? foto : altri).push(st); }); });
+    var L = foto.length >= 2 ? foto : foto.concat(altri), a = cpnPick(L, 7);
+    // niente rosa/viola e due finiture ben diverse
+    var hx = function(st){ var m = /#([0-9a-f]{6})/i.exec(st || ''); if(!m) return null; var v = parseInt(m[1], 16); return [v >> 16, (v >> 8) & 255, v & 255]; };
+    var pink = function(st){ var r = hx(st); if(!r) return false; var mx = Math.max.apply(0, r), mn = Math.min.apply(0, r), d = mx - mn, h = 0; if(!d) return false; h = mx === r[0] ? ((r[1] - r[2]) / d) % 6 : mx === r[1] ? (r[2] - r[0]) / d + 2 : (r[0] - r[1]) / d + 4; h = (h * 60 + 360) % 360; return (h > 250 || h < 15) && d / mx > .12; };
+    var ok = a.filter(function(st){ return !pink(st); }); if(!ok.length) ok = a;
+    var x = ok[0], y = null, bd = -1; ok.forEach(function(st){ if(st === x) return; var p1 = hx(x), p2 = hx(st), dd = (p1 && p2) ? Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]) + Math.abs(p1[2] - p2[2]) : 1; if(dd > bd){ bd = dd; y = st; } });
+    return '<span class="cpn-mt"><i style="' + (x || '') + '"></i><b style="' + (y || x || '') + '"></b></span>';
+  }
   function cpnHome(){
     var wrap = document.getElementById('cpSec'); if(!wrap) return; var S = cpSections();
     wrap.classList.remove('cpn-mz'); wrap.classList.add('cpn-ls');
+    wrap.querySelectorAll('.cpn-gh').forEach(function(h){ h.remove(); });
+    var used = [], bc = [], bm = [];
     wrap.querySelectorAll('[data-cps]').forEach(function(b){ var s = S[+b.dataset.cps]; if(!s) return; var n = cpnCount(s), col = s.groups.every(cpnIsCol);
-      b.className = 'cpn-li'; b.innerHTML = cpnFan5(s) + '<span class="cpn-tx"><b>' + qEsc(s.n) + '</b><em>' + qEsc((s.groups.length > 1 ? s.groups.length + ' cartelle · ' : '') + n + (col ? ' colori' : ' campioni')) + '</em></span><u>›</u>'; });
+      b.className = 'cpn-li'; b.innerHTML = (col ? cpnFan5(s, used) : cpnMat2(s)) + '<span class="cpn-tx"><b>' + qEsc(s.n) + '</b><em>' + qEsc((s.groups.length > 1 ? s.groups.length + ' cartelle · ' : '') + n + (col ? ' colori' : ' campioni')) + '</em></span><u>›</u>';
+      (col ? bc : bm).push(b); });
+    // due gruppi: prima i colori, poi i materiali
+    var gh = function(t){ var d = document.createElement('div'); d.className = 'cpn-gh'; d.textContent = t; return d; };
+    if(bc.length && bm.length){ wrap.appendChild(gh('Colori')); bc.forEach(function(b){ wrap.appendChild(b); }); wrap.appendChild(gh('Materiali')); bm.forEach(function(b){ wrap.appendChild(b); }); }
   }
   // dentro la cartella: una scheda per voce, foto grande + «Vedi i colori» e «📷 Provalo»
   function cpnPhoto(g){
