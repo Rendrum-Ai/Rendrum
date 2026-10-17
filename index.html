@@ -2419,6 +2419,14 @@ body.r13 .cp-big{border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.12)}body.r
 .hbr-p{position:absolute;right:0;top:10px;bottom:10px;width:7px;background:repeating-linear-gradient(#fff 0 1.5px,#d9d4cb 1.5px 3px);border-radius:2px 0 0 2px}
 .hbr b{position:absolute;left:30px;right:150px;top:18px;font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:21px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hbr em{position:absolute;left:30px;bottom:16px;font-style:normal;font-size:13px;opacity:.7}
 .hbr-c{position:absolute;right:22px;top:50%;transform:translateY(-50%);display:flex;gap:7px}.hbr-c i{width:38px;height:38px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.35)}
+.cpA-h{background:#1D1B18;color:#fff;border-radius:16px;padding:16px 18px 15px;margin:0 0 16px}
+.cpA-h b{display:block;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;font-size:27px;line-height:1.1}
+.cpA-h em{display:block;margin-top:6px;font-style:normal;font-family:Inter,system-ui,sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
+html:not(.rd-web) #cpG .cp-gr{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}
+html.rd-web #cpG .cp-gr{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 14px}
+#cpG .cp-sw i{aspect-ratio:1/1.05;border-radius:14px;box-shadow:0 4px 12px rgba(29,27,24,.14)}
+#cpG .cp-sw b{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;font-size:17px;line-height:1.15;margin-top:8px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#cpG .cp-sw span{font-family:Inter,system-ui,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8A847B;margin-top:3px}
 .hbr.hk{height:96px;border-radius:16px;background:#1D1B18;box-shadow:0 6px 16px rgba(29,27,24,.22)}
 .hbr.hk:before{display:none}
 .hbr.hk .hbr-c{left:auto;right:0;top:0;bottom:0;transform:none;width:44%;display:block;gap:0}
@@ -21247,7 +21255,7 @@ body.r13 .cp-big{aspect-ratio:1/1}
       document.querySelectorAll('#cpG [data-cpi]').forEach(function(b){ b.addEventListener('click', function(){ cpColor(s, g, part[+b.dataset.cpi], function(){ cpGroup(s, g, back); }); }); });
       var m = document.getElementById('cpMore'); if(m) m.addEventListener('click', function(){ shown += 60; draw(); });
     }
-    box.innerHTML = '<div class="cc-sub" style="margin-top:0">' + g.list.length + (g.list[0].th && !g.list[0].code ? ' finiture' : ' colori') + (g.d ? ' · ' + qEsc(g.d) : '') + '</div>' + (g.list.length > 24 ? '<input type="search" class="cp-srch" id="cpGQ" placeholder="🔎 Cerca in ' + qEsc(g.n) + '" autocomplete="off">' : '') + '<div id="cpG"></div>';
+    box.innerHTML = '<div class="cpA-h"><b>' + qEsc(g.n) + '</b><em>' + g.list.length + (g.list[0].th && !g.list[0].code ? ' finiture' : ' colori') + (g.d ? ' · ' + qEsc(g.d) : '') + '</em></div>' + (g.list.length > 24 ? '<input type="search" class="cp-srch" id="cpGQ" placeholder="🔎 Cerca in ' + qEsc(g.n) + '" autocomplete="off">' : '') + '<div id="cpG"></div>';
     var gq = document.getElementById('cpGQ'); if(gq) gq.addEventListener('input', function(){ q = gq.value.trim(); shown = 60; draw(); });
     draw();
     // le texture colorate arrivano un attimo dopo: si ridisegna quando sono pronte
