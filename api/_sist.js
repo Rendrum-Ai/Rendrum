@@ -351,8 +351,8 @@ const BP_PATH = /^\/img\/[a-z0-9_]+\/[a-z0-9_]+\/[a-z0-9_.-]+\.(jpg|jpeg|png)$/i
 function bpPath(v) { v = String(v || ""); return BP_PATH.test(v) && v.indexOf("..") < 0 ? v : ""; }
 function parseBp(p) {
   if (!p || typeof p !== "object") return null;
-  const tipo = p.tipo === "pannello" ? "pannello" : p.tipo === "boiserie" ? "boiserie" : null; if (!tipo) return null;
-  const COME = tipo === "pannello" ? ["tutta", "fascia", "meta"] : ["riquadri", "fascia", "porte", "soffitto"];
+  const tipo = p.tipo === "pannello" ? "pannello" : p.tipo === "boiserie" ? "boiserie" : p.tipo === "carta" ? "carta" : null; if (!tipo) return null;
+  const COME = tipo === "carta" ? ["tutta"] : tipo === "pannello" ? ["tutta", "fascia", "meta"] : ["riquadri", "fascia", "porte", "soffitto"];
   const o = { tipo, come: COME.includes(p.come) ? p.come : COME[0], marca: bpClean(p.marca, 40), collezione: bpClean(p.collezione, 60), nome: bpClean(p.nome, 40), codice: bpClean(p.codice, 30), misure: bpClean(p.misure, 90), materiale: bpClean(p.materiale, 80), img: bpPath(p.img), sez: bpPath(p.sez) };
   return o.nome ? o : null;
 }
@@ -372,6 +372,21 @@ function bpPrompt(b, p, colorDesc, nRef) {
     "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: aggiungi SOLO il prodotto descritto.",
     "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
   ];
+  // 18/10: carta da parati (es. Armani/Casa): il disegno e il colore sono quelli del campione, alla scala vera
+  if (p.tipo === "carta") {
+    const refC = nRef ? " Oltre alla foto della stanza ti ho dato la foto del campione della carta: copia ESATTAMENTE il suo disegno, i suoi colori e la sua texture (lucentezza, fibra, rilievo); non copiare lo sfondo né la luce di quell'immagine." : "";
+    return [
+      "Modifica la foto di questo interno rivestendo con la carta da parati " + (p.marca ? p.marca + " " : "") + (p.collezione && p.nome.indexOf(p.collezione) < 0 ? p.collezione + " " : "") + p.nome + (p.codice && p.nome.indexOf(p.codice) < 0 ? " (codice " + p.codice + ")" : "") + (p.materiale ? ", " + p.materiale : "") + " " + dove + ", dal battiscopa fino al soffitto.",
+      p.misure ? "Dati del rotolo: " + p.misure + "; rispetta questa scala: il disegno non deve sembrare più grande o più piccolo del vero rispetto a porte (alte circa 210 cm) e mobili." : "",
+      "La carta è posata a teli verticali affiancati, con le giunte quasi invisibili e il disegno che continua da un telo all'altro; segue esattamente la prospettiva della parete; resta liscia, senza bolle né pieghe.",
+      refC,
+      "Il colore della carta è quello del campione: non schiarirlo, non scurirlo e non cambiarne la tinta.",
+      "La carta si interrompe intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti; il soffitto e le altre pareti restano come sono.",
+      "Le PORTE e le FINESTRE restano esattamente dove sono e come sono.",
+      "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: cambia SOLO le pareti indicate.",
+      "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
+    ].filter(Boolean).join(" ");
+  }
   if (p.tipo === "pannello") {
     const zona = p.come === "fascia" ? "solo una fascia verticale centrata dietro il letto, il divano o la TV (larga circa come il mobile), dal battiscopa al soffitto"
       : p.come === "meta" ? "solo la parte bassa, dal battiscopa fino a circa 100 cm da terra, chiusa in alto da un profilo sottile e dritto"
