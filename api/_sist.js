@@ -347,7 +347,7 @@ module.exports = { parsePiaEst, piaEstPrompt, parsePiscina, piscinaPrompt, parse
 // ---------- Boiserie e pannelli con i prodotti veri dei cataloghi (18/10) ----------
 // Arriva insieme a «boiserie» (stessa geometria di base): qui il profilo o il pannello scelto, con foto e sezione
 function bpClean(v, n) { return String(v == null ? "" : v).replace(/[\r\n\t<>{}]+/g, " ").replace(/\s+/g, " ").trim().slice(0, n); }
-const BP_PATH = /^\/img\/[a-z0-9_]+\/[a-z0-9_]+\/[a-z0-9_.-]+\.(jpg|jpeg|png)$/i;
+const BP_PATH = /^\/img\/[a-z0-9_]+(\/[a-z0-9_]+)?\/[a-z0-9_.-]+\.(jpg|jpeg|png)$/i;   // 18/10: anche img/collezione/foto.jpg (cartelle caricate direttamente in img)
 function bpPath(v) { v = String(v || ""); return BP_PATH.test(v) && v.indexOf("..") < 0 ? v : ""; }
 function parseBp(p) {
   if (!p || typeof p !== "object") return null;
