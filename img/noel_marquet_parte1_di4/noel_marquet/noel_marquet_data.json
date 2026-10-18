@@ -1,0 +1,2967 @@
+{
+ "marchio": {
+  "id": "noel_marquet",
+  "n": "Noël & Marquet",
+  "produttore": "Noël & Marquet",
+  "logo": "/img/noel_marquet/logo.png"
+ },
+ "pavimenti": [],
+ "rivestimenti": [],
+ "boiserie": [
+  "nm_profili_angoli",
+  "nm_profili_cimase_arstyl",
+  "nm_profili_cornici_porte",
+  "nm_profili_cimase_wallstyl",
+  "nm_profili_rivestimento"
+ ],
+ "pannelli_decorativi": [
+  "nm_wall_tiles",
+  "nm_pannelli_parete_arstyl",
+  "nm_pannelli_parete_wallstyl"
+ ],
+ "cementine_e_pastine": [],
+ "resine_microcementi": [],
+ "esterni": [],
+ "collezioni": [
+  {
+   "id": "nm_profili_angoli",
+   "n": "Angoli ARSTYL®",
+   "d": "decorano, danno rilievo e abbelliscono i muri di casa",
+   "materiale": "poliuretano ad alta densità (PU), schiumato (ARSTYL®)",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "boiserie",
+   "formati": [],
+   "spessori": [],
+   "finiture": [
+    "primerizzato, pronto per la verniciatura (pag. 35)"
+   ],
+   "pdf": "/img/noel_marquet/nm_profili_angoli/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 35, 41",
+   "note": "Corners / Angoli, pag. stampata 41: elementi d'angolo da abbinare ai profili indicati. ARSTYL®: classificazione antincendio B - s2, d0 (pag. 6). Misure come scritte nel PDF (mm). Ambiente interno/esterno non indicato esplicitamente. Le immagini nel PDF sono piccole (155×99 px a 72 dpi): i ritagli sono a risoluzione nativa, quindi piccoli. Nessun colore indicato nel PDF: profili primerizzati da verniciare (i lati con * sono senza primer). Le pagine stampate coincidono con le pagine del PDF.",
+   "colori": [
+    {
+     "n": "SP2-5 ARSTYL®",
+     "code": "SP2-5",
+     "hex": "#D9D5DB",
+     "img": "/img/noel_marquet/nm_profili_angoli/sp2_5.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/sp2_5_t.jpg",
+     "px": 152,
+     "misure": "152 × 152 mm",
+     "formati": [
+      "152 × 152 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/sp2_5_sezione.jpg",
+     "note": "ART.NR. 3002454 · EAN 5412938950558. Abbinabile con: SP2 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 152 × 152 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "SP3-4 ARSTYL®",
+     "code": "SP3-4",
+     "hex": "#D8D4DB",
+     "img": "/img/noel_marquet/nm_profili_angoli/sp3_4.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/sp3_4_t.jpg",
+     "px": 152,
+     "misure": "153 × 153 mm",
+     "formati": [
+      "153 × 153 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/sp3_4_sezione.jpg",
+     "note": "ART.NR. 3000774 · EAN 5412938950602. Abbinabile con: SP3 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 153 × 153 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "Z104 ARSTYL®",
+     "code": "Z104",
+     "hex": "#D9D5DB",
+     "img": "/img/noel_marquet/nm_profili_angoli/z104.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/z104_t.jpg",
+     "px": 152,
+     "misure": "107 × 245 mm",
+     "formati": [
+      "107 × 245 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/z104_sezione.jpg",
+     "note": "ART.NR. 3011834 · EAN 5412938850803. Abbinabile con: Z10 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 107 × 245 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "Z103 ARSTYL®",
+     "code": "Z103",
+     "hex": "#D7D3D9",
+     "img": "/img/noel_marquet/nm_profili_angoli/z103.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/z103_t.jpg",
+     "px": 152,
+     "misure": "145 × 145 mm",
+     "formati": [
+      "145 × 145 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/z103_sezione.jpg",
+     "note": "ART.NR. 3011833 · EAN 5412938850704. Abbinabile con: Z10 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 145 × 145 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "Z102 ARSTYL®",
+     "code": "Z102",
+     "hex": "#D7D3D9",
+     "img": "/img/noel_marquet/nm_profili_angoli/z102.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/z102_t.jpg",
+     "px": 152,
+     "misure": "200 × 200 mm",
+     "formati": [
+      "200 × 200 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/z102_sezione.jpg",
+     "note": "ART.NR. 3011832 · EAN 5412938850605. Abbinabile con: Z10 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 200 × 200 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "Z101 ARSTYL®",
+     "code": "Z101",
+     "hex": "#D8D4DB",
+     "img": "/img/noel_marquet/nm_profili_angoli/z101.jpg",
+     "th": "/img/noel_marquet/nm_profili_angoli/z101_t.jpg",
+     "px": 152,
+     "misure": "200 × 200 mm",
+     "formati": [
+      "200 × 200 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_angoli/z101_sezione.jpg",
+     "note": "ART.NR. 3011831 · EAN 5412938537759. Abbinabile con: Z10 (simbolo + nel PDF). Pag. 41.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 200 × 200 mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_wall_tiles",
+   "n": "Elementi per pareti (Wall Tiles) ARSTYL®",
+   "d": "Elementi per pareti",
+   "materiale": "poliuretano (PU) – ARSTYL®",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "pannelli_decorativi",
+   "formati": [],
+   "spessori": [],
+   "finiture": [],
+   "pdf": "/img/noel_marquet/nm_wall_tiles/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 70-71, 139; 3053370-noel-marquet-catalogue-atmospheres-2-en-it-es-pt-2024-10-screen.pdf, pagine 97, 107 (immagini CURVE e PUZZLE)",
+   "note": "Per pareti, soffitti o persino mobili (pag. 59 Product Overview; pag. 3 catalogo Wall Panels). Non sono nel catalogo Wall Panels. Finitura di fornitura non indicata.",
+   "colori": [
+    {
+     "n": "CANELÉ R L",
+     "code": "CANELÉ R L",
+     "hex": "#D3D7DB",
+     "img": "/img/noel_marquet/nm_wall_tiles/canele_r_l.jpg",
+     "th": "/img/noel_marquet/nm_wall_tiles/canele_r_l_t.jpg",
+     "px": 154,
+     "misure": "300 × 600 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3053336. Design Bertrand Lejoly. Confezione: 9 pz (indice pag. 138-139 Product Overview). Nome «CANELÉ R» nella pagina prodotto (pag. 70) e «CANELÉ R L» nelle didascalie e nell'indice. Abbinabile con CANELÉ L. Immagine solo nel Product Overview, piccola (154 px). Immagine: render del prodotto (noel-marquet-product-overview-en-it-es-pt-core2.pdf pag. 70, 72 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3053336",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,18",
+        "pezzi_per_mq": "5,56",
+        "testo": "pezzo da 0,18 m² → 5,56 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CURVE",
+     "code": "CURVE",
+     "hex": "#D7D9D9",
+     "img": "/img/noel_marquet/nm_wall_tiles/curve.jpg",
+     "th": "/img/noel_marquet/nm_wall_tiles/curve_t.jpg",
+     "px": 162,
+     "misure": "380 × 380 × 31 mm",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3050655. Confezione: 6 pz (indice pag. 138-139 Product Overview). Abbinabile con PUZZLE (pag. 70 Product Overview). Designer non indicato. Immagine: render frontale del prodotto (3053370-noel-marquet-catalogue-atmospheres-2-en-it-es-pt-2024-10-screen.pdf pag. 97, 150 dpi nativi).",
+     "art": "3050655",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,1444",
+        "pezzi_per_mq": "6,93",
+        "testo": "pezzo da 0,1444 m² → 6,93 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "PUZZLE",
+     "code": "PUZZLE",
+     "hex": "#D2CAC5",
+     "img": "/img/noel_marquet/nm_wall_tiles/puzzle.jpg",
+     "th": "/img/noel_marquet/nm_wall_tiles/puzzle_t.jpg",
+     "px": 166,
+     "misure": "380 × 380 × 31 mm",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3044537. Design Kamelia Terzieva. Confezione: 6 pz (indice pag. 138-139 Product Overview). A' Design Award 2021; abbinabile con CURVE (pag. 70 Product Overview). Immagine: render frontale del prodotto (3053370-noel-marquet-catalogue-atmospheres-2-en-it-es-pt-2024-10-screen.pdf pag. 107, 150 dpi nativi).",
+     "art": "3044537",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,1444",
+        "pezzi_per_mq": "6,93",
+        "testo": "pezzo da 0,1444 m² → 6,93 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_pannelli_parete_arstyl",
+   "n": "Pannelli a parete ARSTYL®",
+   "d": "Una selezione di 19 pannelli a parete in poliuretano",
+   "materiale": "poliuretano (PU) – ARSTYL®",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "pannelli_decorativi",
+   "formati": [],
+   "spessori": [],
+   "finiture": [],
+   "pdf": "/img/noel_marquet/nm_pannelli_parete_arstyl/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 59-65, 97-98, 138; 1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf, pagine 9-47, 68; 2-noel-marquet-the-essence-of-rhythm.pdf, pagine 3-46",
+   "note": "Per pareti, soffitti o persino mobili (pag. 59 Product Overview; pag. 3 catalogo Wall Panels). Versioni FLEX: si adattano a curve e forme complesse, raggio minimo 20 cm (pag. 98). Con rivestimento ignifugo si può ottenere la classe UE C – s3, d0 (pag. 9 catalogo Wall Panels). Finitura/colore di fornitura non indicati chiaramente (nell'indice la colonna PRIMER è vuota). I pannelli del catalogo «The Essence of Rhythm» (Bohemia, Allegretto, Calando, Canelé XL, Dorique Flex) sono già qui, non ripetuti. Il catalogo Black non contiene pannelli a parete. Profili di finitura abbinati (FL11, FL15, WL10, WL13, WL14, pag. 69 Product Overview / pag. 66 catalogo Wall Panels): sono già nelle collezioni profili per parete WALLSTYL® e battiscopa, non ripetuti qui.",
+   "colori": [
+    {
+     "n": "ALLEGRETTO",
+     "code": "ALLEGRETTO",
+     "hex": "#92867B",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegretto.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegretto_t.jpg",
+     "px": 770,
+     "misure": "300 × 2000 × 14 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "ALLEGRETTO FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3055876. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile ALLEGRETTO FLEX: 295 × 2000 × 14 mm, ART.NR. 3056217; raggio minimo 20 cm (pag. 98 Product Overview). Immagine: ritaglio frontale della foto ambientata (2-noel-marquet-the-essence-of-rhythm.pdf pag. 19, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3055876",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegretto_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "ALLEGRETTINO",
+     "code": "ALLEGRETTINO",
+     "hex": "#AF8040",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegrettino.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegrettino_t.jpg",
+     "px": 610,
+     "misure": "300 × 2000 × 14 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "ALLEGRETTINO FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057479. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile ALLEGRETTINO FLEX: 295 × 2000 × 14 mm, ART.NR. 3057540; raggio minimo 20 cm (pag. 98 Product Overview). Novità (NEW). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 14, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3057479",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/allegrettino_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "BOHEMIA",
+     "code": "BOHEMIA",
+     "hex": "#B1A597",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/bohemia.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/bohemia_t.jpg",
+     "px": 739,
+     "misure": "300 × 2000 × 13 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3055878. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Immagine: ritaglio frontale della foto ambientata (2-noel-marquet-the-essence-of-rhythm.pdf pag. 11, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3055878",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/bohemia_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CALANDO",
+     "code": "CALANDO",
+     "hex": "#CBCBCB",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/calando.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/calando_t.jpg",
+     "px": 858,
+     "misure": "300 × 2000 × 13 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "CALANDO FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3055877. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile CALANDO FLEX: 295 × 2000 × 13 mm, ART.NR. 3056218; raggio minimo 20 cm (pag. 98 Product Overview). Designer non indicato nei PDF. Foto: immagine di apertura del capitolo Calando in The Essence of Rhythm (pag. 20), senza didascalia. Immagine: ritaglio frontale della foto ambientata (2-noel-marquet-the-essence-of-rhythm.pdf pag. 20, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3055877",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/calando_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CANELÉ S",
+     "code": "CANELÉ S",
+     "hex": "#D3D2CF",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_s_t.jpg",
+     "px": 323,
+     "misure": "300 × 2000 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "CANELÉ S FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3050635. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile CANELÉ S FLEX: 295 × 2000 × 14,5 mm, ART.NR. 3052792; raggio minimo 20 cm (pag. 98 Product Overview). Red Dot winner 2023 (pag. 26 catalogo Wall Panels). Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 26, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3050635",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_s_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CANELÉ L",
+     "code": "CANELÉ L",
+     "hex": "#767966",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_l.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_l_t.jpg",
+     "px": 1041,
+     "misure": "300 × 2000 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "CANELÉ L FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3050636. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile CANELÉ L FLEX: 295 × 2000 × 14,5 mm, ART.NR. 3052794; raggio minimo 20 cm (pag. 98 Product Overview). Abbinabile con CANELÉ R L (pag. 62 Product Overview). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 29, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3050636",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_l_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CANELÉ XL",
+     "code": "CANELÉ XL",
+     "hex": "#303336",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_xl.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_xl_t.jpg",
+     "px": 916,
+     "misure": "300 × 2000 × 24 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "CANELÉ XL FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3055332. Design Bertrand Lejoly. Confezione: 3 pz (indice pag. 138-139 Product Overview). Versione flessibile CANELÉ XL FLEX: 295 × 2000 × 24 mm, ART.NR. 3055717; raggio minimo 20 cm (pag. 98 Product Overview). Spessore: 24 mm in Product Overview, pagina prodotto del catalogo Wall Panels e The Essence of Rhythm; l'indice del catalogo Wall Panels (pag. 68) riporta 25 mm. La foto mostra la versione FLEX su parete curva. Immagine: ritaglio frontale della foto ambientata (2-noel-marquet-the-essence-of-rhythm.pdf pag. 34, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3055332",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/canele_xl_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "DORIQUE",
+     "code": "DORIQUE",
+     "hex": "#304960",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/dorique.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/dorique_t.jpg",
+     "px": 1080,
+     "misure": "300 × 2000 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "DORIQUE FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3050611. Design Bertrand Lejoly. Confezione: 6 pz (indice pag. 138-139 Product Overview). Versione flessibile DORIQUE FLEX: 295 × 2000 × 14,5 mm, ART.NR. 3055216; raggio minimo 20 cm (pag. 98 Product Overview). Red Dot winner 2023 (pag. 32 catalogo Wall Panels). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 34, 221 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3050611",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_arstyl/dorique_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,6",
+        "pezzi_per_mq": "1,67",
+        "testo": "pezzo da 0,6 m² → 1,67 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "ARC S",
+     "code": "ARC S",
+     "hex": "#9DB5A1",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/arc_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/arc_s_t.jpg",
+     "px": 1080,
+     "misure": "380 × 950 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3053278. Design Bertrand Lejoly. Confezione: 9 pz (indice pag. 138-139 Product Overview). EAN diverso tra Product Overview (5412938990202) e indice catalogo Wall Panels (5412938990622). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 67, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3053278",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,361",
+        "pezzi_per_mq": "2,77",
+        "testo": "pezzo da 0,361 m² → 2,77 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "ARC L",
+     "code": "ARC L",
+     "hex": "#E7E4DE",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/arc_l.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/arc_l_t.jpg",
+     "px": 323,
+     "misure": "380 × 950 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3053279. Design Bertrand Lejoly. Confezione: 9 pz (indice pag. 138-139 Product Overview). Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 36, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3053279",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,361",
+        "pezzi_per_mq": "2,77",
+        "testo": "pezzo da 0,361 m² → 2,77 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "PYRAMID",
+     "code": "PYRAMID",
+     "hex": "#99A392",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/pyramid.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/pyramid_t.jpg",
+     "px": 750,
+     "misure": "190 × 1135 × 18,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3044330. Design Michaël Bihain. Confezione: 4 pz (indice pag. 138-139 Product Overview). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 41, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3044330",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,2157",
+        "pezzi_per_mq": "4,64",
+        "testo": "pezzo da 0,2157 m² → 4,64 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "SCURETTO",
+     "code": "SCURETTO",
+     "hex": "#4E4846",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/scuretto.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/scuretto_t.jpg",
+     "px": 875,
+     "misure": "380 × 1135 × 14,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3050634. Design Bertrand Lejoly. Confezione: 9 pz (indice pag. 138-139 Product Overview). Archiproducts Awards 2023 Winner (pag. 64 Product Overview). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 45, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3050634",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,4313",
+        "pezzi_per_mq": "2,32",
+        "testo": "pezzo da 0,4313 m² → 2,32 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WAVE",
+     "code": "WAVE",
+     "hex": "#DFE2E4",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/wave.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/wave_t.jpg",
+     "px": 154,
+     "misure": "380 × 1135 × 18,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3012866. Design Michaël Bihain. Confezione: 7 pz (indice pag. 138-139 Product Overview). Solo nel Product Overview (pag. 64): immagine piccola, 154 px, unica disponibile. Immagine: render del prodotto (noel-marquet-product-overview-en-it-es-pt-core2.pdf pag. 64, 72 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3012866",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,4313",
+        "pezzi_per_mq": "2,32",
+        "testo": "pezzo da 0,4313 m² → 2,32 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "LIQUID",
+     "code": "LIQUID",
+     "hex": "#DBDEE0",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/liquid.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/liquid_t.jpg",
+     "px": 154,
+     "misure": "380 × 1135 × 28,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3012865. Design Michaël Bihain. Confezione: 6 pz (indice pag. 138-139 Product Overview). Solo nel Product Overview (pag. 64): immagine piccola, 154 px, unica disponibile. Immagine: render del prodotto (noel-marquet-product-overview-en-it-es-pt-core2.pdf pag. 64, 72 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3012865",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,4313",
+        "pezzi_per_mq": "2,32",
+        "testo": "pezzo da 0,4313 m² → 2,32 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FLOWER",
+     "code": "FLOWER",
+     "hex": "#DADEE0",
+     "img": "/img/noel_marquet/nm_pannelli_parete_arstyl/flower.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_arstyl/flower_t.jpg",
+     "px": 154,
+     "misure": "380 × 1135 × 28 mm (larghezza × lunghezza × spessore)",
+     "formati": [],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3025673. Design Michaël Bihain. Confezione: 5 pz (indice pag. 138-139 Product Overview). Solo nel Product Overview (pag. 64): immagine piccola, 154 px, unica disponibile. Immagine: render del prodotto (noel-marquet-product-overview-en-it-es-pt-core2.pdf pag. 64, 72 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3025673",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,4313",
+        "pezzi_per_mq": "2,32",
+        "testo": "pezzo da 0,4313 m² → 2,32 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_pannelli_parete_wallstyl",
+   "n": "Pannelli a parete WALLSTYL®",
+   "d": "Realizzati in polistirene ad alta densità per un design raffinato",
+   "materiale": "polistirene ad alta densità (HDPS) – WALLSTYL®",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "pannelli_decorativi",
+   "formati": [
+    "250 × 2000 mm",
+    "250 × 2600 mm"
+   ],
+   "spessori": [
+    "9,5 mm"
+   ],
+   "finiture": [],
+   "pdf": "/img/noel_marquet/nm_pannelli_parete_wallstyl/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 66-67, 138; 1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf, pagine 49-65, 68",
+   "note": "Per pareti, soffitti o persino mobili (pag. 59 Product Overview; pag. 3 catalogo Wall Panels). Impermeabili: adatti ad ambienti umidi come cucine, spa e bagni (pag. 49 catalogo Wall Panels). Due lunghezze: 2,00 m e 2,60 m. Resistenti agli urti e ai graffi. Finitura di fornitura non indicata. Profili di finitura abbinati (FL11, FL15, WL10, WL13, WL14, pag. 69 Product Overview / pag. 66 catalogo Wall Panels): sono già nelle collezioni profili per parete WALLSTYL® e battiscopa, non ripetuti qui.",
+   "colori": [
+    {
+     "n": "CANOPÉE S",
+     "code": "CANOPÉE S",
+     "hex": "#E8E6E0",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_s_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057684 (2000 mm) / 3057685 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 50, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057684 (2000 mm) / 3057685 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_s_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "CANOPÉE MIX",
+     "code": "CANOPÉE MIX",
+     "hex": "#E5E3DD",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_mix.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_mix_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057686 (2000 mm) / 3057687 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 50, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057686 (2000 mm) / 3057687 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/canopee_mix_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "LATTE S",
+     "code": "LATTE S",
+     "hex": "#462518",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_s_t.jpg",
+     "px": 287,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057675 (2000 mm) / 3057676 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Foto: parete marrone indicata con il n. 3 = LATTE S (pag. 55-57 catalogo Wall Panels). Immagine: ritaglio frontale della foto ambientata (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 55, 150 dpi); il colore è quello della foto (pannello verniciato o illuminato in ambiente), non un colore di fornitura.",
+     "art": "3057675 (2000 mm) / 3057676 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_s_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "LATTE L",
+     "code": "LATTE L",
+     "hex": "#ECEAE5",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_l.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_l_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057679 (2000 mm) / 3057680 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 54, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057679 (2000 mm) / 3057680 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_l_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "LATTE MIX",
+     "code": "LATTE MIX",
+     "hex": "#EBE8E3",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_mix.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_mix_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057681 (2000 mm) / 3057682 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 54, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057681 (2000 mm) / 3057682 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/latte_mix_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "MEZZALUNA S",
+     "code": "MEZZALUNA S",
+     "hex": "#E8E6E1",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_s_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057671 (2000 mm) / 3057672 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 58, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057671 (2000 mm) / 3057672 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_s_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "MEZZALUNA L",
+     "code": "MEZZALUNA L",
+     "hex": "#EFECE7",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_l.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_l_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057673 (2000 mm) / 3057674 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 58, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057673 (2000 mm) / 3057674 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/mezzaluna_l_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "PLISSÉ S",
+     "code": "PLISSÉ S",
+     "hex": "#E5E2DD",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_s.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_s_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057551 (2000 mm) / 3057552 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 62, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057551 (2000 mm) / 3057552 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_s_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "PLISSÉ L",
+     "code": "PLISSÉ L",
+     "hex": "#E7E4DF",
+     "img": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_l.jpg",
+     "th": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_l_t.jpg",
+     "px": 323,
+     "misure": "250 × 2000 × 9,5 mm oppure 250 × 2600 × 9,5 mm (larghezza × lunghezza × spessore)",
+     "formati": [
+      "250 × 2000 × 9,5 mm",
+      "250 × 2600 × 9,5 mm"
+     ],
+     "finiture": [],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "note": "ART.NR. 3057669 (2000 mm) / 3057670 (2600 mm). Confezione: 8 pz (2000 mm) / 6 pz (2600 mm) (indice pag. 138-139 Product Overview). Novità (NEW). Designer non indicato. Immagine: render del prodotto (1-noel-marquet-wall-panels-catalogue-en-it-es-pt-core2.pdf pag. 62, 150 dpi nativi), vista in prospettiva: nei PDF non c'è una vista frontale certa di questo pannello.",
+     "art": "3057669 (2000 mm) / 3057670 (2600 mm)",
+     "sezione": "/img/noel_marquet/nm_pannelli_parete_wallstyl/plisse_l_sezione.jpg",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,5",
+        "pezzi_per_mq": "2",
+        "testo": "pezzo da 0,5 m² → 2 pezzi per m²"
+       },
+       {
+        "tipo": "pannello",
+        "unita": "m²",
+        "mq_per_pezzo": "0,65",
+        "pezzi_per_mq": "1,54",
+        "testo": "pezzo da 0,65 m² → 1,54 pezzi per m²"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_profili_cimase_arstyl",
+   "n": "Profili per parete ARSTYL®",
+   "d": "decorano, danno rilievo e abbelliscono i muri di casa",
+   "materiale": "poliuretano ad alta densità (PU), schiumato (ARSTYL®)",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "boiserie",
+   "formati": [],
+   "spessori": [],
+   "finiture": [
+    "primerizzato, pronto per la verniciatura (pag. 35)"
+   ],
+   "pdf": "/img/noel_marquet/nm_profili_cimase_arstyl/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 35, 36-37",
+   "note": "Chair Rails / Profili per parete, pag. stampate 36-37. ARSTYL®: classificazione antincendio B - s2, d0 (pag. 6). Misure come scritte nel PDF (mm). Ambiente interno/esterno non indicato esplicitamente. Le immagini nel PDF sono piccole (155×99 px a 72 dpi): i ritagli sono a risoluzione nativa, quindi piccoli. Nessun colore indicato nel PDF: profili primerizzati da verniciare (i lati con * sono senza primer). Le pagine stampate coincidono con le pagine del PDF.",
+   "colori": [
+    {
+     "n": "SP2 ARSTYL®",
+     "code": "SP2",
+     "hex": "#D4D0D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/sp2.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/sp2_t.jpg",
+     "px": 152,
+     "misure": "22 × 9 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "22 × 9 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/sp2_sezione.jpg",
+     "note": "ART.NR. 3046733 · EAN 5412938960212. Abbinabile con: SP2-5 (simbolo + nel PDF). Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "SP3 ARSTYL®",
+     "code": "SP3",
+     "hex": "#D4D0D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/sp3.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/sp3_t.jpg",
+     "px": 152,
+     "misure": "23 × 13 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "23 × 13 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/sp3_sezione.jpg",
+     "note": "ART.NR. 3046734 · EAN 5412938960229. Abbinabile con: SP3-4 (simbolo + nel PDF). Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "SP1 ARSTYL®",
+     "code": "SP1",
+     "hex": "#D8D4D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/sp1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/sp1_t.jpg",
+     "px": 152,
+     "misure": "28 × 9 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "28 × 9 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/sp1_sezione.jpg",
+     "note": "ART.NR. 3046732 · EAN 5412938960205. Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z10 ARSTYL®",
+     "code": "Z10",
+     "hex": "#D4D1D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z10.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z10_t.jpg",
+     "px": 152,
+     "misure": "38 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "Z10 FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z10_sezione.jpg",
+     "note": "ART.NR. 3000615 · EAN 5412938523721. Abbinabile con: Z10 FLEX, Z101, Z102, Z103, Z104 (simbolo + nel PDF). Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z10 FLEX ARSTYL®",
+     "code": "Z10 FLEX",
+     "hex": "#D3CFD5",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z10_flex.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z10_flex_t.jpg",
+     "px": 152,
+     "misure": "38 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z10_flex_sezione.jpg",
+     "note": "ART.NR. 3000591 · EAN 5412938524483. Abbinabile con: Z10 (simbolo + nel PDF). Versione flessibile. Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z1360 ARSTYL®",
+     "code": "Z1360",
+     "hex": "#D5D2D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360_t.jpg",
+     "px": 152,
+     "misure": "60 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "60 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "Z1360 FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360_sezione.jpg",
+     "note": "ART.NR. 3050638 · EAN 5412938987967. Abbinabile con: Z1360 FLEX (simbolo + nel PDF). Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z1360 FLEX ARSTYL®",
+     "code": "Z1360 FLEX",
+     "hex": "#D6D2D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360_flex.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360_flex_t.jpg",
+     "px": 152,
+     "misure": "60 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "60 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z1360_flex_sezione.jpg",
+     "note": "ART.NR. 3050656 · EAN 5412938988001. Abbinabile con: Z1360 (simbolo + nel PDF). Versione flessibile. Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z1550 ARSTYL®",
+     "code": "Z1550",
+     "hex": "#D5D2D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z1550.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z1550_t.jpg",
+     "px": 152,
+     "misure": "80 × 19 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 19 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z1550_sezione.jpg",
+     "note": "ART.NR. 3000623 · EAN 5412938523806. Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z31 ARSTYL®",
+     "code": "Z31",
+     "hex": "#D7D4DA",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z31.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z31_t.jpg",
+     "px": 152,
+     "misure": "80 × 21 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 21 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z31_sezione.jpg",
+     "note": "ART.NR. 3000636 · EAN 5412938523905. Pag. 36.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z13 ARSTYL®",
+     "code": "Z13",
+     "hex": "#D6D3D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z13.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z13_t.jpg",
+     "px": 152,
+     "misure": "80 × 22 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 22 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "Z13 FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z13_sezione.jpg",
+     "note": "ART.NR. 3000621 · EAN 5412938523783. Abbinabile con: Z13 FLEX (simbolo + nel PDF). Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z13 FLEX ARSTYL®",
+     "code": "Z13 FLEX",
+     "hex": "#D6D3D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z13_flex.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z13_flex_t.jpg",
+     "px": 152,
+     "misure": "80 × 22 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 22 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z13_flex_sezione.jpg",
+     "note": "ART.NR. 3000593 · EAN 5412938524506. Abbinabile con: Z13 (simbolo + nel PDF). Versione flessibile. Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z30 ARSTYL®",
+     "code": "Z30",
+     "hex": "#D5D1D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z30.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z30_t.jpg",
+     "px": 152,
+     "misure": "80 × 22 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 22 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z30_sezione.jpg",
+     "note": "ART.NR. 3000635 · EAN 5412938523899. Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z32 ARSTYL®",
+     "code": "Z32",
+     "hex": "#D7D3D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z32.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z32_t.jpg",
+     "px": 152,
+     "misure": "80 × 22 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "80 × 22 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z32_sezione.jpg",
+     "note": "ART.NR. 3000637 · EAN 5412938523912. Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z1 ARSTYL®",
+     "code": "Z1",
+     "hex": "#D4D1D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z1_t.jpg",
+     "px": 152,
+     "misure": "105 × 40 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "105 × 40 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z1_sezione.jpg",
+     "note": "ART.NR. 3000606 · EAN 5412938523639. Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "Z12 ARSTYL®",
+     "code": "Z12",
+     "hex": "#D7D4D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_arstyl/z12.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_arstyl/z12_t.jpg",
+     "px": 152,
+     "misure": "125 × 14 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "125 × 14 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_arstyl/z12_sezione.jpg",
+     "note": "ART.NR. 3011660 · EAN 5412938523745. Pag. 37.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_profili_cornici_porte",
+   "n": "Profili per parete per porte WALLSTYL®",
+   "d": "decorano, danno rilievo e abbelliscono i muri di casa",
+   "materiale": "polistirolo ad alta densità (HDPS), estruso (WALLSTYL®)",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "boiserie",
+   "formati": [],
+   "spessori": [],
+   "finiture": [
+    "primerizzato, pronto per la verniciatura (pag. 35)"
+   ],
+   "pdf": "/img/noel_marquet/nm_profili_cornici_porte/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 35, 44, 45",
+   "note": "Door Frames / Profili per parete per porte, pag. stampata 45. WALLSTYL®: adatti anche ad ambienti umidi come cucine, bagni, centri benessere o bar (pag. 7). Misure come scritte nel PDF (mm). Ambiente interno/esterno non indicato esplicitamente. Le immagini nel PDF sono piccole (155×99 px a 72 dpi): i ritagli sono a risoluzione nativa, quindi piccoli. Nessun colore indicato nel PDF: profili primerizzati da verniciare (i lati con * sono senza primer). Le pagine stampate coincidono con le pagine del PDF.",
+   "colori": [
+    {
+     "n": "WD2-2200 WALLSTYL®",
+     "code": "WD2-2200",
+     "hex": "#C7C5CA",
+     "img": "/img/noel_marquet/nm_profili_cornici_porte/wd2_2200.jpg",
+     "th": "/img/noel_marquet/nm_profili_cornici_porte/wd2_2200_t.jpg",
+     "px": 152,
+     "misure": "70 × 15 × 2200 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "70 × 15 × 2200 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cornici_porte/wd2_2200_sezione.jpg",
+     "note": "ART.NR. 3007189 · EAN 5412938532426. Pag. 45.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2,2",
+        "barre_per_ml": "0,455",
+        "testo": "barra da 2,2 m → 0,455 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL6-2200 WALLSTYL®",
+     "code": "WL6-2200",
+     "hex": "#C5C4C8",
+     "img": "/img/noel_marquet/nm_profili_cornici_porte/wl6_2200.jpg",
+     "th": "/img/noel_marquet/nm_profili_cornici_porte/wl6_2200_t.jpg",
+     "px": 152,
+     "misure": "75 × 22 × 2200 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "75 × 22 × 2200 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cornici_porte/wl6_2200_sezione.jpg",
+     "note": "ART.NR. 3038733 · EAN 5412938982399. Pag. 45.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2,2",
+        "barre_per_ml": "0,455",
+        "testo": "barra da 2,2 m → 0,455 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WB2 WALLSTYL®",
+     "code": "WB2",
+     "hex": "#CFCCCF",
+     "img": "/img/noel_marquet/nm_profili_cornici_porte/wb2.jpg",
+     "th": "/img/noel_marquet/nm_profili_cornici_porte/wb2_t.jpg",
+     "px": 152,
+     "misure": "162 × 100 × 35 (20) mm",
+     "formati": [
+      "162 × 100 × 35 (20) mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cornici_porte/wb2_sezione.jpg",
+     "note": "ART.NR. 3038551 · EAN 5412938982290. Pag. 45.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "pezzo",
+        "unita": "pezzo",
+        "testo": "a pezzo (misure: 162 × 100 × 35 (20) mm)"
+       }
+      ],
+      "nota": "Elemento singolo: consumo a pezzo."
+     }
+    },
+    {
+     "n": "WB3 WALLSTYL®",
+     "code": "WB3",
+     "hex": "#CCCACD",
+     "img": "/img/noel_marquet/nm_profili_cornici_porte/wb3.jpg",
+     "th": "/img/noel_marquet/nm_profili_cornici_porte/wb3_t.jpg",
+     "px": 152,
+     "misure": "162 × 100 × 30 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "162 × 100 × 30 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cornici_porte/wb3_sezione.jpg",
+     "note": "ART.NR. 3038552 · EAN 5412938982313. Pag. 45.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "0,03",
+        "barre_per_ml": "33,333",
+        "testo": "barra da 0,03 m → 33,333 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_profili_cimase_wallstyl",
+   "n": "Profili per parete WALLSTYL®",
+   "d": "decorano, danno rilievo e abbelliscono i muri di casa",
+   "materiale": "polistirolo ad alta densità (HDPS), estruso (WALLSTYL®)",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "boiserie",
+   "formati": [],
+   "spessori": [],
+   "finiture": [
+    "primerizzato, pronto per la verniciatura (pag. 35)"
+   ],
+   "pdf": "/img/noel_marquet/nm_profili_cimase_wallstyl/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 35, 38-40",
+   "note": "Chair Rails / Profili per parete, pag. stampate 38-40. WALLSTYL®: adatti anche al soffitto e ad ambienti umidi come cucine, bagni, centri benessere o bar (pag. 7). Misure come scritte nel PDF (mm). Ambiente interno/esterno non indicato esplicitamente. Le immagini nel PDF sono piccole (155×99 px a 72 dpi): i ritagli sono a risoluzione nativa, quindi piccoli. Nessun colore indicato nel PDF: profili primerizzati da verniciare (i lati con * sono senza primer). Le pagine stampate coincidono con le pagine del PDF.",
+   "colori": [
+    {
+     "n": "WL14 WALLSTYL®",
+     "code": "WL14",
+     "hex": "#CECAD1",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl14.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl14_t.jpg",
+     "px": 152,
+     "misure": "14,5 × 20 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "14,5 × 20 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl14_sezione.jpg",
+     "note": "ART.NR. 3055755 · EAN 5412938994514. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FL15* WALLSTYL®",
+     "code": "FL15*",
+     "hex": "#D3CFD5",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl15_nonprimer.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl15_nonprimer_t.jpg",
+     "px": 152,
+     "misure": "18 × 10 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "18 × 10 × 2000 mm"
+     ],
+     "finiture": [
+      "lato visibile senza primer"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl15_nonprimer_sezione.jpg",
+     "note": "ART.NR. 3055756 · EAN 5412938994538. Lato visibile senza primer (asterisco nel PDF). Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL13 WALLSTYL®",
+     "code": "WL13",
+     "hex": "#D2CED4",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl13.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl13_t.jpg",
+     "px": 152,
+     "misure": "24 × 14,5 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "24 × 14,5 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl13_sezione.jpg",
+     "note": "ART.NR. 3053335 · EAN 5412938990684. Design Bertrand Lejoly (pag. 38). Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL12 WALLSTYL®",
+     "code": "WL12",
+     "hex": "#D4D0D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl12.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl12_t.jpg",
+     "px": 152,
+     "misure": "24,5 × 11 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "24,5 × 11 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl12_sezione.jpg",
+     "note": "ART.NR. 3053298 · EAN 5412938990721. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL7 WALLSTYL®",
+     "code": "WL7",
+     "hex": "#D3D0D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl7.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl7_t.jpg",
+     "px": 152,
+     "misure": "25 × 13 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "25 × 13 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl7_sezione.jpg",
+     "note": "ART.NR. 3045684 · EAN 5412938979382. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL10 WALLSTYL®",
+     "code": "WL10",
+     "hex": "#D8D3D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl10.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl10_t.jpg",
+     "px": 152,
+     "misure": "30 × 14,5 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "30 × 14,5 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl10_sezione.jpg",
+     "note": "ART.NR. 3050631 · EAN 5412938987820. Design Bertrand Lejoly (pag. 38); nel PDF sopra l'immagine c'è il logo «reddot winner 2023» (escluso dal ritaglio, che quindi è più basso). Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "T40 WALLSTYL®",
+     "code": "T40",
+     "hex": "#D5D1D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40_t.jpg",
+     "px": 152,
+     "misure": "30 × 20 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "30 × 20 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40_sezione.jpg",
+     "note": "ART.NR. 3034709 · EAN 5412938980500. Nel PDF T40 compare due volte con immagini diverse e stessi codici (questa è la prima, colonna sinistra). Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "T40 (2) WALLSTYL®",
+     "code": "T40 (2)",
+     "hex": "#D5D2D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40_2.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40_2_t.jpg",
+     "px": 152,
+     "misure": "30 × 20 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "30 × 20 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/t40_2_sezione.jpg",
+     "note": "ART.NR. 3034709 · EAN 5412938980500. Seconda scheda T40 a pag. 38 (colonna centrale): stessi codici ART.NR./EAN e stessa sezione della prima, ma immagine diversa (profilo più squadrato); probabile errore del catalogo, da verificare col fornitore. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WD5 WALLSTYL®",
+     "code": "WD5",
+     "hex": "#D9D5DB",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd5.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd5_t.jpg",
+     "px": 152,
+     "misure": "38 × 10 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 10 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd5_sezione.jpg",
+     "note": "ART.NR. 3038496 · EAN 5412938982337. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FT1* WALLSTYL®",
+     "code": "FT1*",
+     "hex": "#D6D2D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft1_nonprimer.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft1_nonprimer_t.jpg",
+     "px": 152,
+     "misure": "38 × 13 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 13 × 2000 mm"
+     ],
+     "finiture": [
+      "lato visibile senza primer"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft1_nonprimer_sezione.jpg",
+     "note": "ART.NR. 3012614 · EAN 5412938971249. Lato visibile senza primer (asterisco nel PDF). Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL3 WALLSTYL®",
+     "code": "WL3",
+     "hex": "#D5D1D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl3.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl3_t.jpg",
+     "px": 152,
+     "misure": "38 × 16 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 16 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl3_sezione.jpg",
+     "note": "ART.NR. 3004387 · EAN 5412938518727. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL1 WALLSTYL®",
+     "code": "WL1",
+     "hex": "#D6D3D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl1_t.jpg",
+     "px": 152,
+     "misure": "38 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl1_sezione.jpg",
+     "note": "ART.NR. 3004385 · EAN 5412938518765. Pag. 38.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WO1 WALLSTYL®",
+     "code": "WO1",
+     "hex": "#D6D2D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wo1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wo1_t.jpg",
+     "px": 152,
+     "misure": "38 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "38 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wo1_sezione.jpg",
+     "note": "ART.NR. 3004389 · EAN 5412938518949. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL2 WALLSTYL®",
+     "code": "WL2",
+     "hex": "#D4D1D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl2.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl2_t.jpg",
+     "px": 152,
+     "misure": "40 × 20 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "40 × 20 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl2_sezione.jpg",
+     "note": "ART.NR. 3004386 · EAN 5412938518741. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL11 WALLSTYL®",
+     "code": "WL11",
+     "hex": "#D5D2D7",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl11.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl11_t.jpg",
+     "px": 152,
+     "misure": "49 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "49 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl11_sezione.jpg",
+     "note": "ART.NR. 3053297 · EAN 5412938990707. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FL10 WALLSTYL®",
+     "code": "FL10",
+     "hex": "#D9D6DB",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl10.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl10_t.jpg",
+     "px": 152,
+     "misure": "50 × 8 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "50 × 8 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl10_sezione.jpg",
+     "note": "ART.NR. 3040885 · EAN 5412938982658. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "W1 WALLSTYL®",
+     "code": "W1",
+     "hex": "#D4D1D6",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/w1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/w1_t.jpg",
+     "px": 152,
+     "misure": "55 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "55 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/w1_sezione.jpg",
+     "note": "ART.NR. 3013423 · EAN 5412938973014. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WD4 WALLSTYL®",
+     "code": "WD4",
+     "hex": "#D6D3D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd4.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd4_t.jpg",
+     "px": 152,
+     "misure": "58 × 12 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "58 × 12 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd4_sezione.jpg",
+     "note": "ART.NR. 3013824 · EAN 5412938973519. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FT2* WALLSTYL®",
+     "code": "FT2*",
+     "hex": "#D8D5DB",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft2_nonprimer.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft2_nonprimer_t.jpg",
+     "px": 152,
+     "misure": "58 × 13 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "58 × 13 × 2000 mm"
+     ],
+     "finiture": [
+      "lato visibile senza primer"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/ft2_nonprimer_sezione.jpg",
+     "note": "ART.NR. 3012615 · EAN 5412938971270. Lato visibile senza primer (asterisco nel PDF). Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WD1 WALLSTYL®",
+     "code": "WD1",
+     "hex": "#D7D4D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd1.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd1_t.jpg",
+     "px": 152,
+     "misure": "65 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "65 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd1_sezione.jpg",
+     "note": "ART.NR. 3000300 · EAN 5412938527217. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WD2 WALLSTYL®",
+     "code": "WD2",
+     "hex": "#D7D5D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2_t.jpg",
+     "px": 152,
+     "misure": "70 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "70 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "WD2 FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2_sezione.jpg",
+     "note": "ART.NR. 3000301 · EAN 5412938527224. Abbinabile con: WD2-2200, WD2 FLEX (simbolo + nel PDF). Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WD2 FLEX WALLSTYL®",
+     "code": "WD2 FLEX",
+     "hex": "#DAD7DC",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2_flex.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2_flex_t.jpg",
+     "px": 152,
+     "misure": "70 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "70 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wd2_flex_sezione.jpg",
+     "note": "ART.NR. 3050335 · EAN 5412938987561. Abbinabile con: WD2 (simbolo + nel PDF). Versione flessibile. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL6 WALLSTYL®",
+     "code": "WL6",
+     "hex": "#D6D3D8",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl6.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl6_t.jpg",
+     "px": 152,
+     "misure": "75 × 22 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "75 × 22 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl6_sezione.jpg",
+     "note": "ART.NR. 3004388 · EAN 5412938538015. Abbinabile con: WL6-2200 (simbolo + nel PDF). Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL5 WALLSTYL®",
+     "code": "WL5",
+     "hex": "#D7D4D9",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl5.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl5_t.jpg",
+     "px": 152,
+     "misure": "85 × 16 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "85 × 16 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl5_sezione.jpg",
+     "note": "ART.NR. 3003107 · EAN 5412938518680. Pag. 39.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FL9 WALLSTYL®",
+     "code": "FL9",
+     "hex": "#DAD8DD",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl9.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl9_t.jpg",
+     "px": 152,
+     "misure": "100 × 8 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "100 × 8 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/fl9_sezione.jpg",
+     "note": "ART.NR. 3003762 · EAN 5412938965347. Pag. 40.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WL4 WALLSTYL®",
+     "code": "WL4",
+     "hex": "#D8D5DA",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl4.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl4_t.jpg",
+     "px": 152,
+     "misure": "100 × 40 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "100 × 40 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/wl4_sezione.jpg",
+     "note": "ART.NR. 3052828 · EAN 5412938990202. Pag. 40.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FD2S WALLSTYL®",
+     "code": "FD2S",
+     "hex": "#DBD8DD",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s_t.jpg",
+     "px": 152,
+     "misure": "110 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "110 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "FD2S FLEX",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s_sezione.jpg",
+     "note": "ART.NR. 3028380 · EAN 5412938979528. Abbinabile con: FD2S FLEX (simbolo + nel PDF). Pag. 40.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "FD2S FLEX WALLSTYL®",
+     "code": "FD2S FLEX",
+     "hex": "#DEDBDF",
+     "img": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s_flex.jpg",
+     "th": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s_flex_t.jpg",
+     "px": 152,
+     "misure": "110 × 15 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "110 × 15 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_cimase_wallstyl/fd2s_flex_sezione.jpg",
+     "note": "ART.NR. 3050337 · EAN 5412938987608. Abbinabile con: FD2S (simbolo + nel PDF). Versione flessibile. Pag. 40.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  },
+  {
+   "id": "nm_profili_rivestimento",
+   "n": "Rivestimento WALLSTYL®",
+   "d": "creando quadri o boiseries, delimitazioni e compartimentazioni",
+   "materiale": "polistirolo ad alta densità (HDPS), estruso (WALLSTYL®)",
+   "effetto": "",
+   "uso": [
+    "rivestimento"
+   ],
+   "ambiente": [],
+   "decorativa": true,
+   "categoria": "boiserie",
+   "formati": [],
+   "spessori": [],
+   "finiture": [
+    "primerizzato, pronto per la verniciatura (pag. 35)"
+   ],
+   "pdf": "/img/noel_marquet/nm_profili_rivestimento/scheda.pdf",
+   "fonte": "noel-marquet-product-overview-en-it-es-pt-core2.pdf, pagine 35, 42, 43-44",
+   "note": "Wainscotting / Rivestimento, pag. stampata 42 (W1 è anche tra i profili per parete a pag. 39). WALLSTYL®: adatti anche al soffitto e ad ambienti umidi come cucine, bagni, centri benessere o bar (pag. 7). Misure come scritte nel PDF (mm). Ambiente interno/esterno non indicato esplicitamente. Le immagini nel PDF sono piccole (155×99 px a 72 dpi): i ritagli sono a risoluzione nativa, quindi piccoli. Nessun colore indicato nel PDF: profili primerizzati da verniciare (i lati con * sono senza primer). Le pagine stampate coincidono con le pagine del PDF.",
+   "colori": [
+    {
+     "n": "W1 WALLSTYL®",
+     "code": "W1",
+     "hex": "#D1CDD3",
+     "img": "/img/noel_marquet/nm_profili_rivestimento/w1.jpg",
+     "th": "/img/noel_marquet/nm_profili_rivestimento/w1_t.jpg",
+     "px": 152,
+     "misure": "55 × 18 × 2000 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "55 × 18 × 2000 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_rivestimento/w1_sezione.jpg",
+     "note": "ART.NR. 3013423 · EAN 5412938973014. Abbinabile con: WG1 (simbolo + nel PDF). Pag. 42.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2",
+        "barre_per_ml": "0,5",
+        "testo": "barra da 2 m → 0,5 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WG1 WALLSTYL®",
+     "code": "WG1",
+     "hex": "#E2E0E3",
+     "img": "/img/noel_marquet/nm_profili_rivestimento/wg1.jpg",
+     "th": "/img/noel_marquet/nm_profili_rivestimento/wg1_t.jpg",
+     "px": 152,
+     "misure": "79 × 10 × 2440 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "79 × 10 × 2440 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_rivestimento/wg1_sezione.jpg",
+     "note": "ART.NR. 3000326 · EAN 5412938540179. Abbinabile con: W1 (simbolo + nel PDF). Pag. 42.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2,44",
+        "barre_per_ml": "0,41",
+        "testo": "barra da 2,44 m → 0,41 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WG2 WALLSTYL®",
+     "code": "WG2",
+     "hex": "#E1DFE2",
+     "img": "/img/noel_marquet/nm_profili_rivestimento/wg2.jpg",
+     "th": "/img/noel_marquet/nm_profili_rivestimento/wg2_t.jpg",
+     "px": 152,
+     "misure": "92,5 × 15 × 2440 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "92,5 × 15 × 2440 mm"
+     ],
+     "finiture": [
+      "primerizzato, pronto da verniciare"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_rivestimento/wg2_sezione.jpg",
+     "note": "ART.NR. 3000327 · EAN 5412938540155. Pag. 42.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2,44",
+        "barre_per_ml": "0,41",
+        "testo": "barra da 2,44 m → 0,41 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    },
+    {
+     "n": "WG2* WALLSTYL®",
+     "code": "WG2*",
+     "hex": "#E0DEE1",
+     "img": "/img/noel_marquet/nm_profili_rivestimento/wg2_nonprimer.jpg",
+     "th": "/img/noel_marquet/nm_profili_rivestimento/wg2_nonprimer_t.jpg",
+     "px": 152,
+     "misure": "92,5 × 15 × 2440 mm (altezza × profondità × lunghezza)",
+     "formati": [
+      "92,5 × 15 × 2440 mm"
+     ],
+     "finiture": [
+      "lato visibile senza primer"
+     ],
+     "flessibile": "",
+     "uso": [
+      "rivestimento"
+     ],
+     "sezione": "/img/noel_marquet/nm_profili_rivestimento/wg2_nonprimer_sezione.jpg",
+     "note": "ART.NR. 3000327 · EAN 5412938540155. Lato visibile senza primer (asterisco nel PDF). Nel PDF ha gli stessi ART.NR./EAN di WG2. Pag. 42.",
+     "consumo": {
+      "varianti": [
+       {
+        "tipo": "barra",
+        "unita": "metro lineare",
+        "metri_per_barra": "2,44",
+        "barre_per_ml": "0,41",
+        "testo": "barra da 2,44 m → 0,41 barre per metro lineare"
+       }
+      ],
+      "nota": "Calcolato dalle misure del PDF, senza sfrido né tagli. Colla: il PDF rimanda al calcolatore online del produttore."
+     }
+    }
+   ]
+  }
+ ]
+}
