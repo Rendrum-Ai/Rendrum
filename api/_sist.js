@@ -343,3 +343,54 @@ function piscinaPrompt(b) {
 }
 
 module.exports = { parsePiaEst, piaEstPrompt, parsePiscina, piscinaPrompt, parseBt, btNote, parseBs, bsPrompt, parseCapp, cappNote, parseCg, cgPrompt, cappFix, parseZoc, zocNote, zocFix, GRANA, CG_TIPO };
+
+// ---------- Boiserie e pannelli con i prodotti veri dei cataloghi (18/10) ----------
+// Arriva insieme a «boiserie» (stessa geometria di base): qui il profilo o il pannello scelto, con foto e sezione
+function bpClean(v, n) { return String(v == null ? "" : v).replace(/[\r\n\t<>{}]+/g, " ").replace(/\s+/g, " ").trim().slice(0, n); }
+const BP_PATH = /^\/img\/[a-z0-9_]+\/[a-z0-9_]+\/[a-z0-9_.-]+\.(jpg|jpeg|png)$/i;
+function bpPath(v) { v = String(v || ""); return BP_PATH.test(v) && v.indexOf("..") < 0 ? v : ""; }
+function parseBp(p) {
+  if (!p || typeof p !== "object") return null;
+  const tipo = p.tipo === "pannello" ? "pannello" : p.tipo === "boiserie" ? "boiserie" : null; if (!tipo) return null;
+  const COME = tipo === "pannello" ? ["tutta", "fascia", "meta"] : ["riquadri", "fascia", "porte", "soffitto"];
+  const o = { tipo, come: COME.includes(p.come) ? p.come : COME[0], marca: bpClean(p.marca, 40), collezione: bpClean(p.collezione, 60), nome: bpClean(p.nome, 40), codice: bpClean(p.codice, 30), misure: bpClean(p.misure, 90), materiale: bpClean(p.materiale, 80), img: bpPath(p.img), sez: bpPath(p.sez) };
+  return o.nome ? o : null;
+}
+function bpProd(p) { return (p.marca ? p.marca + " " : "") + p.nome + (p.codice && p.codice !== p.nome ? " (codice " + p.codice + ")" : "") + (p.materiale ? ", " + p.materiale : "") + (p.misure ? ", misure " + p.misure : ""); }
+function bpPrompt(b, p, colorDesc, nRef) {
+  const dove = bsDoveTxt(b);
+  const ref = nRef ? (nRef > 1
+    ? " Oltre alla foto della stanza ti ho dato due immagini del prodotto: la sua foto e il disegno della sua sezione. Sono SOLO il modello da copiare fedelmente (forma, rilievo, profondità e proporzioni del prodotto); non copiare lo sfondo, la luce o il colore di quelle immagini."
+    : " Oltre alla foto della stanza ti ho dato la foto del prodotto: è SOLO il modello da copiare fedelmente (forma, rilievo, profondità e proporzioni); non copiare lo sfondo, la luce o il colore di quell'immagine.") : "";
+  const colore = b.col === "tono"
+    ? "Il prodotto è verniciato dello STESSO colore della parete esistente (tono su tono, lo stesso colore reale del muro nella foto, non grigio e non bianco): si riconosce solo grazie al rilievo e alle ombre."
+    : "Il prodotto è verniciato nel colore " + colorDesc + ", finitura opaca.";
+  const fine = [
+    "Rilievo realistico con ombre coerenti con la luce della stanza; linee dritte che seguono esattamente la prospettiva della parete; proporzioni reali rispetto a porte (alte circa 210 cm) e mobili.",
+    "Il prodotto si interrompe intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti.",
+    "Le PORTE e le FINESTRE restano esattamente dove sono e come sono.",
+    "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: aggiungi SOLO il prodotto descritto.",
+    "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
+  ];
+  if (p.tipo === "pannello") {
+    const zona = p.come === "fascia" ? "solo una fascia verticale centrata dietro il letto, il divano o la TV (larga circa come il mobile), dal battiscopa al soffitto"
+      : p.come === "meta" ? "solo la parte bassa, dal battiscopa fino a circa 100 cm da terra, chiusa in alto da un profilo sottile e dritto"
+      : "dal battiscopa fino al soffitto";
+    return [
+      "Modifica la foto di questo interno applicando i pannelli decorativi " + bpProd(p) + " " + dove + ", " + zona + ".",
+      "I pannelli sono montati affiancati, dritti e allineati, e il disegno in rilievo continua da un pannello all'altro senza fughe visibili; rispetta la misura reale di ogni pannello.",
+      ref, colore, ...fine,
+    ].filter(Boolean).join(" ");
+  }
+  if (p.come === "porte" || p.come === "soffitto") {
+    return [
+      p.come === "porte"
+        ? "Modifica la foto di questo interno aggiungendo intorno a OGNI porta che si vede " + dove + " una cornice fatta con il profilo decorativo " + bpProd(p) + ": il profilo corre lungo i due lati e sopra la porta, a pochi centimetri dal telaio, con angoli tagliati a 45° puliti. Niente riquadri sulle pareti."
+        : "Modifica la foto di questo interno aggiungendo una cornice continua lungo il bordo alto " + dove.replace(/^sulla |^su /, "della ").replace(/^della parete/, "della parete") + ", subito sotto il soffitto, fatta con il profilo decorativo " + bpProd(p) + ": segue tutta la parete e negli angoli gira con raccordi a 45° puliti.",
+      ref, colore, ...fine,
+    ].filter(Boolean).join(" ");
+  }
+  return bsPrompt(b, colorDesc) + " Le cornici sono fatte con il profilo decorativo " + bpProd(p) + ": usa esattamente la sua forma e la sua misura, non un profilo generico." + ref;
+}
+module.exports.parseBp = parseBp;
+module.exports.bpPrompt = bpPrompt;

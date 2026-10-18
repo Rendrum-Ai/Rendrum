@@ -888,6 +888,7 @@ module.exports = async function handler(req, res) {
   const cappSel = (materialId === "imbiancatura" && context === "esterno") ? SIST.parseCapp((req.body || {}).cappotto) : null;
   const cgSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseCg((req.body || {}).cartongesso) : null;
   const bsSel = (materialId === "imbiancatura" && context !== "esterno") ? SIST.parseBs((req.body || {}).boiserie) : null;
+  const bpSel = bsSel && SIST.parseBp ? SIST.parseBp((req.body || {}).boipan) : null;
   const zocSel = (materialId === "imbiancatura" && context === "esterno" && !(cappSel && cappSel.zoc)) ? SIST.parseZoc((req.body || {}).zoccolo) : null;
   const cappNote = (cappSel ? SIST.cappNote(cappSel, null) : "") + (zocSel ? SIST.zocNote(zocSel) : "");
   const btSel = SIST.parseBt((req.body || {}).battiscopa, materialId);
@@ -982,7 +983,7 @@ module.exports = async function handler(req, res) {
   const LS_FIN = { tutta: "su TUTTA l'altezza della parete, dal battiscopa al soffitto", fascia: "solo in una FASCIA verticale larga circa 1,5 metri, dal pavimento al soffitto, centrata dietro la TV, il letto o il divano; il resto della parete resta com'è", meta: "solo nella parte BASSA della parete, fino a circa 1,1 metri da terra, con un bordo superiore dritto e pulito; sopra la parete resta com'è", led: "su TUTTA l'altezza della parete, con una striscia LED nascosta lungo il bordo superiore dei pannelli che fa una luce calda e soffusa che scende sui listelli e sfuma verso il basso" };
   const lsB = (req.body || {}).listelli, lsSel = lsB && typeof lsB === "object" && LS_PAN[lsB.pan] && LS_POSA[lsB.posa] && LS_FIN[lsB.fin] ? { pan: lsB.pan, posa: lsB.posa, fin: lsB.fin, dove: String(lsB.dove || "fondo").split("+").filter(function (d) { return LS_DOVE[d]; }) } : null;
   if (lsSel && !lsSel.dove.length) lsSel.dove = ["fondo"];
-  let lsRefB64 = null;
+  let lsRefB64 = null, bpRefs = [];
   function lsPrompt(hasRef) {
     return [
       "Questa è una fotografia vera di una stanza. Aggiungi un rivestimento con PANNELLI DECORATIVI A LISTELLI (pannelli fonoassorbenti moderni): " + LS_PAN[lsSel.pan] + ". Ogni listello è largo circa 2,7 cm e sporge di circa 1,5 cm; tra un listello e l'altro c'è una fuga di circa 1,3 cm.",
@@ -1070,6 +1071,20 @@ module.exports = async function handler(req, res) {
     } catch (e) { lsRefB64 = null; }
     promptOut = lsPrompt(!!lsRefB64);
   }
+  if (bpSel) {
+    // Boiserie e pannelli: foto e sezione del prodotto scelto, prese dalle immagini dell'app
+    try {
+      const host = String(req.headers["x-forwarded-host"] || req.headers.host || "").split(",")[0].trim();
+      if (/^[a-z0-9.-]+(:\d+)?$/i.test(host)) {
+        for (const pth of [bpSel.img, bpSel.sez].filter(Boolean)) {
+          const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 8000);
+          const r = await fetch((/^localhost|^127\./.test(host) ? "http://" : "https://") + host + pth, { signal: ctl.signal }).catch(() => null).finally(function () { clearTimeout(tm); });
+          if (r && r.ok) { const buf = Buffer.from(await r.arrayBuffer()); if (buf.length > 500 && buf.length < 1500000) bpRefs.push({ b64: buf.toString("base64"), mime: /\.png$/i.test(pth) ? "image/png" : "image/jpeg" }); }
+        }
+      }
+    } catch (e) { bpRefs = []; }
+    promptOut = SIST.bpPrompt(bsSel, bpSel, colorRef(colorA, colorAHex), bpRefs.length);
+  }
   if (rnSel) {
     // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
     const chat = await rnChatGpt(imageBase64, mimeType);
@@ -1126,6 +1141,7 @@ module.exports = async function handler(req, res) {
     if (sampleClean) images.push({ b64: sampleClean, mime: "image/jpeg" });
     if (rnCropB64) images.push({ b64: rnCropB64, mime: "image/jpeg" });
     if (lsRefB64) images.push({ b64: lsRefB64, mime: "image/jpeg" });
+    bpRefs.forEach(function (im) { images.push(im); });
     if (accentoRefClean) images.push({ b64: accentoRefClean, mime: "image/jpeg" });
     const send = (extra) => {
       const fd = new FormData();
@@ -1254,6 +1270,7 @@ module.exports = async function handler(req, res) {
     }
     if (rnCropB64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: rnCropB64 } });
     if (lsRefB64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: lsRefB64 } });
+    bpRefs.forEach(function (im) { contentParts.push({ inline_data: { mime_type: im.mime, data: im.b64 } }); });
     if (sampleClean) {
       contentParts.push({ inline_data: { mime_type: "image/jpeg", data: sampleClean } });
     }
