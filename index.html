@@ -25894,7 +25894,7 @@ body.r13 .cp-big{aspect-ratio:1/1}
     micro:'<path d="M8 4.5h8"/><path d="M12 4.5V8"/><path d="M6 9h12l-1.5 2.5h-9z"/><path d="M4.5 15c2.5-1.8 5-1.8 7.5 0s5 1.8 7.5 0"/><path d="M4.5 19c2.5-1.8 5-1.8 7.5 0s5 1.8 7.5 0"/>',
     legno:'<rect x="4" y="5" width="16" height="14" rx="1"/><path d="M4 9.7h16M4 14.3h16"/><path d="M11 5v4.7M8 9.7v4.6M15 9.7v4.6M12 14.3V19"/>',
     pia:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16"/>',
-    carta:'<path d="M6 5h9a3 3 0 0 1 0 6H6z"/><path d="M6 5a3 3 0 0 0 0 6"/><path d="M15 11v8.5l-2-1.3-2 1.3V11"/>',
+    carta:'<rect x="5" y="3.5" width="11" height="4.5" rx="2.2"/><path d="M16 5.8h2.5v14.7H8V8"/><path d="M10.5 11.5l2 1.8 2-1.8M10.5 15.8l2 1.8 2-1.8"/>',
     est:'<path d="M14.5 5.5l2 3.5h-4z"/><circle cx="7" cy="17" r="1.8"/><circle cx="11" cy="16.2" r="1.8"/><circle cx="15" cy="17" r="1.8"/><circle cx="9" cy="13.4" r="1.6"/><circle cx="13" cy="13.4" r="1.6"/><path d="M4 19.5h16"/>'
   };
   function tdmBadge(id){ var p = TDM_IC[id] || TDM_IC.pia; return '<span class="tdm-bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg></span>'; }
@@ -25910,8 +25910,14 @@ body.r13 .cp-big{aspect-ratio:1/1}
   function tdmMaz(s){ var h = tdmHex(s, 60), cols = [h.slice(0, 20), h.slice(20, 40), h.slice(40, 60)].map(function(L){ var o = cpnPick(L, 4); o.sort(function(a, b){ var l = function(x){ var v = parseInt(String(x).slice(1), 16); return (v >> 16) * .3 + ((v >> 8) & 255) * .59 + (v & 255) * .11; }; return l(b) - l(a); }); return o; });
     return '<span class="tdm-mz">' + cols.map(function(L, k){ return '<span class="tdm-mz-c' + (k === 1 ? ' m' : '') + '">' + L.map(function(x){ return '<i style="background:' + (x || '#ddd') + '"></i>'; }).join('') + '<em></em></span>'; }).join('') + '</span>'; }
   // materiali: la texture vera, grande
-  var TDM_PREF = { deco:/ossid|ruggin|corten|ferro|cotto|terra/i, resine:/blu|azzur|grigio|avio|polver/i, micro:/calm stone|timeless grey|urban grey|grigio|grey/i, legno:/miele|ambra|caramel|cognac|noce|oro|honey/i, pia:/marm|bianc|calacat|carrar|onice/i, est:/granigl|ghiai|sasso|grani/i };
-  function tdmTex(s){ var foto = [], pref = []; var re = TDM_PREF[s.id];
+  var TDM_PREF = { carta:/bayad|turandot|shakesp/i, deco:/ossid|ruggin|corten|ferro|cotto|terra/i, resine:/blu|azzur|grigio|avio|polver/i, micro:/calm stone|timeless grey|urban grey|grigio|grey/i, legno:/miele|ambra|caramel|cognac|noce|oro|honey/i, pia:/marm|bianc|calacat|carrar|onice/i, est:/granigl|ghiai|sasso|grani/i };
+  function tdmTex(s){ if(s.__tdmTx) return s.__tdmTx; var re = TDM_PREF[s.id], all = [], pref = [];
+    (s.vs ? s.vs.reduce(function(a, sb){ return a.concat(sb.groups || []); }, []) : s.groups).forEach(function(g){ g.list.forEach(function(c){ all.push([c, g]); if(re && (re.test(c.name || '') || re.test(g.n || ''))) pref.push([c, g]); }); });
+    var L = pref.length ? pref : all, mid = Math.floor(L.length / 2), ord = [];
+    for(var d = 0; ord.length < 6 && d < L.length; d++){ if(L[mid + d]) ord.push(L[mid + d]); if(d && L[mid - d] && ord.length < 6) ord.push(L[mid - d]); }
+    for(var k = 0; k < ord.length; k++){ var st = cpBg(ord[k][0], ord[k][1], true); if(/url\(/.test(st)) return (s.__tdmTx = st); }
+    return 'background:#ddd'; }
+  function tdmTexOld(s){ var foto = [], pref = []; var re = TDM_PREF[s.id];
     var each = function(g){ g.list.forEach(function(c){ var st = cpBg(c, g, true); if(/url\(/.test(st)){ foto.push(st); if(re && (re.test(c.name || '') || re.test(g.n || ''))) pref.push(st); } }); };
     (s.vs ? s.vs.reduce(function(a, sb){ return a.concat(sb.groups || []); }, []) : s.groups).forEach(each);
     var L = pref.length ? pref : foto; return L.length ? L[Math.floor(L.length / 2)] : 'background:#ddd'; }
