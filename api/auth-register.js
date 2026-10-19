@@ -31,6 +31,11 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Usa una richiesta POST" });
   }
 
+  // Registrazioni chiuse: per riaprirle aggiungere su Vercel REGISTRAZIONI_APERTE=1
+  if (String(process.env.REGISTRAZIONI_APERTE || "").trim() !== "1") {
+    return res.status(403).json({ error: "Le registrazioni sono chiuse per ora. Se hai già un account, accedi.", code: "registrazioni_chiuse" });
+  }
+
   const { configured } = getSupabaseConfig();
   if (!configured) {
     return res.status(500).json({

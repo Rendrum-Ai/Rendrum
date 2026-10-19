@@ -145,6 +145,8 @@ async function findOrCreate(id) {
     row = (u.ok && u.data && u.data[0]) || row;
     return { row, isNew: !!row.needs_onboarding, linked: true };
   }
+  // Registrazioni chiuse: con Google/Apple entra solo chi ha gia' un account (riaprire con REGISTRAZIONI_APERTE=1 su Vercel)
+  if (String(process.env.REGISTRAZIONI_APERTE || "").trim() !== "1") return { error: "Le registrazioni sono chiuse per ora. Se hai già un account, accedi con la tua email." };
   // 3) nuovo account (senza password: la può creare con "Password dimenticata?")
   const { hash, salt } = hashPassword(crypto.randomBytes(32).toString("hex"));
   const ins = await supabaseRequest("/pro_accounts", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify([Object.assign({
