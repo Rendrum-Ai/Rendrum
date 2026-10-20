@@ -1085,6 +1085,18 @@ module.exports = async function handler(req, res) {
     } catch (e) { bpRefs = []; }
     promptOut = SIST.bpPrompt(bsSel, bpSel, colorRef(colorA, colorAHex), bpRefs.length);
   }
+  if (psSel && psSel.telo && psSel.telo.img) {
+    // 20/10: teli armati per piscina, foto del telo (solo per quelli con disegno) presa dalle immagini dell'app
+    try {
+      const host = String(req.headers["x-forwarded-host"] || req.headers.host || "").split(",")[0].trim();
+      if (/^[a-z0-9.-]+(:\d+)?$/i.test(host)) {
+        const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 8000);
+        const r = await fetch((/^localhost|^127\./.test(host) ? "http://" : "https://") + host + psSel.telo.img, { signal: ctl.signal }).catch(() => null).finally(function () { clearTimeout(tm); });
+        if (r && r.ok) { const buf = Buffer.from(await r.arrayBuffer()); if (buf.length > 500 && buf.length < 1500000) bpRefs.push({ b64: buf.toString("base64"), mime: /\.png$/i.test(psSel.telo.img) ? "image/png" : "image/jpeg" }); }
+      }
+    } catch (e) { bpRefs = []; }
+    promptOut = SIST.zocFix(cappSel ? SIST.cappFix(SIST.piscinaPrompt(psSel, bpRefs.length), cappSel) : SIST.piscinaPrompt(psSel, bpRefs.length), zocSel);
+  }
   if (rnSel) {
     // 1° motore: come ChatGPT. Un'AI che ragiona guarda la foto e chiede lei l'immagine all'AI che disegna.
     const chat = await rnChatGpt(imageBase64, mimeType);

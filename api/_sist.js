@@ -325,12 +325,23 @@ function piaEstPrompt(b) {
 const PS_COL = { "Bianco": "bianco", "Azzurro chiaro": "azzurro chiaro", "Azzurro": "azzurro", "Blu": "blu intenso", "Verde laguna": "verde laguna (verde-acqua)", "Sabbia": "sabbia chiaro", "Grigio": "grigio medio", "Antracite": "grigio antracite scuro" };
 function parsePiscina(b) {
   if (!b || typeof b !== "object") return null;
-  const cosa = (Array.isArray(b.cosa) ? b.cosa : []).filter((x, i, a) => ["vasca", "bordo", "solarium"].includes(x) && a.indexOf(x) === i);
+  // 20/10: telo armato (liner in PVC) al posto della verniciatura della vasca
+  const t = b.telo && typeof b.telo === "object" ? { marca: bpClean(b.telo.marca, 40), collezione: bpClean(b.telo.collezione, 50), nome: bpClean(b.telo.nome, 40), codice: bpClean(b.telo.codice, 30), hex: /^#[0-9a-f]{6}$/i.test(String(b.telo.hex || "")) ? b.telo.hex : "", spessore: bpClean(b.telo.spessore, 20), gruppo: bpClean(b.telo.gruppo, 30), materiale: bpClean(b.telo.materiale, 140), effetto: bpClean(b.telo.effetto, 160), img: bpPath(b.telo.img) } : null;
+  const cosa = (Array.isArray(b.cosa) ? b.cosa : []).filter((x, i, a) => ["vasca", "bordo", "solarium", "telo"].includes(x) && a.indexOf(x) === i).filter((x) => x !== "telo" || (t && t.nome)).filter((x, i, a) => !(x === "vasca" && a.includes("telo")));
   if (!cosa.length) return null;
-  return { cosa, col: PS_COL[b.col] ? b.col : "Azzurro", bordo: ["graniglia", "piastrella", "pietra"].includes(b.bordo) ? b.bordo : "graniglia", sol: ["graniglia", "piastrelle", "legno"].includes(b.sol) ? b.sol : "graniglia" };
+  return { cosa, col: PS_COL[b.col] ? b.col : "Azzurro", bordo: ["graniglia", "piastrella", "pietra"].includes(b.bordo) ? b.bordo : "graniglia", sol: ["graniglia", "piastrelle", "legno"].includes(b.sol) ? b.sol : "graniglia", telo: cosa.includes("telo") ? t : null };
 }
-function piscinaPrompt(b) {
+function piscinaPrompt(b, nRef) {
   const L = [];
+  if (b.cosa.includes("telo") && b.telo) {
+    const t = b.telo, liscio = /tinta unita|antiscivolo/i.test(t.gruppo);
+    L.push("VASCA: il fondo e le pareti interne della piscina sono rivestiti con un TELO ARMATO in PVC per piscine (liner), " + (t.marca ? t.marca + " " : "") + t.collezione + ", colore " + t.nome + (t.codice ? " (codice " + t.codice + ")" : "") + (t.hex ? ", tonalità " + t.hex : "") + (t.spessore ? ", spessore " + t.spessore : "") + "." +
+      (t.effetto ? " Aspetto del telo: " + t.effetto + "." : "") +
+      (liscio ? " Il telo è in tinta unita, colore uniforme senza disegni." : " Il disegno del telo è piccolo e in scala reale, ripetuto in modo naturale su fondo e pareti, non ingrandito.") +
+      " Il telo è perfettamente teso e aderente, senza pieghe né bolle, segue angoli, gradini e scaletta; le giunture tra i teli sono saldature dritte e sottili, quasi invisibili; in alto il telo finisce subito sotto la copertina del bordo con un profilo sottile." +
+      (nRef ? " Ti ho dato anche la foto del telo: è SOLO il campione del disegno e dei colori da riprodurre fedelmente; non copiare lo sfondo, la luce o i bordi di quell'immagine." : "") +
+      " ACQUA: NON aggiungere e NON togliere acqua, il livello dell'acqua resta esattamente com'è nella foto. Se la piscina è vuota resta VUOTA e si vede bene il telo nuovo; se ha poca acqua resta con la stessa poca acqua; se è piena resta piena, con l'acqua limpida che lascia vedere il colore e il disegno del telo sul fondo (sotto l'acqua il colore appare un po' più azzurro e luminoso, come nella realtà).");
+  }
   if (b.cosa.includes("vasca")) L.push("VASCA: il fondo e le pareti interne della piscina sono verniciati di nuovo in colore " + PS_COL[b.col] + " uniforme, finitura satinata, senza macchie. ACQUA: NON aggiungere e NON togliere acqua, il livello dell'acqua resta esattamente com'è nella foto. Se nella foto la piscina è vuota resta VUOTA e si vedono bene il fondo e le pareti nuove; se ha un po' d'acqua resta con la stessa poca acqua; se è piena resta piena, con l'acqua limpida che lascia vedere il colore nuovo del fondo.");
   if (b.cosa.includes("bordo")) L.push("BORDO PISCINA: tutto intorno alla vasca un bordo nuovo largo circa 35–40 cm " + { graniglia: "in GRANIGLIA (piccoli sassolini levigati legati in resina), chiaro, con lo spigolo verso l'acqua arrotondato (bordo toro)" + (b.cosa.includes("solarium") && b.sol === "graniglia" ? ", continuo con il solarium" : ""), piastrella: "in pezzi speciali di GRES antiscivolo chiaro a BORDO TORO (spigolo arrotondato), con fughe allineate", pietra: "in LASTRE DI PIETRA chiara con lo spigolo arrotondato, posate con fughe sottili" }[b.bordo] + ", continuo e dritto, che segue esattamente la forma della vasca.");
   if (b.cosa.includes("solarium")) L.push("SOLARIUM: il pavimento intorno alla piscina è rifatto " + { graniglia: "in GRANIGLIA drenante (sassolini legati in resina), uniforme, colore chiaro naturale", piastrelle: "in piastrelle di GRES per esterni antiscivolo effetto pietra chiara, formato 60 × 60, posa dritta", legno: "in DOGHE di legno per esterni (decking) color miele, parallele, con fughe sottili" }[b.sol] + ", fino ai bordi del prato o dei muretti, seguendo la prospettiva.");
@@ -353,12 +364,23 @@ function parseBp(p) {
   if (!p || typeof p !== "object") return null;
   const tipo = p.tipo === "pannello" ? "pannello" : p.tipo === "boiserie" ? "boiserie" : p.tipo === "carta" ? "carta" : null; if (!tipo) return null;
   const COME = tipo === "carta" ? ["tutta"] : tipo === "pannello" ? ["tutta", "fascia", "meta"] : ["riquadri", "fascia", "porte", "soffitto"];
-  const o = { tipo, come: COME.includes(p.come) ? p.come : COME[0], marca: bpClean(p.marca, 40), collezione: bpClean(p.collezione, 60), nome: bpClean(p.nome, 40), codice: bpClean(p.codice, 30), misure: bpClean(p.misure, 90), materiale: bpClean(p.materiale, 80), img: bpPath(p.img), sez: bpPath(p.sez) };
+  const o = { tipo, come: COME.includes(p.come) ? p.come : COME[0], marca: bpClean(p.marca, 40), collezione: bpClean(p.collezione, 60), nome: bpClean(p.nome, 40), codice: bpClean(p.codice, 30), misure: bpClean(p.misure, 90), materiale: bpClean(p.materiale, 80), img: bpPath(p.img), sez: bpPath(p.sez), lastra: tipo === "pannello" && (p.lastra === 1 || p.lastra === true) };
+  if (p.zona === "punti" || p.zona === "zona") { o.zona = p.zona; o.zn = Math.max(0, Math.min(4, parseInt(p.zn, 10) || 0)); }   // 19/10: zona segnata sulla foto
   return o.nome ? o : null;
 }
 function bpProd(p) { return (p.marca ? p.marca + " " : "") + p.nome + (p.codice && p.codice !== p.nome ? " (codice " + p.codice + ")" : "") + (p.materiale ? ", " + p.materiale : "") + (p.misure ? ", misure " + p.misure : ""); }
+// 19/10: dove va il prodotto, segnato dall'artigiano sulla foto (immagine in più: la stessa foto con i segni)
+function bpZona(p) {
+  if (!p.zona) return "";
+  const base = " DOVE: ti ho dato anche un'immagine che è la STESSA foto della stanza con dei segni sopra (non è un modello da copiare): ";
+  const fine = " Il battiscopa (zoccolino) esistente, il pavimento e tutto ciò che non è segnato restano IDENTICI; il prodotto parte subito sopra il battiscopa senza coprirlo né cambiarlo.";
+  if (p.zona === "zona") return base + "la parte da rivestire è colorata in MAGENTA trasparente. Applica il prodotto esattamente su quella parte e in nessun altro punto, seguendone i bordi; dove il segno arriva vicino a un angolo, a uno spigolo o al soffitto, arriva fino all'angolo, allo spigolo o al soffitto con un bordo dritto." + fine;
+  const n = p.zn || 1;
+  return base + (n > 1 ? "ci sono " + n + " cerchi rossi numerati: ognuno sta su una parete (o un pilastro) da rivestire." : "c'è un cerchio rosso: sta sulla parete (o sul pilastro) da rivestire.") + " Riveste TUTTA la superficie segnata, da un angolo all'altro e dal battiscopa al soffitto, anche se è grande o in parte nascosta da mobili (che restano davanti); se il cerchio è su un pilastro, riveste tutte le facce visibili del pilastro. Le pareti senza cerchio restano esattamente come sono." + fine;
+}
 function bpPrompt(b, p, colorDesc, nRef) {
-  const dove = bsDoveTxt(b);
+  const dove = p.zona ? "sulle superfici segnate (vedi sotto)" : bsDoveTxt(b);
+  const zonaTxt = bpZona(p);
   const ref = nRef ? (nRef > 1
     ? " Oltre alla foto della stanza ti ho dato due immagini del prodotto: la sua foto e il disegno della sua sezione. Sono SOLO il modello da copiare fedelmente (forma, rilievo, profondità e proporzioni del prodotto); non copiare lo sfondo, la luce o il colore di quelle immagini."
     : " Oltre alla foto della stanza ti ho dato la foto del prodotto: è SOLO il modello da copiare fedelmente (forma, rilievo, profondità e proporzioni); non copiare lo sfondo, la luce o il colore di quell'immagine.") : "";
@@ -378,13 +400,27 @@ function bpPrompt(b, p, colorDesc, nRef) {
     return [
       "Modifica la foto di questo interno rivestendo con la carta da parati " + (p.marca ? p.marca + " " : "") + (p.collezione && p.nome.indexOf(p.collezione) < 0 ? p.collezione + " " : "") + p.nome + (p.codice && p.nome.indexOf(p.codice) < 0 ? " (codice " + p.codice + ")" : "") + (p.materiale ? ", " + p.materiale : "") + " " + dove + ", dal battiscopa fino al soffitto.",
       p.misure ? "Dati del rotolo: " + p.misure + "; rispetta questa scala: il disegno non deve sembrare più grande o più piccolo del vero rispetto a porte (alte circa 210 cm) e mobili." : "",
+      "La carta copre TUTTA la parete, da un angolo all'altro, e parte subito sopra il battiscopa (zoccolino), che resta identico e non viene coperto né cambiato.",
       "La carta è posata a teli verticali affiancati, con le giunte quasi invisibili e il disegno che continua da un telo all'altro; segue esattamente la prospettiva della parete; resta liscia, senza bolle né pieghe.",
-      refC,
+      refC, zonaTxt,
       "Il colore della carta è quello del campione: non schiarirlo, non scurirlo e non cambiarne la tinta.",
       "La carta si interrompe intorno a porte, finestre, prese, interruttori e termosifoni senza passarci sopra; non coprire mobili, quadri o oggetti; il soffitto e le altre pareti restano come sono.",
       "Le PORTE e le FINESTRE restano esattamente dove sono e come sono.",
       "Mantieni identici pavimento, soffitto, mobili, porte, finestre, oggetti, luci e inquadratura: cambia SOLO le pareti indicate.",
       "Il risultato deve sembrare una fotografia reale della stessa stanza dopo i lavori, non un rendering.",
+    ].filter(Boolean).join(" ");
+  }
+  if (p.tipo === "pannello" && p.lastra) {   // 20/10: lastre sottili stampate (es. Tecnografica Ultralight)
+    const zona = p.come === "fascia" ? "solo una fascia verticale centrata dietro il letto, il divano o la TV (larga circa come il mobile), dal battiscopa al soffitto"
+      : p.come === "meta" ? "solo la parte bassa, dal battiscopa fino a circa 100 cm da terra, chiusa in alto da un profilo sottile e dritto"
+      : "dal battiscopa fino al soffitto";
+    return [
+      "Modifica la foto di questo interno rivestendo la parete con le lastre decorative " + bpProd(p) + " " + dove + ", " + zona + ".",
+      "Sono lastre sottili e LISCE con il disegno stampato (nessun rilievo, nessuna cornice): montate affiancate in verticale, dritte e allineate, con giunti sottilissimi appena visibili; il disegno è grande e continuo come una lastra di pietra vera, rispetta la misura reale di ogni lastra.",
+      ref ? ref.replace("forma, rilievo, profondità e proporzioni del prodotto", "disegno, venature e colori").replace("forma, rilievo, profondità e proporzioni", "disegno, venature e colori").replace(/, la luce o il colore di quell/g, " o la luce di quell") : "",
+      zonaTxt,
+      "Colore e disegno sono quelli della foto del prodotto: non schiarirli, non scurirli e non cambiarne la tinta. Se la finitura è lucida, la superficie riflette leggermente la luce della stanza.",
+      ...fine.slice(1),
     ].filter(Boolean).join(" ");
   }
   if (p.tipo === "pannello") {
@@ -394,7 +430,7 @@ function bpPrompt(b, p, colorDesc, nRef) {
     return [
       "Modifica la foto di questo interno applicando i pannelli decorativi " + bpProd(p) + " " + dove + ", " + zona + ".",
       "I pannelli sono montati affiancati, dritti e allineati, e il disegno in rilievo continua da un pannello all'altro senza fughe visibili; rispetta la misura reale di ogni pannello.",
-      ref, colore, ...fine,
+      ref, zonaTxt, colore, ...fine,
     ].filter(Boolean).join(" ");
   }
   if (p.come === "porte" || p.come === "soffitto") {
@@ -402,10 +438,10 @@ function bpPrompt(b, p, colorDesc, nRef) {
       p.come === "porte"
         ? "Modifica la foto di questo interno aggiungendo intorno a OGNI porta che si vede " + dove + " una cornice fatta con il profilo decorativo " + bpProd(p) + ": il profilo corre lungo i due lati e sopra la porta, a pochi centimetri dal telaio, con angoli tagliati a 45° puliti. Niente riquadri sulle pareti."
         : "Modifica la foto di questo interno aggiungendo una cornice continua lungo il bordo alto " + dove.replace(/^sulla |^su /, "della ").replace(/^della parete/, "della parete") + ", subito sotto il soffitto, fatta con il profilo decorativo " + bpProd(p) + ": segue tutta la parete e negli angoli gira con raccordi a 45° puliti.",
-      ref, colore, ...fine,
+      ref, zonaTxt, colore, ...fine,
     ].filter(Boolean).join(" ");
   }
-  return bsPrompt(b, colorDesc) + " Le cornici sono fatte con il profilo decorativo " + bpProd(p) + ": usa esattamente la sua forma e la sua misura, non un profilo generico." + ref;
+  return bsPrompt(b, colorDesc) + " Le cornici sono fatte con il profilo decorativo " + bpProd(p) + ": usa esattamente la sua forma e la sua misura, non un profilo generico." + ref + zonaTxt;
 }
 module.exports.parseBp = parseBp;
 module.exports.bpPrompt = bpPrompt;
