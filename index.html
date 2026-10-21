@@ -10382,7 +10382,7 @@ html.rd-hp #rdTab .hp-plus u{width:50px;height:50px;margin-top:-16px;border-radi
 /* 21/10: in Home, scorrendo giù il logo Rendrum sparisce; torna quando sei di nuovo in cima */
 html.rd-hp body>header{transition:transform .25s ease,opacity .25s ease}
 html.rd-hlHide body>header{transform:translateY(-110%);opacity:0;pointer-events:none}
-</style><style id="rdAmCss">html:not(.rd-am) #amW{display:none!important}
+</style><script>try{if(localStorage.getItem("rdHpOn")==="1")document.documentElement.classList.add("rd-hp","rd-am");if(localStorage.getItem("rdBetaOn")==="1")document.documentElement.classList.add("rd-nf");}catch(e){}</script><style id="rdAmCss">html:not(.rd-am) #amW{display:none!important}
 /* 21/10: menu Altro nuovo, solo tester (html.rd-am) */
 html.rd-am #rdAltro .rx-menu{background:#F7F4F0}
 html.rd-am #rdAltro .rx-menu>:not(#amW):not(.rd-sheet-grab){display:none!important}
@@ -10516,6 +10516,62 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
 #proProjectsModal .pro-projects-card:has(#ppViewListino.ln-on.active){background:#FBF7F3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 #ppViewListino.ln-on .ln-rt,#ppViewListino.ln-on .ln-pr,#ppViewListino.ln-on .ln-dt,#ppViewListino.ln-on .ln-gh,#ppViewListino.ln-on .ln-addc{background-color:transparent!important}
 #ppViewListino.ln-on .ln-chip,#ppViewListino.ln-on .ln-aia,#ppViewListino.ln-on .ln-b2{background-color:#fff!important}
+</style><style id="rdMtCss">/* 21/10: Materiali "il ciclo", solo tester */
+#rdX.mt2-on #rdXB{background:#F8F5F1}
+.mt2{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#151515;padding-bottom:8px}
+:where(.mt2,.mt2-pk) svg{display:block;width:100%;height:100%}
+.mt2 button{font-family:inherit;-webkit-tap-highlight-color:transparent;cursor:pointer}
+.ft-seg.mt2-seg{background:#EFE8E0;border-radius:11px;padding:3px;margin:0 0 14px}
+.ft-seg.mt2-seg button{font-weight:500;font-size:12.5px;color:#8a827a;padding:8px 4px;border-radius:9px;background:none!important}
+.ft-seg.mt2-seg button.on{background:#fff!important;color:#151515;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.mt2-top{display:flex;gap:8px;align-items:flex-start;margin-bottom:14px}
+.mt2-ti{flex:1;min-width:0}
+.mt2-tt{display:inline-flex;align-items:center;gap:4px;border:0;background:none!important;padding:0;font-size:17px;font-weight:700;letter-spacing:-.2px;color:#151515;text-align:left}
+.mt2-tt i{flex:none;width:11px;height:11px;color:#8a827a}
+.mt2-np{display:inline-block;vertical-align:3px;margin-left:5px;font-size:9px;font-weight:500;background:#EFE9E2;border-radius:9px;padding:3px 7px;white-space:nowrap}
+.mt2-ti p{margin:6px 0 0;font-size:9.5px;line-height:1.45;color:#6b6560}
+.mt2-cost{flex:none;width:126px;border-radius:11px;background:#FDEEE3;border:1px solid #F6DCC8;box-shadow:0 3px 8px rgba(220,120,60,.08);padding:2px 0}
+.mt2-cr{position:relative;display:flex;align-items:center;gap:8px;padding:7px 8px}.mt2-cr+.mt2-cr{border-top:1px solid #F0D3BD;margin:0 8px;padding:7px 0}
+.mt2-cr>i{flex:none;width:16px;height:16px;color:#E8742A}
+.mt2-cr em{display:block;font-style:normal;font-size:8px;color:#55504b}.mt2-cr b{display:block;font-size:12px;font-weight:700;white-space:nowrap}
+.mt2-cr input{width:34px;border:0;border-bottom:1.5px dashed #E8A979;background:none;padding:0;font:inherit;font-size:12px;font-weight:700;color:#151515;text-align:right}
+.mt2-inf{position:absolute;right:6px;top:7px;width:13px;height:13px;border:0;background:none!important;padding:0;color:#6b6560}
+.mt2-why{background:#fff;border-radius:10px;padding:9px 10px;font-size:10.5px;line-height:1.45;color:#4d4741;margin:-6px 0 12px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.mt2-steps{position:relative;padding-left:30px}
+.mt2-steps:before{content:"";position:absolute;left:10px;top:0;bottom:0;border-left:1px dashed #D9CFC5}
+.mt2-st{position:relative;margin-bottom:10px}
+.mt2-st:before{content:"";position:absolute;left:-20px;top:30px;bottom:-40px;width:2px;background:#E07A35;border-radius:1px}
+.mt2-st.last:before,.mt2-st:nth-last-child(2):before{display:none}
+.mt2-n{position:absolute;left:-30px;top:16px;width:21px;height:21px;border-radius:50%;background:linear-gradient(180deg,#EA8740,#D86520);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #F8F5F1;z-index:1}
+.mt2-st.last .mt2-n{background:#fff;color:#333;border:1px solid #D9CFC5}
+.mt2-c{position:relative;display:block;width:100%;min-height:84px;border:1px solid #ECE5DD!important;border-radius:11px;background:#fff!important;padding:0;text-align:left;box-shadow:none}
+.mt2-img{position:absolute;left:9px;top:9px;width:56px;height:65px;border-radius:6px;background:#F3F0EC;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.mt2-img .mt2-bk{width:52px;height:62px}
+.mt2-h{display:block;padding:9px 92px 0 78px;min-height:34px}
+.mt2-h b{font-size:12px;font-weight:700;color:#151515}
+.mt2-tag{display:inline-block;vertical-align:1px;margin-left:5px;font-style:normal;font-size:8.5px;font-weight:500;background:#F1ECE6;border-radius:8px;padding:2px 6px}
+.mt2-h em{display:block;font-style:normal;font-size:9px;color:#8a827a;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt2-sup{position:absolute;right:20px;top:10px;max-width:84px;display:flex;align-items:center;gap:4px;height:19px;padding:0 7px;border-radius:10px;background:#F1ECE6;font-size:8.5px;color:#2b2724;white-space:nowrap;overflow:hidden}
+.mt2-sup svg{flex:none;width:11px;height:11px}
+.mt2-go{position:absolute;right:6px;top:14px;width:9px;height:9px;color:#555}
+.mt2-sp{display:flex;padding:7px 8px 9px 78px}
+.mt2-sp>span{position:relative;flex:1;min-width:0;display:grid;grid-template-columns:auto 1fr;column-gap:5px;align-items:center}
+.mt2-sp>span+span{padding-left:7px;border-left:1px solid #ECE5DD;margin-left:4px}
+.mt2-sp i{grid-row:span 2;width:14px;height:14px;color:#3a3531}
+.mt2-sp em{font-style:normal;font-size:8px;color:#8a827a}.mt2-sp b{font-size:9.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt2-empty{border:1.5px dashed #E2D8CE;border-radius:12px;padding:16px;text-align:center;font-size:12px;color:#6b6560;line-height:1.5;margin-bottom:10px}
+.mt2-mod{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:40px;border:1.5px solid #F3C9A9!important;border-radius:11px;background:#fff!important;color:#B4501A;font-size:12.5px;font-weight:600;margin-bottom:8px}
+.mt2-mod svg{width:15px;height:15px}
+.mt2-add{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:36px;border:0;border-radius:10px;background:#1D1B18!important;color:#fff!important;font-size:12.5px;font-weight:600;margin-top:4px}
+.mt2-add svg{width:13px;height:13px}
+.mt2-pk{position:fixed;inset:0;z-index:10040;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.mt2-pkbg{position:absolute;inset:0;background:rgba(20,17,13,.45);opacity:0;transition:opacity .25s}
+.mt2-pkin{position:absolute;left:0;right:0;bottom:0;max-height:80%;overflow:auto;background:#FBF7F3;border-radius:20px 20px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.mt2-pk.on .mt2-pkbg{opacity:1}.mt2-pk.on .mt2-pkin{transform:none}
+.mt2-pkin>b{display:block;font-size:16px;margin:0 2px 10px}
+.mt2-pkin button{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;border-radius:11px;background:#fff;margin-bottom:6px;padding:12px 13px;font-size:14px;font-weight:600;color:#151515}
+.mt2-pkin button em{font-style:normal;font-size:12px;font-weight:400;color:#8a827a}.mt2-pkin button.on{outline:2px solid #E07A35}
+.mt2-sp>span:last-child{flex:1.4}.mt2-sp b{font-size:10px;color:#151515}.mt2-sp em{font-size:8.5px}
 </style></head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -20831,7 +20887,8 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
   })();
   // ===== 20/10: Home nuova con il + rame (solo tester) =====
   (function(){
-    function hpOn(){ try{ return rdIsBeta() && proAccount && proAccount.accountType !== 'privato'; }catch(e){ return false; } }
+    // finché l'account non è caricato vale l'ultima volta (così all'apertura non si vede la Home vecchia per un attimo)
+    function hpOn(){ try{ if(!proAccount || !proAccount.email){ return localStorage.getItem('rdHpOn') === '1'; } var v = !!(rdIsBeta() && proAccount.accountType !== 'privato'); localStorage.setItem('rdHpOn', v ? '1' : '0'); return v; }catch(e){ return false; } }
     function vib(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} }
     function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
     var SV = {
@@ -20901,8 +20958,8 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     var SVG_AR = '<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24h32M28 12l12 12-12 12"/></svg>';
     var SVG_PIN = '<svg viewBox="0 0 48 48" width="9" height="9" fill="currentColor" style="vertical-align:-1px"><path d="M24 44s14-13 14-24a14 14 0 0 0-28 0c0 11 14 24 14 24z"/></svg>';
     var SVG_IMG = '<svg viewBox="0 0 48 48" width="10" height="10" fill="none" stroke="currentColor" stroke-width="4" style="vertical-align:-1px"><rect x="6" y="9" width="36" height="30" rx="4"/><path d="M6 34l11-10 9 8 6-5 10 9"/></svg>';
-    function on(){ try{ return rdIsBeta() && proAccount && proAccount.accountType !== 'privato'; }catch(e){ return false; } }
-    function beta(){ try{ return !!rdIsBeta(); }catch(e){ return false; } }
+    function on(){ try{ if(!proAccount || !proAccount.email){ return localStorage.getItem('rdHpOn') === '1'; } return !!(rdIsBeta() && proAccount.accountType !== 'privato'); }catch(e){ return false; } }
+    function beta(){ try{ if(!proAccount || !proAccount.email){ return localStorage.getItem('rdBetaOn') === '1'; } var v = !!rdIsBeta(); localStorage.setItem('rdBetaOn', v ? '1' : '0'); return v; }catch(e){ return false; } }
     function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
     function J(p){ return p.then(function(x){ return x && x.ok ? x.d : null; }).catch(function(){ return null; }); }
     // i numeri dei 4 riquadri: solo dati veri, se non ci sono il riquadro resta senza numero
@@ -20954,7 +21011,7 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
   })();
   // ===== 21/10: menu Altro nuovo (solo tester): scheda impresa, 3 gruppi con foto, sottopagine =====
   (function(){
-    function on(){ try{ return rdIsBeta() && proAccount && proAccount.accountType !== 'privato'; }catch(e){ return false; } }
+    function on(){ try{ if(!proAccount || !proAccount.email){ return localStorage.getItem('rdHpOn') === '1'; } return !!(rdIsBeta() && proAccount.accountType !== 'privato'); }catch(e){ return false; } }
     function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
     function sv(p, w){ return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="' + (w || 3.4) + '" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
     var I = {
@@ -20985,7 +21042,9 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     function orig(k){ return document.querySelector('#rdAltro .rx-menu > :not(#amW) [data-rxgo2="' + k + '"], #rdAltro .rx-menu > :not(#amW)[data-rxgo2="' + k + '"], #rdAltro .rx-menu > :not(#amW) [data-rdalt="' + k + '"], #rdAltro .rx-menu > :not(#amW)[data-rdalt="' + k + '"]'); }
     function close(){ var s = document.getElementById('rdAltro'); if(s) s.classList.remove('open'); }
     function privacy(){ var m = document.getElementById('privacyModal'); close(); if(m){ m.classList.add('open'); m.style.display = ''; } }
+    function mainView(){ var W = document.getElementById('amW'); if(!W) return; W.classList.remove('am-in-sub'); W.dataset.sub = ''; W.style.minHeight = ''; }
     function go(k){
+      if(!/^sub:/.test(k)) mainView();
       if(k === 'prev'){ close(); var t = document.querySelector('#rdTab [data-rdtab="prev"]'); if(t) t.click(); return; }
       if(k === 'privacy') return privacy();
       if(k === 'campionario'){ var c = orig('campionario'); if(c) return c.click(); close(); try{ cpHome(); }catch(e){} return; }
@@ -21009,6 +21068,7 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
       W.querySelector('.am-sub').innerHTML = '<button type="button" class="am-bk" data-amback>' + I.back + '<span>Menu</span></button><div class="am-st">' + esc(S[0]) + '</div><div class="am-lst">'
         + L.map(function(x){ return '<button type="button" class="am-li" data-amgo="' + x[0] + '"><span class="am-ci">' + I[x[1]] + '</span><b>' + esc(x[2]) + '</b><em>' + esc(x[3]) + '</em><i class="am-ch">' + I.chev + '</i></button>'; }).join('')
         + '</div>' + (k === 'info' ? '<p class="am-ver">Rendrum · versione del 21 ottobre 2026</p>' : '');
+      if(!W.classList.contains('am-in-sub')) W.style.minHeight = W.offsetHeight + 'px';
       W.classList.add('am-in-sub'); var s = W.closest('.rd-sheet-in'); if(s) s.scrollTop = 0;
     }
     function build(){
@@ -21027,7 +21087,7 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
         + '</div><div class="am-sub"></div>';
       M.appendChild(W);
       W.addEventListener('click', function(e){
-        var bk = e.target.closest('[data-amback]'); if(bk){ e.stopPropagation(); W.classList.remove('am-in-sub'); W.dataset.sub = ''; return; }
+        var bk = e.target.closest('[data-amback]'); if(bk){ e.stopPropagation(); mainView(); return; }
         var b = e.target.closest('[data-amgo]'); if(!b) return; e.stopPropagation(); go(b.dataset.amgo);
       });
       return W;
@@ -21046,7 +21106,9 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
       var W = build(); if(W) head(W);
     }
     var was = false;
-    setInterval(function(){ var S = document.getElementById('rdAltro'), op = !!(S && S.classList.contains('open')); if(op && !was){ run(); var W = document.getElementById('amW'); if(W){ W.classList.remove('am-in-sub'); } try{ rxList('site').then(function(){ run(); }).catch(function(){}); }catch(e){} } was = op; }, 250);
+    function onOpen(){ var S = document.getElementById('rdAltro'), op = !!(S && S.classList.contains('open')); if(op && !was){ mainView(); run(); try{ rxList('site').then(function(){ run(); }).catch(function(){}); }catch(e){} } was = op; }
+    (function hook(){ var S = document.getElementById('rdAltro'); if(!S){ setTimeout(hook, 500); return; } new MutationObserver(onOpen).observe(S, { attributes:true, attributeFilter:['class'] }); })();
+    setInterval(onOpen, 500);
     setInterval(function(){ var o = on(); if(o !== document.documentElement.classList.contains('rd-am')) document.documentElement.classList.toggle('rd-am', o); }, 2000);
   })();
   function sfMats(){
@@ -30746,6 +30808,99 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     var del = document.getElementById('mfDel'); if(del) del.addEventListener('click', function(){ if(del.dataset.sure !== '1'){ del.dataset.sure = '1'; del.textContent = 'Sicuro? Tocca di nuovo'; return; } rxDel(id).then(function(){ MT.forn = null; (back || mtBack)(); }).catch(rxFail); });
   }
   try{ RX_GO.materiali = mtPage; }catch(e){}
+  // ===== 21/10: Materiali "il ciclo" (solo tester): passaggi numerati con resa, mani, confezione, fornitore e costo indicativo =====
+  (function(){
+    function mtOn(){ try{ return rdIsBeta() && proAccount && proAccount.accountType !== 'privato'; }catch(e){ return false; } }
+    function sv(p, w){ return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="' + (w || 3) + '" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
+    var IC = {
+      layers: sv('<path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9M6 32l18 9 18-9"/>', 3.4), frame: sv('<path d="M8 16V8h8M32 8h8v8M40 32v8h-8M16 40H8v-8"/>', 3.4),
+      info: sv('<circle cx="24" cy="24" r="17"/><path d="M24 22v11M24 15v.5"/>'), chev: sv('<path d="M18 10l13 14-13 14"/>', 4.5), down: sv('<path d="M12 18l12 12 12-12"/>', 4.5),
+      store: sv('<path d="M8 18l3-10h26l3 10M8 18h32v4a5 5 0 0 1-10 0 5 5 0 0 1-12 0 5 5 0 0 1-10 0zM10 26v14h28V26M20 40v-8h8v8"/>'),
+      roller: sv('<rect x="9" y="7" width="26" height="12" rx="4"/><path d="M35 13h4v10H24v6"/><rect x="21" y="29" width="6" height="12" rx="2"/>'),
+      box: sv('<path d="M24 6l16 8v20l-16 8-16-8V14z"/><path d="M8 14l16 8 16-8M24 22v20"/>'), plus: sv('<path d="M24 10v28M10 24h28"/>', 4)
+    };
+    // colore della fascia sul secchio disegnato (Rendrum non vende prodotti: sul secchio c'è il nome del tuo prodotto)
+    var BAND = ['#C9B49A', '#8C7B6E', '#C0463F', '#3D6FB0', '#6E8A5A', '#B07A3C', '#7B6BA8'];
+    var USO = [[/primer|fondo|fissativ|aggrappo/i, 'Fondo di adesione'], [/rasant|livell|autoliv/i, 'Livellamento e regolarizzazione'], [/finitura protett|protettiv|vernice|trasparente|impregn/i, 'Protezione superficiale'],
+      [/resina|microcemento fine|finitura colorata|pittura|smalto/i, 'Finitura principale'], [/microcemento base|base/i, 'Strato di base'], [/rete/i, 'Rinforzo'], [/colla|collante|adesiv/i, 'Incollaggio'], [/fuga|stucco/i, 'Stuccatura'],
+      [/battiscopa|profil|barra/i, 'Profili e battiscopa'], [/piastrell|lastra|parquet|laminato|spc/i, 'Rivestimento'], [/isolant|pannell/i, 'Isolamento'], [/tassell|vit|crocett|nastro|silicone/i, 'Accessori']];
+    function uso(d){ if(d.uso) return d.uso; var n = d.nome || ''; for(var i = 0; i < USO.length; i++) if(USO[i][0].test(n)) return USO[i][1]; return ''; }
+    function bucket(d, k){
+      var b = BAND[k % BAND.length], nm = qEsc(String(d.nome || '').toUpperCase()).slice(0, 22);
+      return '<svg viewBox="0 0 120 140" class="mt2-bk"><defs><linearGradient id="mtg' + k + '" x1="0" x2="1"><stop offset="0" stop-color="#e9e6e1"/><stop offset=".25" stop-color="#fbfaf8"/><stop offset=".75" stop-color="#f6f4f0"/><stop offset="1" stop-color="#dcd8d2"/></linearGradient></defs>'
+        + '<path d="M22 20 Q60 6 98 20" fill="none" stroke="#cfcac3" stroke-width="3"/><rect x="18" y="22" width="84" height="12" rx="4" fill="#efece7" stroke="#dcd7d0"/><path d="M21 34h78l-5 92a6 6 0 0 1-6 5H32a6 6 0 0 1-6-5z" fill="url(#mtg' + k + ')"/>'
+        + '<path d="M24.6 98h70.8l-2.3 28a6 6 0 0 1-6 5H32.9a6 6 0 0 1-6-5z" fill="' + b + '"/><text x="60" y="70" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="' + (nm.length > 12 ? 7 : 9) + '" font-weight="700" fill="#2b2724">' + nm + '</text></svg>';
+    }
+    function spec(d){
+      var t = mtTipoDi(d), r = [];
+      if(t === 'pittura' && d.resaMq > 0) r.push(['frame', 'Resa', mtF(d.resaMq) + ' m²/l']);
+      else if(d.modo === 'resa') r.push(['frame', 'Resa', mtF(d.resa) + ' ' + (d.um || 'kg') + '/m²']);
+      else if(d.modo === 'scatola') r.push(['frame', 'Copre', mtF(d.conf) + ' m²']);
+      else if(d.modo === 'metro') r.push(['frame', 'Lunghezza', mtF(d.conf) + ' m']);
+      else r.push(['frame', 'Quanti', d.ogni ? '1 ogni ' + mtF(d.ogni) + ' m²' : String(d.fisso || 0)]);
+      r.push(['roller', 'Mani', String(d.mani || 1)]);
+      r.push(['box', 'Confezione', d.modo === 'resa' ? (d.confUm || 'confezione') + ' ' + mtF(d.conf) + ' ' + (d.um || '') : (d.confUm || 'confezione')]);
+      return r;
+    }
+    function supKey(){ return 'rdMtSup:' + MT.lav; }
+    function sup(){ try{ var v = +localStorage.getItem(supKey()); return v > 0 ? v : 100; }catch(e){ return 100; } }
+    // costo: per ogni prodotto quante confezioni servono per la superficie × prezzo a confezione (solo i prodotti che vanno a m²)
+    function costo(L, S){
+      var tot = 0, manca = 0, fuori = 0;
+      L.forEach(function(m){ var d = m.data, B = mtBase(d);
+        if(d.modo === 'metro' || (B !== 'mq' && B !== 'iso')){ fuori++; return; }
+        if(!(+d.prezzo > 0)){ manca++; return; }
+        var c = mtCalc(d, { mq:S, perim:0, porte:0, posa:0 }); tot += (c.q || 0) * (+d.prezzo); });
+      return { tot: tot, manca: manca, fuori: fuori };
+    }
+    function eur(n){ try{ return qpEur(Math.round(n)).replace(/,00$/, ''); }catch(e){ return '€ ' + Math.round(n); } }
+    function draw(){
+      var box = document.getElementById('rdXB'); if(!box) return;
+      var L = mtOf(MT.lav), S = sup(), C = costo(L, S);
+      var h = '<div class="mt2">';
+      h += '<div class="ft-seg mt2-seg"><button type="button" data-mtt="prod" class="on">Prodotti</button><button type="button" data-mtt="forn">Fornitori</button><button type="button" data-mtt="ord">Ordini</button></div>';
+      h += '<div class="mt2-top"><div class="mt2-ti"><button type="button" class="mt2-tt" id="mt2Lav">Ciclo ' + qEsc(mtLavN(MT.lav)) + '<i>' + IC.down + '</i></button><span class="mt2-np">' + L.length + (L.length === 1 ? ' prodotto' : ' prodotti') + '</span>'
+        + '<p>Sequenza completa di prodotti per ogni lavorazione, con le rese e le quantità consigliate.</p></div>'
+        + '<div class="mt2-cost"><div class="mt2-cr"><i>' + IC.layers + '</i><span><em>Costo indicativo</em><b>' + (L.length && !C.manca && C.tot > 0 ? eur(C.tot) : '—') + '</b></span><button type="button" class="mt2-inf" id="mt2Inf" aria-label="Come si calcola">' + IC.info + '</button></div>'
+        + '<div class="mt2-cr"><i>' + IC.frame + '</i><span><em>Superficie totale</em><b><input id="mt2S" inputmode="decimal" value="' + mtF(S) + '"> m²</b></span></div></div></div>';
+      h += '<div class="mt2-why" id="mt2Why" hidden>' + (C.manca ? 'Per il costo servono i prezzi a confezione: mancano in ' + C.manca + (C.manca === 1 ? ' prodotto' : ' prodotti') + '. Tocca il prodotto e scrivi il prezzo. ' : '') + 'Il costo è: resa × mani × superficie, arrotondato alle confezioni intere, × prezzo a confezione' + (C.fuori ? ' (senza battiscopa e profili, che dipendono dal perimetro)' : '') + '. È indicativo: controlla sempre le schede tecniche.</div>';
+      if(L.length){
+        h += '<div class="mt2-steps">' + L.map(function(m, i){ var d = m.data, f = mtForn(d.fornitoreId), u = uso(d), last = i === L.length - 1;
+          return '<div class="mt2-st' + (last ? ' last' : '') + '"><span class="mt2-n">' + (i + 1) + '</span><button type="button" class="mt2-c" data-mtp="' + m.id + '"><span class="mt2-img">' + bucket(d, i) + '</span>'
+            + '<span class="mt2-h"><b>' + qEsc(d.nome || 'Prodotto') + '</b>' + (d.colore ? '<i class="mt2-tag">colore</i>' : '') + (u ? '<em>' + qEsc(u) + '</em>' : '') + '</span>'
+            + (f ? '<span class="mt2-sup">' + IC.store + qEsc(f.data.nome) + '</span>' : '') + '<span class="mt2-go">' + IC.chev + '</span>'
+            + '<span class="mt2-sp">' + spec(d).map(function(x){ return '<span><i>' + IC[x[0]] + '</i><em>' + x[1] + '</em><b>' + qEsc(x[2]) + '</b></span>'; }).join('') + '</span></button></div>'; }).join('') + '</div>';
+      } else {
+        h += '<div class="mt2-empty">Nessun prodotto per ' + qEsc(mtLavN(MT.lav)) + '.' + (MT_MOD[MT.lav] ? ' Parti da un modello con i valori tipici e correggili con quelli del tuo prodotto.' : '') + '</div>';
+        if(MT_MOD[MT.lav]) h += '<button type="button" class="mt2-mod" id="mtMod">' + IC.layers + ' Usa un modello (' + MT_MOD[MT.lav].length + ' prodotti)</button>';
+      }
+      h += '<button type="button" class="mt2-add" id="mtNew">' + IC.plus + ' Aggiungi un passaggio</button></div>';
+      box.innerHTML = h;
+      box.querySelectorAll('[data-mtt]').forEach(function(b){ b.addEventListener('click', function(){ MT.tab = b.dataset.mtt; mtDraw(); }); });
+      box.querySelectorAll('[data-mtp]').forEach(function(b){ b.addEventListener('click', function(){ var m = (MT.mat || []).filter(function(x){ return x.id === b.dataset.mtp; })[0]; if(m) mtForm(m.id, m.data, mtBack); }); });
+      document.getElementById('mtNew').addEventListener('click', function(){ mtForm(null, { lav:MT.lav, modo:'resa', um:'kg', mani:1, scarto:MT_SC.resa, ordine:mtOf(MT.lav).length }, mtBack); });
+      var md = document.getElementById('mtMod'); if(md) md.addEventListener('click', function(){ md.disabled = true; md.textContent = 'Preparo i prodotti…'; mtUseModel(MT.lav).then(function(){ return mtLoad(true); }).then(mtDraw).catch(function(e){ rxFail(e); md.disabled = false; }); });
+      document.getElementById('mt2Inf').addEventListener('click', function(){ var w = document.getElementById('mt2Why'); w.hidden = !w.hidden; });
+      var si = document.getElementById('mt2S');
+      si.addEventListener('change', function(){ var v = qParse(si.value); if(v > 0){ try{ localStorage.setItem(supKey(), String(v)); }catch(e){} } draw(); });
+      si.addEventListener('keydown', function(e){ if(e.key === 'Enter') si.blur(); });
+      document.getElementById('mt2Lav').addEventListener('click', pick);
+    }
+    // scegli la lavorazione
+    function pick(){
+      var old = document.getElementById('mt2Pk'); if(old){ old.remove(); return; }
+      var P = document.createElement('div'); P.id = 'mt2Pk'; P.className = 'mt2-pk';
+      P.innerHTML = '<div class="mt2-pkbg"></div><div class="mt2-pkin"><b>Scegli la lavorazione</b>' + MT_LAV.map(function(l){ var n = mtOf(l[0]).length; return '<button type="button" data-mtl="' + l[0] + '"' + (MT.lav === l[0] ? ' class="on"' : '') + '><span>' + qEsc(l[1]) + '</span><em>' + (n ? n + (n === 1 ? ' prodotto' : ' prodotti') : 'vuoto') + '</em></button>'; }).join('') + '</div>';
+      document.body.appendChild(P);
+      P.querySelector('.mt2-pkbg').addEventListener('click', function(){ P.remove(); });
+      P.querySelectorAll('[data-mtl]').forEach(function(b){ b.addEventListener('click', function(){ MT.lav = b.dataset.mtl; P.remove(); draw(); }); });
+      setTimeout(function(){ P.classList.add('on'); }, 10);
+    }
+    var mtDraw0 = mtDraw;
+    mtDraw = function(){ var X = document.getElementById('rdX'); var on = mtOn() && MT.tab === 'prod'; if(X) X.classList.toggle('mt2-on', on); if(on) return draw(); if(mtOn()){ mtDraw0(); var s = document.querySelector('#rdXB .ft-seg'); if(s) s.classList.add('mt2-seg'); return; } return mtDraw0(); };
+    // uscendo dai Materiali la pagina torna normale
+    setInterval(function(){ var X = document.getElementById('rdX'); if(X && X.classList.contains('mt2-on') && !document.querySelector('#rdXB .mt2')) X.classList.remove('mt2-on'); }, 800);
+  })();
 
   // ===================== ORDINI: riga e stato =====================
   var MT_ST = { inviato:['inviato', 'b1'], confermato:['confermato', 'b2'], arrivato:['arrivato', 'b3'] };
