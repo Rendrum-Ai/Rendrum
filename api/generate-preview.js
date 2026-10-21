@@ -73,11 +73,44 @@ async function useCredit(acc, onlyCredits) {
   return "over";
 }
 
+// 21/10: descrizioni del listino scritte dall'AI (solo testo, solo per chi ha un account)
+async function descVoci(req, res) {
+  const acc = await currentAccount(req).catch(function () { return null; });
+  if (!acc) return res.status(401).json({ error: "Accedi per usare questa funzione." });
+  const key = (process.env.OPENAI_API_KEY || "").trim();
+  if (!key) return res.status(503).json({ error: "Le descrizioni con l'AI non sono disponibili in questo momento." });
+  const pulisci = function (t, n) { return String(t == null ? "" : t).replace(/[\r\n\t]+/g, " ").replace(/[<>{}]/g, "").trim().slice(0, n); };
+  const L = (req.body && Array.isArray(req.body.voci) ? req.body.voci : []).slice(0, 25).map(function (v, i) {
+    return { i: i, titolo: pulisci(v && v.titolo, 160), um: pulisci(v && v.um, 12), lavorazione: pulisci(v && v.lavorazione, 60) };
+  }).filter(function (v) { return v.titolo; });
+  if (!L.length) return res.status(400).json({ error: "Nessuna voce da descrivere." });
+  const ctl = new AbortController(), tm = setTimeout(function () { ctl.abort(); }, 45000);
+  try {
+    const r = await fetch("https://api.openai.com/v1/chat/completions", { method: "POST", signal: ctl.signal, headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: (process.env.RN_DESC_MODEL || "gpt-4.1").trim(), temperature: 0.3, response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: "Sei un esperto impresario edile italiano. Scrivi descrizioni di voci di listino per preventivi rivolti a clienti privati. Per ogni voce: italiano corretto, tono professionale e chiaro, 1 o 2 frasi, massimo 40 parole, descrivi le fasi di lavoro tipiche (preparazione, applicazione, finitura) coerenti con il nome e con l'unità di misura. Non scrivere prezzi, marche, misure, spessori o garanzie che non sono nel nome. Rispondi solo in JSON: {\"voci\":[{\"i\":numero,\"descrizione\":\"testo\"}]}." },
+          { role: "user", content: JSON.stringify(L) }
+        ] })
+    });
+    if (!r.ok) return res.status(502).json({ error: "Non riesco a scrivere le descrizioni adesso. Riprova tra poco." });
+    const j = await r.json();
+    let out = [];
+    try { out = JSON.parse(((j.choices || [])[0] || {}).message.content || "{}").voci || []; } catch (e) { out = []; }
+    out = out.filter(function (x) { return x && typeof x.i === "number" && x.i >= 0 && x.i < L.length && x.descrizione; })
+      .map(function (x) { return { i: x.i, descrizione: pulisci(x.descrizione, 600) }; });
+    return res.status(200).json({ voci: out });
+  } catch (e) {
+    return res.status(502).json({ error: "Non riesco a scrivere le descrizioni adesso. Riprova tra poco." });
+  } finally { clearTimeout(tm); }
+}
+
 module.exports = async function handler(req, res) {
   const tStart = Date.now();   // misura dei tempi (visibile solo agli account di test)
   const qs = req.query || {};
   if (req.method === "GET" && qs.job) return jobs.handleGet(req, res);
   if (req.method === "POST" && qs.action === "notify") return jobs.handleNotify(req, res);
+  if (req.method === "POST" && qs.action === "desc") return descVoci(req, res);
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Usa una richiesta POST" });
   }
