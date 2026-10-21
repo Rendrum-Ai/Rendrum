@@ -10442,6 +10442,80 @@ html.rd-am #rdAltro #amW .am-ver{text-align:center;font-size:11px;color:#8a8580;
 html.rd-am #rdAltro #amW .am-hd{background-color:#1c1a18!important}
 html.rd-am #rdAltro #amW .am-tile,html.rd-am #rdAltro #amW .am-row{background-color:#fff!important}
 html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAltro #amW .am-bk{background-color:transparent!important}
+</style><style id="rdLnCss">/* 21/10: listino nuovo, solo tester (#ppViewListino.ln-on) */
+#ppViewListino.ln-on{position:relative;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#ppViewListino.ln-on>.pro-projects-sub,#ppViewListino.ln-on>.field,#ppViewListino.ln-on>div[style*="flex-wrap"],#ppViewListino.ln-on>.pf-hint:not(#qlMsg),#ppViewListino.ln-on>#qlSave{display:none!important}
+#ppViewListino.ln-on:before{content:"";position:absolute;right:-10px;top:-10px;width:128px;height:100px;background:url(data:image/jpeg;base64,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) center/cover;-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent);mask-image:radial-gradient(closest-side,#000 62%,transparent);pointer-events:none;opacity:.95}
+#ppViewListino.ln-on>.pro-projects-title{position:relative;font-size:22px!important;font-weight:700!important;line-height:1.1;margin:4px 0 5px;padding-right:96px;color:#151515}
+#ppViewListino.ln-on button{font-family:inherit;-webkit-tap-highlight-color:transparent}
+:where(#ppViewListino.ln-on,#lnEd,#lnToast) svg{display:block;width:100%;height:100%}
+.ln-sub{position:relative;font-size:11px;line-height:1.45;color:#6b6560;padding-right:96px;margin-bottom:12px}
+.ln-ai{position:relative;border-radius:14px;background:linear-gradient(180deg,#FFF1E6,#FDEBDD);border:1px solid #F8DCC6;padding:9px 9px 9px;margin-bottom:10px}
+.ln-aiq{position:absolute;left:10px;top:9px;width:31px;height:28px;border-radius:8px;background:linear-gradient(160deg,#F7A35D,#E8692A);color:#fff;display:flex;align-items:center;justify-content:center;padding:7px;box-shadow:0 3px 8px rgba(232,105,42,.3)}
+.ln-aik{display:block;margin-left:41px;font-size:8.5px;font-weight:600;letter-spacing:.06em;color:#D9581C}
+.ln-ait{display:block;margin-left:41px;margin-right:30px;font-size:12px;font-weight:600;color:#151515;margin-top:1px}
+.ln-chips{display:flex;gap:6px;margin-top:9px}
+.ln-chip{flex:1;min-width:0;display:flex;align-items:center;gap:7px;border:0;border-radius:9px;background:#fff;padding:7px 8px;text-align:left;box-shadow:0 1px 4px rgba(200,110,60,.06)}
+.ln-ci{flex:none;width:16px;height:16px;font-style:normal}
+.ln-chip b,.ln-chip em{display:block;font-size:9.5px;line-height:1.35;font-weight:400;color:#222;font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ln-chip em{color:#6b6560;font-weight:400}
+.ln-chip span{min-width:0}
+.ln-sp{margin-top:10px;background:#fff;border-radius:12px;padding:11px}
+.ln-sp p{margin:0 0 9px;font-size:12px;line-height:1.45;color:#4d4741}
+.ln-go{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:38px;border:0;border-radius:11px;background:linear-gradient(180deg,#F18A43,#DD5E1B);color:#fff;font-size:13px;font-weight:600}
+.ln-go svg{width:16px;height:16px}
+.ln-addc{display:flex;align-items:center;gap:10px;width:100%;border:0;border-top:1px solid #F0EBE5;background:none;padding:8px 2px;text-align:left}
+.ln-addc i{flex:none;width:30px;height:30px;border-radius:9px;padding:6px}.ln-addc b{flex:1;font-size:13px;font-weight:600;color:#151515}.ln-addc u{text-decoration:none;font-size:12px;font-weight:600;color:#D9581C}
+.ln-bar{display:flex;gap:7px;margin-bottom:9px}
+.ln-sr{flex:1;min-width:0;display:flex;align-items:center;gap:7px;height:30px;border-radius:15px;background:#fff;padding:0 12px;box-shadow:0 1px 4px rgba(0,0,0,.04);margin:0}
+.ln-sr i{flex:none;width:12px;height:12px;color:#333}
+#ppViewListino.ln-on .ln-sr input{flex:1;min-width:0;width:auto!important;margin:0!important;border:0!important;outline:0;background:none!important;font-size:10.5px!important;padding:0!important;height:auto!important;box-shadow:none!important}
+#ppViewListino.ln-on #lnF{flex:none;width:auto!important;max-width:42%;height:30px!important;margin:0!important;border-radius:15px!important;border:0!important;background:#fff!important;padding:0 8px!important;font-size:10.5px!important;font-weight:500;color:#222;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.ln-g{border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(60,40,20,.05);margin-bottom:8px;overflow:hidden}
+.ln-gh{position:relative;display:block;width:100%;height:37px;border:0;background:none;text-align:left;padding:0}
+.ln-gi{position:absolute;left:8px;top:3px;width:29px;height:28px;border-radius:8px;padding:6px;font-style:normal}
+.ln-gh b{position:absolute;left:47px;top:5px;font-size:11px;font-weight:700;color:#151515}.ln-gh em{position:absolute;left:47px;top:20px;font-size:8.5px;font-style:normal;color:#6b6560}
+.ln-gu{position:absolute;right:8px;top:9px;width:18px;height:18px;border-radius:50%;background:#F5F1ED;padding:5px;color:#222;transition:transform .2s}
+.ln-g.shut .ln-gu{transform:rotate(180deg)}.ln-g.shut .ln-rows{display:none}
+.ln-r{position:relative;display:flex;align-items:center;min-height:36px;border-top:1px solid #F0EBE5;padding:0 2px 0 0;background:#fff}
+.ln-r.drag{z-index:2;box-shadow:0 8px 22px rgba(0,0,0,.15);border-radius:10px}
+.ln-grip{flex:none;width:26px;height:36px;padding:11px 8px;color:#9b958f;touch-action:none;cursor:grab}
+.ln-rt{flex:1;min-width:0;border:0;background:none;text-align:left;padding:5px 4px 5px 6px}
+.ln-rt b{display:block;font-size:10px;font-weight:600;color:#151515;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ln-rt em{display:block;font-size:8.5px;font-style:normal;color:#6b6560;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.ln-um{flex:none;font-size:9px;color:#222;background:#F4EFEA;border-radius:10px;padding:4px 7px;margin-right:8px;white-space:nowrap}
+.ln-pr{flex:none;border:0;background:none;font-size:11px;font-weight:700;color:#151515;padding:6px 2px;white-space:nowrap;min-width:56px;text-align:right}
+.ln-pr.miss{font-size:9px;font-weight:600;color:#D9581C}
+.ln-dt{flex:none;width:26px;height:32px;border:0;background:none;padding:8px 6px;color:#333}
+.ln-menu{position:absolute;right:8px;top:42px;z-index:5;background:#fff;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.16);overflow:hidden;min-width:140px}
+.ln-menu button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:11px 14px;font-size:13.5px;font-weight:500;color:#151515}.ln-menu button+button{border-top:1px solid #F0EBE5}.ln-menu .r{color:#C0392B}
+.ln-empty{border:1.5px dashed #E2D8CE;border-radius:14px;padding:18px;text-align:center;font-size:13px;color:#6b6560;line-height:1.5;margin-bottom:10px}
+.ln-btns{display:flex;gap:8px;margin:6px 0 4px}
+.ln-b1,.ln-b2{display:flex;align-items:center;justify-content:center;gap:7px;height:40px;border-radius:11px;font-size:11.5px;font-weight:600;line-height:1.25;text-align:center;padding:0 8px}
+.ln-b1{flex:1.2;border:0;background:linear-gradient(180deg,#F18A43,#DD5E1B);color:#fff;box-shadow:0 6px 14px rgba(221,94,27,.28)}
+.ln-b2{flex:1;border:1.5px dashed #C9B8A8;background:#fff;color:#3c2a1e}
+.ln-b1 svg,.ln-b2 svg{width:14px;height:14px;flex:none}
+.ln-stat{min-height:16px;text-align:center;font-size:11.5px;color:#6b8f6f;margin:4px 0 2px}.ln-stat.err{color:#C0392B}
+.ln-toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:10050;display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);background:#1D1B18;color:#fff;border-radius:14px;padding:11px 14px;font-size:13px;transition:all .25s;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.ln-toast.on{opacity:1;transform:translate(-50%,0)}.ln-toast button{border:0;background:none;color:#F5A86B;font-weight:700;font-size:13px}
+.ln-ed{position:fixed;inset:0;z-index:10040;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.ln-edbg{position:absolute;inset:0;background:rgba(20,17,13,.45);opacity:0;transition:opacity .25s}
+.ln-edin{position:absolute;left:0;right:0;bottom:0;max-height:88%;overflow:auto;background:#FBF7F3;border-radius:22px 22px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.ln-ed.on .ln-edbg{opacity:1}.ln-ed.on .ln-edin{transform:none}
+.ln-edh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.ln-edh b{font-size:17px}
+.ln-ok{border:0;background:#1D1B18;color:#fff;border-radius:12px;padding:8px 16px;font-size:13.5px;font-weight:600}
+.ln-edin label{display:block;font-size:11.5px;font-weight:600;color:#6b6560;margin-bottom:10px}
+.ln-edin input,.ln-edin select,.ln-edin textarea{display:block;width:100%;box-sizing:border-box;margin-top:5px;border:1.5px solid #E8DFD5;border-radius:11px;background:#fff;padding:10px 11px;font:inherit;font-size:14px;font-weight:400;color:#151515}
+.ln-aib{display:flex;align-items:center;gap:6px;margin:-4px 0 12px;border:1.5px solid #F3C9A9;background:#fff;color:#B4501A;border-radius:11px;padding:7px 11px;font-size:12.5px;font-weight:600}.ln-aib svg{width:14px;height:14px}
+.ln-two{display:flex;gap:10px}.ln-two label{flex:1}
+.ln-edx{display:flex;gap:10px;margin-top:4px}.ln-edx button{flex:1;border:1.5px solid #E8DFD5;background:#fff;border-radius:11px;padding:10px;font-size:13.5px;font-weight:600;color:#151515}.ln-edx .r{color:#C0392B}
+
+#ppViewListino.ln-on{background:radial-gradient(260px 200px at 100% 0,rgba(255,206,160,.35),transparent 70%)}
+.ln-aia{position:absolute;right:9px;top:10px;width:24px;height:24px;border-radius:50%;background:#fff;padding:7px;color:#111;border:0}
+.ln-ai .ln-chip{box-shadow:0 1px 3px rgba(200,110,60,.08)}
+/* come il disegno: foglio color crema, e il tema "vetro" non schiarisce i tasti */
+#proProjectsModal .pro-projects-card:has(#ppViewListino.ln-on.active){background:#FBF7F3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#ppViewListino.ln-on .ln-rt,#ppViewListino.ln-on .ln-pr,#ppViewListino.ln-on .ln-dt,#ppViewListino.ln-on .ln-gh,#ppViewListino.ln-on .ln-addc{background-color:transparent!important}
+#ppViewListino.ln-on .ln-chip,#ppViewListino.ln-on .ln-aia,#ppViewListino.ln-on .ln-b2{background-color:#fff!important}
 </style></head>
 <body>
 <div class="rd-sheet" id="rdAltro"><div class="rd-sheet-in rx-menu"><div class="rd-sheet-grab"></div><button type="button" class="rx-co" data-rdalt="account"><span class="rx-co-lg" id="rxCoLg">R</span><span class="rx-co-t"><b id="rxCoN">La tua impresa</b><span id="rxCoS">Account e piano</span></span><span class="rx-co-go">Profilo ›</span></button><div class="rx-sec">Lavoro</div><div class="rx-gr rx-c1"><button type="button" data-rxgo2="cantieri"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24M7 27V13l9-6 9 6v14"/><path d="M13 27v-7h6v7"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cantieri</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="agenda" data-rxneed="agenda"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6"/></svg><u class="rx-bd" data-rxbd="agenda" hidden></u></span><span class="rx-lb">Agenda</span><span class="rx-pl"></span></button><button type="button" data-rdalt="sopr"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V8l19 19z"/><path d="M10 22v-4M14 22v-2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Sopralluoghi</span><span class="rx-pl"></span></button><button type="button" data-rdalt="listino"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v22H9z"/><path d="M13 11h6M13 16h6M13 21h4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Listino</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="squadra"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="4"/><circle cx="22" cy="12" r="3"/><path d="M4 26c1-5 4-7 8-7s7 2 8 7M20 19c3 0 6 2 7 6"/></svg><u class="rx-bd" data-rxbd="squadra" hidden></u></span><span class="rx-lb">Squadra</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="materiali"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11h18l-2 16H9z"/><path d="M10 11c0-4 2.5-6 6-6s6 2 6 6"/><path d="M11 17h10"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Materiali</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="lavori" data-rxneed="lavori"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.5 3.5L21 13"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Finiti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="cosa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v20M6 16h20"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Cosa vuoi fare?</span><span class="rx-pl"></span></button></div><div class="rx-sec">Soldi e clienti</div><div class="rx-gr rx-c2"><button type="button" data-rxgo2="incassi"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="15" rx="3"/><circle cx="16" cy="16.5" r="3.5"/><path d="M8 13v.01M24 20v.01"/></svg><u class="rx-bd" data-rxbd="incassi" hidden></u></span><span class="rx-lb">Incassi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="fatture"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h16v24l-3-2-2.5 2-2.5-2-2.5 2-2.5-2L8 28z"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Fatture</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="soldi" class="rx-s1only"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M19.5 11.5a5 5 0 1 0 0 9M10 14.5h7M10 17.5h7"/></svg><u class="rx-bd" data-rxbd="soldi" hidden></u></span><span class="rx-lb">Soldi</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="clienti"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="20" height="22" rx="3"/><circle cx="16" cy="13" r="3.5"/><path d="M10.5 22c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Clienti</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="recensioni" data-rxneed="recensioni"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3.3 6.8 7.4 1-5.4 5.2 1.3 7.4L16 21.9l-6.6 3.5 1.3-7.4L5.3 12.8l7.4-1z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Recensioni</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="sito" data-rxneed="sito"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M5 16h22M16 5c3 3 4.5 7 4.5 11s-1.5 8-4.5 11c-3-3-4.5-7-4.5-11S13 8 16 5z"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Il tuo sito</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="voto" data-rxneed="voto"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h20v12H6z"/><path d="M11 15V6h10v9M13 10l2 2 4-4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Condominio</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="stat" data-rxneed="stat"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26V16M12 26V10M18 26V14M24 26V6"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Statistiche</span><span class="rx-pl"></span></button></div><div class="rx-sec">La tua impresa</div><div class="rx-gr rx-c3"><button type="button" data-rdalt="profilo"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h22v14H5z"/><path d="M11 12V8a5 5 0 0 1 10 0v4"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Profilo</span><span class="rx-pl"></span></button><button type="button" data-rdalt="impresa"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27V7h12v20M18 13h8v14"/><path d="M10 11h4M10 15h4M10 19h4M21 17h2M21 21h2"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Dati impresa</span><span class="rx-pl"></span></button><button type="button" data-rdalt="account"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c1.5-6 5-8 10-8s8.5 2 10 8"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Account</span><span class="rx-pl"></span></button><button type="button" data-rxgo2="assist"><span class="rx-ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h22v14H13l-6 5v-5H5z"/><path d="M11 15h.01M16 15h.01M21 15h.01"/></svg><u class="rx-bd" data-rxbd="" hidden></u></span><span class="rx-lb">Assistenza</span><span class="rx-pl"></span></button></div><button type="button" data-rdalt="esci" class="rd-esci"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5H6v22h7M20 10l6 6-6 6M26 16H12"/></svg><span>Esci</span></button></div></div><nav class="rd-tab" id="rdTab" hidden aria-label="Menu"><button type="button" data-rdtab="home" class="on"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 16 6l11 9"/><path d="M8 13v13h16V13"/></svg><span>Oggi</span></button><button type="button" data-rdtab="proj"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a2 2 0 0 1 2-2h6l3 3h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><span>Cantieri</span></button><button type="button" data-rdtab="cam" class="rd-tab-cam" aria-label="Nuova anteprima"><u><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h4l2-3h8l2 3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="17" r="5"/></svg></u><span>Foto</span></button><button type="button" data-rdtab="prev"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 16h9M12 21h9"/></svg><span>Preventivi</span></button><button type="button" data-rdtab="altro"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/><circle cx="24" cy="16" r="1.6"/></svg><span>Altro</span></button></nav>
@@ -20848,10 +20922,11 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     function grp(k){ try{ return (r13.grp || []).filter(function(g){ return g.key === k; })[0] || null; }catch(e){ return null; } }
     function city(v){ var p = String(v || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean); var c = p.length > 1 ? p[p.length - 1] : p[0] || ''; return c.replace(/^\d{5}\s*/, '').replace(/\s*\([A-Z]{2}\)$/, ''); }
     // in cima alla Home la barra con il logo diventa trasparente e si vede la foto
-    function top(){ var L = document.getElementById('panelLanding'), X = document.getElementById('rdX'), y = window.scrollY || 0;
+    function top(){ var L = document.getElementById('panelLanding'), X = document.getElementById('rdX'), y = (window.rdScrollY ? window.rdScrollY() : 0) || window.scrollY || (document.body && document.body.scrollTop) || 0;
       var h = on() && !!(L && L.classList.contains('active') && document.getElementById('r13Home')) && !(X && X.offsetParent);
       document.documentElement.classList.toggle('rd-hlTop', h && y < 30); document.documentElement.classList.toggle('rd-hlHide', h && y >= 30); }
-    window.addEventListener('scroll', function(){ top(); }, { passive:true });
+    // nell'app la pagina scorre dentro il body, non nella finestra: ascolto tutti gli scorrimenti
+    document.addEventListener('scroll', function(){ top(); }, { passive:true, capture:true }); window.addEventListener('scroll', function(){ top(); }, { passive:true });
     function run(){
       var b = beta(); document.documentElement.classList.toggle('rd-nf', b);
       top();
@@ -31433,6 +31508,199 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     document.getElementById('qlMsg').textContent = add.length ? 'Aggiunte ' + add.length + ' voci: inserisci i tuoi prezzi e premi "Salva listino".' : 'Le voci standard sono già nel tuo listino.';
   });
   document.getElementById('qlSave').addEventListener('click', qlSave);
+  // ===== 21/10: Listino nuovo (solo tester): gruppi per lavorazione, cerca, spostare, salvataggio da solo, suggerimenti veri, descrizioni con l'AI =====
+  (function(){
+    function lnOn(){ try{ return rdIsBeta() && proAccount && proAccount.accountType !== 'privato'; }catch(e){ return false; } }
+    var LN = { q:'', coll:{}, t:null, saving:false, again:false, menu:-1, sug:'', undo:null };
+    function sv(p, w){ return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="' + (w || 3.2) + '" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
+    var IC = {
+      box: sv('<path d="M24 6l16 8v20l-16 8-16-8V14z"/><path d="M8 14l16 8 16-8M24 22v20"/>'),
+      layers: sv('<path d="M24 7l17 8.5L24 24 7 15.5z"/><path d="M7 24l17 8.5L41 24M7 32.5L24 41l17-8.5"/>'),
+      stairs: sv('<path d="M6 40h10v-9h9v-9h9v-9h8"/>'),
+      roller: sv('<rect x="9" y="7" width="26" height="12" rx="4"/><path d="M35 13h4v10H24v6"/><rect x="21" y="29" width="6" height="12" rx="2"/>'),
+      shield: sv('<path d="M24 5l15 6v11c0 10-6 17-15 21-9-4-15-11-15-21V11z"/><path d="M17 24l5 5 9-10"/>'),
+      planks: sv('<rect x="6" y="9" width="36" height="30" rx="3"/><path d="M6 19h36M6 29h36M20 9v10M30 19v10M16 29v10"/>'),
+      tiles: sv('<rect x="7" y="7" width="15" height="15" rx="2"/><rect x="26" y="7" width="15" height="15" rx="2"/><rect x="7" y="26" width="15" height="15" rx="2"/><rect x="26" y="26" width="15" height="15" rx="2"/>'),
+      gravel: '<svg viewBox="0 0 48 48" fill="currentColor"><circle cx="13" cy="14" r="5"/><circle cx="31" cy="12" r="4"/><circle cx="22" cy="26" r="5.5"/><circle cx="37" cy="27" r="4.5"/><circle cx="12" cy="35" r="4"/><circle cx="29" cy="38" r="4"/></svg>',
+      tag: sv('<path d="M25 6h15v15L22 39 7 24z"/><circle cx="33" cy="14" r="2.5"/>'),
+      bulb: sv('<path d="M17 30c-4-3-6-7-6-11a13 13 0 0 1 26 0c0 4-2 8-6 11v5H17z"/><path d="M19 41h10M24 8V4M8 12l-3-2M40 12l3-2"/>', 3),
+      pen: sv('<path d="M10 38l4-12 20-20 8 8-20 20z"/><path d="M30 10l8 8"/>'),
+      search: sv('<circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/>', 3.6),
+      up: sv('<path d="M12 29l12-12 12 12"/>', 4.5),
+      chev: sv('<path d="M18 10l13 14-13 14"/>', 5),
+      plus: sv('<path d="M24 10v28M10 24h28"/>', 4),
+      spark: '<svg viewBox="0 0 48 48" fill="currentColor"><path d="M20 6c1.4 9 6 13.6 15 15-9 1.4-13.6 6-15 15-1.4-9-6-13.6-15-15 9-1.4 13.6-6 15-15z"/><path d="M37 28c.7 4.5 3 6.8 7.5 7.5-4.5.7-6.8 3-7.5 7.5-.7-4.5-3-6.8-7.5-7.5 4.5-.7 6.8-3 7.5-7.5z"/></svg>',
+      dots: '<svg viewBox="0 0 48 48" fill="currentColor"><circle cx="24" cy="12" r="3.5"/><circle cx="24" cy="24" r="3.5"/><circle cx="24" cy="36" r="3.5"/></svg>',
+      grip: '<svg viewBox="0 0 48 48" fill="currentColor"><circle cx="18" cy="12" r="3.4"/><circle cx="30" cy="12" r="3.4"/><circle cx="18" cy="24" r="3.4"/><circle cx="30" cy="24" r="3.4"/><circle cx="18" cy="36" r="3.4"/><circle cx="30" cy="36" r="3.4"/></svg>'
+    };
+    var CAT = { monolith:['box','#FCE6D2','#E07B22'], microcemento:['layers','#ECE9E5','#6B635C'], scale:['stairs','#F7E6D6','#A8622A'], imbiancatura:['roller','#FADAD6','#D2553F'], resina_haccp:['shield','#DCEBF7','#2F6FA8'],
+      spc:['planks','#F3E7DA','#9A6A3C'], laminato:['planks','#F3E7DA','#9A6A3C'], parquet:['planks','#F3E7DA','#8A5A2C'], piastrelle:['tiles','#E2ECF7','#3E6FA0'], graniglia_esterni:['gravel','#DDF1E8','#1E9A6A'], '':['tag','#EAE2FA','#7B4FD0'] };
+    function cat(k){ return CAT[k] || CAT['']; }
+    function norm(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    function lavName(k){ return k ? qlLavName(k) : 'Altre voci'; }
+    function umTxt(u){ return u === 'a corpo' || u === 'forfait' ? u : '€/' + (u || 'mq'); }
+    function root(){ return document.getElementById('ppViewListino'); }
+    // ---------- salvataggio da solo ----------
+    function stat(t, err){ var s = document.getElementById('lnStat'); if(s){ s.textContent = t; s.classList.toggle('err', !!err); } }
+    function saveSoon(){ clearTimeout(LN.t); stat('Modifiche da salvare…'); LN.t = setTimeout(saveNow, 900); }
+    function saveNow(){
+      clearTimeout(LN.t); LN.t = null;
+      if(ql.list.some(function(v){ return !(v.titolo || '').trim(); })){ stat('Scrivi il nome della voce per salvare'); return Promise.resolve(false); }
+      if(LN.saving){ LN.again = true; return Promise.resolve(false); }
+      LN.saving = true; stat('Salvo…');
+      return qApi('listino', 'POST', { listino: ql.list }).then(function(x){
+        if(!x.ok){ stat((x.d && x.d.error) || 'Non sono riuscito a salvare. Riprova.', true); return false; }
+        qs.settings.listino = x.d.listino; stat('✓ Salvato'); try{ if(qs.cur) qRenderListinoSel(); }catch(e){} return true;
+      }).catch(function(){ stat('Connessione assente: le modifiche non sono salvate.', true); return false; })
+        .then(function(r){ LN.saving = false; if(LN.again){ LN.again = false; saveSoon(); } return r; });
+    }
+    // ---------- suggerimenti veri ----------
+    function stdMissing(){
+      var have = {}; ql.list.forEach(function(v){ have[v.lavorazione || ''] = 1; });
+      var out = []; Q_STD.forEach(function(t){ if(t[0] && !have[t[0]] && out.indexOf(t[0]) < 0) out.push(t[0]); }); return out;
+    }
+    function stdLeft(){ var have = {}; ql.list.forEach(function(v){ have[(v.lavorazione || '') + '|' + v.titolo] = 1; }); return Q_STD.filter(function(t){ return !have[t[0] + '|' + t[1]]; }).length; }
+    function noDesc(){ var o = []; ql.list.forEach(function(v, i){ if((v.titolo || '').trim() && !(v.descrizione || '').trim()) o.push(i); }); return o; }
+    function aiWrite(idx){
+      var L = idx.slice(0, 25).map(function(i){ var v = ql.list[i]; return { titolo: v.titolo, um: v.um, lavorazione: lavName(v.lavorazione || '') }; });
+      return fetch('/api/generate-preview?action=desc', { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ voci: L }) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok) throw new Error(d.error || 'Non riesco a scrivere le descrizioni adesso. Riprova tra poco.'); return d; }); })
+        .then(function(d){ var n = 0; (d.voci || []).forEach(function(x){ var i = idx[x.i]; if(i == null || !ql.list[i] || !x.descrizione) return; if(!(ql.list[i].descrizione || '').trim() || idx.length === 1){ ql.list[i].descrizione = String(x.descrizione).slice(0, 3000); n++; } }); return n; });
+    }
+    // ---------- disegno ----------
+    function top(){
+      var R = root(); if(!R) return;
+      var T = document.getElementById('lnTop');
+      if(!T){ T = document.createElement('div'); T.id = 'lnTop'; R.insertBefore(T, document.getElementById('qlList')); }
+      var miss = stdMissing(), nd = noDesc(), chips = '';
+      if(nd.length) chips += '<button type="button" class="ln-chip" data-lnsug="ai"><i class="ln-ci" style="color:#E8822F">' + IC.pen + '</i><span><b>Scrivi le descrizioni</b><em>con l\'AI, ' + nd.length + (nd.length === 1 ? ' voce vuota' : ' voci vuote') + '</em></span></button>';
+      if(miss.length) chips += '<button type="button" class="ln-chip" data-lnsug="cat"><i class="ln-ci" style="color:#D2553F">' + IC.tag + '</i><span><b>Categorie da aggiungere</b><em>' + miss.slice(0, 2).map(lavName).join(' · ') + (miss.length > 2 ? ' e altre ' + (miss.length - 2) : '') + '</em></span></button>';
+      var n = (nd.length ? 1 : 0) + (miss.length ? 1 : 0);
+      var sug = '';
+      if(LN.sug === 'ai' && nd.length) sug = '<div class="ln-sp"><p>Scrivo una descrizione professionale per ' + (nd.length === 1 ? 'la voce senza descrizione' : 'le ' + nd.length + ' voci senza descrizione') + ', partendo dal nome. Poi la leggi e la cambi come vuoi.</p><button type="button" class="ln-go" data-lnai="1">' + IC.spark + ' Scrivi le descrizioni</button></div>';
+      if(LN.sug === 'cat' && miss.length) sug = '<div class="ln-sp"><p>Lavorazioni che non hai ancora nel listino. Tocca per aggiungere le voci standard (con le descrizioni già scritte): poi metti tu i prezzi.</p>' + miss.map(function(k){ var c = cat(k); return '<button type="button" class="ln-addc" data-lnadd="' + k + '"><i style="background:' + c[1] + ';color:' + c[2] + '">' + IC[c[0]] + '</i><b>' + qEsc(lavName(k)) + '</b><u>+ Aggiungi</u></button>'; }).join('') + '</div>';
+      var sel = '<option value="*">Tutte le lavorazioni</option>' + Q_LAV.map(function(l){ return '<option value="' + l[0] + '"' + (ql.filter === l[0] ? ' selected' : '') + '>' + qEsc(lavName(l[0])) + '</option>'; }).join('');
+      T.innerHTML = '<div class="ln-sub">Prezzi e descrizioni delle tue lavorazioni: li ritrovi in ogni preventivo.</div>'
+        + (n ? '<div class="ln-ai"><span class="ln-aiq">' + IC.bulb + '</span><span class="ln-aik">SUGGERIMENTI AI</span><span class="ln-ait">' + (n === 1 ? '1 cosa per completare il listino' : '2 cose per completare il listino') + '</span><button type="button" class="ln-aia" data-lnsug="' + (nd.length ? 'ai' : 'cat') + '" aria-label="Apri">' + IC.chev + '</button><div class="ln-chips">' + chips + '</div>' + sug + '</div>' : '')
+        + '<div class="ln-bar"><label class="ln-sr"><i>' + IC.search + '</i><input type="search" id="lnQ" placeholder="Cerca una lavorazione..." value="' + qEsc(LN.q) + '"></label><select id="lnF">' + sel + '</select></div>';
+      var q = document.getElementById('lnQ'); q.addEventListener('input', function(){ LN.q = q.value; list(); });
+      document.getElementById('lnF').addEventListener('change', function(){ ql.filter = this.value; var f = document.getElementById('qlFilter'); if(f) f.value = ql.filter; list(); });
+      T.querySelectorAll('[data-lnsug]').forEach(function(b){ b.addEventListener('click', function(){ LN.sug = LN.sug === b.dataset.lnsug ? '' : b.dataset.lnsug; top(); }); });
+      T.querySelectorAll('[data-lnadd]').forEach(function(b){ b.addEventListener('click', function(){
+        var k = b.dataset.lnadd, add = Q_STD.filter(function(t){ return t[0] === k; }).map(function(t){ return { lavorazione:t[0], titolo:t[1], descrizione:t[2], um:t[3], qta:1, prezzo:0 }; });
+        ql.list = ql.list.concat(add); LN.coll[k] = false; stat(''); render(); saveSoon(); toast('Aggiunte ' + add.length + (add.length === 1 ? ' voce' : ' voci') + ' di ' + lavName(k) + ': metti i tuoi prezzi');
+      }); });
+      var ab = T.querySelector('[data-lnai]'); if(ab) ab.addEventListener('click', function(){
+        ab.disabled = true; ab.innerHTML = 'Scrivo…'; var idx = noDesc();
+        aiWrite(idx).then(function(n){ LN.sug = ''; render(); saveSoon(); toast(n ? 'Scritte ' + n + (n === 1 ? ' descrizione' : ' descrizioni') + ': controllale quando vuoi' : 'Nessuna descrizione scritta'); })
+          .catch(function(e){ ab.disabled = false; ab.innerHTML = IC.spark + ' Riprova'; stat(e.message, true); });
+      });
+    }
+    function list(){
+      var box = document.getElementById('qlList'); if(!box) return;
+      var q = norm(LN.q).trim(), G = {}, order = [];
+      ql.list.forEach(function(v, i){
+        var k = v.lavorazione || ''; if(ql.filter !== '*' && k !== ql.filter) return;
+        if(q && norm(v.titolo + ' ' + v.descrizione).indexOf(q) < 0) return;
+        if(!G[k]){ G[k] = []; order.push(k); } G[k].push(i);
+      });
+      var pos = {}; Q_LAV.forEach(function(l, j){ pos[l[0]] = j; }); order.sort(function(a, b){ return (a === '' ? 99 : pos[a]) - (b === '' ? 99 : pos[b]); });
+      if(!order.length){ box.innerHTML = '<div class="ln-empty">' + (q ? 'Nessuna voce trovata per «' + qEsc(LN.q) + '».' : ql.list.length ? 'Nessuna voce per questa lavorazione.' : 'Il listino è vuoto. Aggiungi le voci standard Rendrum (con le descrizioni già scritte) oppure crea la tua prima voce.') + '</div>'; return; }
+      box.innerHTML = order.map(function(k){
+        var c = cat(k), ids = G[k], shut = LN.coll[k] && !q;
+        return '<div class="ln-g' + (shut ? ' shut' : '') + '" data-lng="' + k + '"><button type="button" class="ln-gh" data-lncol="' + k + '"><i class="ln-gi" style="background:' + c[1] + ';color:' + c[2] + '">' + IC[c[0]] + '</i><b>' + qEsc(lavName(k)) + '</b><em>' + ids.length + (ids.length === 1 ? ' lavorazione' : ' lavorazioni') + '</em><span class="ln-gu">' + IC.up + '</span></button>'
+          + '<div class="ln-rows">' + ids.map(function(i){ var v = ql.list[i];
+            return '<div class="ln-r" data-lni="' + i + '"><span class="ln-grip" data-lngrip="' + i + '">' + IC.grip + '</span><button type="button" class="ln-rt" data-lned="' + i + '"><b>' + qEsc(v.titolo || 'Nuova voce') + '</b><em>' + qEsc((v.descrizione || '').split(/[.\n]/)[0] || 'Senza descrizione') + '</em></button>'
+              + '<span class="ln-um">' + qEsc(umTxt(v.um)) + '</span><button type="button" class="ln-pr' + (v.prezzo ? '' : ' miss') + '" data-lned="' + i + '">' + (v.prezzo ? qEsc(qpEur(v.prezzo)) : 'metti prezzo') + '</button><button type="button" class="ln-dt" data-lnm="' + i + '" aria-label="Altro">' + IC.dots + '</button></div>'; }).join('') + '</div></div>';
+      }).join('');
+      box.querySelectorAll('[data-lncol]').forEach(function(b){ b.addEventListener('click', function(){ var k = b.dataset.lncol; LN.coll[k] = !LN.coll[k]; b.parentNode.classList.toggle('shut', LN.coll[k]); }); });
+      box.querySelectorAll('[data-lned]').forEach(function(b){ b.addEventListener('click', function(){ edit(+b.dataset.lned); }); });
+      box.querySelectorAll('[data-lnm]').forEach(function(b){ b.addEventListener('click', function(e){ e.stopPropagation(); menu(+b.dataset.lnm, b); }); });
+      box.querySelectorAll('[data-lngrip]').forEach(drag);
+    }
+    function bottom(){
+      var R = root(); if(!R) return; var B = document.getElementById('lnBtm');
+      if(!B){ B = document.createElement('div'); B.id = 'lnBtm'; R.insertBefore(B, document.getElementById('qlErr')); }
+      var left = stdLeft(), empty = !ql.list.length;
+      B.innerHTML = '<div class="ln-btns">' + (empty && left ? '<button type="button" class="ln-b2" id="lnNew">' + IC.plus + ' Nuova voce</button><button type="button" class="ln-b1" id="lnStd">' + IC.spark + ' Aggiungi voci standard</button>'
+          : '<button type="button" class="ln-b1" id="lnNew">' + IC.plus + ' Nuova voce</button>' + (left ? '<button type="button" class="ln-b2" id="lnStd">' + IC.spark + ' Aggiungi voci standard</button>' : '')) + '</div><div class="ln-stat" id="lnStat"></div>';
+      document.getElementById('lnNew').addEventListener('click', function(){ var k = ql.filter === '*' ? '' : ql.filter; ql.list.unshift({ titolo:'', descrizione:'', qta:1, um:'mq', prezzo:0, lavorazione:k }); LN.coll[k] = false; render(); edit(0, true); });
+      var s = document.getElementById('lnStd'); if(s) s.addEventListener('click', function(){ var n0 = ql.list.length; document.getElementById('qlStd').click(); var n = ql.list.length - n0; document.getElementById('qlMsg').textContent = ''; if(n){ saveSoon(); toast('Aggiunte ' + n + ' voci standard: metti i tuoi prezzi'); } else toast('Le voci standard sono già nel tuo listino'); });
+    }
+    function render(){ top(); list(); bottom(); }
+    // ---------- menu ⋮ ----------
+    function menu(i, b){
+      var old = document.getElementById('lnMenu'); if(old){ old.remove(); if(LN.menu === i){ LN.menu = -1; return; } }
+      LN.menu = i; var m = document.createElement('div'); m.id = 'lnMenu'; m.className = 'ln-menu';
+      m.innerHTML = '<button type="button" data-x="ed">Modifica</button><button type="button" data-x="dup">Duplica</button><button type="button" data-x="del" class="r">Elimina</button>';
+      b.parentNode.appendChild(m);
+      m.addEventListener('click', function(e){ var x = e.target.closest('[data-x]'); if(!x) return; e.stopPropagation(); m.remove(); LN.menu = -1;
+        if(x.dataset.x === 'ed') return edit(i);
+        if(x.dataset.x === 'dup'){ var c = qClone(ql.list[i]); c.titolo = (c.titolo || '') + ' (copia)'; ql.list.splice(i + 1, 0, c); render(); saveSoon(); return edit(i + 1); }
+        var gone = ql.list.splice(i, 1)[0]; render(); saveSoon();
+        toast('Voce eliminata', 'Annulla', function(){ ql.list.splice(i, 0, gone); render(); saveSoon(); });
+      });
+      setTimeout(function(){ document.addEventListener('click', function cl(){ var mm = document.getElementById('lnMenu'); if(mm) mm.remove(); LN.menu = -1; document.removeEventListener('click', cl); }); }, 0);
+    }
+    function toast(t, act, fn){
+      var o = document.getElementById('lnToast'); if(o) o.remove();
+      var d = document.createElement('div'); d.id = 'lnToast'; d.className = 'ln-toast'; d.innerHTML = '<span>' + qEsc(t) + '</span>' + (act ? '<button type="button">' + qEsc(act) + '</button>' : '');
+      document.body.appendChild(d); if(act) d.querySelector('button').addEventListener('click', function(){ d.remove(); fn(); });
+      setTimeout(function(){ d.classList.add('on'); }, 10); setTimeout(function(){ d.classList.remove('on'); setTimeout(function(){ d.remove(); }, 300); }, act ? 4500 : 2600);
+    }
+    // ---------- modifica di una voce ----------
+    function edit(i, isNew){
+      var v = ql.list[i]; if(!v) return; var old = document.getElementById('lnEd'); if(old) old.remove();
+      var E = document.createElement('div'); E.id = 'lnEd'; E.className = 'ln-ed';
+      E.innerHTML = '<div class="ln-edbg"></div><div class="ln-edin"><div class="ln-edh"><b>' + (isNew ? 'Nuova voce' : 'Modifica voce') + '</b><button type="button" class="ln-ok">Fatto</button></div>'
+        + '<label>Lavorazione<select data-f="lavorazione">' + Q_LAV.map(function(l){ return '<option value="' + l[0] + '">' + qEsc(lavName(l[0])) + '</option>'; }).join('') + '</select></label>'
+        + '<label>Nome della voce<input type="text" maxlength="160" data-f="titolo" placeholder="es. Pavimento in resina"></label>'
+        + '<label>Descrizione (come apparirà nel preventivo)<textarea rows="4" maxlength="3000" data-f="descrizione"></textarea></label><button type="button" class="ln-aib">' + IC.spark + ' Scrivi con l\'AI</button>'
+        + '<div class="ln-two"><label>Unità<select data-f="um">' + Q_UNITS.map(function(u){ return '<option>' + u + '</option>'; }).join('') + '</select></label><label>Prezzo € (IVA esclusa)<input type="text" inputmode="decimal" data-f="prezzo" placeholder="0,00"></label></div>'
+        + '<div class="ln-edx"><button type="button" data-x="dup">Duplica</button><button type="button" data-x="del" class="r">Elimina</button></div></div>';
+      document.body.appendChild(E);
+      E.querySelectorAll('[data-f]').forEach(function(el){
+        var f = el.dataset.f; el.value = f === 'prezzo' ? qFmtIn(v[f]) : (v[f] || (f === 'um' ? 'mq' : ''));
+        el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function(){ v[f] = f === 'prezzo' ? qParse(el.value) : el.value; });
+      });
+      function close(){ E.classList.remove('on'); setTimeout(function(){ E.remove(); }, 250);
+        if(!(v.titolo || '').trim() && !(v.descrizione || '').trim() && !v.prezzo){ var j = ql.list.indexOf(v); if(j > -1) ql.list.splice(j, 1); render(); saveSoon(); return; }
+        render(); saveSoon(); }
+      E.querySelector('.ln-ok').addEventListener('click', close); E.querySelector('.ln-edbg').addEventListener('click', close);
+      var ai = E.querySelector('.ln-aib'); ai.addEventListener('click', function(){
+        if(!(v.titolo || '').trim()){ E.querySelector('[data-f="titolo"]').focus(); return; }
+        ai.disabled = true; ai.textContent = 'Scrivo…'; var keep = v.descrizione; v.descrizione = '';
+        aiWrite([ql.list.indexOf(v)]).then(function(n){ if(!n) v.descrizione = keep; E.querySelector('[data-f="descrizione"]').value = v.descrizione || ''; })
+          .catch(function(e){ v.descrizione = keep; toast(e.message); }).then(function(){ ai.disabled = false; ai.innerHTML = IC.spark + ' Scrivi con l\'AI'; });
+      });
+      E.querySelector('[data-x="dup"]').addEventListener('click', function(){ var j = ql.list.indexOf(v), c = qClone(v); c.titolo = (c.titolo || '') + ' (copia)'; ql.list.splice(j + 1, 0, c); E.remove(); render(); saveSoon(); edit(j + 1); });
+      E.querySelector('[data-x="del"]').addEventListener('click', function(){ var j = ql.list.indexOf(v); ql.list.splice(j, 1); E.remove(); render(); saveSoon(); toast('Voce eliminata', 'Annulla', function(){ ql.list.splice(j, 0, v); render(); saveSoon(); }); });
+      setTimeout(function(){ E.classList.add('on'); if(isNew) E.querySelector('[data-f="titolo"]').focus(); }, 10);
+    }
+    // ---------- spostare le voci: tieni premuti i puntini e trascina ----------
+    function drag(g){
+      g.addEventListener('pointerdown', function(e){
+        var row = g.closest('.ln-r'), box = row.parentNode; e.preventDefault(); row.classList.add('drag');
+        // il movimento si segue su tutta la pagina: spostando la riga il dito non si "perde"
+        function mv(ev){ if(ev.pointerId !== e.pointerId) return; var rs = [].slice.call(box.children); for(var k = 0; k < rs.length; k++){ var r = rs[k]; if(r === row) continue; var bb = r.getBoundingClientRect(); if(ev.clientY > bb.top && ev.clientY < bb.bottom){ var ref = ev.clientY < bb.top + bb.height / 2 ? r : r.nextSibling; if(ref !== row && ref !== row.nextSibling) box.insertBefore(row, ref); break; } } }
+        function up(ev){ if(ev && ev.pointerId !== e.pointerId) return; document.removeEventListener('pointermove', mv, true); document.removeEventListener('pointerup', up, true); document.removeEventListener('pointercancel', up, true); row.classList.remove('drag');
+          var ids = [].slice.call(box.children).map(function(r){ return +r.dataset.lni; }), slots = ids.slice().sort(function(a, b){ return a - b; }), items = ids.map(function(i){ return ql.list[i]; });
+          var changed = ids.some(function(x, k){ return x !== slots[k]; }); if(!changed) return;
+          slots.forEach(function(s, k){ ql.list[s] = items[k]; }); render(); saveSoon(); }
+        document.addEventListener('pointermove', mv, true); document.addEventListener('pointerup', up, true); document.addEventListener('pointercancel', up, true);
+      });
+    }
+    // ---------- aggancio al listino di prima ----------
+    var qlRender0 = qlRender;
+    qlRender = function(){
+      var R = root(), on = lnOn(); if(R) R.classList.toggle('ln-on', on); document.documentElement.classList.toggle('rd-ln', on);
+      if(!on){ ['lnTop', 'lnBtm'].forEach(function(id){ var x = document.getElementById(id); if(x) x.remove(); }); return qlRender0(); }
+      render();
+    };
+    // uscendo, se c'è qualcosa da salvare si salva subito
+    var bk = document.getElementById('qlBack'); if(bk) bk.addEventListener('click', function(){ if(lnOn() && LN.t) saveNow(); }, true);
+    document.addEventListener('visibilitychange', function(){ if(document.hidden && LN.t) saveNow(); });
+  })();
 
   document.getElementById('qBackQuotes').addEventListener('click', function(){ if(rdS1() && qs.cur){ qwOpen(3); } else qOpenList(); });
   ['qSetBack', 'pfBackBtn'].forEach(function(id){ var el = document.getElementById(id); if(el) el.addEventListener('click', function(e){
