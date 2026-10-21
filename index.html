@@ -10938,6 +10938,13 @@ html.rd-vetro .hp-ai:not(#_f){background:rgba(255,248,243,.62)!important;border-
 /* barra in basso: bianca, appena trasparente */
 html.rd-vetro #rdTab:not(#_f){background:rgba(255,255,255,.82)!important;-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3)}
 html.rd-vetro.rd-hp #rdTab .hp-plus u{box-shadow:0 0 0 5px rgba(255,255,255,.85),0 6px 14px rgba(204,111,51,.35)}
+/* 21/10 sera: anche preventivo (procedura e preventivo aperto), assistente e menu Altro */
+html.rd-vetro #proProjectsModal.pv3 .pro-projects-card:not(#_f),
+html.rd-vetro #rdAltro .rd-sheet-in.rx-menu:not(#_f),
+html.rd-vetro #aiBox:not(#_f){background:linear-gradient(rgba(246,242,236,.74),rgba(246,242,236,.74)),url(/img/rd_fv_fondo.jpg) center/cover no-repeat!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html.rd-vetro #aiBox .b:not(#_f){background:transparent!important}
+html.rd-vetro .fv-bar:not(#_f){background-color:rgba(255,255,255,.84)!important;-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border-color:rgba(255,255,255,.6)!important}
+html.rd-vetro #ppViewQuote.ed2on .ed2-bar:not(#_f){box-shadow:0 -4px 16px rgba(0,0,0,.05)!important}
 </style>
 <style id="rd-1019-css">/* tema scuro: pulsanti neri con scritta bianca (Per chi è?, sopralluogo, OK anteprima) */
 html.rd-vetro.r13t .qw-big.p,html.rd-vetro.r13t .s2-b.p,html.rd-vetro.r13t .rd-pv-ok{color:#fff}
@@ -10948,26 +10955,37 @@ html.rd-vetro.r13t .qw-big.p i,html.rd-vetro.r13t .s2-b.p i{background:rgba(255,
 html.rd-vetro .r13-cp:active{transform:scale(.985)}
 </style>
 <script id="rd-1021-js">document.addEventListener("DOMContentLoaded", function(){
-/* 21/10: fondo in vetro — segna come «vetro» i riquadri bianchi della Home e delle pagine interne (solo account di prova) */
+/* 21/10: fondo in vetro — segna come «vetro» i riquadri bianchi di Home, pagine interne, preventivo, assistente e menu Altro (solo account di prova) */
 (function(){
   var H = document.documentElement, t = 0, seen = new WeakSet();
+  var ROOTS = ['#rdOggi', '#rdXB', '#proProjectsModal.pv3 .pro-projects-card', '#aiBox', '#rdAltro .rd-sheet-in'];
   function white(e){
     var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/); if(!m) return false;
     var v = m[1].split(',').map(Number); return (v.length < 4 || v[3] > .9) && v[0] >= 248 && v[1] >= 245 && v[2] >= 238;
   }
   function scan(){
     t = 0; if(!H.classList.contains('rd-vetro')) return;
-    ['rdOggi', 'rdXB'].forEach(function(id){
-      var root = document.getElementById(id); if(!root) return;
+    // ricontrolla quelli già segnati (un pulsante che non è più selezionato torna com'era)
+    var old = Array.prototype.slice.call(document.querySelectorAll('.fv-g'));
+    old.forEach(function(e){ e.classList.remove('fv-g'); });
+    old.forEach(function(e){ if(white(e)) e.classList.add('fv-g'); });
+    ROOTS.forEach(function(sel){
+      var root = document.querySelector(sel); if(!root) return;
       root.querySelectorAll('*').forEach(function(e){
         if(seen.has(e)) return; var r = e.getBoundingClientRect(); if(r.width < 36 || r.height < 26) return;
-        if(e.matches('.on,.active,.sel,[aria-pressed],[aria-selected],input,textarea,select') || (e.parentElement && e.parentElement.querySelector(':scope > .on, :scope > .active, :scope > .sel, :scope > [aria-pressed]'))) return;
-        seen.add(e); if(white(e)) e.classList.add('fv-g');
+        if(e.matches('input,textarea,select')) return;
+        seen.add(e); if(white(e)){ var ps = getComputedStyle(e).position; e.classList.add(ps === 'fixed' || ps === 'sticky' ? 'fv-bar' : 'fv-g'); }
       });
     });
   }
   function later(){ if(!t) t = setTimeout(scan, 160); }
-  new MutationObserver(later).observe(document.body, { childList:true, subtree:true });
+  function strip(v){ return (' ' + (v || '') + ' ').replace(/ fv-g /g, ' ').replace(/\s+/g, ' ').trim(); }
+  new MutationObserver(function(rs){
+    for(var i = 0; i < rs.length; i++){
+      var r = rs[i];
+      if(r.type === 'childList' || strip(r.oldValue) !== strip(r.target.getAttribute('class'))){ later(); return; }
+    }
+  }).observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class'], attributeOldValue:true });
   new MutationObserver(later).observe(H, { attributes:true, attributeFilter:['class'] });
   later();
 })();
