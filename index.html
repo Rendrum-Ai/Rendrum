@@ -25264,6 +25264,43 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
       .then(function(){ soMsg('✓ ' + SO_BLE.name + ' collegato: tocca la prima misura e premi il tasto del misuratore.'); soDrawMis(); })
       .catch(function(e){ if(SO_BLE.dev){ try{ SO_BLE.dev.gatt.disconnect(); }catch(er){} } SO_BLE.dev = null; if(e && e.name === 'NotFoundError') return; soMsg('Non riesco a collegare il misuratore. Usa la modalità tastiera (vedi il manuale) e riprova.', true); });
   }
+  // ===== 21/10: misuratore laser Bluetooth anche nell'app iPhone/Android (modulo nativo BluetoothLe). Nel browser resta Web Bluetooth come prima =====
+  function soBleNat(){ try{ var C = window.Capacitor; return !!(C && C.isNativePlatform && C.isNativePlatform() && C.Plugins && C.Plugins.BluetoothLe); }catch(e){ return false; } }
+  // i valori arrivano dal telefono come testo esadecimale ("0a 1b 2c" o "0a1b2c")
+  function soBleDV(v){
+    if(v && typeof v === 'object' && v.byteLength != null) return v;
+    var s = String(v || '').toLowerCase(), b = s.indexOf(' ') > -1 ? s.trim().split(/\s+/) : (s.replace(/[^0-9a-f]/g, '').match(/../g) || []);
+    var u = new Uint8Array(b.map(function(x){ return parseInt(x, 16) || 0; })); return new DataView(u.buffer);
+  }
+  function soBleHex(arr){ return arr.map(function(n){ return ('0' + (n & 255).toString(16)).slice(-2); }).join(' '); }
+  var soBleOk0 = soBleOk, soBleConnect0 = soBleConnect;
+  soBleOk = function(){ return soBleNat() || soBleOk0(); };
+  soBleConnect = function(){
+    if(!soBleNat()) return soBleConnect0();
+    var B = window.Capacitor.Plugins.BluetoothLe, P = SO_BLE_P;
+    function off(){ (SO_BLE.lis || []).forEach(function(l){ try{ l.remove(); }catch(e){} }); SO_BLE.lis = []; }
+    if(SO_BLE.nat){ var id0 = SO_BLE.nat; SO_BLE.nat = null; SO_BLE.dev = null; off(); B.disconnect({ deviceId:id0 }).catch(function(){}); soDrawMis(); return; }
+    var id = null;
+    B.initialize({ androidNeverForLocation:false })
+      .then(function(){ return B.requestDevice({ optionalServices:[P.leica.svc, P.bosch.svc], displayMode:'list' }); })
+      .then(function(dev){ id = dev.deviceId; SO_BLE.name = dev.name || 'Misuratore'; soMsg('Collego ' + SO_BLE.name + '…');
+        return B.addListener('disconnected|' + id, function(){ SO_BLE.nat = null; SO_BLE.dev = null; off(); try{ soMsg('Misuratore scollegato.'); soDrawMis(); }catch(e){} })
+          .then(function(l){ SO_BLE.lis = [l]; return B.connect({ deviceId:id, timeout:15000 }); }); })
+      .then(function(){
+        var tryP = function(k){ var pr = P[k], key = 'notification|' + id + '|' + pr.svc + '|' + pr.ch, lis = null;
+          return B.addListener(key, function(ev){ var v = pr.parse(soBleDV(ev && ev.value)); if(v != null) soBleFill(v); })
+            .then(function(l){ lis = l; return B.startNotifications({ deviceId:id, service:pr.svc, characteristic:pr.ch }); })
+            .then(function(){ SO_BLE.lis.push(lis); return pr.start ? B.write({ deviceId:id, service:pr.svc, characteristic:pr.ch, value:soBleHex(pr.start) }) : null; })
+            .then(function(){ return k; })
+            .catch(function(e){ if(lis) try{ lis.remove(); }catch(x){} throw e; }); };
+        return tryP('leica').catch(function(){ return tryP('bosch'); });
+      })
+      .then(function(){ SO_BLE.nat = id; SO_BLE.dev = { nat:true }; soMsg('✓ ' + SO_BLE.name + ' collegato: tocca la prima misura e premi il tasto del misuratore.'); soDrawMis(); })
+      .catch(function(e){ off(); if(id) B.disconnect({ deviceId:id }).catch(function(){}); SO_BLE.nat = null; SO_BLE.dev = null;
+        var m = String((e && (e.message || e.errorMessage)) || e || '');
+        if(/cancel|annull/i.test(m)) return;
+        soMsg(/disabled|off|spento|not enabled/i.test(m) ? 'Accendi il Bluetooth del telefono e riprova.' : /denied|unauthori|permission|permesso/i.test(m) ? 'Rendrum non ha il permesso Bluetooth: Impostazioni › Rendrum › Bluetooth.' : 'Non riesco a collegare il misuratore. Accendilo, tienilo vicino al telefono e riprova.', true); });
+  };
   // ---------- Servizi in più per i professionisti (per ora solo account di prova) ----------
   // Agenda, lavori finiti, recensioni, sito vetrina, voto condominio, statistiche, WhatsApp.
   var rx = { cache:{}, back:null, edit:null };
@@ -31489,6 +31526,13 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     }).finally(function(){ rdV2.loading = false; });
   }
   function rdOggiBind(box){ ctCosaBind(box); }
+  document.getElementById('rdTab').addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-rdtab]'); if(!b) return; var k = b.dataset.rdtab, m = document.getElementById('proProjectsModal');
+    if(k !== 'prev' && m && m.classList.contains('open')){ try{ ppClose(); }catch(x){}
+      // chiudendo Preventivi l'app riapre la pagina di prima: se hai scelto un'altra scheda vince la tua scelta
+      setTimeout(function(){ if(k === 'home'){ var x = document.getElementById('rdX'); if(x && !x.hidden){ x.hidden = true; document.documentElement.classList.remove('rd-x-open'); } }
+        if(!(k === 'altro' && !document.querySelector('#rdAltro.open'))) rdTabOn(k); }, 80); }
+  }, true);
   document.getElementById('rdTab').addEventListener('click', function(e){
     var b = e.target.closest('[data-rdtab]'); if(!b) return;
     var k = b.dataset.rdtab, sheet = document.getElementById('rdAltro');
