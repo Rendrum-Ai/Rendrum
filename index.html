@@ -10255,6 +10255,10 @@ html.rd-cpm #rdX.cpm-on #rdXB.cpm-in>*:nth-child(2){animation-delay:.03s}html.rd
 html.rd-cpm .rd-tab{background:rgba(255,255,255,.78)!important;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border-top-color:rgba(0,0,0,.05)!important}
 .cpm-toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);background:#1D1B18;color:#fff;border-radius:20px;padding:10px 16px;font-size:14px;font-weight:600;opacity:0;transition:all .25s;z-index:99999;pointer-events:none}
 .cpm-toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* 21/10: niente lampo del campionario vecchio: finché non è pronto il nuovo resta nascosto (al massimo 0,7 s) */
+html.rd-cpm #rdXB:has(#cpQ, #cpGQ, .cp-gr, .hbr.cat, .hbl.vs-l, .cpp, .cpA-h, #cpSec):not(:has(.cpm-h)){visibility:hidden;animation:cpmReveal 0s linear .7s forwards}
+@keyframes cpmReveal{to{visibility:visible}}
 </style><style id="rdHpCss">/* 20/10: Home nuova con il + rame, solo tester (html.rd-hp) */
 .hp-w{display:none}
 html.rd-hp .hp-w{display:block;margin:14px 0 4px}
@@ -10374,6 +10378,10 @@ html.rd-hp #rdTab button.on{color:#CF7436}
 html.rd-hp #rdTab button.on:after{content:"";position:absolute;left:50%;bottom:2px;width:28px;height:2.5px;margin-left:-14px;border-radius:2px;background:#CF7436}
 html.rd-hp #rdTab button{position:relative}
 html.rd-hp #rdTab .hp-plus u{width:50px;height:50px;margin-top:-16px;border-radius:50%;background:linear-gradient(180deg,#E28F55,#CC6F33);font-size:30px;box-shadow:0 0 0 5px #fff,0 6px 14px rgba(204,111,51,.35)}
+
+/* 21/10: in Home, scorrendo giù il logo Rendrum sparisce; torna quando sei di nuovo in cima */
+html.rd-hp body>header{transition:transform .25s ease,opacity .25s ease}
+html.rd-hlHide body>header{transform:translateY(-110%);opacity:0;pointer-events:none}
 </style><style id="rdAmCss">html:not(.rd-am) #amW{display:none!important}
 /* 21/10: menu Altro nuovo, solo tester (html.rd-am) */
 html.rd-am #rdAltro .rx-menu{background:#F7F4F0}
@@ -20841,7 +20849,8 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     function city(v){ var p = String(v || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean); var c = p.length > 1 ? p[p.length - 1] : p[0] || ''; return c.replace(/^\d{5}\s*/, '').replace(/\s*\([A-Z]{2}\)$/, ''); }
     // in cima alla Home la barra con il logo diventa trasparente e si vede la foto
     function top(){ var L = document.getElementById('panelLanding'), X = document.getElementById('rdX'), y = window.scrollY || 0;
-      var t = on() && !!(L && L.classList.contains('active') && document.getElementById('r13Home')) && !(X && X.offsetParent) && y < 30; document.documentElement.classList.toggle('rd-hlTop', t); }
+      var h = on() && !!(L && L.classList.contains('active') && document.getElementById('r13Home')) && !(X && X.offsetParent);
+      document.documentElement.classList.toggle('rd-hlTop', h && y < 30); document.documentElement.classList.toggle('rd-hlHide', h && y >= 30); }
     window.addEventListener('scroll', function(){ top(); }, { passive:true });
     function run(){
       var b = beta(); document.documentElement.classList.toggle('rd-nf', b);
