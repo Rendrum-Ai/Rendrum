@@ -25273,6 +25273,9 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     var u = new Uint8Array(b.map(function(x){ return parseInt(x, 16) || 0; })); return new DataView(u.buffer);
   }
   function soBleHex(arr){ return arr.map(function(n){ return ('0' + (n & 255).toString(16)).slice(-2); }).join(' '); }
+  function soBleT(t, err, keep){ try{ soMsg(t, err); }catch(e){} var d = document.getElementById('soBleToast'); if(!d){ d = document.createElement('div'); d.id = 'soBleToast'; d.style.cssText = 'position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:100000;border-radius:14px;padding:12px 14px;font:600 14px/1.4 Inter,-apple-system,sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.25);transition:opacity .3s'; document.body.appendChild(d); }
+    d.style.background = err ? '#B3261E' : '#1D1B18'; d.style.color = '#fff'; d.style.opacity = '1'; d.textContent = t; clearTimeout(d._t); if(!keep) d._t = setTimeout(function(){ d.style.opacity = '0'; }, err ? 9000 : 4000); }
+  function soBleTo(p, ms, what){ return Promise.race([Promise.resolve(p), new Promise(function(_, rej){ setTimeout(function(){ rej(new Error('tempo scaduto: ' + what)); }, ms); })]); }
   var soBleOk0 = soBleOk, soBleConnect0 = soBleConnect;
   soBleOk = function(){ return soBleNat() || soBleOk0(); };
   soBleConnect = function(){
@@ -25281,25 +25284,25 @@ html.rd-am #rdAltro #amW .am-li,html.rd-am #rdAltro #amW .am-vt,html.rd-am #rdAl
     function off(){ (SO_BLE.lis || []).forEach(function(l){ try{ l.remove(); }catch(e){} }); SO_BLE.lis = []; }
     if(SO_BLE.nat){ var id0 = SO_BLE.nat; SO_BLE.nat = null; SO_BLE.dev = null; off(); B.disconnect({ deviceId:id0 }).catch(function(){}); soDrawMis(); return; }
     var id = null;
-    B.initialize({ androidNeverForLocation:false })
-      .then(function(){ return B.requestDevice({ optionalServices:[P.leica.svc, P.bosch.svc], displayMode:'list' }); })
-      .then(function(dev){ id = dev.deviceId; SO_BLE.name = dev.name || 'Misuratore'; soMsg('Collego ' + SO_BLE.name + '…');
-        return B.addListener('disconnected|' + id, function(){ SO_BLE.nat = null; SO_BLE.dev = null; off(); try{ soMsg('Misuratore scollegato.'); soDrawMis(); }catch(e){} })
-          .then(function(l){ SO_BLE.lis = [l]; return B.connect({ deviceId:id, timeout:15000 }); }); })
-      .then(function(){
+    soBleT('Bluetooth: preparo…', false, true); soBleTo(B.initialize({ androidNeverForLocation:false }), 8000, 'avvio Bluetooth')
+      .then(function(){ soBleT('Scegli il misuratore dalla lista', false, true); return B.requestDevice({ optionalServices:[P.leica.svc, P.bosch.svc], displayMode:'list' }); })
+      .then(function(dev){ id = dev.deviceId; SO_BLE.name = dev.name || 'Misuratore'; soBleT('1/3 Collego ' + SO_BLE.name + '…', false, true);
+        return soBleTo(B.addListener('disconnected|' + id, function(){ SO_BLE.nat = null; SO_BLE.dev = null; off(); try{ soBleT('Misuratore scollegato.'); soDrawMis(); }catch(e){} }), 5000, 'ascolto scollegamento')
+          .then(function(l){ SO_BLE.lis = [l]; return soBleTo(B.connect({ deviceId:id, timeout:15000 }), 20000, 'collegamento'); }); })
+      .then(function(){ soBleT('2/3 Collegato, attivo le misure…', false, true);
         var tryP = function(k){ var pr = P[k], key = 'notification|' + id + '|' + pr.svc + '|' + pr.ch, lis = null;
-          return B.addListener(key, function(ev){ var v = pr.parse(soBleDV(ev && ev.value)); if(v != null) soBleFill(v); })
-            .then(function(l){ lis = l; return B.startNotifications({ deviceId:id, service:pr.svc, characteristic:pr.ch }); })
+          return soBleTo(B.addListener(key, function(ev){ var v = pr.parse(soBleDV(ev && ev.value)); if(v != null){ soBleT('📏 ' + String(Math.round(v * 1000) / 1000).replace('.', ',') + ' m'); soBleFill(v); } else soBleT('Dato ricevuto ma non leggibile (' + String(ev && ev.value).slice(0, 40) + ')', true); }), 5000, 'ascolto misure')
+            .then(function(l){ lis = l; return soBleTo(B.startNotifications({ deviceId:id, service:pr.svc, characteristic:pr.ch }), 10000, 'attivazione misure ' + k); })
             .then(function(){ SO_BLE.lis.push(lis); return pr.start ? B.write({ deviceId:id, service:pr.svc, characteristic:pr.ch, value:soBleHex(pr.start) }) : null; })
             .then(function(){ return k; })
             .catch(function(e){ if(lis) try{ lis.remove(); }catch(x){} throw e; }); };
         return tryP('leica').catch(function(){ return tryP('bosch'); });
       })
-      .then(function(){ SO_BLE.nat = id; SO_BLE.dev = { nat:true }; soMsg('✓ ' + SO_BLE.name + ' collegato: tocca la prima misura e premi il tasto del misuratore.'); soDrawMis(); })
+      .then(function(){ SO_BLE.nat = id; SO_BLE.dev = { nat:true }; soBleT('✓ 3/3 ' + SO_BLE.name + ' pronto: tocca la prima misura e premi il tasto del misuratore.'); soDrawMis(); })
       .catch(function(e){ off(); if(id) B.disconnect({ deviceId:id }).catch(function(){}); SO_BLE.nat = null; SO_BLE.dev = null;
         var m = String((e && (e.message || e.errorMessage)) || e || '');
-        if(/cancel|annull/i.test(m)) return;
-        soMsg(/disabled|off|spento|not enabled/i.test(m) ? 'Accendi il Bluetooth del telefono e riprova.' : /denied|unauthori|permission|permesso/i.test(m) ? 'Rendrum non ha il permesso Bluetooth: Impostazioni › Rendrum › Bluetooth.' : 'Non riesco a collegare il misuratore. Accendilo, tienilo vicino al telefono e riprova.', true); });
+        if(/cancel|annull/i.test(m)){ soBleT('Annullato.'); return; }
+        soBleT(/disabled|off|spento|not enabled/i.test(m) ? 'Accendi il Bluetooth del telefono e riprova.' : /denied|unauthori|permission|permesso/i.test(m) ? 'Rendrum non ha il permesso Bluetooth: Impostazioni › Rendrum › Bluetooth.' : 'Non riesco a collegare il misuratore. Accendilo, tienilo vicino al telefono e riprova. (Dettaglio: ' + m.slice(0, 120) + ')', true); });
   };
   // ---------- Servizi in più per i professionisti (per ora solo account di prova) ----------
   // Agenda, lavori finiti, recensioni, sito vetrina, voto condominio, statistiche, WhatsApp.
