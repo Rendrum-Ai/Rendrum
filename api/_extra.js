@@ -18,8 +18,8 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito", "condo", "spesa"];
-const SINGLE = ["site", "tariffe", "commerc"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito", "condo", "spesa", "mezzo", "doc", "prof"];
+const SINGLE = ["site", "tariffe", "commerc", "prof"];
 const MT_TIPI = ["pia", "legno", "resina", "pittura", "colla", "barra", "acc"];
 // cosa cerca la lettura della scheda per ogni tipo di materiale
 const MT_AI = {
@@ -32,6 +32,7 @@ const MT_AI = {
   acc: "È un ACCESSORIO (rete, nastro, distanziatori, crocette, tasselli…). Cerca quanti m² copre una confezione (ogni) oppure quanti pezzi ci sono (conf).",
 };
 const TOKEN = /^[a-f0-9]{20}$/;
+const DOC_TIPI = ["durc", "visura", "certificato", "patente_crediti", "patente_guida", "polizza", "attestato", "altro"];
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
 
 function str(v, max) { return String(v == null ? "" : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").replace(/[<>]/g, "").trim().slice(0, max); }
@@ -66,6 +67,26 @@ function clean(kind, d, old) {
     stato: old.stato === "ricevuta" ? "ricevuta" : "attesa",
     stelle: old.stelle || 0, testo: old.testo || "", nome: old.nome || "", at: old.at || "",
     nascosta: !!d.nascosta,
+  };
+  if (kind === "prof") return {
+    // profilo azienda (22/10): foto di copertina e colore della scheda
+    copertina: url(d.copertina), colore: ["nero", "moka", "bosco", "notte", "terra"].includes(d.colore) ? d.colore : "nero",
+  };
+  if (kind === "mezzo") return {
+    // mezzi e attrezzature (22/10)
+    nome: str(d.nome, 120), tipo: ["furgone", "auto", "macchinario", "attrezzo", "altro"].includes(d.tipo) ? d.tipo : "altro",
+    targa: str(d.targa, 20).toUpperCase(), stato: ["uso", "magazzino", "riparazione"].includes(d.stato) ? d.stato : "magazzino",
+    cantiere: str(d.cantiere, 120), foto: url(d.foto), note: str(d.note, 600),
+    scad: (Array.isArray(d.scad) ? d.scad : []).slice(0, 8).map(x => ({ t: ["assicurazione", "revisione", "bollo", "tagliando", "manutenzione", "altro"].includes(x && x.t) ? x.t : "altro", data: date(x && x.data), nota: str(x && x.nota, 80) })).filter(x => x.data),
+    docs: urls(d.docs, 8),
+  };
+  if (kind === "doc") return {
+    // documenti e certificazioni caricati dall'impresa (22/10); «letto» = righe lette sul documento
+    tipo: DOC_TIPI.includes(d.tipo) ? d.tipo : "altro", titolo: str(d.titolo, 120), intestato: str(d.intestato, 160),
+    piva: str(d.piva, 20).toUpperCase().replace(/\s+/g, ""), cf: str(d.cf, 20).toUpperCase().replace(/\s+/g, ""), numero: str(d.numero, 60), persona: str(d.persona, 120),
+    data: date(d.data), scadenza: date(d.scadenza), crediti: d.crediti === "" || d.crediti == null ? null : int(d.crediti, 0, 100),
+    pagine: urls(d.pagine, 10), note: str(d.note, 600), mezzoId: UUID.test(String(d.mezzoId || "")) ? d.mezzoId : null,
+    letto: Object.fromEntries(Object.entries(obj(d.letto)).slice(0, 12).map(([k, v]) => [str(k, 20).replace(/[^a-zA-Z]/g, ""), str(v, 160)]).filter(([k, v]) => k && v)),
   };
   if (kind === "condo") return {
     // scheda condominio (21/10): dati del palazzo e condòmini con interno e millesimi
@@ -355,6 +376,29 @@ async function handle(req, res, action, acc) {
       return res.status(200).json({ data: out, opzioni: opz });
     }
     return res.status(200).json({ data: clean("materiale", Object.assign({}, d, { nota: d.nota ? "Dalla scheda: " + d.nota : "" })) });
+  }
+  if (action === "px-doc-ai") {
+    // legge un documento (foto o PDF) e restituisce tipo, intestatario e date, con il testo letto; l'impresa controlla prima di salvare
+    if (req.method !== "POST") return res.status(405).json({ error: "Metodo non valido" });
+    const key = (process.env.OPENAI_API_KEY || "").trim();
+    if (!key) return res.status(503).json({ error: "Lettura automatica non attiva: scrivi i dati a mano.", code: "noai" });
+    const list = (Array.isArray(b.pagine) ? b.pagine : [b.dataUrl]).map(x => String(x || "")).filter(Boolean).slice(0, 4);
+    const ok = list.length && list.every(du => (/^data:application\/pdf;base64,/.test(du) || /^data:image\/(jpeg|png|webp);base64,/.test(du)));
+    if (!ok || list.reduce((a, du) => a + du.length, 0) > 9000000) return res.status(400).json({ error: "Carica una foto o un PDF (massimo 6 MB)." });
+    const oggi = new Date().toISOString().slice(0, 10);
+    const prompt = "Sei un esperto di documenti aziendali italiani per l'edilizia. Leggi questo documento ed estrai SOLO quello che c'è scritto, senza inventare: se un dato non c'è metti stringa vuota (o null per i numeri). Oggi è " + oggi + ". " +
+      "Rispondi solo con un JSON con queste chiavi: tipo (uno tra: durc, visura, certificato, patente_crediti, patente_guida, polizza, attestato, altro; 'visura' = visura camerale, 'certificato' = certificato camerale o altro certificato con validità, 'patente_crediti' = patente a crediti per i cantieri INL, 'polizza' = assicurazione), " +
+      "titolo (nome del documento come scritto, max 80 caratteri), intestato (impresa o persona intestataria), piva, cf, numero (numero di protocollo, polizza, patente o codice), persona (se il documento è di una persona), " +
+      "data (data di emissione, richiesta o estrazione, formato AAAA-MM-GG), scadenza (data di scadenza o fine validità SOLO se scritta, formato AAAA-MM-GG), crediti (solo per patente a crediti: punteggio scritto, numero), " +
+      "letto (oggetto: per ogni campo che hai trovato, il testo esatto della riga del documento da cui lo prendi, max 120 caratteri, es. { \"scadenza\": \"Scadenza validità 12/02/2027\" }).";
+    const content = [{ type: "input_text", text: prompt }].concat(list.map((du, i) => /^data:application\/pdf/.test(du) ? { type: "input_file", filename: "documento" + (i + 1) + ".pdf", file_data: du } : { type: "input_image", image_url: du }));
+    const model = (process.env.OPENAI_VISION_MODEL || "gpt-4o-mini").trim();
+    const r = await fetch("https://api.openai.com/v1/responses", { method: "POST", headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify({ model, input: [{ role: "user", content }], text: { format: { type: "json_object" } } }) }).catch(() => null);
+    const j = r ? await r.json().catch(() => null) : null;
+    const txt = j && (j.output_text || ((j.output || []).flatMap(o => o.content || []).map(c => c.text || "").join("")));
+    let d = null; try { d = JSON.parse(String(txt || "").replace(/^```json|```$/g, "")); } catch (e) { d = null; }
+    if (!r || !r.ok || !d) return res.status(502).json({ error: "Non sono riuscito a leggere il documento. Prova con una foto più nitida o scrivi i dati a mano." });
+    return res.status(200).json({ data: clean("doc", d) });
   }
   if (action === "px-mail-ordine") {
     if (req.method !== "POST" || !UUID.test(String(b.ordineId || ""))) return res.status(400).json({ error: "Ordine non valido." });
