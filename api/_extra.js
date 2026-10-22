@@ -18,7 +18,7 @@ const { supabaseRequest } = require("./_auth-lib");
 const { uploadPhoto } = require("./_projects-lib");
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito"];
+const KINDS = ["agenda", "lavoro", "review", "vote", "site", "costo", "tariffe", "variante", "cliente", "proforma", "commerc", "incasso", "materiale", "fornitore", "ordine", "invito", "condo", "spesa"];
 const SINGLE = ["site", "tariffe", "commerc"];
 const MT_TIPI = ["pia", "legno", "resina", "pittura", "colla", "barra", "acc"];
 // cosa cerca la lettura della scheda per ogni tipo di materiale
@@ -67,10 +67,24 @@ function clean(kind, d, old) {
     stelle: old.stelle || 0, testo: old.testo || "", nome: old.nome || "", at: old.at || "",
     nascosta: !!d.nascosta,
   };
+  if (kind === "condo") return {
+    // scheda condominio (21/10): dati del palazzo e condòmini con interno e millesimi
+    nome: str(d.nome, 120), indirizzo: str(d.indirizzo, 200), citta: str(d.citta, 80), unita: int(d.unita, 0, 5000), amm: str(d.amm, 120),
+    foto: url(d.foto), archiviato: !!d.archiviato,
+    condomini: (Array.isArray(d.condomini) ? d.condomini : []).slice(0, 400).map(c => ({ nome: str(c && c.nome, 80), scala: str(c && c.scala, 20), interno: str(c && c.interno, 20), telefono: str(c && c.telefono, 40), mill: num(c && c.mill, 1000) })).filter(c => c.nome || c.interno),
+  };
+  if (kind === "spesa") return {
+    // spesa o fattura del condominio (21/10)
+    condoId: UUID.test(String(d.condoId || "")) ? d.condoId : null, data: date(d.data), scadenza: date(d.scadenza),
+    fornitore: str(d.fornitore, 120), numero: str(d.numero, 40), desc: str(d.desc, 300),
+    cat: ["lavori", "manutenzione", "pulizie", "luce", "acqua", "riscaldamento", "ascensore", "assicurazione", "amministrazione", "altro"].includes(d.cat) ? d.cat : "altro",
+    importo: num(d.importo, 1e8), pagata: !!d.pagata, foto: urls(d.foto, 4), lavoro: str(d.lavoro, 120),
+  };
   if (kind === "vote") return {
     titolo: str(d.titolo, 120), indirizzo: str(d.indirizzo, 200), note: str(d.note, 600),
-    opzioni: (Array.isArray(d.opzioni) ? d.opzioni : []).slice(0, 4).map(o => ({ img: url(o && o.img), nome: str(o && o.nome, 80) })).filter(o => o.img),
+    opzioni: (Array.isArray(d.opzioni) ? d.opzioni : []).slice(0, 4).map(o => ({ img: url(o && o.img), nome: str(o && o.nome, 80), prezzo: num(o && o.prezzo, 1e8) })).filter(o => o.img),
     chiuso: !!d.chiuso, voti: Array.isArray(old.voti) ? old.voti : [],
+    condoId: UUID.test(String(d.condoId || "")) ? d.condoId : null, prima: url(d.prima), anonima: !!d.anonima, prezzi: !!d.prezzi,
   };
   if (kind === "site") return {
     attivo: !!d.attivo, slogan: str(d.slogan, 140), dominio: str(d.dominio, 80).toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, ""),
@@ -223,11 +237,11 @@ async function handlePublic(req, res, action) {
     const g = await getOne("kind=eq.vote&token=eq." + t);
     if (g.missing || !g.row) return res.status(404).json({ error: "Link non valido o scaduto." });
     const d = g.row.data || {}, acc = await account(g.row.account_id, "company_name,logo_url") || {};
-    if (req.method === "GET") return res.status(200).json({ impresa: acc.company_name || "", logo: acc.logo_url || null, titolo: d.titolo || "", indirizzo: d.indirizzo || "", note: d.note || "", opzioni: (d.opzioni || []).map(o => ({ img: o.img, nome: o.nome })), chiuso: !!d.chiuso, n: (d.voti || []).length });
+    if (req.method === "GET") return res.status(200).json({ impresa: acc.company_name || "", logo: acc.logo_url || null, titolo: d.titolo || "", indirizzo: d.indirizzo || "", note: d.note || "", opzioni: (d.opzioni || []).map(o => d.prezzi && o.prezzo ? { img: o.img, nome: o.nome, prezzo: o.prezzo } : { img: o.img, nome: o.nome }), chiuso: !!d.chiuso, n: (d.voti || []).length, anonima: !!d.anonima, prima: d.prima || null });
     if (d.chiuso) return res.status(409).json({ error: "La votazione è chiusa." });
-    const scelta = Math.round(+b.scelta), nome = str(b.nome, 60), interno = str(b.interno, 20);
+    const scelta = Math.round(+b.scelta), interno = str(b.interno, 20), nome = d.anonima ? (interno ? "Interno " + interno : "") : str(b.nome, 60);
     if (!(scelta >= 0 && scelta < (d.opzioni || []).length)) return res.status(400).json({ error: "Scegli una proposta." });
-    if (!nome) return res.status(400).json({ error: "Scrivi il tuo nome." });
+    if (!nome) return res.status(400).json({ error: d.anonima ? "Scrivi il tuo interno." : "Scrivi il tuo nome." });
     const voti = (d.voti || []).slice(0, 400), k = (nome + "|" + interno).toLowerCase();
     const i = voti.findIndex(v => (v.nome + "|" + v.interno).toLowerCase() === k);
     const v = { scelta, nome, interno, at: new Date().toISOString() };
