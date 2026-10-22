@@ -22924,6 +22924,9 @@ html.rd-gb #aiBusy .gb-tip i:not(#_f){color:#F0B98A!important}
             cs.push({ id:id, n:it.n, serie:(it.l && it.l !== it.n ? it.l + ' · ' : '') + f.n, d:it.d, colori: sw }); (f.id === 'micro' ? micro : deco).push(id); }); });
           if(cs.length) XB.push({ marchio:{ id:'loggia', n:'Loggia', produttore:'Loggia', txt:'LOGGIA' }, __t:{ micro: micro.concat(deco.slice(0, 3)), deco: deco.concat(micro) }, collezioni: cs }); }
       }catch(e){}
+      // teli per piscine (Renolit, Soprema) e piastrelle La Fabbrica AVA
+      try{ (window.PS_TELI || []).forEach(function(B){ if(B && B.collezioni && B.collezioni.length) XB.push({ marchio:B.marchio, __t:{ pool: B.collezioni.map(function(c){ return c.id; }) }, collezioni:B.collezioni }); }); }catch(e){}
+      try{ var A = window.AVA_DATA; if(A && A.collezioni) XB.push({ marchio:A.marchio, __t:{ tile:(A.pavimenti || []).concat(A.rivestimenti || []).filter(function(x, i, a){ return a.indexOf(x) === i; }), out:(A.esterni || []).map(function(x){ return x.id || x; }) }, collezioni:A.collezioni }); }catch(e){}
       return XB;
     }
     function brands(){ return (window.BP_BRANDS || []).concat(extra()); }
@@ -22937,6 +22940,11 @@ html.rd-gb #aiBusy .gb-tip i:not(#_f){color:#F0B98A!important}
       if(mat === 'carta') return ['carta', 'pan'];
       if(mat === 'microcemento' || cat === 'microcemento' || mat === 'monolith' || cat === 'monolith') return ['micro'];
       if(mat === 'deco' || cat === 'deco') return ['deco', 'carta', 'pan'];
+      if(mat === 'piscina' || cat === 'piscina') return ['pool'];
+      if(mat === 'piastrelle' || cat === 'piastrelle') return ['tile'];
+      if(mat === 'pia_est' || cat === 'pia_est') return ['out'];
+      if(mat === 'scale' || cat === 'scale') return ['tile', 'micro'];
+      if(mat === 'cartongesso' || cat === 'cartongesso') return ['pan', 'carta', 'deco'];   // per finire le pareti nuove
       if(mat === 'boipan'){ var t = (state.bp && state.bp.tipo) || 'pan'; return t === 'boi' ? ['boi', 'pan'] : ['pan', 'carta', 'boi']; }
       var interno = true; try{ interno = state.context !== 'esterno'; }catch(e){}
       if(interno && (mat === 'deco' || mat === 'imbiancatura' || cat === 'imbiancatura' || cat === 'deco' || mat === 'boiserie' || cat === 'boiserie')) return ['carta', 'pan'];
@@ -22985,7 +22993,7 @@ html.rd-gb #aiBusy .gb-tip i:not(#_f){color:#F0B98A!important}
       if(k === 'mat') return '<div class="vt-s">' + lb + '<div class="vt-mat">' + pic(h) + '<div>' + logo(B, 18) + '<b>' + E(nm(c.n)) + '</b>' + (c.d || c.serie ? '<em>' + E(c.d || c.serie) + '</em>' : '')
         + '<div class="vt-kv">' + dati(c).map(function(r){ return '<span>' + E(r[0]) + '</span><b>' + E(r[1]) + '</b>'; }).join('') + '</div></div></div>'
         + '<div class="vt-bt"><button type="button" class="p" data-vto>' + (c.pdf ? 'Scheda tecnica' : 'Scopri') + '</button><button type="button" data-vtp>Prova dopo</button></div></div>';
-      return '<div class="vt-s">' + lb + '<div class="vt-hero">' + (c._hex ? '<div class="vt-hxg">' + c.colori.slice(0, 6).map(function(y){ return '<span style="background:' + E(y.hex) + '"></span>'; }).join('') + '</div>' : pic(h, 'big')) + logo(B) + '<div class="vt-tx"><b>' + E(nm(c.n)) + '</b><span>' + E([x.nuovo ? 'Nuova collezione' : (c.serie || ''), c.colori.length + (x.t === 'carta' || x.t === 'micro' || x.t === 'deco' ? ' colori' : ' elementi')].filter(Boolean).join(' · ')) + '</span></div></div>'
+      return '<div class="vt-s">' + lb + '<div class="vt-hero">' + (c._hex ? '<div class="vt-hxg">' + c.colori.slice(0, 6).map(function(y){ return '<span style="background:' + E(y.hex) + '"></span>'; }).join('') + '</div>' : pic(h, 'big')) + logo(B) + '<div class="vt-tx"><b>' + E(nm(c.n)) + '</b><span>' + E([x.nuovo ? 'Nuova collezione' : (c.serie || ''), c.colori.length + (x.t === 'pan' || x.t === 'boi' ? ' elementi' : ' colori')].filter(Boolean).join(' · ')) + '</span></div></div>'
         + (sw.length ? '<div class="vt-sw">' + sw.map(function(y){ return pic(y); }).join('') + '</div>' : '')
         + '<div class="vt-bt"><button type="button" class="p" data-vto>Scopri</button><button type="button" data-vtp>Prova dopo</button></div></div>';
     }
@@ -23026,7 +23034,7 @@ html.rd-gb #aiBusy .gb-tip i:not(#_f){color:#F0B98A!important}
         var y = c.colori[e] || {}, d = dati(c), pf = isPref(x, e);
         o.innerHTML = '<div class="vt-top">' + pic(y, 'big') + '<button type="button" class="vt-x" data-vtx aria-label="Chiudi">✕</button><div class="vt-tx">' + (x.nuovo ? '<span class="vt-nv">NUOVA COLLEZIONE</span>' : '') + '<b>' + E(nm(c.n)) + '</b>' + logo(B, 22) + '</div></div>'
           + '<div class="vt-bd"><div class="vt-cn"><b>' + E(nm(y.n)) + '</b>' + (y.code && y.code !== y.n ? '<span>' + E(y.code) + '</span>' : '') + '</div>'
-          + (c.colori.length > 1 ? '<div class="vt-h">' + (x.t === 'carta' || x.t === 'micro' || x.t === 'deco' ? 'Colori' : 'Elementi') + ' · ' + c.colori.length + '</div><div class="vt-tn">' + c.colori.slice(0, 24).map(function(z, i){ return '<button type="button" data-vte="' + i + '"' + (i === e ? ' class="on"' : '') + '>' + pic(z) + '<i>' + E(nm(z.n)) + '</i></button>'; }).join('') + '</div>' : '')
+          + (c.colori.length > 1 ? '<div class="vt-h">' + (x.t === 'pan' || x.t === 'boi' ? 'Elementi' : 'Colori') + ' · ' + c.colori.length + '</div><div class="vt-tn">' + c.colori.slice(0, 24).map(function(z, i){ return '<button type="button" data-vte="' + i + '"' + (i === e ? ' class="on"' : '') + '>' + pic(z) + '<i>' + E(nm(z.n)) + '</i></button>'; }).join('') + '</div>' : '')
           + '<div class="vt-kv2">' + d.concat(c.materiale ? [['Materiale', c.materiale]] : []).concat(y.misure ? [['Misure', y.misure]] : []).map(function(r){ return '<span>' + E(r[0]) + '</span><b>' + E(r[1]) + '</b>'; }).join('') + '<span>Produttore</span><b>' + E(B.marchio.produttore || B.marchio.n) + '</b></div>'
           + (msg ? '<div class="vt-ok">' + E(msg) + '</div>' : '')
           + '<div class="vt-g"><button type="button" data-vtd="prova"><u>✦</u>Prova nella prossima anteprima</button><button type="button" data-vtd="pref"' + (pf ? ' class="on"' : '') + '><u>' + (pf ? '♥' : '♡') + '</u>' + (pf ? 'Nei preferiti' : 'Salva nei preferiti') + '</button>'
@@ -23091,9 +23099,15 @@ html.rd-gb #aiBusy .gb-tip i:not(#_f){color:#F0B98A!important}
       b.textContent = '✓ Da provare'; b.classList.add('ok');
     }, true);
 
+    // «Stai provando»: per piscina, cartongesso ecc. diceva «Imbiancatura»; usa il nome del lavoro scelto
+    function fixName(){ var m = ''; try{ m = (SF_ON && SF.mat) || ''; }catch(e){}
+      var N = { piscina:'Piscina', cartongesso:'Cartongesso', carta:'Carta da parati', boipan:'Boiserie e pannelli', deco:'Pareti decorate', pia_est:'Piastrelle esterne', pit_est:'Facciata', scale:'Scale', legno:'Pavimento in legno', graniglia_esterni:'Graniglia per esterni' }[m];
+      var el = document.getElementById('gbMn'); if(N && el && /imbiancatura/i.test(el.textContent)) el.textContent = N;
+      var st = document.getElementById('gbStep'); if(N && st && /^Imbiancatura( interni| esterni)?/i.test(st.textContent)) st.textContent = st.textContent.replace(/^Imbiancatura( interni| esterni)?/i, N); }
+    setInterval(function(){ if(VT.on) try{ fixName(); }catch(e){} }, 250);
     // aggancio alla schermata di attesa
     function hook(){ if(typeof window.gbBusy !== 'function' || window.gbBusy.__vt) return !!(window.gbBusy && window.gbBusy.__vt);
-      var g0 = window.gbBusy; window.gbBusy = function(on){ var r = g0.apply(this, arguments); try{ if(on && vtOn()) start(); else { stop(); var bx = document.getElementById('vtBox'); if(bx && !on) bx.remove(); var w = document.getElementById('gbWait'); if(w && !on) w.classList.remove('vt-has'); } }catch(e){} return r; };
+      var g0 = window.gbBusy; window.gbBusy = function(on){ var r = g0.apply(this, arguments); try{ if(on && vtOn()) fixName(); }catch(e){} try{ if(on && vtOn()) start(); else { stop(); var bx = document.getElementById('vtBox'); if(bx && !on) bx.remove(); var w = document.getElementById('gbWait'); if(w && !on) w.classList.remove('vt-has'); } }catch(e){} return r; };
       window.gbBusy.__vt = 1; return true; }
     if(!hook()){ var hk = setInterval(function(){ if(hook()) clearInterval(hk); }, 300); }
     window.vtState = VT; window.vtBrands = brands; window.vtSheetTest = function(mi, ci){ var B = window.BP_BRANDS[mi]; sheet({ B:B, c:B.collezioni[ci], t: (B.carta_da_parati || []).indexOf(B.collezioni[ci].id) > -1 ? 'carta' : 'pan' }); };
