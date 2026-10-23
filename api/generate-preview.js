@@ -444,6 +444,24 @@ module.exports = async function handler(req, res) {
   // Monolith Pietra e Terrazzo si posano SOLO a pavimento (non a parete): lo
   // diciamo esplicitamente all'AI così non applica la lavorazione anche ai muri
   // inquadrati nella foto.
+  // 23/10: resina e microcemento su una o più zone (pavimento, pareti, scale), le pareti scelte
+  // con i numeri sulla foto o a sinistra/destra/di fronte, e la lista di cosa resta uguale.
+  const rzSel = (function (r) {
+    if (!r || typeof r !== "object") return null;
+    const mid = String(materialId || "");
+    if (!(mid.indexOf("monolith") === 0 || mid === "microcemento")) return null;
+    const z = { pav: r.pav === true, par: r.par === true, sca: r.sca === true };
+    if (!z.pav && !z.par && !z.sca) return null;
+    const q = r.pareti && typeof r.pareti === "object" ? String(r.pareti.q || "") : "";
+    z.q = ["tutte", "sx", "dx", "fondo", "punti"].includes(q) ? q : "tutte";
+    z.n = Math.max(0, Math.min(4, Number(r.pareti && r.pareti.n) || 0));
+    if (z.q === "punti" && !z.n) z.q = "tutte";
+    z.scaT = ["tutto", "pedate", "toro"].includes(r.scaT) ? r.scaT : "tutto";
+    z.resta = Array.isArray(r.resta) ? r.resta.filter(function (x) { return typeof x === "string" && x.trim(); }).slice(0, 8).map(function (x) { return x.slice(0, 80); }) : [];
+    const FIX = { sca: "le SCALE e i gradini", pav: "il PAVIMENTO", par: "le PARETI", par2: "le PARETI NON indicate", sof: "il SOFFITTO e le luci", ogg: "PORTE, FINESTRE, MOBILI e oggetti" };
+    z.fix = Array.isArray(r.fix) ? r.fix.filter(function (x) { return FIX[x]; }).slice(0, 4).map(function (x) { return FIX[x]; }) : [];
+    return z;
+  })((req.body || {}).rz);
   const FLOOR_ONLY_MATERIALS = ["monolith_pietra", "monolith_terrazzo", "parquet", "spc", "laminato", "piastrelle", "graniglia_esterni"];
   // PIASTRELLE: solo pavimento oppure pavimento e rivestimento (con doccia).
   const piaRivOn = materialId === "piastrelle" && piaDove === "riv";
@@ -456,7 +474,7 @@ module.exports = async function handler(req, res) {
     "metro": "piastrelle 7,5×15 cm stile metro posate a mattoncino sfalsato, bordi leggermente bisellati",
     "mosaico": "mosaico a tessere quadrate 2,5×2,5 cm con fughe sottili e regolari"
   };
-  const isFloorOnly = FLOOR_ONLY_MATERIALS.includes(materialId) && !piaRivOn;
+  const isFloorOnly = FLOOR_ONLY_MATERIALS.includes(materialId) && !piaRivOn && !rzSel;
 
   // Per la categoria "Resine" (monolith), l'utente ora sceglie esplicitamente DOVE
   // applicare la resina: solo pavimento, solo pareti (rivestimento), o entrambi
@@ -487,11 +505,40 @@ module.exports = async function handler(req, res) {
   const scaleSurfaceDesc = materialId === "scale"
     ? "SOLO ai gradini della scala visibile nella foto (pedate, alzate, frontalini e gli eventuali pianerottoli INTERMEDI tra una rampa e l'altra), dal primo all'ultimo gradino visibile. Il PAVIMENTO della stanza davanti, sotto e intorno alla scala (anche se è una piccola porzione in primo piano o ai piedi del primo gradino) NON fa parte della scala: resta IDENTICO alla foto originale, stesso materiale, stesse piastrelle e fughe, stesso colore. Pareti, soffitto, porte e corrimano non si toccano"
     : "";
-  const surfaceDesc = granSurfaceDesc ? granSurfaceDesc : scaleSurfaceDesc ? scaleSurfaceDesc : piaRivOn
+  let surfaceDesc = granSurfaceDesc ? granSurfaceDesc : scaleSurfaceDesc ? scaleSurfaceDesc : piaRivOn
     ? "al pavimento e alle pareti (rivestimento) come descritto zona per zona nelle ZONE PIASTRELLE qui sotto"
     : isFloorOnly
     ? "SOLO al pavimento inquadrato (questa lavorazione si posa esclusivamente a pavimento, non va applicata alle pareti anche se visibili nella foto)"
     : (resinaAreaDesc || ((materialId === "imbiancatura" && context === "esterno") ? "a tutte le pareti esterne della facciata visibili nella foto" : (materialId === "imbiancatura" || materialId === "decorazioni") ? "SOLO alle pareti della stanza visibili nella foto (il pavimento NON si tocca: resta identico per colore, materiale e finitura)" : "alla superficie del pavimento/parete inquadrata"));
+
+  let rzNote = "";
+  if (rzSel) {
+    const parti = [];
+    if (rzSel.pav) parti.push("al PAVIMENTO inquadrato");
+    if (rzSel.par) {
+      const PQ = {
+        tutte: "a TUTTE le pareti inquadrate nella foto",
+        sx: "SOLO alla parete a SINISTRA guardando la foto (le altre pareti restano identiche)",
+        dx: "SOLO alla parete a DESTRA guardando la foto (le altre pareti restano identiche)",
+        fondo: "SOLO alla parete DI FRONTE, quella di fondo guardando la foto (le altre pareti restano identiche)",
+        punti: "SOLO alle pareti indicate dai CERCHI ROSSI NUMERATI nell'ULTIMA immagine (" + rzSel.n + (rzSel.n === 1 ? " parete" : " pareti") + "); tutte le altre pareti restano identiche",
+      };
+      parti.push(PQ[rzSel.q]);
+    }
+    if (rzSel.sca) parti.push(rzSel.scaT === "pedate"
+      ? "SOLO alle PEDATE dei gradini della scala (la parte orizzontale dove si cammina, dal primo all'ultimo gradino visibile); le ALZATE (la parte verticale) restano come sono"
+      : "ai GRADINI della scala visibile, dal primo all'ultimo: pedate, alzate e frontalini" + (rzSel.scaT === "toro" ? ", con lo SPIGOLO di ogni gradino ARROTONDATO (bordo tondo, a toro)" : ""));
+    surfaceDesc = parti.join("; inoltre ");
+    const restaTxt = rzSel.resta.length ? rzSel.resta.join(", ") : "";
+    rzNote = " ZONE DA RIFARE (scelte dal cliente, regola vincolante): la lavorazione va " + parti.join("; ") + "."
+      + (rzSel.sca && !rzSel.pav ? " Il PAVIMENTO della stanza intorno e ai piedi della scala NON fa parte della scala: resta IDENTICO." : "")
+      + (!rzSel.sca ? " La SCALA, se c'è, NON si tocca: gradini, pedate, alzate e frontalini restano IDENTICI alla foto originale (stesso materiale, stesse venature, stesso colore, stesse fughe)." : "")
+      + (!rzSel.pav && !rzSel.sca ? " Il PAVIMENTO resta IDENTICO alla foto originale." : "")
+      + (!rzSel.par ? " Le PARETI restano IDENTICHE alla foto originale (stesso colore e stessa finitura)." : "")
+      + (rzSel.q === "punti" && rzSel.par ? " Ogni parete indicata da un cerchio va rifatta per intero, da angolo ad angolo e dal pavimento al soffitto. I cerchi numerati sono solo indicazioni: NON disegnarli nell'immagine finale." : "")
+      + (restaTxt ? " RESTA UGUALE (non va modificato in nessun modo): " + restaTxt + "." : "")
+      + (rzSel.fix.length ? " ATTENZIONE: nel tentativo precedente è cambiato per errore anche ciò che doveva restare uguale (" + rzSel.fix.join(" e ") + "). Questa volta tieni ESATTAMENTE come nella foto originale " + rzSel.fix.join(" e ") + ": stesso materiale, stessa texture, stesso colore. Un risultato con queste parti cambiate è SBAGLIATO." : "");
+  }
 
   // Layout principale facciata (solo Imbiancatura Esterno): "due_colori" divide
   // semplicemente la facciata in parte alta e parte bassa. Il marcapiano
@@ -777,7 +824,7 @@ module.exports = async function handler(req, res) {
   // specifico): oltre alle singole note di preservazione già presenti nei rami
   // facciata/pavimento/default qui sotto, questa regola assoluta copre TUTTI i casi
   // e ribadisce che l'unica area modificabile è quella esplicitamente descritta.
-  const bothSurfacesTargeted = resinaArea === "tutto";
+  const bothSurfacesTargeted = rzSel ? (rzSel.pav && rzSel.par) : resinaArea === "tutto";
   const globalPreservationNote = bothSurfacesTargeted
     ? " REGOLA ASSOLUTA: non alterare in nessun modo altri elementi della foto oltre a quanto esplicitamente richiesto in queste istruzioni — non spostare, aggiungere, rimuovere o modificare mobili, oggetti, porte, finestre, prese elettriche, interruttori, quadri, piante, altre pareti non indicate, illuminazione naturale o artificiale, inquadratura o prospettiva. In questo caso sia il pavimento SIA le pareti inquadrate sono l'area da trattare (resina applicata su entrambi in modo coerente e continuo); resta invariato tutto il resto (mobili, infissi, oggetti, ecc.)."
     : " REGOLA ASSOLUTA: non alterare in nessun modo altri elementi della foto oltre a quanto esplicitamente richiesto in queste istruzioni — non spostare, aggiungere, rimuovere o modificare mobili, oggetti, porte, finestre, prese elettriche, interruttori, quadri, piante, pavimenti (a meno che non sia il pavimento l'elemento richiesto), altre pareti non indicate, illuminazione naturale o artificiale, inquadratura o prospettiva. L'unica area che puoi modificare è quella esplicitamente descritta sopra.";
@@ -1059,6 +1106,7 @@ module.exports = async function handler(req, res) {
     accentoNote,
     colonneNote,
     segniNote,
+    rzNote,
     bordaturaNote,
     tettoNote,
     corniciNote,
