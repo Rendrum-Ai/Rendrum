@@ -158,12 +158,36 @@ function loginForm(){
   gate('<h1>Accedi</h1><p>Usa l\'email e la password dell\'account Super Admin.</p>'
     + '<form id="lf"><label class="f"><span>Email</span><input type="email" id="le" autocomplete="username" required></label>'
     + '<label class="f"><span>Password</span><input type="password" id="lp" autocomplete="current-password" required></label>'
-    + '<button class="b w" id="lb">Accedi</button><div class="err" id="lerr"></div></form>');
+    + '<button class="b w" id="lb">Accedi</button><div class="err" id="lerr"></div></form>'
+    + '<p style="margin:16px 0 0;font-size:13px">Primo accesso? <a href="#" id="lnew">Crea l\'account Super Admin</a></p>');
+  $('lnew').onclick = function(e){ e.preventDefault(); newForm(); };
   $('lf').onsubmit = function(ev){
     ev.preventDefault(); $('lb').disabled = true; $('lerr').textContent = '';
     fetch('/api/auth-login', { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ email: $('le').value, password: $('lp').value }) })
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok) throw new Error(d.error || 'Accesso non riuscito'); start(); }); })
       .catch(function(e){ $('lerr').textContent = e.message; $('lb').disabled = false; });
+  };
+}
+function newForm(){
+  gate('<h1>Crea l\'account Super Admin</h1><p>Solo per l\'email messa su Vercel in RD_ADMIN_EMAILS. Le registrazioni normali restano chiuse.</p>'
+    + '<form id="nf"><label class="f"><span>Email</span><input type="email" id="ne" value="superadmin@rendrum.com" autocomplete="username" required></label>'
+    + '<label class="f"><span>Password nuova (almeno 8 caratteri)</span><input type="password" id="np" autocomplete="new-password" required></label>'
+    + '<label class="f"><span>Ripeti la password</span><input type="password" id="np2" autocomplete="new-password" required></label>'
+    + '<button class="b w" id="nb">Crea l\'account</button><div class="err" id="nerr"></div></form>'
+    + '<p style="margin:16px 0 0;font-size:13px"><a href="#" id="nback">‹ Torna ad Accedi</a></p>');
+  $('nback').onclick = function(e){ e.preventDefault(); loginForm(); };
+  $('nf').onsubmit = function(ev){
+    ev.preventDefault(); $('nerr').textContent = '';
+    if($('np').value.length < 8) return $('nerr').textContent = 'La password deve avere almeno 8 caratteri.';
+    if($('np').value !== $('np2').value) return $('nerr').textContent = 'Le due password non sono uguali.';
+    $('nb').disabled = true;
+    fetch('/api/auth-register', { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ email: $('ne').value, password: $('np').value, accountType: 'professionista', companyName: 'Rendrum Super Admin' }) })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){
+        if(!r.ok) throw new Error(d.code === 'registrazioni_chiuse' ? 'Questa email non è quella del Super Admin messa su Vercel (RD_ADMIN_EMAILS).' : (d.error || 'Non riuscito'));
+        if(d.needsVerification) return gate('<h1>Controlla la posta</h1><p>Abbiamo mandato un\'email a <b>' + E(d.email) + '</b>. Aprila e premi <b>Conferma email</b>, poi torna qui e accedi.</p><button class="b w" id="nlog">Vai ad Accedi</button>'), $('nlog').onclick = loginForm;
+        start(); }); })
+      .catch(function(e){ $('nerr').textContent = e.message; $('nb').disabled = false; });
   };
 }
 function codeForm(email){
