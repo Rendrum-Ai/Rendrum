@@ -21,6 +21,7 @@ const {
   emailEnabled,
   newToken,
   sendVerifyEmail,
+  isAdminEmail,
 } = require("./_auth-lib");
 
 const VALID_TIERS = ["basic", "medium", "pro", "promax"];   // promax: serve supabase_piani.sql
@@ -32,7 +33,9 @@ module.exports = async function handler(req, res) {
   }
 
   // Registrazioni chiuse: per riaprirle aggiungere su Vercel REGISTRAZIONI_APERTE=1
-  if (String(process.env.REGISTRAZIONI_APERTE || "").trim() !== "1") {
+  // ...tranne l'account Super Admin (email in RD_ADMIN_EMAILS), che si crea da rendrum.com/admin.html
+  const regEmail = String((req.body || {}).email || "").trim().toLowerCase();
+  if (String(process.env.REGISTRAZIONI_APERTE || "").trim() !== "1" && !isAdminEmail(regEmail)) {
     return res.status(403).json({ error: "Le registrazioni sono chiuse per ora. Se hai già un account, accedi.", code: "registrazioni_chiuse" });
   }
 
