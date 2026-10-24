@@ -462,6 +462,21 @@ module.exports = async function handler(req, res) {
     z.fix = Array.isArray(r.fix) ? r.fix.filter(function (x) { return FIX[x]; }).slice(0, 4).map(function (x) { return FIX[x]; }) : [];
     return z;
   })((req.body || {}).rz);
+  const scSel = (function (r) {
+    if (!r || typeof r !== "object" || materialId !== "scale") return null;
+    const pick = function (v, L) { return L.includes(v) ? v : ""; };
+    const FIX = { pav: "il PAVIMENTO intorno alla scala", par: "le PARETI", rin: "la RINGHIERA e il corrimano", pia: "il PIANEROTTOLO", sof: "il SOFFITTO e le luci", sky: "il CIELO, le piante e il prato", ogg: "PORTE, FINESTRE, MOBILI e oggetti" };
+    return {
+      ext: r.ctx === "esterno",
+      bordo: pick(r.bordo, ["vivo", "arr", "toro", "mtoro", "lucida", "metallo", "led", "legnoL", "goc"]),
+      alz: pick(r.alz, ["uguali", "scure", "bianche", "pedate"]),
+      pian: pick(r.pian, ["si", "no"]),
+      fia: pick(r.fia, ["si", "no"]),
+      lati: pick(r.lati, ["none", "grad", "ramp", "fascia", "filo", "stesso", "led", "vecchio", "niente", "murcom", "murriv", "zoc"]),
+      resta: Array.isArray(r.resta) ? r.resta.filter(function (x) { return typeof x === "string" && x.trim(); }).slice(0, 10).map(function (x) { return x.slice(0, 80); }) : [],
+      fix: Array.isArray(r.fix) ? r.fix.filter(function (x) { return FIX[x]; }).slice(0, 4).map(function (x) { return FIX[x]; }) : [],
+    };
+  })((req.body || {}).sc);
   const FLOOR_ONLY_MATERIALS = ["monolith_pietra", "monolith_terrazzo", "parquet", "spc", "laminato", "piastrelle", "graniglia_esterni"];
   // PIASTRELLE: solo pavimento oppure pavimento e rivestimento (con doccia).
   const piaRivOn = materialId === "piastrelle" && piaDove === "riv";
@@ -538,6 +553,57 @@ module.exports = async function handler(req, res) {
       + (rzSel.q === "punti" && rzSel.par ? " Ogni parete indicata da un cerchio va rifatta per intero, da angolo ad angolo e dal pavimento al soffitto. I cerchi numerati sono solo indicazioni: NON disegnarli nell'immagine finale." : "")
       + (restaTxt ? " RESTA UGUALE (non va modificato in nessun modo): " + restaTxt + "." : "")
       + (rzSel.fix.length ? " ATTENZIONE: nel tentativo precedente è cambiato per errore anche ciò che doveva restare uguale (" + rzSel.fix.join(" e ") + "). Questa volta tieni ESATTAMENTE come nella foto originale " + rzSel.fix.join(" e ") + ": stesso materiale, stessa texture, stesso colore. Un risultato con queste parti cambiate è SBAGLIATO." : "");
+  }
+
+  let scNote = "";
+  if (scSel) {
+    const BORDO = {
+      vivo: "lo spigolo davanti di ogni gradino è VIVO: dritto, netto, a 90 gradi",
+      arr: "lo spigolo davanti di ogni gradino è ARROTONDATO con un raggio piccolo e regolare (circa 1 cm), senza spigolo vivo",
+      toro: "il bordo davanti di ogni gradino è a TORO: la pedata sporge di circa 2-3 cm oltre l'alzata e il bordo è un mezzo cerchio pieno e liscio",
+      mtoro: "il bordo davanti di ogni gradino è a MEZZO TORO: la pedata sporge di circa 2 cm oltre l'alzata e solo lo spigolo superiore è arrotondato",
+      lucida: "il bordo davanti di ogni gradino è a COSTA dritta con il fianco lucidato, leggermente più lucido della pedata",
+      metallo: "su ogni spigolo c'è un PROFILO ANGOLARE IN METALLO (alluminio satinato) largo circa 3-4 cm sulla pedata, con sottili righe antiscivolo parallele, che scende di circa 2 cm sull'alzata",
+      led: "sotto il bordo di ogni gradino c'è un sottile profilo in alluminio con una STRISCIA LED a luce calda ACCESA, che illumina dall'alto verso il basso l'alzata sottostante con una luce morbida",
+      legnoL: "su ogni spigolo c'è un PROFILO A L IN LEGNO (stessa essenza) che copre lo spessore del rivestimento",
+      goc: "il bordo davanti di ogni gradino SPORGE di circa 3-4 cm oltre l'alzata e sotto la sporgenza c'è un piccolo taglio (GOCCIOLATOIO) per far gocciolare l'acqua",
+    };
+    const ALZ = {
+      uguali: "le ALZATE (la parte verticale) sono rivestite con lo stesso materiale e lo stesso colore delle pedate",
+      scure: "le ALZATE sono rivestite con lo stesso materiale delle pedate ma in un tono nettamente PIÙ SCURO",
+      bianche: "le ALZATE sono BIANCHE (laccate o in tinta bianca opaca), le pedate nel materiale e colore scelti",
+      pedate: "si rivestono SOLO le PEDATE (la parte orizzontale): le ALZATE restano IDENTICHE alla foto originale",
+    };
+    const LATI = {
+      none: "lungo il muro della scala NON c'è zoccolino: il muro arriva pulito fino ai gradini (se nella foto c'è uno zoccolino vecchio, va tolto e il muro è finito come il resto)",
+      grad: "lungo il muro della scala c'è uno ZOCCOLINO A GRADONI alto circa 6-7 cm, di colore neutro tortora, che segue a scaletta il profilo di ogni gradino (orizzontale sulle pedate, verticale sulle alzate)",
+      ramp: "lungo il muro della scala c'è uno ZOCCOLINO RAMPANTE: un'unica fascia inclinata alta circa 8 cm, parallela alla rampa, appoggiata sopra i bordi dei gradini, di colore neutro tortora",
+      fascia: "sul muro lungo la scala c'è una FASCIA DIPINTA grigio antracite opaco alta circa 35 cm, parallela alla rampa, con il bordo superiore dritto e netto",
+      filo: "lungo il muro della scala c'è uno ZOCCOLINO FILO MURO incassato: si vede solo una sottile riga d'ombra scura che segue a scaletta i gradini",
+      stesso: "lungo il muro della scala c'è uno ZOCCOLINO A GRADONI alto circa 10 cm nello STESSO materiale e colore dei gradini",
+      led: "lungo il muro della scala, poco sopra i gradini e parallela alla rampa, c'è una sottile RIGA DI LUCE LED calda accesa incassata nel muro",
+      vecchio: "lo zoccolino che c'è lungo il muro resta IDENTICO alla foto",
+      niente: "ai lati della scala non si aggiunge niente: muri, muretti, ringhiere e aiuole restano IDENTICI",
+      murcom: "il MURETTO laterale della scala resta IDENTICO alla foto",
+      murriv: "il MURETTO laterale della scala (la parte sopra e i fianchi) è rivestito con lo STESSO materiale e colore dei gradini",
+      zoc: "sul muro a lato della scala c'è uno ZOCCOLINO A GRADONI alto circa 8 cm nello stesso materiale dei gradini",
+    };
+    surfaceDesc = "a TUTTI i gradini della scala visibile nella foto, dal primo all'ultimo: pedate" + (scSel.alz === "pedate" ? "" : ", alzate") + " e bordi"
+      + (scSel.pian === "si" ? ", e a TUTTI i pianerottoli (sia quelli tra due rampe sia quello in fondo o in cima alla scala)" : "")
+      + (scSel.fia === "si" ? ", e al FIANCO laterale della scala (e al sottoscala se si vede)" : "");
+    const restaTxt = scSel.resta.length ? scSel.resta.join(", ") : "";
+    scNote = " LA SCALA (regola vincolante, guarda bene tutta la foto prima di cambiare): fanno parte della scala TUTTI i gradini, anche quelli lontani e piccoli, quelli TAGLIATI dal bordo della foto e i GRADINI IN CURVA (a ventaglio, anche se hanno forma a triangolo o a trapezio)."
+      + " Conta i gradini nella foto: nel risultato devono essere lo stesso numero, nella stessa posizione, tutti rifatti. Ogni gradino si rifà SEMPRE INTERO, da muro a muro e fino al suo spigolo: MAI a metà, mai tagliato in diagonale, mai con un pezzo del materiale vecchio."
+      + (scSel.pian === "si" ? " I PIANEROTTOLI non sono pavimento: fanno parte della scala e si rifanno come i gradini, anche quello in fondo alla rampa." : " I PIANEROTTOLI restano IDENTICI alla foto originale.")
+      + " Il PAVIMENTO " + (scSel.ext ? "esterno intorno alla scala (vialetto, cortile, terrazzo)" : "della stanza") + " FUORI dalla scala (prima del primo gradino e dopo l'ultimo gradino o pianerottolo) resta IDENTICO alla foto."
+      + (scSel.bordo && BORDO[scSel.bordo] ? " BORDO DEL GRADINO: " + BORDO[scSel.bordo] + ", uguale su tutti i gradini." : "")
+      + (scSel.alz && ALZ[scSel.alz] ? " " + ALZ[scSel.alz] + "." : "")
+      + (scSel.fia === "no" ? " Il FIANCO laterale della scala resta com'è." : "")
+      + (scSel.lati && LATI[scSel.lati] ? " AI LATI: " + LATI[scSel.lati] + "." : "")
+      + " Ringhiere, corrimano e balaustre restano IDENTICI e al loro posto."
+      + (scSel.ext ? " SCALA ESTERNA: cielo, piante, prato, aiuole, facciata, cancelli e luce del sole restano IDENTICI alla foto originale; il materiale nuovo è adatto all'esterno e riceve la stessa luce del sole." : "")
+      + (restaTxt ? " RESTA UGUALE (non va modificato in nessun modo): " + restaTxt + "." : "")
+      + (scSel.fix.length ? " ATTENZIONE: nel tentativo precedente è cambiato per errore anche ciò che doveva restare uguale (" + scSel.fix.join(" e ") + "). Questa volta tieni ESATTAMENTE come nella foto originale " + scSel.fix.join(" e ") + ": stesso materiale, stessa texture, stesso colore. Un risultato con queste parti cambiate è SBAGLIATO." : "");
   }
 
   // Layout principale facciata (solo Imbiancatura Esterno): "due_colori" divide
@@ -1107,6 +1173,7 @@ module.exports = async function handler(req, res) {
     colonneNote,
     segniNote,
     rzNote,
+    scNote,
     bordaturaNote,
     tettoNote,
     corniciNote,
