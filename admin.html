@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="it"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Rendrum · Super Admin</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#0E1116;color:#E9E4DE;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:14px}
+body{background:radial-gradient(1200px 600px at 85% -10%,#2a2238 0,transparent 60%),radial-gradient(900px 500px at -10% 110%,#1f2a33 0,transparent 60%),#0E1116;background-attachment:fixed}
+a{color:#F2A66B}
+button,input,select{font:inherit;color:inherit}
+.hid{display:none!important}
+/* accesso */
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.card{width:100%;max-width:400px;background:#151922;border:1px solid #262b35;border-radius:18px;padding:26px 24px;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+.lg{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:16px}.lg u{text-decoration:none;color:#F2A66B;font-size:24px}
+.cc{font-size:10px;letter-spacing:1.8px;color:#6c675f;margin:2px 0 18px}
+.card h1{font-size:20px;margin:0 0 6px;color:#fff}.card p{color:#A9A39C;margin:0 0 14px;line-height:1.45}
+.f{display:block;margin-bottom:10px}.f span{display:block;font-size:12px;color:#8f8a83;margin-bottom:4px}
+.f input{width:100%;background:#0f1218;border:1px solid #2a2f38;border-radius:10px;padding:11px 12px;outline:none}
+.f input:focus{border-color:#F2A66B}
+.code{font-size:26px!important;letter-spacing:10px;text-align:center}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;background:#F2A66B;color:#1A1006}
+.b:disabled{opacity:.5;cursor:default}
+.b.w{width:100%}.b.g{background:#232935;color:#e6e0d9}.b.s{padding:6px 11px;font-size:12.5px;border-radius:8px}
+.b.r{background:rgba(255,138,122,.15);color:#ff8a7a}
+.err{color:#ff8a7a;font-size:13px;min-height:18px;margin:8px 0 0}
+.ok{color:#6fd39b}.bad{color:#ff8a7a}.st{color:#F2A66B}.mut{color:#8f8a83}
+/* pannello */
+.app{display:flex;min-height:100vh}
+.nav{width:210px;flex:none;background:#151922;border-right:1px solid #222731;padding:18px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.nav .lg{margin:0 6px}.nav .cc{margin:2px 6px 16px}
+.nav button{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:none;border:0;color:#9a948d;padding:8px 10px;border-radius:9px;cursor:pointer;margin-bottom:1px}
+.nav button:hover{background:#1b2029;color:#e6e0d9}
+.nav button.on{background:rgba(242,166,107,.16);color:#F2A66B;font-weight:700}
+.nav button[disabled]{opacity:.45;cursor:default}.nav button[disabled]:hover{background:none;color:#9a948d}
+.nav small{font-size:10px;color:#6c675f;font-weight:600}
+.nav .bot{margin-top:auto;font-size:12px;color:#8f8a83;padding:10px 6px 0;border-top:1px solid #222731}
+.nav .bot b{display:block;color:#F2A66B;font-size:11px;margin-bottom:2px}
+.main{flex:1;min-width:0;padding:22px 26px 60px}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.hd h2{margin:0;font-size:24px;color:#fff}.hd .s{color:#8f8a83;font-size:13px;margin-top:2px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:12px}
+.kp{background:linear-gradient(160deg,#1b2029,#161a22);border:1px solid #262b35;border-radius:12px;padding:12px 14px}
+.kp em{font-style:normal;font-size:12px;color:#8f8a83;display:block}.kp b{font-size:24px;color:#fff;display:block;margin-top:3px}.kp s{text-decoration:none;font-size:11.5px;color:#F2A66B;font-weight:700}
+.pan{background:#171b23;border:1px solid #262b35;border-radius:12px;padding:14px;margin-bottom:12px;min-width:0}
+.pan h4{margin:0 0 10px;font-size:11px;letter-spacing:1.4px;color:#F2A66B;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.g2{display:grid;grid-template-columns:1.6fr 1fr;gap:12px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{text-align:left;font-size:11px;color:#8f8a83;font-weight:600;padding:6px 8px;border-bottom:1px solid #262b35;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #232833;color:#cfc9c2;vertical-align:top}
+tr.cl{cursor:pointer}tr.cl:hover td{background:#1b2029}
+td b{color:#fff;font-weight:600}
+td.n,th.n{text-align:right;white-space:nowrap}
+.tg{display:inline-block;border-radius:7px;padding:1px 7px;font-size:11px;font-weight:700;white-space:nowrap}
+.tg.c{background:rgba(111,211,155,.15);color:#6fd39b}.tg.n{background:rgba(242,166,107,.15);color:#F2A66B}.tg.p{background:rgba(255,138,122,.15);color:#ff8a7a}.tg.x{background:#232935;color:#bcb6ae}.tg.v{background:rgba(150,140,255,.15);color:#b7aeff}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bar input,.bar select{background:#0f1218;border:1px solid #2a2f38;border-radius:9px;padding:8px 10px;outline:none}
+.bar input{flex:1;min-width:180px}
+.seg{display:inline-flex;background:#151922;border:1px solid #262b35;border-radius:9px;padding:2px}
+.seg button{background:none;border:0;color:#9a948d;padding:5px 10px;border-radius:7px;cursor:pointer;font-size:12.5px}.seg button.on{background:#232935;color:#fff;font-weight:700}
+.svg{width:100%;height:160px;display:block}
+.note{background:rgba(242,166,107,.08);border:1px solid rgba(242,166,107,.25);border-radius:12px;padding:10px 12px;color:#e6d3c2;font-size:13px;line-height:1.45;margin-bottom:12px}
+.note.r{background:rgba(255,138,122,.08);border-color:rgba(255,138,122,.3);color:#ffd0c8}
+.dl{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;font-size:13px}.dl dt{color:#8f8a83}.dl dd{margin:0;color:#e6e0d9;word-break:break-word}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.pg{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;color:#8f8a83;font-size:12.5px}
+.ld{color:#8f8a83;padding:30px 0;text-align:center}
+.back{background:none;border:0;color:#F2A66B;cursor:pointer;padding:0;margin-bottom:8px;font-weight:700}
+.dlg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:9}
+.dlg .card{max-width:420px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#232935;border:1px solid #2f3540;color:#fff;border-radius:10px;padding:10px 16px;z-index:10;font-weight:600}
+.mtop{display:none}
+@media (max-width:820px){
+  .app{display:block}
+  .nav{position:sticky;top:0;z-index:5;width:auto;height:auto;flex-direction:row;align-items:center;gap:4px;overflow-x:auto;padding:10px 12px;border-right:0;border-bottom:1px solid #222731}
+  .nav .lg,.nav .cc,.nav .bot,.nav small{display:none}
+  .nav button{width:auto;white-space:nowrap;flex:none}
+  .nav button[disabled]{display:none}
+  .main{padding:16px 16px 60px}
+  .g2{grid-template-columns:1fr}
+  .dl{grid-template-columns:1fr}.dl dt{margin-top:6px}
+  .mtop{display:block}
+  .hm{display:none}
+  td{padding:7px 5px}
+}
+</style>
+</head>
+<body>
+<div id="gate" class="gate"><div class="card">
+  <div class="lg"><u>R</u>RENDRUM</div><div class="cc">SUPER ADMIN</div>
+  <div id="gBody"><p class="mut">Caricamento…</p></div>
+</div></div>
+<div id="app" class="app hid">
+  <nav class="nav" id="nav">
+    <div class="lg"><u>R</u>RENDRUM</div><div class="cc">SUPER ADMIN</div>
+    <button data-v="dash">Dashboard</button>
+    <button data-v="users">Utenti</button>
+    <button data-v="subs">Abbonamenti</button>
+    <button data-v="inc">Incassi</button>
+    <button data-v="log">Registro</button>
+    <button disabled>Partner <small>presto</small></button>
+    <button disabled>Campionari <small>presto</small></button>
+    <button disabled>Anteprime AI <small>presto</small></button>
+    <button disabled>Richieste <small>presto</small></button>
+    <button disabled>Pubblicità <small>presto</small></button>
+    <button disabled>Assistenza <small>presto</small></button>
+    <button disabled>Sicurezza <small>presto</small></button>
+    <div class="bot"><b>● Super Admin</b><span id="who"></span><br><a href="/" style="font-size:12px">Apri l'app</a> · <a href="#" id="out" style="font-size:12px">Esci</a></div>
+  </nav>
+  <main class="main" id="main"></main>
+</div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function E(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
+function eur(c){ return '€ ' + ((Number(c) || 0) / 100).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function eur0(c){ return '€ ' + Math.round((Number(c) || 0) / 100).toLocaleString('it-IT'); }
+function dt(s){ if(!s) return '—'; var d = new Date(s); return isNaN(d) ? '—' : d.toLocaleDateString('it-IT', { day:'2-digit', month:'2-digit', year:'numeric' }); }
+function dtt(s){ if(!s) return '—'; var d = new Date(s); return isNaN(d) ? '—' : d.toLocaleString('it-IT', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' }); }
+function num(n){ return n == null ? '—' : Number(n).toLocaleString('it-IT'); }
+var TIER = { basic:'Basic', medium:'Medium', pro:'Pro', promax:'Pro Max' };
+var STATO = { pagante:['c','Pagante'], prova:['n','In prova'], gratis:['x','Senza piano'], insoluto:['p','Pagamento non riuscito'] };
+function tgStato(s){ var x = STATO[s] || ['x', s]; return '<span class="tg ' + x[0] + '">' + E(x[1]) + '</span>'; }
+function toast(t){ var d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(function(){ d.remove(); }, 2600); }
+
+function api(action, opt){
+  opt = opt || {};
+  var url = '/api/admin?action=' + action + (opt.q ? '&' + opt.q : '');
+  return fetch(url, { method: opt.body ? 'POST' : 'GET', credentials: 'same-origin', cache: 'no-store',
+    headers: opt.body ? { 'Content-Type': 'application/json' } : {}, body: opt.body ? JSON.stringify(opt.body) : undefined })
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){
+      if(!r.ok){ var e = new Error(d.error || ('Errore ' + r.status)); e.code = d.code; e.status = r.status; throw e; }
+      return d; }); });
+}
+function fail(e){
+  if(e && (e.code === 'code' || e.code === 'login' || e.code === 'no-admin')){ start(); return; }
+  $('main').insertAdjacentHTML('afterbegin', '<div class="note r">' + E(e && e.message || 'Errore') + '</div>');
+}
+
+/* ---------------- accesso ---------------- */
+function gate(html){ $('app').classList.add('hid'); $('gate').classList.remove('hid'); $('gBody').innerHTML = html; }
+function start(){
+  gate('<p class="mut">Caricamento…</p>');
+  api('me').then(function(m){
+    if(!m.adminSet) return gate('<h1>Pannello non attivo</h1><p>Su Vercel manca <b>RD_ADMIN_EMAILS</b> con l\'email del Super Admin (es. superadmin@rendrum.com). Dopo averla messa rifai il deploy.</p>');
+    if(!m.email) return loginForm();
+    if(!m.admin) return gate('<h1>Accesso non consentito</h1><p>Sei entrato come <b>' + E(m.email) + '</b>, che non è un account Super Admin.</p><button class="b w g" id="gOut">Esci e cambia account</button>'), $('gOut').onclick = logoutAll;
+    if(m.open) return openApp(m);
+    if(!m.emailOn) return gate('<h1>Codice non disponibile</h1><p>Il codice arriva via email, ma su Vercel manca <b>RESEND_API_KEY</b>.</p>');
+    if(m.logOk === false) return gate('<h1>Manca un passaggio</h1><p>Esegui <b>supabase_admin.sql</b> in Supabase (SQL Editor), poi ricarica questa pagina.</p>');
+    codeForm(m.email);
+  }).catch(function(e){ gate('<h1>Errore</h1><p>' + E(e.message) + '</p><button class="b w" onclick="location.reload()">Riprova</button>'); });
+}
+function loginForm(){
+  gate('<h1>Accedi</h1><p>Usa l\'email e la password dell\'account Super Admin.</p>'
+    + '<form id="lf"><label class="f"><span>Email</span><input type="email" id="le" autocomplete="username" required></label>'
+    + '<label class="f"><span>Password</span><input type="password" id="lp" autocomplete="current-password" required></label>'
+    + '<button class="b w" id="lb">Accedi</button><div class="err" id="lerr"></div></form>');
+  $('lf').onsubmit = function(ev){
+    ev.preventDefault(); $('lb').disabled = true; $('lerr').textContent = '';
+    fetch('/api/auth-login', { method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ email: $('le').value, password: $('lp').value }) })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if(!r.ok) throw new Error(d.error || 'Accesso non riuscito'); start(); }); })
+      .catch(function(e){ $('lerr').textContent = e.message; $('lb').disabled = false; });
+  };
+}
+function codeForm(email){
+  gate('<h1>Codice di sicurezza</h1><p>Mandiamo un codice di 6 cifre a <b>' + E(email) + '</b>. Vale 10 minuti.</p>'
+    + '<button class="b w" id="cs">Mandami il codice</button>'
+    + '<form id="cf" class="hid" style="margin-top:14px"><label class="f"><span>Codice ricevuto</span><input class="code" id="cc" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label>'
+    + '<button class="b w" id="cb">Apri il pannello</button></form><div class="err" id="cerr"></div>'
+    + '<p style="margin-top:14px;font-size:12px"><a href="#" id="cOut">Non sei tu? Esci</a></p>');
+  $('cOut').onclick = function(e){ e.preventDefault(); logoutAll(); };
+  $('cs').onclick = function(){
+    $('cs').disabled = true; $('cerr').textContent = '';
+    api('code-send', { body: {} }).then(function(){ $('cs').textContent = 'Rimanda il codice'; $('cf').classList.remove('hid'); $('cc').focus(); setTimeout(function(){ $('cs').disabled = false; }, 30000); })
+      .catch(function(e){ $('cerr').textContent = e.message; $('cs').disabled = false; });
+  };
+  $('cf').onsubmit = function(ev){
+    ev.preventDefault(); $('cb').disabled = true; $('cerr').textContent = '';
+    api('code-check', { body: { code: $('cc').value } }).then(start).catch(function(e){ $('cerr').textContent = e.message; $('cb').disabled = false; });
+  };
+}
+function logoutAll(){
+  api('logout', { body: {} }).catch(function(){}).then(function(){ return fetch('/api/auth-logout', { method:'POST', credentials:'same-origin' }).catch(function(){}); }).then(start);
+}
+
+/* ---------------- pannello ---------------- */
+var VIEW = 'dash', ME = null;
+function openApp(m){
+  ME = m; $('gate').classList.add('hid'); $('app').classList.remove('hid'); $('who').textContent = m.email;
+  var h = (location.hash || '').replace('#', '');
+  go(['dash', 'users', 'subs', 'inc', 'log'].indexOf(h.split('/')[0]) >= 0 ? h : 'dash');
+}
+$('nav').addEventListener('click', function(e){ var b = e.target.closest('button[data-v]'); if(b) go(b.getAttribute('data-v')); });
+$('out').onclick = function(e){ e.preventDefault(); api('logout', { body: {} }).catch(function(){}).then(start); };
+window.addEventListener('hashchange', function(){ var h = location.hash.replace('#', ''); if(h && h !== VIEW && ME) go(h, true); });
+function go(v, fromHash){
+  VIEW = v; var root = v.split('/')[0];
+  if(!fromHash && location.hash.replace('#', '') !== v) location.hash = v;
+  [].forEach.call(document.querySelectorAll('.nav button[data-v]'), function(b){ b.classList.toggle('on', b.getAttribute('data-v') === root); });
+  var m = $('main'); m.innerHTML = '<div class="ld">Caricamento…</div>'; window.scrollTo(0, 0);
+  if(root === 'dash') return vDash(m);
+  if(root === 'users') return v.split('/')[1] ? vUser(m, v.split('/')[1]) : vUsers(m);
+  if(root === 'subs') return vSubs(m);
+  if(root === 'inc') return vInc(m);
+  if(root === 'log') return vLog(m);
+}
+function head(t, s, right){ return '<div class="hd"><div><h2>' + E(t) + '</h2><div class="s">' + E(s) + '</div></div>' + (right || '') + '</div>'; }
+function kp(l, v, s){ return '<div class="kp"><em>' + E(l) + '</em><b>' + v + '</b>' + (s ? '<s>' + s + '</s>' : '') + '</div>'; }
+function bars(pts, money){
+  var w = 600, h = 160, n = pts.length, mx = Math.max.apply(null, pts.map(function(p){ return p[1]; }).concat([1]));
+  var bw = (w - 20) / n, g = '';
+  for(var i = 0; i < 4; i++) g += '<line x1="0" x2="' + w + '" y1="' + (12 + i * 38) + '" y2="' + (12 + i * 38) + '" stroke="#232833"/>';
+  pts.forEach(function(p, i){
+    var bh = p[1] ? Math.max(3, p[1] / mx * (h - 34)) : 0, x = 10 + i * bw;
+    g += '<rect x="' + (x + bw * .15).toFixed(1) + '" y="' + (h - 20 - bh).toFixed(1) + '" width="' + (bw * .7).toFixed(1) + '" height="' + bh.toFixed(1) + '" rx="2" fill="#F2A66B" opacity="' + (p[1] ? .9 : .2) + '"><title>' + E(dt(p[0]) + ': ' + (money ? eur(p[1]) : p[1])) + '</title></rect>';
+  });
+  g += '<text x="10" y="' + (h - 4) + '" fill="#6f6a65" font-size="11">' + E(dt(pts[0][0])) + '</text><text x="' + (w - 10) + '" y="' + (h - 4) + '" fill="#6f6a65" font-size="11" text-anchor="end">' + E(dt(pts[n - 1][0])) + '</text>';
+  g += '<text x="' + (w - 4) + '" y="10" fill="#6f6a65" font-size="11" text-anchor="end">max ' + E(money ? eur0(mx) : mx) + '</text>';
+  return '<svg class="svg" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' + g + '</svg>';
+}
+function userRow(u){
+  return '<tr class="cl" data-u="' + E(u.id) + '"><td><b>' + E(u.nome || '—') + '</b><br><span class="mut">' + E(u.email) + '</span></td>'
+    + '<td>' + (u.tipo === 'privato' ? 'Privato' : 'Professionista') + '</td>'
+    + '<td>' + tgStato(u.stato) + (u.tier && u.stato !== 'gratis' ? ' <span class="mut">' + E(TIER[u.tier] || u.tier) + (u.anno ? ' · anno' : '') + '</span>' : '') + (u.tester ? ' <span class="tg v">tester</span>' : '') + '</td>'
+    + '<td>' + (u.stato === 'pagante' ? u.usate + ' / ' + u.limite : u.prova && u.prova.inizio ? u.prova.usate + ' / ' + u.prova.di + ' prova' : '—') + (u.crediti ? '<br><span class="mut">+' + u.crediti + ' comprate</span>' : '') + '</td>'
+    + '<td>' + dt(u.creato) + '</td></tr>';
+}
+function bindRows(m){ [].forEach.call(m.querySelectorAll('tr[data-u]'), function(tr){ tr.onclick = function(){ go('users/' + tr.getAttribute('data-u')); }; }); }
+var UT = '<div class="tw"><table><thead><tr><th>Utente</th><th>Tipo</th><th>Stato</th><th>Anteprime mese</th><th>Iscritto</th></tr></thead><tbody>';
+
+/* dashboard */
+function vDash(m){
+  Promise.all([api('dash'), ME.stripe ? api('incassi', { q: 'days=30' }).catch(function(e){ return { err: e.message }; }) : Promise.resolve(null)]).then(function(r){
+    var d = r[0], inc = r[1];
+    var ant = d.anteprime || {};
+    var piani = Object.keys(d.perPiano).map(function(k){ return '<tr><td>' + E(TIER[k] || k) + '</td><td style="text-align:right">' + d.perPiano[k] + '</td></tr>'; }).join('') || '<tr><td class="mut">Nessun abbonamento attivo</td><td></td></tr>';
+    m.innerHTML = head('Dashboard', 'Rendrum oggi, dati veri dal database')
+      + '<div class="kpi">'
+      + kp('Utenti registrati', num(d.utenti), num(d.professionisti) + ' professionisti · ' + num(d.privati) + ' privati')
+      + kp('Nuovi iscritti', num(d.sett), 'ultimi 7 giorni · oggi ' + num(d.oggi))
+      + kp('Abbonati paganti', num(d.paganti), num(d.prova) + ' in prova' + (d.insoluti ? ' · ' + d.insoluti + ' insoluti' : ''))
+      + kp('Anteprime AI fatte', num(ant.mese), 'ultimi 30 giorni · oggi ' + num(ant.oggi) + (ant.errori ? ' · ' + ant.errori + ' non riuscite' : ''))
+      + kp('Incassato dal sito', inc && inc.attivo ? eur0(inc.totali.lordo) : '—', inc && inc.attivo ? 'ultimi 30 giorni (Stripe)' : (inc && inc.err ? 'Stripe non risponde' : 'Stripe non collegato'))
+      + '</div>'
+      + '<div class="g2"><div class="pan"><h4>Nuovi iscritti · 30 giorni</h4>' + bars(d.giorni) + '</div>'
+      + '<div class="pan"><h4>Abbonati per piano</h4><table>' + piani + '</table><p class="mut" style="font-size:12px;margin:10px 0 0">Valore mensile dei piani attivi, calcolato dai prezzi di listino: <b class="st">' + eur0(d.mensileStimato) + '</b> + IVA (non è l\'incassato).</p></div></div>'
+      + '<div class="pan"><h4>Ultimi iscritti <button class="b g s" id="allU">Tutti gli utenti →</button></h4>' + UT + d.ultimi.map(userRow).join('') + '</tbody></table></div></div>';
+    bindRows(m); $('allU').onclick = function(){ go('users'); };
+  }).catch(fail);
+}
+
+/* utenti */
+var UQ = { q: '', f: '', p: 0 };
+function vUsers(m){
+  m.innerHTML = head('Utenti', 'Cerca, apri la scheda, dai crediti o la prova')
+    + '<div class="bar"><input id="uq" placeholder="Cerca email, nome, telefono, città, P.IVA" value="' + E(UQ.q) + '">'
+    + '<select id="uf"><option value="">Tutti</option><option value="professionista">Professionisti</option><option value="privato">Privati</option><option value="pagante">Paganti</option><option value="prova">In prova</option><option value="gratis">Senza piano</option><option value="insoluto">Pagamento non riuscito</option><option value="tester">Tester</option></select></div>'
+    + '<div class="pan" id="ul"><div class="ld">Caricamento…</div></div>';
+  $('uf').value = UQ.f;
+  var t; $('uq').oninput = function(){ clearTimeout(t); t = setTimeout(function(){ UQ.q = $('uq').value; UQ.p = 0; load(); }, 300); };
+  $('uf').onchange = function(){ UQ.f = $('uf').value; UQ.p = 0; load(); };
+  function load(){
+    api('users', { q: 'q=' + encodeURIComponent(UQ.q) + '&f=' + encodeURIComponent(UQ.f) + '&p=' + UQ.p }).then(function(d){
+      var pages = Math.max(1, Math.ceil(d.tot / 50));
+      $('ul').innerHTML = (d.lista.length ? UT + d.lista.map(userRow).join('') + '</tbody></table></div>' : '<div class="ld">Nessun utente trovato.</div>')
+        + '<div class="pg">' + num(d.tot) + ' utenti · pagina ' + (UQ.p + 1) + ' di ' + pages
+        + ' <button class="b g s" id="pp"' + (UQ.p ? '' : ' disabled') + '>‹</button><button class="b g s" id="pn"' + (UQ.p + 1 < pages ? '' : ' disabled') + '>›</button></div>';
+      bindRows($('ul'));
+      $('pp').onclick = function(){ UQ.p--; load(); }; $('pn').onclick = function(){ UQ.p++; load(); };
+    }).catch(fail);
+  }
+  load();
+}
+function vUser(m, id){
+  api('user', { q: 'id=' + encodeURIComponent(id) }).then(function(u){
+    var trial = u.prova ? (u.prova.usate + ' di ' + u.prova.di + (u.prova.fine ? ' · finisce ' + dt(u.prova.fine) : ' · non iniziata')) : 'colonne non presenti';
+    var lav = u.lavori.length ? '<table>' + u.lavori.map(function(j){ return '<tr><td>' + E(j.title || 'Anteprima') + '</td><td>' + (j.status === 'done' ? '<span class="tg c">fatta</span>' : j.status === 'error' ? '<span class="tg p">non riuscita</span>' : '<span class="tg n">' + E(j.status) + '</span>') + '</td><td>' + dtt(j.created_at) + '</td><td>' + (j.result_url ? '<a href="' + E(j.result_url) + '" target="_blank" rel="noopener">vedi</a>' : '') + '</td></tr>'; }).join('') + '</table>' : '<p class="mut">Nessuna anteprima salvata.</p>';
+    var pag = u.pagamenti.length ? '<table>' + u.pagamenti.map(function(p){ return '<tr><td>' + dt(p.data) + '</td><td>' + E(p.tipo) + '</td><td style="text-align:right"><b>' + eur(p.importo) + '</b>' + (p.rimborsato ? '<br><span class="bad">rimborsati ' + eur(p.rimborsato) + '</span>' : '') + '</td><td>' + (p.stato === 'succeeded' ? '<span class="tg c">pagato</span>' : '<span class="tg p">' + E(p.stato) + '</span>') + '</td></tr>'; }).join('') + '</table>' : '<p class="mut">Nessun pagamento.</p>';
+    var reg = u.registro.length ? '<table>' + u.registro.map(function(r){ return '<tr><td>' + dtt(r.created_at) + '</td><td>' + E(azione(r)) + '</td><td class="mut">' + E(r.admin_email) + '</td></tr>'; }).join('') + '</table>' : '<p class="mut">Nessuna azione dal pannello.</p>';
+    m.innerHTML = '<button class="back" id="bk">‹ Utenti</button>' + head(u.nome || u.email, u.email)
+      + '<div class="kpi">' + kp('Stato', tgStato(u.stato) + (u.tester ? ' <span class="tg v">tester</span>' : ''), (u.tier && u.stato !== 'gratis' ? (TIER[u.tier] || u.tier) + (u.anno ? ' · annuale' : ' · mensile') : ''))
+      + kp('Anteprime questo mese', u.usate + (u.limite ? ' / ' + u.limite : ''), 'totale fatte: ' + num(u.anteprimeTot))
+      + kp('Anteprime comprate', u.crediti == null ? '—' : num(u.crediti), 'non scadono')
+      + kp('Prova gratuita', u.prova ? u.prova.usate + ' / ' + u.prova.di : '—', u.prova && u.prova.fine ? 'fino al ' + dt(u.prova.fine) : '') + '</div>'
+      + '<div class="g2"><div>'
+      + '<div class="pan"><h4>Dati</h4><dl class="dl"><dt>Tipo</dt><dd>' + (u.tipo === 'privato' ? 'Privato' : 'Professionista') + '</dd><dt>Telefono</dt><dd>' + E(u.tel || '—') + '</dd><dt>Città</dt><dd>' + E(u.citta || '—') + '</dd><dt>P.IVA</dt><dd>' + E(u.piva || '—') + '</dd><dt>Iscritto</dt><dd>' + dtt(u.creato) + '</dd><dt>Email confermata</dt><dd>' + (u.verificata ? 'sì' : '<span class="bad">no</span>') + '</dd><dt>Accesso</dt><dd>' + ([u.social.google ? 'Google' : '', u.social.apple ? 'Apple' : ''].filter(Boolean).join(', ') || 'email e password') + '</dd><dt>Prova</dt><dd>' + E(trial) + '</dd><dt>Preventivi</dt><dd>' + num(u.preventivi) + '</dd><dt>Sopralluoghi</dt><dd>' + num(u.sopralluoghi) + '</dd><dt>Cantieri</dt><dd>' + num(u.cantieri) + '</dd><dt>Cliente Stripe</dt><dd>' + (u.stripe ? '<a href="https://dashboard.stripe.com/customers/' + encodeURIComponent(u.stripe) + '" target="_blank" rel="noopener">apri su Stripe</a>' : '—') + '</dd></dl></div>'
+      + '<div class="pan"><h4>Ultime anteprime</h4>' + lav + '</div></div><div>'
+      + '<div class="pan"><h4>Azioni</h4><div class="acts" style="flex-direction:column;align-items:stretch">'
+      + '<button class="b g" id="aCr">＋ Dai anteprime (crediti)</button>'
+      + '<button class="b g" id="aTr">↻ Fai ripartire la prova gratuita</button>'
+      + (u.testerCol ? '<button class="b g" id="aTe">' + (u.testerManuale ? '✕ Togli dai tester' : '★ Metti tra i tester') + '</button>' : '<p class="mut" style="font-size:12px;margin:0">Per mettere i tester esegui supabase_admin.sql.</p>')
+      + (u.tester && !u.testerManuale ? '<p class="mut" style="font-size:12px;margin:0">È già tester per data di iscrizione o perché è nell\'elenco su Vercel.</p>' : '')
+      + '</div></div>'
+      + '<div class="pan"><h4>Pagamenti (Stripe)</h4>' + pag + '</div>'
+      + '<div class="pan"><h4>Registro di questo utente</h4>' + reg + '</div></div></div>';
+    $('bk').onclick = function(){ go('users'); };
+    $('aCr').onclick = function(){ dlgCredits(u); };
+    $('aTr').onclick = function(){ confirmDlg('Far ripartire la prova?', 'La prova gratuita di ' + u.email + ' riparte da oggi con ' + (u.prova ? u.prova.di : '') + ' anteprime.', function(){ return api('user-trial', { body: { id: u.id } }); }); };
+    if($('aTe')) $('aTe').onclick = function(){ var on = !u.testerManuale; confirmDlg(on ? 'Mettere tra i tester?' : 'Togliere dai tester?', on ? u.email + ' vedrà le novità in prova.' : u.email + ' non vedrà più le novità in prova (se non è tester per altri motivi).', function(){ return api('user-tester', { body: { id: u.id, on: on } }); }); };
+  }).catch(fail);
+}
+function dlgCredits(u){
+  var d = document.createElement('div'); d.className = 'dlg';
+  d.innerHTML = '<div class="card"><h1>Dai anteprime</h1><p>' + E(u.email) + ' ne ha ' + num(u.crediti || 0) + ' comprate. Per toglierle scrivi un numero negativo.</p>'
+    + '<label class="f"><span>Quante</span><input id="dn" type="number" min="-500" max="500" value="5"></label>'
+    + '<label class="f"><span>Motivo (resta nel registro)</span><input id="dm" maxlength="200" placeholder="es. regalo per il problema del 20/10"></label>'
+    + '<div class="acts"><button class="b" id="dok">Conferma</button><button class="b g" id="dno">Annulla</button></div><div class="err" id="derr"></div></div>';
+  document.body.appendChild(d);
+  $('dno').onclick = function(){ d.remove(); };
+  $('dok').onclick = function(){
+    $('dok').disabled = true;
+    api('user-credits', { body: { id: u.id, n: Number($('dn').value), nota: $('dm').value } }).then(function(r){ d.remove(); toast('Fatto: ora ha ' + r.crediti + ' anteprime comprate'); go('users/' + u.id, true); })
+      .catch(function(e){ $('derr').textContent = e.message; $('dok').disabled = false; });
+  };
+}
+function confirmDlg(t, s, fn){
+  var d = document.createElement('div'); d.className = 'dlg';
+  d.innerHTML = '<div class="card"><h1>' + E(t) + '</h1><p>' + E(s) + '</p><div class="acts"><button class="b" id="cok">Conferma</button><button class="b g" id="cno">Annulla</button></div><div class="err" id="cerr2"></div></div>';
+  document.body.appendChild(d);
+  $('cno').onclick = function(){ d.remove(); };
+  $('cok').onclick = function(){ $('cok').disabled = true; fn().then(function(){ d.remove(); toast('Fatto'); go(VIEW, true); }).catch(function(e){ $('cerr2').textContent = e.message; $('cok').disabled = false; }); };
+}
+function azione(r){
+  var d = r.detail || {};
+  if(r.action === 'crediti') return (d.n > 0 ? 'Dati ' + d.n : 'Tolti ' + (-d.n)) + ' crediti (' + d.prima + ' → ' + d.dopo + ')' + (d.nota ? ' · ' + d.nota : '');
+  if(r.action === 'prova') return 'Prova gratuita fatta ripartire';
+  if(r.action === 'tester-si') return 'Messo tra i tester';
+  if(r.action === 'tester-no') return 'Tolto dai tester';
+  if(r.action === 'login') return 'Accesso al pannello' + (d.ip ? ' (' + d.ip + ')' : '');
+  if(r.action === 'code-fail') return 'Codice sbagliato';
+  return r.action;
+}
+
+/* abbonamenti */
+function vSubs(m){
+  api('subs').then(function(d){
+    var c = { pagante:0, prova:0, insoluto:0, gratis:0 }; d.lista.forEach(function(u){ c[u.stato] = (c[u.stato] || 0) + 1; });
+    var rows = d.lista.map(function(u){ var s = u.stripeSub;
+      return '<tr class="cl" data-u="' + E(u.id) + '"><td><b>' + E(u.nome || '—') + '</b><br><span class="mut">' + E(u.email) + '</span></td><td>' + E(TIER[u.tier] || u.tier || '—') + '</td><td>' + (u.anno ? 'Annuale' : 'Mensile') + '</td>'
+        + '<td>' + tgStato(u.stato) + (s && s.disdetto ? ' <span class="tg p">disdetto</span>' : '') + '</td><td>' + (s && s.importo != null ? eur(s.importo) + ' / ' + (s.ogni === 'year' ? 'anno' : 'mese') : '—') + '</td><td>' + (s ? dt(s.rinnovo) : '—') + '</td></tr>'; }).join('');
+    m.innerHTML = head('Abbonamenti', 'Solo lettura: per cambiare un piano si usa Stripe')
+      + (d.errore ? '<div class="note r">Stripe: ' + E(d.errore) + '</div>' : '') + (!d.stripe ? '<div class="note">Stripe non è collegato: vedi solo quello che c\'è nel database.</div>' : '')
+      + '<div class="kpi">' + kp('Paganti', num(c.pagante)) + kp('In prova', num(c.prova)) + kp('Pagamento non riuscito', num(c.insoluto)) + kp('Chiusi', num(c.gratis)) + '</div>'
+      + '<div class="pan"><div class="tw"><table><thead><tr><th>Utente</th><th>Piano</th><th>Durata</th><th>Stato</th><th>Importo</th><th>Prossimo rinnovo</th></tr></thead><tbody>' + (rows || '<tr><td colspan="6" class="mut">Nessun abbonamento.</td></tr>') + '</tbody></table></div></div>';
+    bindRows(m);
+  }).catch(fail);
+}
+
+/* incassi */
+var DAYS = 30, LAST = null;
+function vInc(m){
+  var seg = '<div class="seg" id="seg">' + [7, 30, 90, 365].map(function(n){ return '<button data-d="' + n + '" class="' + (n === DAYS ? 'on' : '') + '">' + (n === 365 ? '1 anno' : n + ' giorni') + '</button>'; }).join('') + '</div>';
+  m.innerHTML = head('Incassi', 'Sito, Apple e Google', seg) + '<div id="ib"><div class="ld">Caricamento da Stripe…</div></div>';
+  $('seg').onclick = function(e){ var b = e.target.closest('button[data-d]'); if(b){ DAYS = Number(b.getAttribute('data-d')); vInc(m); } };
+  if(!ME.stripe){ $('ib').innerHTML = '<div class="note">Stripe non è collegato (manca STRIPE_SECRET_KEY su Vercel).</div>' + chan(null); return; }
+  api('incassi', { q: 'days=' + DAYS }).then(function(d){
+    LAST = d; var t = d.totali;
+    var tipi = Object.keys(d.perTipo).map(function(k){ return '<tr><td>' + E(k) + '</td><td style="text-align:right">' + eur(d.perTipo[k]) + '</td></tr>'; }).join('') || '<tr><td class="mut">Nessun pagamento</td><td></td></tr>';
+    var lista = d.lista.slice(0, 60).map(function(x){ return '<tr><td>' + dtt(x.data) + '</td><td>' + E(x.tipo) + '<br><span class="mut">' + E(x.email || x.desc || '') + '</span></td><td class="n">' + eur(x.lordo) + '</td><td class="n mut hm">' + eur(x.commissione) + '</td><td class="n"><b>' + eur(x.netto) + '</b></td><td class="hm">' + (x.stato === 'available' ? '<span class="tg c">disponibile</span>' : '<span class="tg n">dal ' + dt(x.disponibile) + '</span>') + '</td></tr>'; }).join('');
+    $('ib').innerHTML = '<div class="kpi">' + kp('Incassato (lordo)', eur(t.lordo), num(t.pagamenti) + ' pagamenti') + kp('Commissioni Stripe', eur(t.commissioni)) + kp('Rimborsi', eur(t.rimborsi)) + kp('Netto', eur(t.netto), 'lordo − commissioni − rimborsi') + '</div>'
+      + (t.altreValute ? '<div class="note">' + t.altreValute + ' movimenti in altre valute non sono nel conto.</div>' : '') + (d.troncato ? '<div class="note">Troppi movimenti: il conto è parziale, scegli un periodo più corto.</div>' : '')
+      + '<div class="g2"><div class="pan"><h4>Incassato al giorno</h4>' + bars(DAYS > 90 ? week(d.serie) : d.serie, true) + '</div>'
+      + '<div class="pan"><h4>Per tipo</h4><table>' + tipi + '</table>'
+      + (d.saldo ? '<p style="margin:12px 0 0;font-size:13px">Su Stripe: <b class="ok">' + eur(d.saldo.disponibile) + '</b> disponibili · <b class="st">' + eur(d.saldo.inArrivo) + '</b> in arrivo</p>' : '')
+      + (d.bonifici.length ? '<p class="mut" style="font-size:12px;margin:8px 0 0">Ultimi bonifici al conto: ' + d.bonifici.slice(0, 3).map(function(b){ return eur(b.importo) + ' (' + dt(b.arrivo) + (b.stato === 'paid' ? '' : ', ' + b.stato) + ')'; }).join(' · ') + '</p>' : '') + '</div></div>'
+      + chan(t)
+      + '<div class="pan"><h4>Movimenti <button class="b g s" id="csv">Esporta per il commercialista (CSV)</button></h4><div class="tw"><table><thead><tr><th>Data</th><th>Cosa</th><th class="n">Lordo</th><th class="n hm">Commissione</th><th class="n">Netto</th><th class="hm">Soldi</th></tr></thead><tbody>' + (lista || '<tr><td colspan="6" class="mut">Nessun movimento nel periodo.</td></tr>') + '</tbody></table></div>'
+      + (d.lista.length > 60 ? '<p class="mut" style="font-size:12px">Qui vedi gli ultimi 60, nel CSV ci sono tutti (' + d.lista.length + ').</p>' : '') + '</div>'
+      + '<p class="mut" style="font-size:12px">Non sono un commercialista: questi numeri vengono da Stripe e servono come aiuto, i conti ufficiali li fa lui.</p>';
+    $('csv').onclick = csv;
+  }).catch(function(e){ $('ib').innerHTML = '<div class="note r">' + E(e.message) + '</div>' + chan(null); });
+}
+function week(s){ var o = []; for(var i = 0; i < s.length; i += 7){ var sum = 0; s.slice(i, i + 7).forEach(function(p){ sum += p[1]; }); o.push([s[i][0], sum]); } return o; }
+function chan(t){
+  return '<div class="pan"><h4>Per canale</h4><table>'
+    + '<tr><td><b>Sito (Stripe)</b></td><td>' + (t ? '<span class="tg c">collegato</span>' : '<span class="tg p">non collegato</span>') + '</td><td style="text-align:right">' + (t ? eur(t.lordo) : '—') + '</td></tr>'
+    + '<tr><td><b>Apple App Store</b></td><td><span class="tg x">Fase 2</span></td><td style="text-align:right" class="mut">serve la chiave dei report su Vercel</td></tr>'
+    + '<tr><td><b>Google Play</b></td><td><span class="tg x">Fase 2</span></td><td style="text-align:right" class="mut">serve l\'accesso ai report su Vercel</td></tr>'
+    + '</table><p class="mut" style="font-size:12px;margin:10px 0 0">Oggi nell\'app non si compra niente tramite Apple o Google: si paga solo dal sito. Questi canali si accendono quando ci saranno gli acquisti dentro l\'app.</p></div>';
+}
+function csv(){
+  if(!LAST) return;
+  var q = function(v){ v = String(v == null ? '' : v); return /[;"\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+  var c = function(n){ return ((Number(n) || 0) / 100).toFixed(2).replace('.', ','); };
+  var rows = [['Data', 'Ora', 'Tipo', 'Email', 'Descrizione', 'Lordo', 'Commissione', 'Netto', 'Stato']];
+  LAST.lista.forEach(function(x){ var d = new Date(x.data); rows.push([d.toLocaleDateString('it-IT'), d.toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' }), x.tipo, x.email, x.desc, c(x.lordo), c(x.commissione), c(x.netto), x.stato === 'available' ? 'disponibile' : 'in arrivo']); });
+  var blob = new Blob(['﻿' + rows.map(function(r){ return r.map(q).join(';'); }).join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Rendrum_incassi_sito_' + LAST.giorni + 'giorni_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* registro */
+function vLog(m){
+  api('log').then(function(d){
+    m.innerHTML = head('Registro', 'Tutto quello che si fa dal pannello resta scritto qui')
+      + '<div class="pan"><div class="tw"><table><thead><tr><th>Quando</th><th>Chi</th><th>Cosa</th><th>Su chi</th></tr></thead><tbody>'
+      + (d.lista.map(function(r){ return '<tr><td>' + dtt(r.created_at) + '</td><td class="mut">' + E(r.admin_email) + '</td><td>' + E(azione(r)) + '</td><td>' + E(r.target_email || '') + '</td></tr>'; }).join('') || '<tr><td colspan="4" class="mut">Ancora niente.</td></tr>')
+      + '</tbody></table></div></div>';
+  }).catch(fail);
+}
+
+start();
+})();
+</script>
+</body></html>
