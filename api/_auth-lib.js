@@ -190,6 +190,8 @@ function publicUser(row) {
     unlimited: unlimitedEmail(row.email),
     // novita' attive (account registrati fino al 14/10/2026 + staff)
     tester: isBeta(row),
+    // pannello Super Admin (solo email in RD_ADMIN_EMAILS)
+    admin: isAdminEmail(row.email),
     // Accesso con Google/Apple (colonne di supabase_accesso_social.sql; assenti = valori di sempre)
     passwordSet: row.password_set !== false,
     needsOnboarding: row.needs_onboarding === true,
@@ -249,6 +251,8 @@ function unlimitedEmail(e) {
 // registrati prima di BETA_FINO (su Vercel si puo' cambiare la data con BETA_FINO, o aggiungere email in BETA_EMAILS).
 function isBeta(row) {
   if (!row) return false;
+  if (row.is_tester === true) return true; // messo dal pannello Super Admin
+  if (isAdminEmail(row.email)) return true; // il Super Admin vede tutte le novita'
   const e = String(row.email || "").trim().toLowerCase();
   const extra = ["info@dgmresine.com", "prova@rendrum.com"].concat(String(process.env.BETA_EMAILS || "").split(",").map(x => x.trim().toLowerCase()).filter(Boolean));
   if (extra.includes(e)) return true;
@@ -256,6 +260,9 @@ function isBeta(row) {
   const c = Date.parse(row.created_at || "");
   return !!(c && fino && c < fino);
 }
+// Super Admin: solo le email messe su Vercel in RD_ADMIN_EMAILS (separate da virgola).
+function adminEmails() { return String(process.env.RD_ADMIN_EMAILS || "").split(",").map(x => x.trim().toLowerCase()).filter(Boolean); }
+function isAdminEmail(e) { const x = String(e || "").trim().toLowerCase(); return !!x && adminEmails().includes(x); }
 function paymentsEnabled() { return Boolean((process.env.STRIPE_SECRET_KEY || "").trim()); }
 
 // Chiamata alla REST API di Stripe (form-encoded), senza librerie esterne.
@@ -347,6 +354,8 @@ module.exports = {
   carryOver,
   paymentsEnabled,
   isBeta,
+  isAdminEmail,
+  adminEmails,
   stripeRequest,
   currentAccount,
   sessionMatches,
