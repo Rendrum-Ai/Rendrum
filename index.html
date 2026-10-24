@@ -23625,6 +23625,7 @@ html.an29 #gbSeg:not([hidden]) + #hero #heroDots{display:none!important}
       var sb = document.getElementById('proSubBtn');
       if(sb && sb.style.display !== 'none' && !document.documentElement.classList.contains('is-app')) h += row('sub', IC.card, 'Abbonamento', 'Gestisci il tuo piano e i pagamenti', '');
       if(document.documentElement.classList.contains('rd-s1')){ var lt = document.getElementById('langToggle'), en = lt && /IT/i.test(lt.textContent); h += row('lang', IC.globe, 'Lingua', en ? 'English · tocca per l’italiano' : 'Italiano · tocca per English', ''); }
+      if(a.admin) h += '<div class="pf28-sec">Super Admin</div>' + row('sadm', IC.lock, 'Pannello Super Admin', 'Utenti, abbonamenti e incassi · meglio dal computer', '');
       paint(b, 'Altro', 'Profilo azienda', 'Tutto in un unico posto, solo per te.', h, 'pf28-main');
     }
     // le pagine di prima (dati impresa, banca, condizioni, profilo pubblico, account) si aprono a tutto schermo e tornano qui
@@ -23648,6 +23649,7 @@ html.an29 #gbSeg:not([hidden]) + #hero #heroDots{display:none!important}
       var k = b.dataset.pg;
       if(k === 'impresa' || k === 'banca' || k === 'cond' || k === 'pub' || k === 'acc') return oldPage(k);
       if(k === 'sub'){ var sb = document.getElementById('proSubBtn'); if(sb) sb.click(); return; }
+      if(k === 'sadm'){ if(document.documentElement.classList.contains('is-app') || location.protocol !== 'https:') window.open('https://rendrum.com/admin.html', '_blank'); else location.href = '/admin.html'; return; }
       if(k === 'lang'){ var lt = document.getElementById('langToggle'); if(lt) lt.click(); setTimeout(drawMain, 80); return; }
       if(k === 'listino' || k === 'squadra' || k === 'materiali') return altroPage(k);
       if(k === 'cov') return covEdit();
